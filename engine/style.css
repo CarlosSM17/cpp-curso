@@ -1,0 +1,251 @@
+:root{
+  --ink:#1f2937; --muted:#64748b; --line:#e2e8f0;
+  --sop:#2563eb; --sopl:#eff6ff;
+  --pro:#7c3aed; --prol:#f5f3ff;
+  --tar:#059669; --tarl:#ecfdf5;
+  --pv:#c2410c;  --pvl:#fff7ed;
+  --ev:#be123c;  --evl:#fff1f2;
+  --fi:#334155;  --fil:#f8fafc;
+  --ra:#0f766e;  --rb:#be185d;
+}
+@page { size: Letter; }
+*{ box-sizing:border-box; }
+html{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+body.doc{ font-family:Inter, "DejaVu Sans", sans-serif; font-size:9.7pt; line-height:1.5; color:var(--ink); margin:0; }
+p{ margin:5px 0 7px; }
+ul,ol{ margin:4px 0 8px; padding-left:20px; }
+li{ margin:2px 0; }
+code{ font-family:"DejaVu Sans Mono", monospace; font-size:0.86em; background:#f1f5f9; border:1px solid #e2e8f0; border-radius:3px; padding:0 3px; }
+a{ color:var(--sop); }
+strong{ font-weight:700; }
+
+/* ---------- encabezados ---------- */
+h1{ break-before:page; font-family:"Inter Display", Inter, sans-serif; font-weight:800; font-size:19pt; line-height:1.15;
+    margin:0 0 2px; padding:4px 0 4px 13px; border-left:7px solid var(--c, var(--fi)); color:var(--c, var(--fi)); }
+body.doc > h1:first-child, body.doc > .ficha-wrap:first-child > h1:first-child{ break-before:auto; }
+h1.ficha{ --c:var(--fi); } h1.soporte{ --c:var(--sop); } h1.procedimental{ --c:var(--pro); }
+h1.tareas{ --c:var(--tar); } h1.protocolo{ --c:var(--pv); } h1.evaluacion{ --c:var(--ev); }
+h1.glosario{ --c:#0f766e; } h1.anexo{ --c:#475569; } h1.guia{ --c:#0f766e; }
+.h1-sub{ font-size:8.6pt; color:var(--muted); margin:3px 0 14px 20px; }
+h2{ font-family:"Inter Display", Inter, sans-serif; font-weight:700; font-size:12.8pt; margin:16px 0 6px; color:#0f172a; break-after:avoid; }
+h3{ font-weight:700; font-size:10.6pt; margin:12px 0 4px; color:#0f172a; break-after:avoid; }
+h4{ font-weight:700; font-size:9.8pt; margin:10px 0 3px; break-after:avoid; }
+h2 + *, h3 + *{ break-before:avoid; }
+
+/* ---------- insignias ---------- */
+.ruta{ display:inline-block; font:700 7.4pt Inter; padding:1px 7px; border-radius:10px; color:#fff; vertical-align:1px; white-space:nowrap; }
+.ra{ background:var(--ra); } .rb{ background:var(--rb); }
+.ef{ display:inline-block; font:600 7.2pt Inter; padding:0 6px; border-radius:3px; margin:1px 2px 1px 0; border:1px solid; white-space:nowrap; line-height:1.55; }
+.ef-n{ color:#9a3412; background:#fff7ed; border-color:#fdba74; }
+.ef-r{ color:#6b21a8; background:#faf5ff; border-color:#d8b4fe; }
+.ef-x{ color:#334155; background:#f1f5f9; border-color:#cbd5e1; }
+.arcs{ display:inline-block; font:600 7.2pt Inter; color:#0369a1; background:#f0f9ff; border:1px solid #7dd3fc; padding:0 6px; border-radius:3px; white-space:nowrap; line-height:1.55; }
+.circ{ font-weight:700; color:var(--tar); }
+.tag-como,.tag-porque{ display:inline-block; font:700 7pt Inter; padding:0 6px; border-radius:3px; color:#fff; margin-right:4px; letter-spacing:.03em; vertical-align:1px; }
+.tag-como{ background:#c2410c; } .tag-porque{ background:#7c3aed; }
+
+/* ---------- cajas ---------- */
+.caja{ border:1px solid var(--line); border-left:4px solid var(--bc,#94a3b8); background:var(--bg,#fff); border-radius:6px;
+       padding:7px 12px 6px; margin:10px 0; break-inside:avoid; }
+.caja > *:last-child{ margin-bottom:2px; }
+.caja-h{ font-weight:700; font-size:10.2pt; display:flex; gap:7px; align-items:center; margin:0 0 4px; flex-wrap:wrap; color:var(--hc,var(--ink)); }
+.caja-h .ico{ font-size:10.5pt; }
+.caja-h .h-ef{ margin-left:auto; font-weight:400; }
+.c-analogia{ --bc:#f59e0b; --bg:#fffbeb; --hc:#92400e; }
+.c-pregunta{ --bc:#0284c7; --bg:#f0f9ff; --hc:#075985; }
+.c-relevancia{ --bc:#10b981; --bg:#f0fdf4; --hc:#065f46; }
+.c-nota{ --bc:#64748b; --bg:#f8fafc; }
+.c-cuidado{ --bc:#dc2626; --bg:#fef2f2; --hc:#991b1b; }
+.c-tip{ --bc:#16a34a; --bg:#f0fdf4; --hc:#166534; }
+.c-def{ --bc:#2563eb; --bg:#eff6ff; --hc:#1e3a8a; }
+.c-concepto{ --bc:#2563eb; --bg:#fff; break-inside:auto; border-color:#bfdbfe; }
+.c-concepto .caja-h{ color:#1e3a8a; font-size:10.8pt; break-after:avoid; }
+.cnum{ background:#2563eb; color:#fff; border-radius:50%; min-width:21px; height:21px; display:inline-flex; align-items:center; justify-content:center; font-size:9pt; }
+.c-ejemplo{ --bc:#2563eb; --bg:#fff; break-inside:auto; border-color:#bfdbfe; }
+.c-ejemplo > .caja-h{ color:#1e3a8a; }
+.c-sintaxis,.c-checklist,.c-errores,.c-isomorfo{ --bc:#7c3aed; --bg:#faf5ff; --hc:#5b21b6; }
+.c-sintaxis,.c-errores,.c-isomorfo{ break-inside:auto; }
+.c-resumen{ --bc:#2563eb; --bg:#f8fafc; --hc:#1e3a8a; }
+.c-colab{ --bc:#0f766e; --bg:#f0fdfa; --hc:#115e59; break-inside:auto; }
+.c-autog{ --bc:#475569; --bg:#f8fafc; --hc:#334155; break-inside:auto; }
+.c-movimiento{ --bc:#ea580c; --bg:#fff7ed; --hc:#9a3412; }
+.c-protocolo{ --bc:#c2410c; --bg:#fffaf5; --hc:#9a3412; break-inside:auto; }
+.c-recall,.c-compr{ --bc:#be123c; --bg:#fff; --hc:#9f1239; break-inside:auto; border-color:#fecdd3; }
+.c-autoexp,.c-imagina{ --bc:#a21caf; --bg:#fdf4ff; --hc:#86198f; }
+.c-checkpoint{ --bc:#059669; --bg:#fff; --hc:#047857; border-style:dashed; border-left-style:solid; }
+.c-reto{ --bc:#eab308; --bg:#fefce8; --hc:#854d0e; }
+.c-registro{ --bc:#0f766e; --bg:#f0fdfa; --hc:#115e59; }
+.c-plan{ --bc:#334155; --bg:#f8fafc; }
+
+/* tarea */
+.c-tarea{ border:1.5px solid #86efac; border-left:5px solid var(--tar); background:#fff; padding:0 12px 6px; break-inside:auto; margin:14px 0; }
+.tarea-h{ background:var(--tarl); margin:0 -12px 8px; padding:7px 12px 6px; border-bottom:1px solid #bbf7d0; border-radius:4px 4px 0 0; break-after:avoid; }
+.tarea-t{ font:700 11pt "Inter Display", Inter; color:#065f46; }
+.tarea-m{ margin-top:3px; display:flex; gap:6px; align-items:center; flex-wrap:wrap; }
+.tarea-e{ margin-top:3px; }
+.dur{ font:600 7.4pt Inter; color:#065f46; background:#fff; border:1px solid #a7f3d0; padding:0 7px; border-radius:10px; }
+.solref{ font-size:7.8pt; color:var(--tar); margin:6px 0 2px; }
+.c-tarea .caja{ break-inside:avoid; }
+
+/* ---------- código ---------- */
+.codewrap{ margin:9px 0; }
+figure.code{ margin:0; border:1px solid #d5dde8; border-radius:6px; background:#fbfcfe; overflow:hidden; }
+figure.code.keep{ break-inside:avoid; }
+.codewrap > figure.code + .term, .codewrap > figure.code + .filebox{ margin-top:0; border-top-left-radius:0; border-top-right-radius:0; }
+.codewrap > figure.code:not(:last-child){ border-bottom-left-radius:0; border-bottom-right-radius:0; }
+.codewrap{ break-inside:auto; }
+.code-t{ display:flex; justify-content:space-between; align-items:center; font:600 7.8pt Inter; color:#334155; background:#eef2f7; padding:3px 8px; border-bottom:1px solid #d5dde8; }
+.cbadge{ font:700 6.6pt Inter; text-transform:uppercase; letter-spacing:.05em; background:#334155; color:#fff; padding:1px 6px; border-radius:3px; margin-left:4px; }
+.cb-blank{ background:var(--tar); }
+table.src{ border-collapse:collapse; width:100%; font:8.2pt/1.45 "DejaVu Sans Mono", monospace; }
+table.src td{ padding:0; vertical-align:top; }
+table.src td.ln{ width:24px; text-align:right; color:#94a3b8; padding:0 6px 0 4px; background:#f1f5f9; border-right:1px solid #e2e8f0; font-size:7.4pt; }
+table.src td.cl{ white-space:pre-wrap; word-break:break-word; padding:0 8px; }
+table.src td.an{ font:7.9pt/1.45 Inter, sans-serif; color:#1e3a8a; background:#eff6ff; border-left:2px solid #93c5fd; padding:0 8px; width:43%; }
+table.src td.an code{ font-size:0.92em; background:#dbeafe; border-color:#bfdbfe; }
+table.src tr:first-child td{ padding-top:4px; } table.src tr:last-child td{ padding-bottom:4px; }
+table.src tr.hl td.cl{ background:#fef3c7; box-shadow: inset 3px 0 0 #f59e0b; }
+figure.pseudo{ background:#fffdf5; border-color:#fde68a; }
+figure.pseudo .code-t{ background:#fef3c7; border-color:#fde68a; color:#92400e; }
+figure.pseudo .cbadge{ background:#b45309; }
+figure.pseudo td.ln{ background:#fef9e7; }
+.hueco{ display:inline-block; min-width:44px; text-align:center; background:#ecfdf5; border:1.5px dashed var(--tar); border-radius:4px; color:var(--tar); font-weight:700; line-height:1.15; }
+/* tokens (pygments) */
+.k,.kr,.kd,.kn,.kc{ color:#7c3aed; font-weight:600; }
+.kt{ color:#0e7490; font-weight:600; }
+.s,.s1,.s2,.sc,.dl,.sa{ color:#b45309; }
+.se{ color:#dc2626; }
+.mi,.mf,.m,.mh,.il,.mo,.mb{ color:#be123c; }
+.c,.c1,.cm,.ch,.cs{ color:#64748b; font-style:italic; }
+.cp,.cpf{ color:#15803d; }
+.nf,.fm{ color:#1d4ed8; }
+.nb,.bp{ color:#0369a1; }
+.o,.ow{ color:#334155; }
+.nc,.nn{ color:#0e7490; font-weight:600; }
+figure.pseudo .k{ color:#1d4ed8; font-weight:700; }
+
+/* consola */
+.term{ background:#0f172a; color:#e2e8f0; border-radius:6px; margin:0; overflow:hidden; break-inside:avoid; }
+.term-t{ font:600 7.4pt Inter; color:#94a3b8; display:flex; justify-content:space-between; gap:10px; padding:3px 10px; border-bottom:1px solid #1e293b; background:#111c33; }
+.term-in b{ color:#fde68a; font-family:"DejaVu Sans Mono"; font-weight:400; }
+.term pre{ tab-size:8; font:8.1pt/1.42 "DejaVu Sans Mono", monospace; padding:5px 10px 6px; margin:0; white-space:pre-wrap; word-break:break-word; }
+.term.err pre{ color:#fecaca; }
+.term.err .term-t{ color:#fca5a5; }
+.filebox{ border:1px solid #cbd5e1; border-radius:6px; background:#fff; margin:8px 0; overflow:hidden; break-inside:avoid; }
+.file-t{ background:#f1f5f9; font:600 7.8pt Inter; padding:3px 8px; border-bottom:1px solid #e2e8f0; }
+.filebox pre{ font:8.1pt/1.42 "DejaVu Sans Mono"; margin:0; padding:5px 10px; white-space:pre-wrap; }
+
+/* ---------- tablas ---------- */
+table{ border-collapse:collapse; }
+.doc table:not(.src){ width:100%; font-size:8.7pt; margin:6px 0 12px; }
+.doc table:not(.src) th{ background:#f1f5f9; text-align:left; padding:4px 7px; border-bottom:2px solid #cbd5e1; font-weight:700; vertical-align:bottom; }
+.doc table:not(.src) td{ padding:4px 7px; border-bottom:1px solid #e2e8f0; vertical-align:top; }
+.doc table:not(.src) tr{ break-inside:avoid; }
+.doc table:not(.src) td code{ white-space:nowrap; }
+table.tb.obj td{ width:50%; }
+table.tb.efx td:first-child{ width:19%; } table.tb.efx td:nth-child(2){ width:21%; }
+table.tb.dif td:first-child{ width:11%; } table.tb.dif td:nth-child(2){ width:17%; }
+table.tb.plan td:first-child{ width:13%; } table.tb.plan td:last-child{ width:9%; white-space:nowrap; }
+table.tb.glos td:first-child{ width:20%; } table.tb.glos td:nth-child(2){ width:20%; }
+table.traza td, table.traza th{ text-align:center; font-family:"DejaVu Sans Mono"; }
+
+/* ---------- figuras ---------- */
+figure.fig{ text-align:center; margin:10px auto; break-inside:avoid; }
+figure.fig svg{ max-width:100%; height:auto; }
+figcaption{ font-size:8.2pt; color:var(--muted); font-style:italic; margin-top:3px; }
+.dg text{ dominant-baseline:auto; }
+
+/* ---------- varios ---------- */
+.lineas{ background-image:repeating-linear-gradient(to bottom, transparent 0 25px, #cbd5e1 25px 26px); margin:4px 0 8px; }
+.blank{ display:inline-block; min-width:90px; border-bottom:1px solid #64748b; }
+.pb{ break-after:page; height:0; }
+.kv{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:6px 0 4px; }
+.kv div{ background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:5px 9px; }
+.kv span{ display:block; font-size:7.2pt; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; }
+.kv b{ font-size:8.8pt; font-weight:600; }
+.mini{ font-size:8.2pt; color:var(--muted); }
+.cols{ display:grid; grid-template-columns:1fr 1fr; gap:12px; align-items:start; }
+.cols > *{ min-width:0; }
+.cols3{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; }
+.fuentes{ margin-top:18px; border-top:1px solid var(--line); padding-top:6px; font-size:8.4pt; color:#475569; break-inside:avoid; }
+.fuentes h3{ margin-top:4px; }
+.sol{ margin:10px 0 14px; padding-top:4px; border-top:1px dashed #cbd5e1; }
+.sol-h{ font:700 9.6pt Inter; color:#fff; background:#475569; display:inline-block; padding:1px 10px; border-radius:4px; margin-bottom:3px; break-after:avoid; }
+.opciones{ list-style:none; padding-left:6px; }
+ol.reactivos > li{ margin-bottom:8px; break-inside:avoid; }
+.c-recall ol > li, .c-compr ol > li{ break-inside:avoid; margin-bottom:7px; }
+.c-recall ol ol, .c-recall ol ul{ list-style:none; padding-left:12px; margin-top:2px; }
+.speaker{ font-weight:700; color:#9a3412; }
+.c-protocolo p{ margin:4px 0 6px; }
+.checks{ list-style:none; padding-left:4px; }
+.checks li::before{ content:"☐  "; color:var(--tar); font-weight:700; }
+.escala{ display:flex; gap:4px; margin:6px 0; }
+.escala span{ flex:1; border:1px solid #cbd5e1; border-radius:4px; text-align:center; font-size:8pt; padding:4px 0; }
+.escala span b{ display:block; font-size:10pt; }
+
+/* ---------- portada ---------- */
+body.cover{ margin:0; }
+.cov{ width:8.5in; height:11in; padding:0.75in 0.72in 0.6in; display:flex; flex-direction:column; color:#fff;
+      background:radial-gradient(circle at 85% 12%, rgba(45,212,191,.18), transparent 38%),
+                 radial-gradient(circle at 10% 95%, rgba(124,58,237,.22), transparent 40%),
+                 linear-gradient(160deg,#0b1222 0%,#132036 55%,#0f2f33 100%); font-family:Inter, sans-serif; }
+.cov-top{ display:flex; justify-content:space-between; align-items:baseline; border-bottom:1px solid rgba(255,255,255,.15); padding-bottom:10px; }
+.cov-brand{ font:700 11pt "Inter Display"; letter-spacing:.02em; }
+.cov-model{ font:500 8.5pt Inter; color:#5eead4; text-transform:uppercase; letter-spacing:.08em; }
+.cov-num{ font:800 128pt/1 "Inter Display"; color:transparent; -webkit-text-stroke:2px #5eead4; margin-top:0.55in; letter-spacing:-.02em; }
+.cov-kicker{ font:700 10pt Inter; text-transform:uppercase; letter-spacing:.18em; color:#5eead4; margin-top:10px; }
+.cov-title{ font:800 30pt/1.12 "Inter Display"; margin-top:8px; max-width:6.6in; }
+.cov-lema{ font:italic 400 13.5pt/1.4 Lora, serif; color:#cbd5e1; margin-top:12px; max-width:6.2in; }
+.cov-steps{ display:flex; align-items:stretch; gap:5px; margin-top:0.55in; }
+.cs{ flex:1; border-radius:8px; padding:8px 8px 7px; font:600 8.2pt/1.25 Inter; color:#fff; border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.05); }
+.cs span{ display:block; font:800 13pt "Inter Display"; margin-bottom:2px; }
+.cs-soporte span{ color:#93c5fd; } .cs-procedimental span{ color:#c4b5fd; } .cs-tareas span{ color:#6ee7b7; }
+.cs-protocolo span{ color:#fdba74; } .cs-evaluacion span{ color:#fda4af; }
+.ca{ align-self:center; color:#64748b; font-size:12pt; }
+.cov-rutas{ margin-top:14px; display:grid; grid-template-columns:1fr 1fr; gap:10px; font-size:8.4pt; color:#cbd5e1; }
+.cov-rutas .ruta{ margin-right:4px; }
+.cov-foot{ margin-top:auto; display:grid; grid-template-columns:1.25fr 1fr; gap:26px; border-top:1px solid rgba(255,255,255,.15); padding-top:12px; font-size:8pt; color:#cbd5e1; line-height:1.45; }
+.cov-src ul{ padding-left:14px; margin:4px 0 0; }
+.cov-src b{ color:#fff; }
+.cov-model2 b{ color:#5eead4; }
+.cov em{ color:#e2e8f0; }
+.caja-h .kick{ font:700 7.1pt Inter; text-transform:uppercase; letter-spacing:.08em; opacity:.75; padding-right:7px; border-right:1px solid currentColor; }
+table.src td.an{ font-size:7.6pt; line-height:1.4; width:46%; }
+.tarea-h{ break-inside:avoid; }
+p:has(+ .codewrap), p:has(+ figure), p:has(+ .term), p:has(+ table){ break-after:avoid; }
+.caja-h{ break-after:avoid; }
+.term .run-sep{ font:600 7.2pt Inter; color:#94a3b8; padding:3px 10px 0; border-top:1px dashed #334155; }
+.term .run-sep:first-of-type{ border-top:none; }
+.term .run-sep b{ color:#fde68a; font-family:"DejaVu Sans Mono"; font-weight:400; }
+.term.multi pre{ padding-top:2px; }
+.term .kin{ color:#fde047; background:rgba(253,224,71,.13); border-radius:2px; }
+.term-in b{ color:#fde047; font-family:Inter; font-weight:700; }
+.cols{ grid-template-columns:1.55fr 1fr; }
+.cols.eq{ grid-template-columns:1fr 1fr; }
+.cols table.src td.an{ width:40%; font-size:7.2pt; }
+.cols figure.fig{ margin-top:0; }
+.traza table td, .traza table th{ text-align:center; font-family:"DejaVu Sans Mono", monospace; font-size:8.2pt; }
+.traza table{ width:auto !important; margin-left:auto; margin-right:auto; }
+.caja-h{ break-inside:avoid; }
+.cb-frag{ background:#64748b; }
+
+/* plantillas en blanco (Tema 00) */
+.doc table.tb.plantilla td{ height:21px; border:1px solid #cbd5e1; }
+.doc table.tb.plantilla th{ border:1px solid #cbd5e1; font-size:7.8pt; }
+.doc table.tb.plantilla{ break-inside:avoid; }
+table.tb.guia5 td:first-child{ width:7%; white-space:nowrap; }
+.leyenda{ display:flex; flex-wrap:wrap; gap:6px; margin:6px 0 10px; }
+.leyenda div{ flex:1 1 30%; border-radius:6px; padding:6px 8px; font-size:8.4pt; border:1px solid #e2e8f0; border-left:5px solid var(--c); background:#fff; }
+.leyenda div b{ display:block; color:var(--c); font-size:8.8pt; }
+
+/* compactar la ficha y no dejar salidas de consola huérfanas */
+.ficha-wrap table.tb{ font-size:8.35pt !important; margin:4px 0 9px !important; }
+.ficha-wrap table.tb td, .ficha-wrap table.tb th{ padding:3px 6px !important; }
+.ficha-wrap h2{ margin:12px 0 5px; }
+.codewrap > figure.code + .term, .codewrap > figure.code + .filebox{ break-before:avoid; }
+
+/* protocolo verbal más compacto (guion + programa en una página) */
+.c-protocolo p{ margin:3px 0 5px; font-size:9.35pt; line-height:1.45; }
+.c-protocolo table.src{ line-height:1.3; }
+.c-protocolo table.src td.an{ line-height:1.3; }
+.c-protocolo .term pre{ line-height:1.3; }

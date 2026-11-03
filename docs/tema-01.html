@@ -1,0 +1,1029 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tema 01. Estructura y compilación · Programación básica en C++</title>
+<meta name="description" content="Tema 01: Estructura de un programa en C++ y cadena de compilación">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/fuentes.css">
+<link rel="stylesheet" href="assets/curso.css">
+<script>try{var t=localStorage.getItem('clt4bp-tema');if(t)document.documentElement.dataset.theme=t;}catch(e){}document.documentElement.classList.add('js');</script>
+</head>
+<body>
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+<header class="sitio">
+  <a class="marca" href="index.html"><svg class="logo" viewBox="0 0 40 40" aria-hidden="true"><path d="M2 15.5 H38" stroke="var(--ra)" stroke-width="4.5" stroke-linecap="round"/><path d="M2 24.5 H38" stroke="var(--rb)" stroke-width="4.5" stroke-linecap="round"/><rect x="13" y="7" width="14" height="26" rx="7" fill="var(--surface)" stroke="var(--ink)" stroke-width="3"/></svg><span><b>Programación básica en C++</b><small>Curso interactivo con el mapa de ruta CLT4BP</small></span></a>
+  <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-principal">Menú</button>
+  <nav id="nav-principal" class="nav" aria-label="Secciones del curso"><a href="index.html">Mapa del curso</a><a href="diagnostico.html">Diagnóstico</a><a href="progreso.html">Mi progreso</a><a href="glosario.html">Glosario</a><a href="guia.html">Guía docente</a>
+    <button class="tema-btn" type="button" title="Cambiar entre modo claro y oscuro"><span class="tema-ico" aria-hidden="true"></span><span class="tema-txt">Tema</span></button>
+  </nav>
+</header>
+<main id="contenido">
+<div class="tema" data-num="01" data-bloque="I">
+<section class="tema-hero">
+  <div class="hero-est" aria-hidden="true"><span>01</span></div>
+  <div class="hero-txt">
+    <p class="hero-bloque"><a href="index.html#bloque-I">Bloque I: Fundamentos</a></p>
+    <h1>Estructura de un programa en C++ y cadena de compilación</h1>
+    <p class="lema">Del texto que escribes al programa que se ejecuta: anatomía de un programa y el viaje que hace hasta convertirse en ejecutable.</p>
+    <dl class="hero-meta"><div><dt>Duración sugerida</dt><dd>4 h · 2 sesiones de 2 h</dd></div><div><dt>Antes de empezar</dt><dd>Ninguno (tema de entrada). Uso básico de la computadora y de un editor de texto.</dd></div></dl>
+    <div class="selector-ruta" data-bloque="I"></div>
+  </div>
+</section>
+<div class="tema-cuerpo">
+  <nav class="rail" aria-label="Pasos del tema"><p class="rail-t">Ruta del tema</p><ol><li><a href="#soporte" data-paso="soporte" class="est est-soporte"><span class="est-pt" aria-hidden="true"></span><span class="est-t"><small>Paso 1</small>Soporte</span></a></li><li><a href="#procedimental" data-paso="procedimental" class="est est-procedimental"><span class="est-pt" aria-hidden="true"></span><span class="est-t"><small>Paso 2</small>Procedimental</span></a></li><li><a href="#tareas" data-paso="tareas" class="est est-tareas"><span class="est-pt" aria-hidden="true"></span><span class="est-t"><small>Paso 3</small>Tareas</span></a></li><li><a href="#protocolo" data-paso="protocolo" class="est est-protocolo"><span class="est-pt" aria-hidden="true"></span><span class="est-t"><small>Paso 4</small>Protocolo verbal</span></a></li><li><a href="#evaluacion" data-paso="evaluacion" class="est est-evaluacion"><span class="est-pt" aria-hidden="true"></span><span class="est-t"><small>Paso 5</small>Evaluación</span></a></li></ol><ul class="rail-extra"><li><a href="#glosario" data-paso="glosario">Glosario y fuentes</a></li><li><a href="#docente" data-paso="docente">Ficha docente</a></li><li><a href="pdf/Tema01_Estructura_programa_y_compilacion.pdf" download>Descargar PDF</a></li></ul></nav>
+  <div class="paneles"><section class="panel p-soporte" id="soporte" data-paso="soporte" aria-labelledby="h-soporte">
+<header class="panel-h"><p class="panel-n">Paso 1 de 5</p><h2 id="h-soporte">Información de soporte</h2><p>Los conceptos y modelos mentales del tema, uno por uno. Léela antes de las tareas y vuelve a ella cuando la necesites.</p></header>
+<div class="contenido">
+<div class="caja c-analogia">
+<div class="caja-h"><span class="ico">💡</span><span class="kick">Analogía</span><span>Un programa es una receta… para un cocinero muy literal</span></div>
+<p>Imagina una receta de cocina. Primero dice <strong>qué ingredientes necesitas</strong>, después da <strong>pasos en orden</strong> y cada paso termina con un punto. El cocinero no improvisa: si la receta dice «agrega sal» pero nunca dijiste qué es la sal, se detiene.</p>
+<p>Un programa en C++ funciona igual: las <strong>bibliotecas</strong> son los ingredientes, las <strong>sentencias</strong> son los pasos (cada una termina en <code>;</code>) y la computadora es el cocinero literal. Hay un detalle: el cocinero no lee español ni C++, solo <strong>lenguaje máquina</strong> (ceros y unos). Por eso necesitamos un <strong>traductor</strong>: el compilador.</p>
+</div>
+<div class="caja c-pregunta">
+<div class="caja-h"><span class="ico">❓</span><span>Pregunta para pensar</span></div>
+<p>Antes de seguir, piensa 30 segundos: <strong>¿cómo crees que la computadora «entiende» lo que escribes en C++ si solo maneja ceros y unos?</strong> Anota tu idea; al final de la sección 1.5 la comparas con lo que realmente pasa.</p>
+<textarea class="resp" placeholder="Escribe aquí tu respuesta. Se guarda en este navegador." rows="3"></textarea>
+</div>
+<div class="caja c-relevancia">
+<div class="caja-h"><span class="ico">🎯</span><span class="kick">¿Por qué y para qué?</span><span>¿Por qué y para qué aprender esto?</span></div>
+<p>C++ está detrás de motores de videojuegos (Unreal Engine), navegadores (Chrome), sistemas operativos, software de bancos y hasta de las placas Arduino. Todos esos programas, por grandes que sean, tienen la misma estructura básica que vas a aprender hoy: <strong>un <code>main</code>, sentencias en orden y una cadena de compilación que los convierte en ejecutables</strong>. Dominar esto te permite leer cualquier programa en C++ y entender los mensajes de error, que es la habilidad que más tiempo ahorra a un programador. <span class="arcs">ARCS · Relevancia</span></p>
+</div>
+<h2>1.1 Las piezas, una por una</h2>
+<p>Un programa tiene varias piezas que interactúan. Para no saturar tu memoria de trabajo, las verás <strong>aisladas</strong>, una a la vez; al final las juntamos. <span class="ef ef-n">Elementos aislados</span></p>
+<div class="caja c-concepto">
+<div class="caja-h"><span class="cnum">1</span><span>El programa más pequeño: la función <code>main</code></span><span class="h-ef"><span class="ef ef-n">Elementos aislados</span> <span class="ef ef-n">Atención dividida</span></span></div>
+<p>Todo programa en C++ empieza a ejecutarse en una función llamada <strong><code>main</code></strong>. Es el <strong>punto de entrada</strong>.</p>
+<div class="codewrap" data-mode="check" data-src="aW50IG1haW4oKQp7CiAgICByZXR1cm4gMDsKfQ=="><figure class="code anot keep"><table class="src"><tr><td class="ln">1</td><td class="cl"><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="p">)</span></td><td class="an"><code>int</code>: main devuelve un número entero al sistema operativo</td></tr><tr><td class="ln">2</td><td class="cl"><span class="p">{</span></td><td class="an"><code>{</code> abre el <strong>bloque</strong> de instrucciones de main</td></tr><tr><td class="ln">3</td><td class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td><td class="an"><code>return 0;</code> termina el programa e informa «todo salió bien»</td></tr><tr><td class="ln">4</td><td class="cl"><span class="p">}</span></td><td class="an"><code>}</code> cierra el bloque</td></tr></table></figure></div>
+<p>Este programa compila y se ejecuta… pero no hace nada visible. Para «ver» algo necesitamos la siguiente pieza.</p>
+</div>
+<div class="caja c-concepto">
+<div class="caja-h"><span class="cnum">2</span><span>Mostrar texto: <code>#include &lt;iostream&gt;</code> y <code>cout</code></span><span class="h-ef"><span class="ef ef-n">Elementos aislados</span> <span class="ef ef-n">Atención dividida</span></span></div>
+<p>Para escribir en pantalla usamos <code>cout</code> (<em>character output</em>), que vive en la <strong>biblioteca</strong> <code>iostream</code>. La línea <code>#include</code> le pide al preprocesador que copie esa biblioteca dentro de tu programa.</p>
+<div class="codewrap" data-mode="run" data-src="I2luY2x1ZGUgPGlvc3RyZWFtPgppbnQgbWFpbigpCnsKICAgIHN0ZDo6Y291dCA8PCAiSG9sYSwgbXVuZG8iOwogICAgcmV0dXJuIDA7Cn0="><figure class="code anot keep"><table class="src"><tr><td class="ln">1</td><td class="cl"><span class="cp">#</span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span></td><td class="an">Directiva: trae la biblioteca de entrada/salida</td></tr><tr><td class="ln">2</td><td class="cl"><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="p">)</span></td><td class="an"></td></tr><tr><td class="ln">3</td><td class="cl"><span class="p">{</span></td><td class="an"></td></tr><tr><td class="ln">4</td><td class="cl"><span class="w">    </span><span class="n">std</span><span class="o">:</span><span class="o">:</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Hola, mundo</span><span class="s">&quot;</span><span class="p">;</span></td><td class="an"><code>std::cout</code> es la pantalla; <code>&lt;&lt;</code> «envía» el texto hacia ella</td></tr><tr><td class="ln">5</td><td class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td><td class="an"></td></tr><tr><td class="ln">6</td><td class="cl"><span class="p">}</span></td><td class="an"></td></tr></table></figure><div class="term"><div class="term-t"><span>▶ Salida en consola</span></div><pre>Hola, mundo</pre></div></div>
+<ul>
+<li>El texto entre comillas dobles (<code>"Hola, mundo"</code>) es un <strong>literal de cadena</strong>: se muestra tal cual.</li>
+<li>El operador <code>&lt;&lt;</code> se lee «enviar a». Puedes encadenarlo: <code>std::cout &lt;&lt; "Hola" &lt;&lt; " mundo";</code></li>
+<li><code>std::</code> indica que <code>cout</code> pertenece al <strong>espacio de nombres</strong> estándar <code>std</code>.</li>
+</ul>
+</div>
+<div class="caja c-concepto">
+<div class="caja-h"><span class="cnum">3</span><span>El atajo <code>using namespace std;</code></span><span class="h-ef"><span class="ef ef-n">Elementos aislados</span></span></div>
+<p>Escribir <code>std::</code> antes de cada <code>cout</code> es correcto, pero repetitivo. La línea <code>using namespace std;</code> le dice al compilador «busca los nombres también en <code>std</code>», y entonces basta con <code>cout</code>.</p>
+<div class="codewrap" data-mode="run" data-src="I2luY2x1ZGUgPGlvc3RyZWFtPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwppbnQgbWFpbigpCnsKICAgIGNvdXQgPDwgIkhvbGEsIG11bmRvIjsKICAgIHJldHVybiAwOwp9"><figure class="code anot keep"><table class="src"><tr><td class="ln">1</td><td class="cl"><span class="cp">#</span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span></td><td class="an"></td></tr><tr><td class="ln">2</td><td class="cl"><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span></td><td class="an">A partir de aquí <code>cout</code> equivale a <code>std::cout</code></td></tr><tr><td class="ln">3</td><td class="cl"><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="p">)</span></td><td class="an"></td></tr><tr><td class="ln">4</td><td class="cl"><span class="p">{</span></td><td class="an"></td></tr><tr><td class="ln">5</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Hola, mundo</span><span class="s">&quot;</span><span class="p">;</span></td><td class="an">Sin <code>std::</code> gracias a la línea 2</td></tr><tr><td class="ln">6</td><td class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td><td class="an"></td></tr><tr><td class="ln">7</td><td class="cl"><span class="p">}</span></td><td class="an"></td></tr></table></figure><div class="term"><div class="term-t"><span>▶ Salida en consola</span></div><pre>Hola, mundo</pre></div></div>
+<div class="caja c-nota">
+<div class="caja-h"><span class="ico">📝</span><span class="kick">Nota</span><span>¿Por qué el C++ Crash Course no usa este atajo?</span></div>
+<p>El libro de Lospinoso escribe siempre <code>std::</code> (y en el capítulo 1 usa <code>printf</code> de C). En programas grandes, <code>using namespace std;</code> puede provocar choques de nombres. En este curso lo usamos porque reduce la carga de lectura en programas pequeños; en la Ruta B verás ambas formas.</p>
+</div>
+</div>
+<div class="caja c-concepto">
+<div class="caja-h"><span class="cnum">4</span><span>Saltos de línea y tabuladores: <code>\n</code>, <code>endl</code>, <code>\t</code></span><span class="h-ef"><span class="ef ef-n">Elementos aislados</span> <span class="ef ef-n">Atención dividida</span></span></div>
+<p><code>cout</code> no cambia de renglón por sí solo. Para controlar el formato se usan <strong>secuencias de escape</strong> (una barra invertida <code>\</code> seguida de una letra) o el manipulador <code>endl</code>.</p>
+<div class="codewrap" data-mode="run" data-src="I2luY2x1ZGUgPGlvc3RyZWFtPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwppbnQgbWFpbigpCnsKICAgIGNvdXQgPDwgIkxpbmVhIDEiOwogICAgY291dCA8PCAiIChzaWd1ZSlcbiI7CiAgICBjb3V0IDw8ICJMaW5lYSAyIiA8PCBlbmRsOwogICAgY291dCA8PCAiTm9tYnJlOlx0QW5hXG4iOwogICAgY291dCA8PCAiRWRhZDpcdDE3XG4iOwogICAgcmV0dXJuIDA7Cn0="><figure class="code anot keep"><table class="src"><tr><td class="ln">1</td><td class="cl"><span class="cp">#</span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span></td><td class="an"></td></tr><tr><td class="ln">2</td><td class="cl"><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span></td><td class="an"></td></tr><tr><td class="ln">3</td><td class="cl"><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="p">)</span></td><td class="an"></td></tr><tr><td class="ln">4</td><td class="cl"><span class="p">{</span></td><td class="an"></td></tr><tr><td class="ln">5</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Linea 1</span><span class="s">&quot;</span><span class="p">;</span></td><td class="an">Sin salto: lo siguiente queda pegado</td></tr><tr><td class="ln">6</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s"> (sigue)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td><td class="an"><code>\n</code> = salto de línea dentro del texto</td></tr><tr><td class="ln">7</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Linea 2</span><span class="s">&quot;</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span></td><td class="an"><code>endl</code> = salto de línea (y vacía el búfer)</td></tr><tr><td class="ln">8</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Nombre:</span><span class="se">\t</span><span class="s">Ana</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td><td class="an"><code>\t</code> = tabulador: alinea en columnas</td></tr><tr><td class="ln">9</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Edad:</span><span class="se">\t</span><span class="s">17</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td><td class="an"></td></tr><tr><td class="ln">10</td><td class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td><td class="an"></td></tr><tr><td class="ln">11</td><td class="cl"><span class="p">}</span></td><td class="an"></td></tr></table></figure><div class="term"><div class="term-t"><span>▶ Salida en consola</span></div><pre>Linea 1 (sigue)
+Linea 2
+Nombre:	Ana
+Edad:	17</pre></div></div>
+</div>
+<div class="caja c-concepto">
+<div class="caja-h"><span class="cnum">5</span><span>Comentarios: notas para humanos</span><span class="h-ef"><span class="ef ef-n">Elementos aislados</span></span></div>
+<p>El compilador <strong>ignora</strong> los comentarios; sirven para explicar el código a otras personas (¡y a ti en el futuro!).</p>
+<div class="codewrap" data-mode="run" data-src="I2luY2x1ZGUgPGlvc3RyZWFtPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwovKiBDb21lbnRhcmlvIGRlIGJsb3F1ZToKICAgcHVlZGUgb2N1cGFyIHZhcmlhcyBsaW5lYXMuCiAgIEF1dG9yOiBlcXVpcG8gMywgUHJvZ3JhbWFjaW9uIGJhc2ljYSAqLwppbnQgbWFpbigpCnsKICAgIGNvdXQgPDwgIkxvcyBjb21lbnRhcmlvcyBubyBzZSBtdWVzdHJhblxuIjsgIC8vIGNvbWVudGFyaW8gZGUgdW5hIGxpbmVhCiAgICByZXR1cm4gMDsKfQ=="><figure class="code keep"><table class="src"><tr><td class="ln">1</td><td class="cl"><span class="cp">#</span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span></td></tr><tr><td class="ln">2</td><td class="cl"><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span></td></tr><tr><td class="ln">3</td><td class="cl"><span class="cm">/* Comentario de bloque:</span></td></tr><tr><td class="ln">4</td><td class="cl"><span class="cm">   puede ocupar varias lineas.</span></td></tr><tr><td class="ln">5</td><td class="cl"><span class="cm">   Autor: equipo 3, Programacion basica */</span></td></tr><tr><td class="ln">6</td><td class="cl"><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="p">)</span></td></tr><tr><td class="ln">7</td><td class="cl"><span class="p">{</span></td></tr><tr><td class="ln">8</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Los comentarios no se muestran</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w">  </span><span class="c1">// comentario de una linea</span></td></tr><tr><td class="ln">9</td><td class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td></tr><tr><td class="ln">10</td><td class="cl"><span class="p">}</span></td></tr></table></figure><div class="term"><div class="term-t"><span>▶ Salida en consola</span></div><pre>Los comentarios no se muestran</pre></div></div>
+</div>
+<div class="caja c-concepto">
+<div class="caja-h"><span class="cnum">6</span><span>Reglas de escritura (delimitadores)</span><span class="h-ef"><span class="ef ef-n">Elementos aislados</span></span></div>
+<div class="tabla-scroll"><table>
+<thead>
+<tr>
+<th>Símbolo</th>
+<th>Para qué sirve</th>
+<th>Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>;</code></td>
+<td>Termina una sentencia</td>
+<td><code>return 0;</code></td>
+</tr>
+<tr>
+<td><code>{ }</code></td>
+<td>Abren y cierran un bloque</td>
+<td>cuerpo de <code>main</code></td>
+</tr>
+<tr>
+<td><code>( )</code></td>
+<td>Encierran parámetros de una función</td>
+<td><code>main()</code></td>
+</tr>
+<tr>
+<td><code>" "</code></td>
+<td>Delimitan un literal de cadena</td>
+<td><code>"Hola"</code></td>
+</tr>
+<tr>
+<td><code>&lt; &gt;</code></td>
+<td>Encierran el nombre de una biblioteca estándar</td>
+<td><code>#include &lt;iostream&gt;</code></td>
+</tr>
+<tr>
+<td><code>//</code>, <code>/* */</code></td>
+<td>Comentarios</td>
+<td><code>// nota</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>Además: <strong>C++ distingue mayúsculas de minúsculas</strong> (<code>Main</code> ≠ <code>main</code>, <code>Cout</code> ≠ <code>cout</code>) y los espacios y saltos de línea extra no importan al compilador, pero sí a quien lee tu código: <strong>indenta</strong> el contenido de cada bloque.</p>
+</div>
+<h2>1.2 Todas las piezas juntas: anatomía de un programa</h2>
+<p>Ahora que conoces cada pieza por separado, mira cómo interactúan en un programa completo. La explicación de cada línea está <strong>integrada a su derecha</strong> para que no tengas que ir y venir entre texto y código. <span class="ef ef-n">Atención dividida</span></p>
+<div class="codewrap" data-mode="run" data-src="Ly8gUHJvZ3JhbWE6IHNhbHVkbyBkZSBiaWVudmVuaWRhCi8vIEN1cnNvOiBQcm9ncmFtYWNpb24gYmFzaWNhIGVuIEMrKwojaW5jbHVkZSA8aW9zdHJlYW0+CnVzaW5nIG5hbWVzcGFjZSBzdGQ7CgppbnQgbWFpbigpCnsKICAgIGNvdXQgPDwgIkJpZW52ZW5pZG8gYSBDKytcbiI7CiAgICBjb3V0IDw8ICJIb3kgYXByZW5kZXMgbGEgZXN0cnVjdHVyYVxuIjsKICAgIHJldHVybiAwOwp9" data-title="anatomia.cpp"><figure class="code anot keep"><div class="code-t"><span>anatomia.cpp</span><span><span class="cbadge">C++</span></span></div><table class="src"><tr><td class="ln">1</td><td class="cl"><span class="c1">// Programa: saludo de bienvenida</span></td><td class="an"><strong>Comentario</strong>: describe el programa</td></tr><tr><td class="ln">2</td><td class="cl"><span class="c1">// Curso: Programacion basica en C++</span></td><td class="an">El compilador lo ignora</td></tr><tr><td class="ln">3</td><td class="cl"><span class="cp">#</span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span></td><td class="an"><strong>Directiva</strong> del preprocesador: incluye la biblioteca</td></tr><tr><td class="ln">4</td><td class="cl"><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span></td><td class="an">Permite escribir <code>cout</code> en lugar de <code>std::cout</code></td></tr><tr><td class="ln">5</td><td class="cl">&#8203;</td><td class="an">Línea en blanco: solo legibilidad</td></tr><tr><td class="ln">6</td><td class="cl"><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="p">)</span></td><td class="an"><strong>Función principal</strong>: aquí inicia la ejecución</td></tr><tr><td class="ln">7</td><td class="cl"><span class="p">{</span></td><td class="an">Inicio del bloque de <code>main</code></td></tr><tr><td class="ln">8</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Bienvenido a C++</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td><td class="an"><strong>Sentencia</strong> de salida; termina en <code>;</code></td></tr><tr><td class="ln">9</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Hoy aprendes la estructura</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td><td class="an">Las sentencias se ejecutan en orden, de arriba abajo</td></tr><tr><td class="ln">10</td><td class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td><td class="an">Devuelve 0 al sistema: «terminó sin problemas»</td></tr><tr><td class="ln">11</td><td class="cl"><span class="p">}</span></td><td class="an">Fin del bloque (y del programa)</td></tr></table></figure><div class="term"><div class="term-t"><span>▶ Salida en consola</span></div><pre>Bienvenido a C++
+Hoy aprendes la estructura</pre></div></div>
+<h2>1.3 Del texto al ejecutable: la cadena de compilación</h2>
+<p>Tu archivo <code>.cpp</code> es solo texto. Para que la computadora lo ejecute, pasa por una <strong>cadena de herramientas</strong> (<em>tool chain</em>). Sigue el diagrama de izquierda a derecha: arriba están las fases y abajo lo que cada una produce.</p>
+<figure class="fig" style="max-width:92%"><svg class="dg" width="1142" height="185"
+ viewBox="0.00 0.00 856.61 138.60" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(10.8 127.8)">
+<title>G</title>
+
+<g id="node1" class="node">
+<title>src</title>
+<polygon fill="#f8fafc" stroke="#475569" stroke-width="1.3" points="105,-101 0,-101 0,-65 111,-65 111,-95 105,-101"/>
+<polyline fill="none" stroke="#475569" stroke-width="1.3" points="105,-101 105,-95 "/>
+<polyline fill="none" stroke="#475569" stroke-width="1.3" points="111,-95 105,-95 "/>
+<text text-anchor="middle" x="55.5" y="-87" font-family="Inter" font-size="12.50">bienvenida.cpp</text>
+<text text-anchor="middle" x="55.5" y="-73" font-family="Inter" font-size="12.50">código fuente</text>
+</g>
+
+<g id="node2" class="node">
+<title>pre</title>
+<polygon fill="#eff6ff" stroke="#2563eb" stroke-width="1.3" points="272,-108 143,-108 143,-58 272,-58 272,-108"/>
+<text text-anchor="middle" x="207.5" y="-94" font-family="Inter" font-size="12.50">1. Preprocesador</text>
+<text text-anchor="middle" x="207.5" y="-80" font-family="Inter" font-size="12.50">copia &lt;iostream&gt;,</text>
+<text text-anchor="middle" x="207.5" y="-66" font-family="Inter" font-size="12.50">quita comentarios</text>
+</g>
+
+<g id="edge1" class="edge">
+<title>src&#45;&gt;pre</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M111.08,-83C118.97,-83 127.18,-83 135.34,-83"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="135.8,-85.45 142.8,-83 135.8,-80.55 135.8,-85.45"/>
+</g>
+
+<g id="node3" class="node">
+<title>exp</title>
+<polygon fill="#f8fafc" stroke="#475569" stroke-width="1.3" points="242,-36 167,-36 167,0 248,0 248,-30 242,-36"/>
+<polyline fill="none" stroke="#475569" stroke-width="1.3" points="242,-36 242,-30 "/>
+<polyline fill="none" stroke="#475569" stroke-width="1.3" points="248,-30 242,-30 "/>
+<text text-anchor="middle" x="207.5" y="-22" font-family="Inter" font-size="12.50">código</text>
+<text text-anchor="middle" x="207.5" y="-8" font-family="Inter" font-size="12.50">expandido</text>
+</g>
+
+<g id="edge5" class="edge">
+<title>pre&#45;&gt;exp</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" stroke-dasharray="5,2" d="M207.5,-57.68C207.5,-50.46 207.5,-43.24 207.5,-36.03"/>
+</g>
+
+<g id="node4" class="node">
+<title>comp</title>
+<polygon fill="#eff6ff" stroke="#2563eb" stroke-width="1.3" points="434,-108 304,-108 304,-58 434,-58 434,-108"/>
+<text text-anchor="middle" x="369" y="-94" font-family="Inter" font-size="12.50">2. Compilador</text>
+<text text-anchor="middle" x="369" y="-80" font-family="Inter" font-size="12.50">revisa sintaxis,</text>
+<text text-anchor="middle" x="369" y="-66" font-family="Inter" font-size="12.50">traduce a máquina</text>
+</g>
+
+<g id="edge2" class="edge">
+<title>pre&#45;&gt;comp</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M272.46,-83C280.35,-83 288.46,-83 296.46,-83"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="296.77,-85.45 303.77,-83 296.77,-80.55 296.77,-85.45"/>
+</g>
+
+<g id="node5" class="node">
+<title>obj</title>
+<polygon fill="#f8fafc" stroke="#475569" stroke-width="1.3" points="414,-36 318,-36 318,0 420,0 420,-30 414,-36"/>
+<polyline fill="none" stroke="#475569" stroke-width="1.3" points="414,-36 414,-30 "/>
+<polyline fill="none" stroke="#475569" stroke-width="1.3" points="420,-30 414,-30 "/>
+<text text-anchor="middle" x="369" y="-22" font-family="Inter" font-size="12.50">bienvenida.o</text>
+<text text-anchor="middle" x="369" y="-8" font-family="Inter" font-size="12.50">código objeto</text>
+</g>
+
+<g id="edge6" class="edge">
+<title>comp&#45;&gt;obj</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" stroke-dasharray="5,2" d="M369,-57.68C369,-50.46 369,-43.24 369,-36.03"/>
+</g>
+
+<g id="node6" class="node">
+<title>link</title>
+<polygon fill="#eff6ff" stroke="#2563eb" stroke-width="1.3" points="577,-108 466,-108 466,-58 577,-58 577,-108"/>
+<text text-anchor="middle" x="521.5" y="-94" font-family="Inter" font-size="12.50">3. Enlazador</text>
+<text text-anchor="middle" x="521.5" y="-80" font-family="Inter" font-size="12.50">une tu código</text>
+<text text-anchor="middle" x="521.5" y="-66" font-family="Inter" font-size="12.50">con bibliotecas</text>
+</g>
+
+<g id="edge3" class="edge">
+<title>comp&#45;&gt;link</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M434.26,-83C442.34,-83 450.58,-83 458.62,-83"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="458.93,-85.45 465.93,-83 458.93,-80.55 458.93,-85.45"/>
+</g>
+
+<g id="node7" class="node">
+<title>exe</title>
+<path fill="#1e293b" stroke="#1e293b" stroke-width="1.3" d="M564.5,-36C564.5,-36 478.5,-36 478.5,-36 472.5,-36 466.5,-30 466.5,-24 466.5,-24 466.5,-12 466.5,-12 466.5,-6 472.5,0 478.5,0 478.5,0 564.5,0 564.5,0 570.5,0 576.5,-6 576.5,-12 576.5,-12 576.5,-24 576.5,-24 576.5,-30 570.5,-36 564.5,-36"/>
+<text text-anchor="middle" x="521.5" y="-22" font-family="Inter" font-size="12.50" fill="white">bienvenida.exe</text>
+<text text-anchor="middle" x="521.5" y="-8" font-family="Inter" font-size="12.50" fill="white">ejecutable</text>
+</g>
+
+<g id="edge7" class="edge">
+<title>link&#45;&gt;exe</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" stroke-dasharray="5,2" d="M521.5,-57.68C521.5,-50.46 521.5,-43.24 521.5,-36.03"/>
+</g>
+
+<g id="node8" class="node">
+<title>run</title>
+<polygon fill="#ecfdf5" stroke="#059669" stroke-width="1.3" points="835.02,-117 655.24,-117 608.99,-49 788.77,-49 835.02,-117"/>
+<text text-anchor="middle" x="722.01" y="-87" font-family="Inter" font-size="12.50">4. Ejecución</text>
+<text text-anchor="middle" x="722.01" y="-73" font-family="Inter" font-size="12.50">el SO corre main</text>
+</g>
+
+<g id="edge4" class="edge">
+<title>link&#45;&gt;run</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M577.01,-83C591.87,-83 608.43,-83 624.87,-83"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="624.9,-85.45 631.9,-83 624.9,-80.55 624.9,-85.45"/>
+</g>
+</g>
+</svg>
+<figcaption>Figura 1. Cadena de compilación: arriba las fases, abajo lo que cada una produce.</figcaption></figure>
+<div class="tabla-scroll"><table>
+<thead>
+<tr>
+<th>Fase</th>
+<th>Qué recibe</th>
+<th>Qué hace</th>
+<th>Qué produce</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Edición</td>
+<td>Tus ideas</td>
+<td>Escribes el programa en un editor o IDE</td>
+<td><code>nombre.cpp</code> (código fuente)</td>
+</tr>
+<tr>
+<td>Preprocesamiento</td>
+<td><code>nombre.cpp</code></td>
+<td>Ejecuta las directivas <code>#</code> (copia <code>&lt;iostream&gt;</code>), elimina comentarios</td>
+<td>Código fuente expandido (temporal)</td>
+</tr>
+<tr>
+<td>Compilación</td>
+<td>Código expandido</td>
+<td>Verifica reglas del lenguaje y traduce a lenguaje máquina</td>
+<td><code>nombre.o</code> / <code>nombre.obj</code> (código objeto)</td>
+</tr>
+<tr>
+<td>Enlace</td>
+<td>Código objeto + bibliotecas</td>
+<td>Une todas las piezas y verifica que cada función usada exista</td>
+<td><code>nombre.exe</code> (ejecutable)</td>
+</tr>
+<tr>
+<td>Ejecución</td>
+<td>Ejecutable</td>
+<td>El sistema operativo lo carga en memoria y ejecuta <code>main</code></td>
+<td>La salida en pantalla</td>
+</tr>
+</tbody>
+</table></div>
+<p>Con el compilador <strong>g++</strong> (MinGW en Windows, Linux) todo se hace con un comando; en Visual Studio, con el botón «Compilar y ejecutar»:</p>
+<div class="term"><div class="term-t"><span>▶ Terminal: compilar y ejecutar con g++</span></div><pre>$ g++ bienvenida.cpp -o bienvenida      # preprocesa, compila y enlaza
+$ ./bienvenida                          # en Windows: bienvenida.exe
+Bienvenido a C++
+Hoy aprendes la estructura</pre></div>
+<h2>1.4 ¿En qué fase aparece cada error?</h2>
+<p>Los errores se clasifican según <strong>la fase</strong> en la que se detectan. Mira cómo se «enganchan» a la cadena:</p>
+<figure class="fig" style="max-width:78%"><svg class="dg" width="861" height="248"
+ viewBox="0.00 0.00 646.10 185.60" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(10.8 174.8)">
+<title>G</title>
+
+<g id="node1" class="node">
+<title>c</title>
+<polygon fill="#eff6ff" stroke="#2563eb" stroke-width="1.3" points="120.5,-164 26.5,-164 26.5,-138 120.5,-138 120.5,-164"/>
+<text text-anchor="middle" x="73.5" y="-148" font-family="Inter" font-size="12.50">Compilación</text>
+</g>
+
+<g id="node2" class="node">
+<title>l</title>
+<polygon fill="#eff6ff" stroke="#2563eb" stroke-width="1.3" points="103.5,-118 43.5,-118 43.5,-92 103.5,-92 103.5,-118"/>
+<text text-anchor="middle" x="73.5" y="-102" font-family="Inter" font-size="12.50">Enlace</text>
+</g>
+
+<g id="edge1" class="edge">
+<title>c&#45;&gt;l</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M73.5,-137.98C73.5,-134 73.5,-129.47 73.5,-125.1"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="75.95,-125.01 73.5,-118.01 71.05,-125.01 75.95,-125.01"/>
+</g>
+
+<g id="node5" class="node">
+<title>ec</title>
+<text text-anchor="middle" x="390.5" y="-147.9" font-family="Inter" font-size="12.00" fill="#475569">Error de COMPILACIÓN: falta ; &#160;· &#160;nombre no declarado &#160;· &#160;Cout en vez de cout</text>
+</g>
+
+<g id="edge4" class="edge">
+<title>c&#45;&gt;ec</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" stroke-dasharray="1,5" d="M120.55,-151C132.51,-151 144.46,-151 156.41,-151"/>
+</g>
+
+<g id="node3" class="node">
+<title>e</title>
+<polygon fill="#eff6ff" stroke="#2563eb" stroke-width="1.3" points="113,-72 34,-72 34,-46 113,-46 113,-72"/>
+<text text-anchor="middle" x="73.5" y="-56" font-family="Inter" font-size="12.50">Ejecución</text>
+</g>
+
+<g id="edge2" class="edge">
+<title>l&#45;&gt;e</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M73.5,-91.98C73.5,-88 73.5,-83.47 73.5,-79.1"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="75.95,-79.01 73.5,-72.01 71.05,-79.01 75.95,-79.01"/>
+</g>
+
+<g id="node6" class="node">
+<title>el</title>
+<text text-anchor="middle" x="358.5" y="-101.9" font-family="Inter" font-size="12.00" fill="#475569">Error de ENLACE: función usada pero no definida &#160;· &#160;Main en vez de main</text>
+</g>
+
+<g id="edge5" class="edge">
+<title>l&#45;&gt;el</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" stroke-dasharray="1,5" d="M103.56,-105C115.51,-105 127.46,-105 139.41,-105"/>
+</g>
+
+<g id="node4" class="node">
+<title>r</title>
+<polygon fill="#fde68a" stroke="#d97706" stroke-width="1.3" points="147,-26 0,-26 0,0 147,0 147,-26"/>
+<text text-anchor="middle" x="73.5" y="-10" font-family="Inter" font-size="12.50">Resultado en pantalla</text>
+</g>
+
+<g id="edge3" class="edge">
+<title>e&#45;&gt;r</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M73.5,-45.98C73.5,-42 73.5,-37.47 73.5,-33.1"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="75.95,-33.01 73.5,-26.01 71.05,-33.01 75.95,-33.01"/>
+</g>
+
+<g id="node7" class="node">
+<title>ee</title>
+<text text-anchor="middle" x="375.5" y="-55.9" font-family="Inter" font-size="12.00" fill="#475569">Error de EJECUCIÓN: el programa se detiene (división entre cero, memoria)</text>
+</g>
+
+<g id="edge6" class="edge">
+<title>e&#45;&gt;ee</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" stroke-dasharray="1,5" d="M113.02,-59C124.98,-59 136.94,-59 148.91,-59"/>
+</g>
+
+<g id="node8" class="node">
+<title>er</title>
+<text text-anchor="middle" x="379.5" y="-9.9" font-family="Inter" font-size="12.00" fill="#475569">Error de LÓGICA: compila y corre, pero el resultado es incorrecto</text>
+</g>
+
+<g id="edge7" class="edge">
+<title>r&#45;&gt;er</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" stroke-dasharray="1,5" d="M147.01,-13C158.97,-13 170.93,-13 182.88,-13"/>
+</g>
+</g>
+</svg>
+<figcaption>Figura 2. Tipos de error según la fase en que se detectan.</figcaption></figure>
+<div class="caja c-def">
+<div class="caja-h"><span class="ico">📌</span><span class="kick">Definición</span><span>Regla de oro de la depuración</span></div>
+<p>El compilador reporta los errores como <strong><code>archivo:línea:columna: error: mensaje</code></strong>. Corrige <strong>siempre el primer error</strong> y vuelve a compilar: muchos errores posteriores son consecuencia del primero.</p>
+</div>
+<h2>1.5 Ejemplo resuelto: tarjeta de bienvenida</h2>
+<div class="caja c-ejemplo">
+<div class="caja-h"><span class="ico">✎</span><span class="kick">Ejemplo resuelto</span><span>Ejemplo resuelto · Tarjeta de bienvenida al curso</span><span class="h-ef"><span class="ef ef-n">Ejemplo resuelto</span> <span class="ef ef-n">Atención dividida</span></span></div>
+<p><strong>Problema.</strong> Escribir un programa que muestre una tarjeta de bienvenida con un borde, el nombre del curso y dos datos alineados con tabuladores.</p>
+<p><strong>A. Algoritmo</strong> (qué hacer, en lenguaje natural)</p>
+<ol>
+<li>Mostrar el borde superior.</li>
+<li>Mostrar el título del curso.</li>
+<li>Mostrar los datos «Lenguaje» y «Sesiones» alineados.</li>
+<li>Mostrar el borde inferior.</li>
+</ol>
+<p><strong>B. Pseudocódigo</strong> (en PSeInt)</p>
+<figure class="code pseudo keep"><div class="code-t"><span></span><span><span class="cbadge">Pseudocódigo (PSeInt)</span></span></div><table class="src"><tr><td class="ln">1</td><td class="cl"><span class="k">Algoritmo</span> TarjetaBienvenida</td></tr><tr><td class="ln">2</td><td class="cl">    <span class="k">Escribir</span> <span class="s">&quot;+-------------------------------+&quot;</span></td></tr><tr><td class="ln">3</td><td class="cl">    <span class="k">Escribir</span> <span class="s">&quot;|  PROGRAMACION BASICA EN C++   |&quot;</span></td></tr><tr><td class="ln">4</td><td class="cl">    <span class="k">Escribir</span> <span class="s">&quot;|  Lenguaje: C++   Sesiones: 2  |&quot;</span></td></tr><tr><td class="ln">5</td><td class="cl">    <span class="k">Escribir</span> <span class="s">&quot;+-------------------------------+&quot;</span></td></tr><tr><td class="ln">6</td><td class="cl"><span class="k">FinAlgoritmo</span></td></tr></table></figure>
+<p><strong>C. Código en C++</strong> (cada paso del algoritmo es una o más sentencias)</p>
+<div class="codewrap" data-mode="run" data-src="Ly8gVGFyamV0YSBkZSBiaWVudmVuaWRhCiNpbmNsdWRlIDxpb3N0cmVhbT4KdXNpbmcgbmFtZXNwYWNlIHN0ZDsKaW50IG1haW4oKQp7CiAgICBjb3V0IDw8ICIrLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLStcbiI7CiAgICBjb3V0IDw8ICJ8ICBQUk9HUkFNQUNJT04gQkFTSUNBIEVOIEMrKyAgIHxcbiI7CiAgICBjb3V0IDw8ICJ8ICBMZW5ndWFqZTpcdEMrK1x0XHR8XG4iOwogICAgY291dCA8PCAifCAgU2VzaW9uZXM6XHQyXHRcdHxcbiI7CiAgICBjb3V0IDw8ICIrLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLStcbiI7CiAgICByZXR1cm4gMDsKfQ==" data-title="tarjeta.cpp"><figure class="code anot keep"><div class="code-t"><span>tarjeta.cpp</span><span><span class="cbadge">C++</span></span></div><table class="src"><tr><td class="ln">1</td><td class="cl"><span class="c1">// Tarjeta de bienvenida</span></td><td class="an">Comentario: propósito del programa</td></tr><tr><td class="ln">2</td><td class="cl"><span class="cp">#</span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span></td><td class="an">Paso 0: «ingredientes» (biblioteca)</td></tr><tr><td class="ln">3</td><td class="cl"><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span></td><td class="an"></td></tr><tr><td class="ln">4</td><td class="cl"><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="p">)</span></td><td class="an"></td></tr><tr><td class="ln">5</td><td class="cl"><span class="p">{</span></td><td class="an"></td></tr><tr><td class="ln">6</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">+-------------------------------+</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td><td class="an">Paso 1: borde superior</td></tr><tr><td class="ln">7</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">|  PROGRAMACION BASICA EN C++   |</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td><td class="an">Paso 2: título</td></tr><tr><td class="ln">8</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">|  Lenguaje:</span><span class="se">\t</span><span class="s">C++</span><span class="se">\t</span><span class="se">\t</span><span class="s">|</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td><td class="an">Paso 3: <code>\t</code> alinea los datos en columnas</td></tr><tr><td class="ln">9</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">|  Sesiones:</span><span class="se">\t</span><span class="s">2</span><span class="se">\t</span><span class="se">\t</span><span class="s">|</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td><td class="an"></td></tr><tr><td class="ln">10</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">+-------------------------------+</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td><td class="an">Paso 4: borde inferior</td></tr><tr><td class="ln">11</td><td class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td><td class="an">Fin exitoso</td></tr><tr><td class="ln">12</td><td class="cl"><span class="p">}</span></td><td class="an"></td></tr></table></figure><div class="term"><div class="term-t"><span>▶ Salida en consola</span></div><pre>+-------------------------------+
+|  PROGRAMACION BASICA EN C++   |
+|  Lenguaje:	C++		|
+|  Sesiones:	2		|
++-------------------------------+</pre></div></div>
+<p><strong>D. Verificación.</strong> La salida coincide con lo planeado en el algoritmo: cuatro partes, en el mismo orden en que se escribieron las sentencias (estructura <strong>secuencial</strong>).</p>
+</div>
+<div class="caja c-pregunta">
+<div class="caja-h"><span class="ico">❓</span><span class="kick">Pregunta para pensar</span><span>Vuelve a tu respuesta inicial</span></div>
+<p>¿Tu idea de cómo la computadora «entiende» C++ se parece a la cadena preprocesador → compilador → enlazador? ¿Qué cambiarías? <span class="arcs">ARCS · Confianza</span></p>
+</div>
+<div class="caja c-resumen">
+<div class="caja-h"><span class="ico">🗺</span><span class="kick">Resumen visual</span><span>Mapa del tema</span></div>
+<figure class="fig"><svg class="dg" width="1089" height="357"
+ viewBox="0.00 0.00 817.10 267.60" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(10.8 256.8)">
+<title>G</title>
+
+<g id="node1" class="node">
+<title>p</title>
+<path fill="#1e293b" stroke="#1e293b" stroke-width="1.3" d="M366.33,-246C366.33,-246 276.67,-246 276.67,-246 272.33,-246 268,-241.67 268,-237.33 268,-237.33 268,-228.67 268,-228.67 268,-224.33 272.33,-220 276.67,-220 276.67,-220 366.33,-220 366.33,-220 370.67,-220 375,-224.33 375,-228.67 375,-228.67 375,-237.33 375,-237.33 375,-241.67 370.67,-246 366.33,-246"/>
+<text text-anchor="middle" x="321.5" y="-230" font-family="Inter" font-size="12.50" fill="white">Programa C++</text>
+</g>
+
+<g id="node2" class="node">
+<title>f</title>
+<polygon fill="#eff6ff" stroke="#2563eb" stroke-width="1.3" points="369.5,-198 273.5,-198 273.5,-172 369.5,-172 369.5,-198"/>
+<text text-anchor="middle" x="321.5" y="-182" font-family="Inter" font-size="12.50">Archivo .cpp</text>
+</g>
+
+<g id="edge1" class="edge">
+<title>p&#45;&gt;f</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M321.5,-219.91C321.5,-215.41 321.5,-210.17 321.5,-205.18"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="323.95,-205.16 321.5,-198.16 319.05,-205.16 323.95,-205.16"/>
+</g>
+
+<g id="node3" class="node">
+<title>d</title>
+<polygon fill="#eff6ff" stroke="#2563eb" stroke-width="1.3" points="135,-141 0,-141 0,-115 135,-115 135,-141"/>
+<text text-anchor="middle" x="67.5" y="-125" font-family="Inter" font-size="12.50">Directivas #include</text>
+</g>
+
+<g id="edge2" class="edge">
+<title>f&#45;&gt;d</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M273.21,-175.75C237.51,-169.41 187.78,-160.04 144.5,-150 135.27,-147.86 125.47,-145.36 116.07,-142.85"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="116.71,-140.49 109.31,-141.03 115.43,-145.22 116.71,-140.49"/>
+</g>
+
+<g id="node4" class="node">
+<title>m</title>
+<polygon fill="#eff6ff" stroke="#2563eb" stroke-width="1.3" points="319.5,-141 153.5,-141 153.5,-115 319.5,-115 319.5,-141"/>
+<text text-anchor="middle" x="236.5" y="-125" font-family="Inter" font-size="12.50">main(): punto de entrada</text>
+</g>
+
+<g id="edge3" class="edge">
+<title>f&#45;&gt;m</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M302.64,-171.79C290.53,-163.96 274.67,-153.7 261.52,-145.19"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="262.52,-142.92 255.31,-141.17 259.86,-147.03 262.52,-142.92"/>
+</g>
+
+<g id="node7" class="node">
+<title>cm</title>
+<polygon fill="#eff6ff" stroke="#2563eb" stroke-width="1.3" points="475.5,-141 337.5,-141 337.5,-115 475.5,-115 475.5,-141"/>
+<text text-anchor="middle" x="406.5" y="-125" font-family="Inter" font-size="12.50">Comentarios // /* */</text>
+</g>
+
+<g id="edge4" class="edge">
+<title>f&#45;&gt;cm</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M340.36,-171.79C352.47,-163.96 368.33,-153.7 381.48,-145.19"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="383.14,-147.03 387.69,-141.17 380.48,-142.92 383.14,-147.03"/>
+</g>
+
+<g id="node8" class="node">
+<title>cad</title>
+<polygon fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.3" points="791.5,-146 497.5,-146 497.5,-110 791.5,-110 791.5,-146"/>
+<polygon fill="none" stroke="#7c3aed" stroke-width="1.3" points="795.5,-150 493.5,-150 493.5,-106 795.5,-106 795.5,-150"/>
+<text text-anchor="middle" x="644.5" y="-132" font-family="Inter" font-size="12.50">Cadena de compilación:</text>
+<text text-anchor="middle" x="644.5" y="-118" font-family="Inter" font-size="12.50">preprocesar → compilar → enlazar → ejecutar</text>
+</g>
+
+<g id="edge7" class="edge">
+<title>f&#45;&gt;cad</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M369.51,-175.83C407.69,-169.32 462.99,-159.91 514,-151.22"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="514.68,-153.59 521.17,-150 513.86,-148.76 514.68,-153.59"/>
+</g>
+
+<g id="node5" class="node">
+<title>s</title>
+<polygon fill="#eff6ff" stroke="#2563eb" stroke-width="1.3" points="312,-79 161,-79 161,-53 312,-53 312,-79"/>
+<text text-anchor="middle" x="236.5" y="-63" font-family="Inter" font-size="12.50">Sentencias ; en orden</text>
+</g>
+
+<g id="edge5" class="edge">
+<title>m&#45;&gt;s</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M236.5,-114.86C236.5,-106.64 236.5,-95.62 236.5,-86.23"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="238.95,-86.12 236.5,-79.12 234.05,-86.12 238.95,-86.12"/>
+</g>
+
+<g id="node6" class="node">
+<title>o</title>
+<polygon fill="#eff6ff" stroke="#2563eb" stroke-width="1.3" points="326.5,-26 146.5,-26 146.5,0 326.5,0 326.5,-26"/>
+<text text-anchor="middle" x="236.5" y="-10" font-family="Inter" font-size="12.50">cout &lt;&lt; &quot;texto&quot; &#160;\n &#160;\t &#160;endl</text>
+</g>
+
+<g id="edge6" class="edge">
+<title>s&#45;&gt;o</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M236.5,-52.91C236.5,-47.16 236.5,-40.12 236.5,-33.62"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="238.95,-33.35 236.5,-26.35 234.05,-33.35 238.95,-33.35"/>
+</g>
+
+<g id="node9" class="node">
+<title>err</title>
+<polygon fill="#fde68a" stroke="#d97706" stroke-width="1.3" points="742,-84 547,-84 547,-48 742,-48 742,-84"/>
+<text text-anchor="middle" x="644.5" y="-70" font-family="Inter" font-size="12.50">Errores: compilación · enlace</text>
+<text text-anchor="middle" x="644.5" y="-56" font-family="Inter" font-size="12.50">ejecución · lógica</text>
+</g>
+
+<g id="edge8" class="edge">
+<title>cad&#45;&gt;err</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M644.5,-105.68C644.5,-101.08 644.5,-96.18 644.5,-91.48"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="646.95,-91.3 644.5,-84.3 642.05,-91.3 646.95,-91.3"/>
+</g>
+</g>
+</svg>
+</figure>
+</div>
+</div>
+<footer class="panel-f"><button class="btn btn-hecho" type="button" data-paso="soporte" aria-pressed="false">Marcar este paso como terminado</button><a class="btn btn-sig" href="#procedimental" data-ir="procedimental">Siguiente paso: Información procedimental</a></footer>
+</section><section class="panel p-procedimental" id="procedimental" data-paso="procedimental" aria-labelledby="h-procedimental">
+<header class="panel-h"><p class="panel-n">Paso 2 de 5</p><h2 id="h-procedimental">Información procedimental</h2><p>Sintaxis, reglas y errores frecuentes. Tenla a la vista mientras resuelves las tareas.</p></header>
+<div class="contenido">
+<p>Esta sección es tu <strong>caja de herramientas</strong>: no hay que memorizarla, hay que <strong>consultarla</strong> mientras resuelves las tareas.</p>
+<div class="caja c-sintaxis">
+<div class="caja-h"><span class="ico">⌨</span><span class="kick">Tarjeta de sintaxis</span><span>Tarjeta de sintaxis 2.1 · Plantilla de todo programa</span></div>
+<div class="codewrap" data-mode="check" data-src="I2luY2x1ZGUgPGlvc3RyZWFtPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwoKaW50IG1haW4oKQp7CiAgICAvLyB0dXMgc2VudGVuY2lhcyBhcXVpCiAgICByZXR1cm4gMDsKfQ==" data-title="plantilla.cpp"><figure class="code keep"><div class="code-t"><span>plantilla.cpp</span><span><span class="cbadge">C++</span></span></div><table class="src"><tr><td class="ln">1</td><td class="cl"><span class="cp">#</span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span></td></tr><tr><td class="ln">2</td><td class="cl"><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span></td></tr><tr><td class="ln">3</td><td class="cl">&#8203;</td></tr><tr><td class="ln">4</td><td class="cl"><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="p">)</span></td></tr><tr><td class="ln">5</td><td class="cl"><span class="p">{</span></td></tr><tr><td class="ln">6</td><td class="cl"><span class="w">    </span><span class="c1">// tus sentencias aqui</span></td></tr><tr><td class="ln">7</td><td class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td></tr><tr><td class="ln">8</td><td class="cl"><span class="p">}</span></td></tr></table></figure></div>
+<div class="tabla-scroll"><table>
+<thead>
+<tr>
+<th>Quiero…</th>
+<th>Escribo</th>
+<th>Resultado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mostrar texto</td>
+<td><code>cout &lt;&lt; "Hola";</code></td>
+<td><code>Hola</code></td>
+</tr>
+<tr>
+<td>Mostrar y saltar de línea</td>
+<td><code>cout &lt;&lt; "Hola\n";</code> o <code>cout &lt;&lt; "Hola" &lt;&lt; endl;</code></td>
+<td><code>Hola</code> + nuevo renglón</td>
+</tr>
+<tr>
+<td>Encadenar varias partes</td>
+<td><code>cout &lt;&lt; "A" &lt;&lt; "B" &lt;&lt; "C\n";</code></td>
+<td><code>ABC</code></td>
+</tr>
+<tr>
+<td>Alinear en columnas</td>
+<td><code>cout &lt;&lt; "Dato:\tvalor\n";</code></td>
+<td><code>Dato:   valor</code></td>
+</tr>
+<tr>
+<td>Mostrar comillas o barra</td>
+<td><code>cout &lt;&lt; "Dijo \"hola\" \\ fin";</code></td>
+<td><code>Dijo "hola" \ fin</code></td>
+</tr>
+<tr>
+<td>Comentar una línea</td>
+<td><code>// nota</code></td>
+<td>(se ignora)</td>
+</tr>
+<tr>
+<td>Comentar un bloque</td>
+<td><code>/* varias lineas */</code></td>
+<td>(se ignora)</td>
+</tr>
+<tr>
+<td>Compilar (g++)</td>
+<td><code>g++ prog.cpp -o prog</code></td>
+<td>crea <code>prog.exe</code></td>
+</tr>
+<tr>
+<td>Compilar con avisos</td>
+<td><code>g++ -Wall prog.cpp -o prog</code></td>
+<td>muestra advertencias útiles</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="caja c-checklist">
+<div class="caja-h"><span class="ico">☑</span><span class="kick">Guía de preguntas de rutina</span><span>Guía de preguntas de rutina 2.2 · Antes de compilar, pregúntate…</span></div>
+<ul class="checks">
+<li>¿Incluí <code>#include &lt;iostream&gt;</code> y escribí <code>using namespace std;</code> (o <code>std::</code>)?</li>
+<li>¿<code>main</code> está escrita en minúsculas y tiene paréntesis: <code>int main()</code>?</li>
+<li>¿Cada <code>{</code> tiene su <code>}</code>? (Indentar ayuda a verlo.)</li>
+<li>¿Cada sentencia termina en <code>;</code>? (Las líneas <code>#include</code>, <code>int main()</code>, <code>{</code> y <code>}</code> <b>no</b> llevan <code>;</code>.)</li>
+<li>¿Cada texto abre y cierra comillas dobles <code>" "</code>?</li>
+<li>Si hay errores: ¿leí el <b>primero</b> y fui a la línea y columna que indica?</li>
+</ul>
+</div>
+<div class="caja c-errores">
+<div class="caja-h"><span class="ico">🐞</span><span class="kick">Errores frecuentes</span><span>Errores frecuentes 2.3 · Lee el mensaje, encuentra la causa</span><span class="h-ef"><span class="ef ef-n">Variabilidad</span> <span class="ef ef-r">Autoexplicación</span></span></div>
+<p>Antes de leer la corrección, intenta explicar <strong>por qué</strong> falla cada programa.</p>
+<p><strong>a) Falta el punto y coma.</strong> El compilador se da cuenta hasta la <em>siguiente</em> línea, por eso el error puede señalar una línea después.</p>
+<div class="codewrap" data-mode="err" data-src="I2luY2x1ZGUgPGlvc3RyZWFtPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwppbnQgbWFpbigpCnsKICAgIGNvdXQgPDwgIkhvbGEiCiAgICByZXR1cm4gMDsKfQ=="><figure class="code keep"><table class="src"><tr><td class="ln">1</td><td class="cl"><span class="cp">#</span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span></td></tr><tr><td class="ln">2</td><td class="cl"><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span></td></tr><tr><td class="ln">3</td><td class="cl"><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="p">)</span></td></tr><tr><td class="ln">4</td><td class="cl"><span class="p">{</span></td></tr><tr><td class="ln">5</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Hola</span><span class="s">&quot;</span></td></tr><tr><td class="ln">6</td><td class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td></tr><tr><td class="ln">7</td><td class="cl"><span class="p">}</span></td></tr></table></figure><div class="term err"><div class="term-t"><span>▶ Mensaje del compilador (g++)</span></div><pre>main.cpp:5:19: error: expected ‘;’ before ‘return’
+    5 |     cout &lt;&lt; &quot;Hola&quot;
+      |                   ^
+      |                   ;
+    6 |     return 0;</pre></div></div>
+<p><em>Corrección:</em> <code>cout &lt;&lt; "Hola";</code> — el mensaje dice <em>expected ';' before 'return'</em>: falta <code>;</code> <strong>antes</strong> de <code>return</code>.</p>
+<p><strong>b) Mayúscula donde no va.</strong> <code>Cout</code> no existe; C++ distingue mayúsculas.</p>
+<div class="codewrap" data-mode="err" data-src="I2luY2x1ZGUgPGlvc3RyZWFtPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwppbnQgbWFpbigpCnsKICAgIENvdXQgPDwgIkhvbGFcbiI7CiAgICByZXR1cm4gMDsKfQ=="><figure class="code keep"><table class="src"><tr><td class="ln">1</td><td class="cl"><span class="cp">#</span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span></td></tr><tr><td class="ln">2</td><td class="cl"><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span></td></tr><tr><td class="ln">3</td><td class="cl"><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="p">)</span></td></tr><tr><td class="ln">4</td><td class="cl"><span class="p">{</span></td></tr><tr><td class="ln">5</td><td class="cl"><span class="w">    </span><span class="n">Cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Hola</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">6</td><td class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td></tr><tr><td class="ln">7</td><td class="cl"><span class="p">}</span></td></tr></table></figure><div class="term err"><div class="term-t"><span>▶ Mensaje del compilador (g++)</span></div><pre>main.cpp:5:5: error: ‘Cout’ was not declared in this scope
+    5 |     Cout &lt;&lt; &quot;Hola\n&quot;;
+      |     ^~~~</pre></div></div>
+<p><em>Corrección:</em> <code>cout</code>. El mensaje <em>was not declared in this scope</em> significa «no conozco ese nombre».</p>
+<p><strong>c) Olvidar la biblioteca.</strong> Sin <code>#include &lt;iostream&gt;</code>, <code>cout</code> no está declarado.</p>
+<div class="codewrap" data-mode="err" data-src="dXNpbmcgbmFtZXNwYWNlIHN0ZDsKaW50IG1haW4oKQp7CiAgICBzdGQ6OmNvdXQgPDwgIkhvbGFcbiI7CiAgICByZXR1cm4gMDsKfQ=="><figure class="code keep"><table class="src"><tr><td class="ln">1</td><td class="cl"><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span></td></tr><tr><td class="ln">2</td><td class="cl"><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="p">)</span></td></tr><tr><td class="ln">3</td><td class="cl"><span class="p">{</span></td></tr><tr><td class="ln">4</td><td class="cl"><span class="w">    </span><span class="n">std</span><span class="o">:</span><span class="o">:</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Hola</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">5</td><td class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td></tr><tr><td class="ln">6</td><td class="cl"><span class="p">}</span></td></tr></table></figure><div class="term err"><div class="term-t"><span>▶ Mensaje del compilador (g++)</span></div><pre>main.cpp:4:10: error: ‘cout’ is not a member of ‘std’
+    4 |     std::cout &lt;&lt; &quot;Hola\n&quot;;
+      |          ^~~~
+main.cpp:1:1: note: ‘std::cout’ is defined in header ‘&lt;iostream&gt;’; did you forget to ‘#include &lt;iostream&gt;’?
+  +++ |+#include &lt;iostream&gt;</pre></div></div>
+<p><em>Corrección:</em> agregar <code>#include &lt;iostream&gt;</code> al inicio. Observa que g++ incluso sugiere la solución en el mensaje (<em>did you forget to include?</em>).</p>
+<p><strong>d) Comillas sin cerrar.</strong></p>
+<div class="codewrap" data-mode="err" data-src="I2luY2x1ZGUgPGlvc3RyZWFtPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwppbnQgbWFpbigpCnsKICAgIGNvdXQgPDwgIkhvbGFcbjsKICAgIHJldHVybiAwOwp9"><figure class="code keep"><table class="src"><tr><td class="ln">1</td><td class="cl"><span class="cp">#</span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span></td></tr><tr><td class="ln">2</td><td class="cl"><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span></td></tr><tr><td class="ln">3</td><td class="cl"><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="p">)</span></td></tr><tr><td class="ln">4</td><td class="cl"><span class="p">{</span></td></tr><tr><td class="ln">5</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Hola</span><span class="se">\n</span><span class="s">;</span></td></tr><tr><td class="ln">6</td><td class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td></tr><tr><td class="ln">7</td><td class="cl"><span class="p">}</span></td></tr></table></figure><div class="term err"><div class="term-t"><span>▶ Mensaje del compilador (g++)</span></div><pre>main.cpp:5:13: error: missing terminating &quot; character
+    5 |     cout &lt;&lt; &quot;Hola\n;
+      |             ^~~~~~~~
+main.cpp: In function ‘int main()’:
+main.cpp:6:5: error: expected primary-expression before ‘return’</pre></div></div>
+<p><em>Corrección:</em> cerrar la cadena: <code>"Hola\n";</code>.</p>
+<p><strong>e) <code>Main</code> con mayúscula: ¡error de enlace!</strong> El archivo <strong>compila</strong> (no hay errores de sintaxis), pero el <strong>enlazador</strong> no encuentra la función <code>main</code> que todo programa necesita.</p>
+<div class="codewrap" data-mode="err" data-src="I2luY2x1ZGUgPGlvc3RyZWFtPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwppbnQgTWFpbigpCnsKICAgIGNvdXQgPDwgIkhvbGFcbiI7CiAgICByZXR1cm4gMDsKfQ=="><figure class="code keep"><table class="src"><tr><td class="ln">1</td><td class="cl"><span class="cp">#</span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span></td></tr><tr><td class="ln">2</td><td class="cl"><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span></td></tr><tr><td class="ln">3</td><td class="cl"><span class="kt">int</span><span class="w"> </span><span class="nf">Main</span><span class="p">(</span><span class="p">)</span></td></tr><tr><td class="ln">4</td><td class="cl"><span class="p">{</span></td></tr><tr><td class="ln">5</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Hola</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">6</td><td class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td></tr><tr><td class="ln">7</td><td class="cl"><span class="p">}</span></td></tr></table></figure><div class="term err"><div class="term-t"><span>▶ Mensaje del compilador (g++)</span></div><pre>/usr/bin/ld: Scrt1.o: in function `_start&#x27;:
+(.text+0x1b): undefined reference to `main&#x27;
+collect2: error: ld returned 1 exit status</pre></div></div>
+<p><em>Corrección:</em> <code>int main()</code>. Si el mensaje menciona <strong><code>ld</code></strong> o <strong><em>undefined reference</em></strong>, el problema está en la fase de <strong>enlace</strong>.</p>
+</div>
+<div class="caja c-tip">
+<div class="caja-h"><span class="ico">✔</span><span class="kick">Consejo</span><span>Acentos y eñes en la consola de Windows</span></div>
+<p>Si escribes <code>cout &lt;&lt; "Programación";</code> puede que la consola de Windows muestre símbolos raros. Por eso en este material los <strong>mensajes</strong> se escriben sin acentos (los comentarios sí pueden llevarlos). Si quieres usarlos, ejecuta <code>chcp 65001</code> en la terminal antes de correr el programa o guarda el archivo en UTF-8 y configura tu IDE.</p>
+</div>
+<div class="caja c-isomorfo">
+<div class="caja-h"><span class="ico">⇄</span><span class="kick">Ejemplo isomórfico</span><span>Ejemplo isomórfico 2.4 · El mismo patrón, otro contexto</span><span class="h-ef"><span class="ef ef-n">Variabilidad</span></span></div>
+<p>El patrón «planear la salida → una sentencia por renglón → verificar» sirve para cualquier texto con formato. Aquí, un boleto de cine:</p>
+<div class="codewrap" data-mode="run" data-src="I2luY2x1ZGUgPGlvc3RyZWFtPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwppbnQgbWFpbigpCnsKICAgIGNvdXQgPDwgIj09PSBDSU5FTUEgQysrID09PVxuIjsKICAgIGNvdXQgPDwgIlBlbGljdWxhOlx0RWwgQ29tcGlsYWRvclxuIjsKICAgIGNvdXQgPDwgIlNhbGE6XHRcdDRcbiI7CiAgICBjb3V0IDw8ICJBc2llbnRvOlx0Ri0xMlxuIjsKICAgIGNvdXQgPDwgIj09PT09PT09PT09PT09PT09PVxuIjsKICAgIHJldHVybiAwOwp9" data-title="boleto.cpp"><figure class="code anot keep"><div class="code-t"><span>boleto.cpp</span><span><span class="cbadge">C++</span></span></div><table class="src"><tr><td class="ln">1</td><td class="cl"><span class="cp">#</span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span></td><td class="an"></td></tr><tr><td class="ln">2</td><td class="cl"><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span></td><td class="an"></td></tr><tr><td class="ln">3</td><td class="cl"><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="p">)</span></td><td class="an"></td></tr><tr><td class="ln">4</td><td class="cl"><span class="p">{</span></td><td class="an"></td></tr><tr><td class="ln">5</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">=== CINEMA C++ ===</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td><td class="an">Encabezado</td></tr><tr><td class="ln">6</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Pelicula:</span><span class="se">\t</span><span class="s">El Compilador</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td><td class="an"><code>\t</code> alinea las columnas</td></tr><tr><td class="ln">7</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Sala:</span><span class="se">\t</span><span class="se">\t</span><span class="s">4</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td><td class="an">Dos <code>\t</code> porque «Sala:» es más corto</td></tr><tr><td class="ln">8</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Asiento:</span><span class="se">\t</span><span class="s">F-12</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td><td class="an"></td></tr><tr><td class="ln">9</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">==================</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td><td class="an"></td></tr><tr><td class="ln">10</td><td class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td><td class="an"></td></tr><tr><td class="ln">11</td><td class="cl"><span class="p">}</span></td><td class="an"></td></tr></table></figure><div class="term"><div class="term-t"><span>▶ Salida en consola</span></div><pre>=== CINEMA C++ ===
+Pelicula:	El Compilador
+Sala:		4
+Asiento:	F-12
+==================</pre></div></div>
+</div>
+</div>
+<footer class="panel-f"><button class="btn btn-hecho" type="button" data-paso="procedimental" aria-pressed="false">Marcar este paso como terminado</button><a class="btn btn-sig" href="#tareas" data-ir="tareas">Siguiente paso: Tareas de aprendizaje</a></footer>
+</section><section class="panel p-tareas" id="tareas" data-paso="tareas" aria-labelledby="h-tareas">
+<header class="panel-h"><p class="panel-n">Paso 3 de 5</p><h2 id="h-tareas">Tareas de aprendizaje</h2><p>De menor a mayor complejidad: la ayuda se retira tarea con tarea. Intenta cada una antes de abrir la solución.</p></header>
+<div class="aviso-ruta" data-bloque="I"></div><div class="contenido">
+<p>Resuélvelas <strong>en orden</strong>. Cada tarea te da un poco menos de ayuda que la anterior: es el <strong>desvanecimiento de guía</strong>. Mantén la sección 2 a la vista. <span class="ef ef-r">Desvanecimiento de guía</span></p>
+<div class="caja c-tarea" data-ruta="A" id="t1">
+<div class="tarea-h">
+<div class="tarea-t">T1. Cartel de evento escolar: estudia el ejemplo y resuelve su gemelo</div>
+<div class="tarea-m"><span class="ruta ra">Ruta A</span><span class="dur">⏱ 20 min</span></div>
+<div class="tarea-e"><span class="ef ef-n">Ejemplo resuelto</span> <span class="ef ef-n">Variabilidad</span></div>
+</div>
+<p><strong>Contexto.</strong> El club de robótica te pidió un programa que muestre en la pantalla del laboratorio el cartel de su próximo evento.</p>
+<p><strong>¿Por qué y para qué?</strong> Casi todos los programas comienzan mostrando información con formato; es la base para menús, reportes y tickets. <span class="arcs">ARCS · Relevancia</span></p>
+<p><strong>Paso 1 · Estudia este ejemplo resuelto</strong> (lee cada anotación de la derecha):</p>
+<div class="codewrap" data-mode="run" data-src="I2luY2x1ZGUgPGlvc3RyZWFtPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwppbnQgbWFpbigpCnsKICAgIGNvdXQgPDwgIioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKlxuIjsKICAgIGNvdXQgPDwgIiogICBUT1JORU8gREUgUk9CT1RJQ0EgMjAyNiAgKlxuIjsKICAgIGNvdXQgPDwgIioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKlxuIjsKICAgIGNvdXQgPDwgIkZlY2hhOlx0MTUgZGUgbm92aWVtYnJlXG4iOwogICAgY291dCA8PCAiTHVnYXI6XHRMYWJvcmF0b3JpbyAzXG4iOwogICAgY291dCA8PCAiSG9yYTpcdDEwOjAwXG4iOwogICAgcmV0dXJuIDA7Cn0=" data-title="cartel_robotica.cpp"><figure class="code anot keep"><div class="code-t"><span>cartel_robotica.cpp</span><span><span class="cbadge">C++</span></span></div><table class="src"><tr><td class="ln">1</td><td class="cl"><span class="cp">#</span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span></td><td class="an"></td></tr><tr><td class="ln">2</td><td class="cl"><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span></td><td class="an"></td></tr><tr><td class="ln">3</td><td class="cl"><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="p">)</span></td><td class="an"></td></tr><tr><td class="ln">4</td><td class="cl"><span class="p">{</span></td><td class="an"></td></tr><tr><td class="ln">5</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">******************************</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td><td class="an">Borde superior: 30 asteriscos</td></tr><tr><td class="ln">6</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">*   TORNEO DE ROBOTICA 2026  *</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td><td class="an">Título centrado a mano con espacios (30 caracteres)</td></tr><tr><td class="ln">7</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">******************************</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td><td class="an"></td></tr><tr><td class="ln">8</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Fecha:</span><span class="se">\t</span><span class="s">15 de noviembre</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td><td class="an"><code>\t</code> separa etiqueta y dato</td></tr><tr><td class="ln">9</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Lugar:</span><span class="se">\t</span><span class="s">Laboratorio 3</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td><td class="an"></td></tr><tr><td class="ln">10</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Hora:</span><span class="se">\t</span><span class="s">10:00</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td><td class="an"></td></tr><tr><td class="ln">11</td><td class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td><td class="an"></td></tr><tr><td class="ln">12</td><td class="cl"><span class="p">}</span></td><td class="an"></td></tr></table></figure><div class="term"><div class="term-t"><span>▶ Salida en consola</span></div><pre>******************************
+*   TORNEO DE ROBOTICA 2026  *
+******************************
+Fecha:	15 de noviembre
+Lugar:	Laboratorio 3
+Hora:	10:00</pre></div></div>
+<p><strong>Paso 2 · Ahora tú (problema gemelo).</strong> Escribe <code>cartel_feria.cpp</code> para la <strong>Feria de Ciencias</strong>: mismo formato (borde, título, tres datos alineados), con fecha <em>20 de noviembre</em>, lugar <em>Patio central</em> y hora <em>09:30</em>.</p>
+<p><strong>Resultado esperado:</strong> un cartel idéntico en estructura al del ejemplo, con los datos nuevos.</p>
+<div class="caja c-checkpoint">
+<div class="caja-h"><span class="ico">🚩</span><span>Checkpoint</span></div>
+<p>¿Tu programa compila al primer intento? Si no, usa la guía 2.2. ¿Los tres datos quedaron alineados? <span class="arcs">ARCS · Confianza</span></p>
+</div>
+<div class="sol" data-label="T1">
+<div class="codewrap" data-mode="run" data-src="I2luY2x1ZGUgPGlvc3RyZWFtPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwppbnQgbWFpbigpCnsKICAgIGNvdXQgPDwgIioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKlxuIjsKICAgIGNvdXQgPDwgIiogICAgIEZFUklBIERFIENJRU5DSUFTICAgICAgKlxuIjsKICAgIGNvdXQgPDwgIioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKlxuIjsKICAgIGNvdXQgPDwgIkZlY2hhOlx0MjAgZGUgbm92aWVtYnJlXG4iOwogICAgY291dCA8PCAiTHVnYXI6XHRQYXRpbyBjZW50cmFsXG4iOwogICAgY291dCA8PCAiSG9yYTpcdDA5OjMwXG4iOwogICAgcmV0dXJuIDA7Cn0=" data-title="cartel_feria.cpp"><figure class="code keep"><div class="code-t"><span>cartel_feria.cpp</span><span><span class="cbadge">C++</span></span></div><table class="src"><tr><td class="ln">1</td><td class="cl"><span class="cp">#</span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span></td></tr><tr><td class="ln">2</td><td class="cl"><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span></td></tr><tr><td class="ln">3</td><td class="cl"><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="p">)</span></td></tr><tr><td class="ln">4</td><td class="cl"><span class="p">{</span></td></tr><tr><td class="ln">5</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">******************************</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">6</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">*     FERIA DE CIENCIAS      *</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">7</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">******************************</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">8</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Fecha:</span><span class="se">\t</span><span class="s">20 de noviembre</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">9</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Lugar:</span><span class="se">\t</span><span class="s">Patio central</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">10</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Hora:</span><span class="se">\t</span><span class="s">09:30</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">11</td><td class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td></tr><tr><td class="ln">12</td><td class="cl"><span class="p">}</span></td></tr></table></figure><div class="term"><div class="term-t"><span>▶ Salida en consola</span></div><pre>******************************
+*     FERIA DE CIENCIAS      *
+******************************
+Fecha:	20 de noviembre
+Lugar:	Patio central
+Hora:	09:30</pre></div></div>
+</div>
+</div>
+<div class="caja c-tarea" data-ruta="A" id="t2">
+<div class="tarea-h">
+<div class="tarea-t">T2. Ticket de la cafetería (completa con pistas)</div>
+<div class="tarea-m"><span class="ruta ra">Ruta A</span><span class="dur">⏱ 20 min</span></div>
+<div class="tarea-e"><span class="ef ef-n">Problema por completar</span> <span class="ef ef-r">Desvanecimiento de guía</span></div>
+</div>
+<p><strong>Contexto.</strong> La cafetería de la escuela necesita imprimir un ticket de ejemplo para probar su nueva impresora.</p>
+<p><strong>¿Por qué y para qué?</strong> Los tickets usan columnas alineadas: el mismo principio de los reportes de cualquier sistema de ventas.</p>
+<p>Completa los huecos <span class="circ">①</span> a <span class="circ">⑤</span>. Las pistas están en los comentarios.</p>
+<div class="codewrap" data-mode="display" data-src="I2luY2x1ZGUgX18xX18gICAgICAgICAgICAgICAgICAgICAgICAgLy8gMTogYmlibGlvdGVjYSBwYXJhIHVzYXIgY291dAp1c2luZyBuYW1lc3BhY2Ugc3RkOwppbnQgX18yX18oKSAgICAgICAgICAgICAgICAgICAgICAgICAgICAvLyAyOiBwdW50byBkZSBlbnRyYWRhIGRlbCBwcm9ncmFtYQp7CiAgICBjb3V0IDw8ICJDQUZFVEVSSUEgRVNDT0xBUiIgX18zX18gIC8vIDM6IHRlcm1pbmEgbGEgbGluZWEgY29uIHVuIHNhbHRvIChkb3MgZm9ybWFzIHZhbGlkYXMpCiAgICBjb3V0IDw8ICJQcm9kdWN0b1x0UHJlY2lvXG4iOwogICAgY291dCA8PCAiVG9ydGEiIF9fNF9fICIkMzVcbiI7ICAgICAvLyA0OiBhbGluZWEgZWwgcHJlY2lvIGVuIGxhIGNvbHVtbmEgKG9wZXJhZG9yICsgZXNjYXBlKQogICAgY291dCA8PCAiQWd1YVx0XHQkMTVcbiI7CiAgICBjb3V0IDw8ICJUT1RBTFx0XHQkNTBcbiJfXzVfXyAgICAgIC8vIDU6IGxvIHF1ZSB0ZXJtaW5hIHRvZGEgc2VudGVuY2lhCiAgICByZXR1cm4gMDsKfQ==" data-blank="1" data-title="ticket.cpp"><figure class="code keep"><div class="code-t"><span>ticket.cpp</span><span><span class="cbadge">C++</span><span class="cbadge cb-blank">por completar</span></span></div><table class="src"><tr><td class="ln">1</td><td class="cl"><span class="cp">#</span><span class="cp">include <input class="hole" data-n="1" aria-label="Hueco 1" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="①">                         </span><span class="c1">// 1: biblioteca para usar cout</span></td></tr><tr><td class="ln">2</td><td class="cl"><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span></td></tr><tr><td class="ln">3</td><td class="cl"><span class="kt">int</span><span class="w"> </span><span class="nf"><input class="hole" data-n="2" aria-label="Hueco 2" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="②"></span><span class="p">(</span><span class="p">)</span><span class="w">                            </span><span class="c1">// 2: punto de entrada del programa</span></td></tr><tr><td class="ln">4</td><td class="cl"><span class="p">{</span></td></tr><tr><td class="ln">5</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">CAFETERIA ESCOLAR</span><span class="s">&quot;</span><span class="w"> </span><span class="n"><input class="hole" data-n="3" aria-label="Hueco 3" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="③"></span><span class="w">  </span><span class="c1">// 3: termina la linea con un salto (dos formas validas)</span></td></tr><tr><td class="ln">6</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Producto</span><span class="se">\t</span><span class="s">Precio</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">7</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Torta</span><span class="s">&quot;</span><span class="w"> </span><span class="n"><input class="hole" data-n="4" aria-label="Hueco 4" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="④"></span><span class="w"> </span><span class="s">&quot;</span><span class="s">$35</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w">     </span><span class="c1">// 4: alinea el precio en la columna (operador + escape)</span></td></tr><tr><td class="ln">8</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Agua</span><span class="se">\t</span><span class="se">\t</span><span class="s">$15</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">9</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">TOTAL</span><span class="se">\t</span><span class="se">\t</span><span class="s">$50</span><span class="se">\n</span><span class="s">&quot;</span><span class="n"><input class="hole" data-n="5" aria-label="Hueco 5" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="⑤"></span><span class="w">      </span><span class="c1">// 5: lo que termina toda sentencia</span></td></tr><tr><td class="ln">10</td><td class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td></tr><tr><td class="ln">11</td><td class="cl"><span class="p">}</span></td></tr></table></figure></div>
+<p><strong>Resultado esperado:</strong></p>
+<div class="term"><div class="term-t"><span>▶ Salida esperada</span></div><pre>CAFETERIA ESCOLAR
+Producto	Precio
+Torta		$35
+Agua		$15
+TOTAL		$50</pre></div>
+<div class="sol" data-label="T2">
+<p><span class="circ">①</span> <code>&lt;iostream&gt;</code> · <span class="circ">②</span> <code>main</code> · <span class="circ">③</span> <code>&lt;&lt; endl;</code> o <code>&lt;&lt; "\n";</code> · <span class="circ">④</span> <code>&lt;&lt; "\t\t" &lt;&lt;</code> · <span class="circ">⑤</span> <code>;</code></p>
+<div class="codewrap" data-mode="run" data-src="I2luY2x1ZGUgPGlvc3RyZWFtPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwppbnQgbWFpbigpCnsKICAgIGNvdXQgPDwgIkNBRkVURVJJQSBFU0NPTEFSIiA8PCBlbmRsOwogICAgY291dCA8PCAiUHJvZHVjdG9cdFByZWNpb1xuIjsKICAgIGNvdXQgPDwgIlRvcnRhIiA8PCAiXHRcdCIgPDwgIiQzNVxuIjsKICAgIGNvdXQgPDwgIkFndWFcdFx0JDE1XG4iOwogICAgY291dCA8PCAiVE9UQUxcdFx0JDUwXG4iOwogICAgcmV0dXJuIDA7Cn0=" data-title="ticket.cpp"><figure class="code keep"><div class="code-t"><span>ticket.cpp</span><span><span class="cbadge">C++</span></span></div><table class="src"><tr><td class="ln">1</td><td class="cl"><span class="cp">#</span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span></td></tr><tr><td class="ln">2</td><td class="cl"><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span></td></tr><tr><td class="ln">3</td><td class="cl"><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="p">)</span></td></tr><tr><td class="ln">4</td><td class="cl"><span class="p">{</span></td></tr><tr><td class="ln">5</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">CAFETERIA ESCOLAR</span><span class="s">&quot;</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span></td></tr><tr><td class="ln">6</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Producto</span><span class="se">\t</span><span class="s">Precio</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">7</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Torta</span><span class="s">&quot;</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\t</span><span class="se">\t</span><span class="s">&quot;</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">$35</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">8</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Agua</span><span class="se">\t</span><span class="se">\t</span><span class="s">$15</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">9</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">TOTAL</span><span class="se">\t</span><span class="se">\t</span><span class="s">$50</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">10</td><td class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td></tr><tr><td class="ln">11</td><td class="cl"><span class="p">}</span></td></tr></table></figure><div class="term"><div class="term-t"><span>▶ Salida en consola</span></div><pre>CAFETERIA ESCOLAR
+Producto	Precio
+Torta		$35
+Agua		$15
+TOTAL		$50</pre></div></div>
+</div>
+</div>
+<div class="caja c-tarea" data-ruta="AB" id="t3">
+<div class="tarea-h">
+<div class="tarea-t">T3. Menú de un videojuego (completa sin pistas)</div>
+<div class="tarea-m"><span class="ruta ra">Ruta A</span> <span class="ruta rb">Ruta B</span><span class="dur">⏱ 20 min</span></div>
+<div class="tarea-e"><span class="ef ef-n">Problema por completar</span> <span class="ef ef-r">Desvanecimiento de guía</span></div>
+</div>
+<p><strong>Contexto.</strong> Estás programando la pantalla de inicio de un videojuego de consola. <strong>¿Para qué?</strong> Todo juego empieza con un menú; después aprenderás a leer la opción del jugador (Tema 05).</p>
+<p>Ahora hay más huecos y <strong>ninguna pista</strong>. Usa la tarjeta 2.1.</p>
+<div class="codewrap" data-mode="display" data-src="I2luY2x1ZGUgPGlvc3RyZWFtPgpfXzFfXyBuYW1lc3BhY2Ugc3RkX18yX18KaW50IG1haW4oKQpfXzNfXwogICAgY291dCA8PCAiPT09PT09PT09PT09PT09PT09PT09PT09PT1cbiI7CiAgICBjb3V0IDw8ICIgICAgIExBIENSSVBUQSBERUwgQklUXG4iOwogICAgY291dCA8PCAiPT09PT09PT09PT09PT09PT09PT09PT09PT1cbiIgX180X18KICAgIGNvdXQgPDwgIjEuXHROdWV2YSBwYXJ0aWRhXG4iOwogICAgY291dCA8PCAiMi5cdENvbnRpbnVhclxuIjsKICAgIGNvdXQgX181X18gIjMuXHRTYWxpclxuIjsKICAgIF9fNl9fIDA7Cl9fN19f" data-blank="1" data-title="menu_juego.cpp"><figure class="code keep"><div class="code-t"><span>menu_juego.cpp</span><span><span class="cbadge">C++</span><span class="cbadge cb-blank">por completar</span></span></div><table class="src"><tr><td class="ln">1</td><td class="cl"><span class="cp">#</span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span></td></tr><tr><td class="ln">2</td><td class="cl"><span class="n"><input class="hole" data-n="1" aria-label="Hueco 1" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="①"></span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std<input class="hole" data-n="2" aria-label="Hueco 2" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="②"></span></td></tr><tr><td class="ln">3</td><td class="cl"><span class="nn">int</span><span class="w"> </span><span class="nn">main</span><span class="p">(</span><span class="p">)</span></td></tr><tr><td class="ln">4</td><td class="cl"><span class="nn"><input class="hole" data-n="3" aria-label="Hueco 3" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="③"></span></td></tr><tr><td class="ln">5</td><td class="cl"><span class="w">    </span><span class="nn">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">==========================</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">6</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">     LA CRIPTA DEL BIT</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">7</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">==========================</span><span class="se">\n</span><span class="s">&quot;</span><span class="w"> </span><span class="n"><input class="hole" data-n="4" aria-label="Hueco 4" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="④"></span></td></tr><tr><td class="ln">8</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">1.</span><span class="se">\t</span><span class="s">Nueva partida</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">9</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">2.</span><span class="se">\t</span><span class="s">Continuar</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">10</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="n"><input class="hole" data-n="5" aria-label="Hueco 5" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="⑤"></span><span class="w"> </span><span class="s">&quot;</span><span class="s">3.</span><span class="se">\t</span><span class="s">Salir</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">11</td><td class="cl"><span class="w">    </span><span class="n"><input class="hole" data-n="6" aria-label="Hueco 6" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="⑥"></span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td></tr><tr><td class="ln">12</td><td class="cl"><span class="n"><input class="hole" data-n="7" aria-label="Hueco 7" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="⑦"></span></td></tr></table></figure></div>
+<p><strong>Resultado esperado:</strong> el menú con las tres opciones numeradas y alineadas.</p>
+<div class="sol" data-label="T3">
+<p><span class="circ">①</span> <code>using</code> · <span class="circ">②</span> <code>;</code> · <span class="circ">③</span> <code>{</code> · <span class="circ">④</span> <code>;</code> · <span class="circ">⑤</span> <code>&lt;&lt;</code> · <span class="circ">⑥</span> <code>return</code> · <span class="circ">⑦</span> <code>}</code></p>
+<div class="codewrap" data-mode="run" data-src="I2luY2x1ZGUgPGlvc3RyZWFtPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwppbnQgbWFpbigpCnsKICAgIGNvdXQgPDwgIj09PT09PT09PT09PT09PT09PT09PT09PT09XG4iOwogICAgY291dCA8PCAiICAgICBMQSBDUklQVEEgREVMIEJJVFxuIjsKICAgIGNvdXQgPDwgIj09PT09PT09PT09PT09PT09PT09PT09PT09XG4iOwogICAgY291dCA8PCAiMS5cdE51ZXZhIHBhcnRpZGFcbiI7CiAgICBjb3V0IDw8ICIyLlx0Q29udGludWFyXG4iOwogICAgY291dCA8PCAiMy5cdFNhbGlyXG4iOwogICAgcmV0dXJuIDA7Cn0=" data-title="menu_juego.cpp"><figure class="code keep"><div class="code-t"><span>menu_juego.cpp</span><span><span class="cbadge">C++</span></span></div><table class="src"><tr><td class="ln">1</td><td class="cl"><span class="cp">#</span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span></td></tr><tr><td class="ln">2</td><td class="cl"><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span></td></tr><tr><td class="ln">3</td><td class="cl"><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="p">)</span></td></tr><tr><td class="ln">4</td><td class="cl"><span class="p">{</span></td></tr><tr><td class="ln">5</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">==========================</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">6</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">     LA CRIPTA DEL BIT</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">7</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">==========================</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">8</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">1.</span><span class="se">\t</span><span class="s">Nueva partida</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">9</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">2.</span><span class="se">\t</span><span class="s">Continuar</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">10</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">3.</span><span class="se">\t</span><span class="s">Salir</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">11</td><td class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td></tr><tr><td class="ln">12</td><td class="cl"><span class="p">}</span></td></tr></table></figure><div class="term"><div class="term-t"><span>▶ Salida en consola</span></div><pre>==========================
+     LA CRIPTA DEL BIT
+==========================
+1.	Nueva partida
+2.	Continuar
+3.	Salir</pre></div></div>
+</div>
+</div>
+<div class="caja c-tarea" data-ruta="AB" id="t4">
+<div class="tarea-h">
+<div class="tarea-t">T4. Tu tarjeta de presentación (problema convencional)</div>
+<div class="tarea-m"><span class="ruta ra">Ruta A</span> <span class="ruta rb">Ruta B</span><span class="dur">⏱ 30 min</span></div>
+<div class="tarea-e"><span class="ef ef-n">Variabilidad</span> <span class="ef ef-r">Desvanecimiento de guía</span></div>
+</div>
+<p><strong>Contexto.</strong> En la primera semana de clases cada estudiante presenta una «tarjeta digital». <strong>¿Para qué?</strong> Es tu primer programa completo, escrito desde cero, sin código de apoyo.</p>
+<p><strong>Requisitos:</strong></p>
+<ol>
+<li>Un comentario de bloque con tu nombre y la fecha.</li>
+<li>Un borde superior e inferior.</li>
+<li>Al menos cuatro datos alineados con <code>\t</code> (nombre, carrera o grado, lenguaje favorito, un pasatiempo).</li>
+<li>Una frase final entre comillas dobles (usa <code>\"</code>).</li>
+<li>Debe compilar sin errores con <code>g++ -Wall</code>.</li>
+</ol>
+<p><strong>Resultado esperado (ejemplo):</strong></p>
+<div class="term"><div class="term-t"><span>▶ Ejemplo de salida</span></div><pre>################################
+Nombre:     Ana Lopez
+Grado:      2o semestre
+Lenguaje:   C++
+Pasatiempo: videojuegos
+&quot;Aprender a programar es aprender a pensar&quot;
+################################</pre></div>
+<div class="caja c-reto">
+<div class="caja-h"><span class="ico">⭐</span><span>Reto extra</span></div>
+<p>Dibuja tu inicial en grande con asteriscos debajo de la tarjeta (arte ASCII). <span class="arcs">ARCS · Satisfacción</span></p>
+</div>
+<div class="sol" data-label="T4">
+<p>Hay muchas soluciones correctas; esta es una posible:</p>
+<div class="codewrap" data-mode="run" data-src="LyogVGFyamV0YSBkZSBwcmVzZW50YWNpb24KICAgQXV0b3JhOiBBbmEgTG9wZXoKICAgRmVjaGE6IGFnb3N0byAyMDI2ICovCiNpbmNsdWRlIDxpb3N0cmVhbT4KdXNpbmcgbmFtZXNwYWNlIHN0ZDsKaW50IG1haW4oKQp7CiAgICBjb3V0IDw8ICIjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjI1xuIjsKICAgIGNvdXQgPDwgIk5vbWJyZTpcdFx0QW5hIExvcGV6XG4iOwogICAgY291dCA8PCAiR3JhZG86XHRcdDJvIHNlbWVzdHJlXG4iOwogICAgY291dCA8PCAiTGVuZ3VhamU6XHRDKytcbiI7CiAgICBjb3V0IDw8ICJQYXNhdGllbXBvOlx0dmlkZW9qdWVnb3NcbiI7CiAgICBjb3V0IDw8ICJcIkFwcmVuZGVyIGEgcHJvZ3JhbWFyIGVzIGFwcmVuZGVyIGEgcGVuc2FyXCJcbiI7CiAgICBjb3V0IDw8ICIjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjI1xuIjsKICAgIHJldHVybiAwOwp9" data-title="tarjeta_presentacion.cpp"><figure class="code keep"><div class="code-t"><span>tarjeta_presentacion.cpp</span><span><span class="cbadge">C++</span></span></div><table class="src"><tr><td class="ln">1</td><td class="cl"><span class="cm">/* Tarjeta de presentacion</span></td></tr><tr><td class="ln">2</td><td class="cl"><span class="cm">   Autora: Ana Lopez</span></td></tr><tr><td class="ln">3</td><td class="cl"><span class="cm">   Fecha: agosto 2026 */</span></td></tr><tr><td class="ln">4</td><td class="cl"><span class="cp">#</span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span></td></tr><tr><td class="ln">5</td><td class="cl"><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span></td></tr><tr><td class="ln">6</td><td class="cl"><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="p">)</span></td></tr><tr><td class="ln">7</td><td class="cl"><span class="p">{</span></td></tr><tr><td class="ln">8</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">################################</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">9</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Nombre:</span><span class="se">\t</span><span class="se">\t</span><span class="s">Ana Lopez</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">10</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Grado:</span><span class="se">\t</span><span class="se">\t</span><span class="s">2o semestre</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">11</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Lenguaje:</span><span class="se">\t</span><span class="s">C++</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">12</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Pasatiempo:</span><span class="se">\t</span><span class="s">videojuegos</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">13</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">Aprender a programar es aprender a pensar</span><span class="se">\&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">14</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">################################</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">15</td><td class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td></tr><tr><td class="ln">16</td><td class="cl"><span class="p">}</span></td></tr></table></figure><div class="term"><div class="term-t"><span>▶ Salida en consola</span></div><pre>################################
+Nombre:		Ana Lopez
+Grado:		2o semestre
+Lenguaje:	C++
+Pasatiempo:	videojuegos
+&quot;Aprender a programar es aprender a pensar&quot;
+################################</pre></div></div>
+</div>
+</div>
+<div class="caja c-tarea" data-ruta="A" id="t5">
+<div class="tarea-h">
+<div class="tarea-t">T5. Una figura, muchas soluciones (solución libre)</div>
+<div class="tarea-m"><span class="ruta ra">Ruta A</span><span class="dur">⏱ 20 min</span></div>
+<div class="tarea-e"><span class="ef ef-r">Solución libre</span> <span class="ef ef-n">Variabilidad</span></div>
+</div>
+<p><strong>Contexto.</strong> Necesitas mostrar este triángulo en pantalla:</p>
+<div class="term"><div class="term-t"><span>▶ Figura a mostrar</span></div><pre>*
+**
+***
+****</pre></div>
+<p><strong>Tarea de solución libre:</strong> no hay una única respuesta. <strong>Escribe todas las versiones del programa que se te ocurran</strong> para producir exactamente la misma figura. Por ejemplo: un <code>cout</code> por renglón, un solo <code>cout</code> con varios <code>\n</code>, usando <code>endl</code>, encadenando con <code>&lt;&lt;</code>… Compara tus versiones: ¿cuál es más fácil de leer?, ¿cuál es más corta?</p>
+<div class="sol" data-label="T5">
+<p>Algunas de las soluciones posibles (todas producen la misma salida):</p>
+<div class="codewrap" data-mode="run" data-src="I2luY2x1ZGUgPGlvc3RyZWFtPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwppbnQgbWFpbigpCnsKICAgIGNvdXQgPDwgIipcbiI7CiAgICBjb3V0IDw8ICIqKlxuIjsKICAgIGNvdXQgPDwgIioqKlxuIjsKICAgIGNvdXQgPDwgIioqKipcbiI7CiAgICByZXR1cm4gMDsKfQ==" data-title="version1_un_cout_por_linea.cpp"><figure class="code keep"><div class="code-t"><span>version1_un_cout_por_linea.cpp</span><span><span class="cbadge">C++</span></span></div><table class="src"><tr><td class="ln">1</td><td class="cl"><span class="cp">#</span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span></td></tr><tr><td class="ln">2</td><td class="cl"><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span></td></tr><tr><td class="ln">3</td><td class="cl"><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="p">)</span></td></tr><tr><td class="ln">4</td><td class="cl"><span class="p">{</span></td></tr><tr><td class="ln">5</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">*</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">6</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">**</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">7</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">***</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">8</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">****</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">9</td><td class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td></tr><tr><td class="ln">10</td><td class="cl"><span class="p">}</span></td></tr></table></figure><div class="term"><div class="term-t"><span>▶ Salida en consola</span></div><pre>*
+**
+***
+****</pre></div></div>
+<div class="codewrap" data-mode="run" data-src="I2luY2x1ZGUgPGlvc3RyZWFtPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwppbnQgbWFpbigpCnsKICAgIGNvdXQgPDwgIipcbioqXG4qKipcbioqKipcbiI7CiAgICByZXR1cm4gMDsKfQ==" data-title="version2_un_solo_cout.cpp"><figure class="code keep"><div class="code-t"><span>version2_un_solo_cout.cpp</span><span><span class="cbadge">C++</span></span></div><table class="src"><tr><td class="ln">1</td><td class="cl"><span class="cp">#</span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span></td></tr><tr><td class="ln">2</td><td class="cl"><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span></td></tr><tr><td class="ln">3</td><td class="cl"><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="p">)</span></td></tr><tr><td class="ln">4</td><td class="cl"><span class="p">{</span></td></tr><tr><td class="ln">5</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">*</span><span class="se">\n</span><span class="s">**</span><span class="se">\n</span><span class="s">***</span><span class="se">\n</span><span class="s">****</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">6</td><td class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td></tr><tr><td class="ln">7</td><td class="cl"><span class="p">}</span></td></tr></table></figure><div class="term"><div class="term-t"><span>▶ Salida en consola</span></div><pre>*
+**
+***
+****</pre></div></div>
+<div class="codewrap" data-mode="run" data-src="I2luY2x1ZGUgPGlvc3RyZWFtPgppbnQgbWFpbigpCnsKICAgIHN0ZDo6Y291dCA8PCAiKiIgPDwgc3RkOjplbmRsIDw8ICIqKiIgPDwgc3RkOjplbmRsCiAgICAgICAgICAgICAgPDwgIioqKiIgPDwgc3RkOjplbmRsIDw8ICIqKioqIiA8PCBzdGQ6OmVuZGw7CiAgICByZXR1cm4gMDsKfQ==" data-title="version3_endl_encadenado.cpp"><figure class="code keep"><div class="code-t"><span>version3_endl_encadenado.cpp</span><span><span class="cbadge">C++</span></span></div><table class="src"><tr><td class="ln">1</td><td class="cl"><span class="cp">#</span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span></td></tr><tr><td class="ln">2</td><td class="cl"><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="p">)</span></td></tr><tr><td class="ln">3</td><td class="cl"><span class="p">{</span></td></tr><tr><td class="ln">4</td><td class="cl"><span class="w">    </span><span class="n">std</span><span class="o">:</span><span class="o">:</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">*</span><span class="s">&quot;</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">:</span><span class="o">:</span><span class="n">endl</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">**</span><span class="s">&quot;</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">:</span><span class="o">:</span><span class="n">endl</span></td></tr><tr><td class="ln">5</td><td class="cl"><span class="w">              </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">***</span><span class="s">&quot;</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">:</span><span class="o">:</span><span class="n">endl</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">****</span><span class="s">&quot;</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">:</span><span class="o">:</span><span class="n">endl</span><span class="p">;</span></td></tr><tr><td class="ln">6</td><td class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td></tr><tr><td class="ln">7</td><td class="cl"><span class="p">}</span></td></tr></table></figure><div class="term"><div class="term-t"><span>▶ Salida en consola</span></div><pre>*
+**
+***
+****</pre></div></div>
+<p>La versión 1 es la más legible; la 2, la más corta; la 3 muestra que una sentencia puede ocupar varias líneas (el <code>;</code> marca el final, no el salto de línea).</p>
+</div>
+</div>
+<div class="caja c-tarea" data-ruta="B" id="t6">
+<div class="tarea-h">
+<div class="tarea-t">T6. ¿Puedes ayudar a tu compañero? (autoexplicación)</div>
+<div class="tarea-m"><span class="ruta rb">Ruta B</span><span class="dur">⏱ 20 min</span></div>
+<div class="tarea-e"><span class="ef ef-r">Autoexplicación</span> <span class="ef ef-r">Reversión de la experiencia</span></div>
+</div>
+<p><strong>Contexto.</strong> Un compañero escribió este programa para mostrar el horario del laboratorio, pero no compila. Te pide ayuda porque no entiende los mensajes del compilador.</p>
+<div class="codewrap" data-mode="display" data-src="dXNpbmcgbmFtZXNwYWNlIHN0ZDsKaW50IG1haW4oKQp7CiAgICBDb3V0IDw8ICJIT1JBUklPIERFIExBQk9SQVRPUklPXG4iOwogICAgY291dCA8PCAiTHVuZXM6XHRcdDg6MDAgLSAxMDowMFxuIgogICAgY291dCA8PCAiTWllcmNvbGVzOlx0MTI6MDAgLSAxNDowMFxuOwogICAgY291dCA8PCAiVmllcm5lczpcdDk6MDAgLSAxMTowMFxuIjsKICAgIHJldHVybiAwOwp9" data-title="horario_con_errores.cpp"><figure class="code keep"><div class="code-t"><span>horario_con_errores.cpp</span><span><span class="cbadge">C++</span><span class="cbadge cb-frag">fragmento</span></span></div><table class="src"><tr><td class="ln">1</td><td class="cl"><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span></td></tr><tr><td class="ln">2</td><td class="cl"><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="p">)</span></td></tr><tr><td class="ln">3</td><td class="cl"><span class="p">{</span></td></tr><tr><td class="ln">4</td><td class="cl"><span class="w">    </span><span class="n">Cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">HORARIO DE LABORATORIO</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">5</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Lunes:</span><span class="se">\t</span><span class="se">\t</span><span class="s">8:00 - 10:00</span><span class="se">\n</span><span class="s">&quot;</span></td></tr><tr><td class="ln">6</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Miercoles:</span><span class="se">\t</span><span class="s">12:00 - 14:00</span><span class="se">\n</span><span class="s">;</span></td></tr><tr><td class="ln">7</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Viernes:</span><span class="se">\t</span><span class="s">9:00 - 11:00</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">8</td><td class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td></tr><tr><td class="ln">9</td><td class="cl"><span class="p">}</span></td></tr></table></figure></div>
+<ol>
+<li>Encuentra <strong>los cuatro errores</strong>.</li>
+<li>Para cada uno, <strong>explica con tus palabras</strong> por qué es un error y qué fase lo detecta.</li>
+<li>Escribe la versión corregida y compílala.</li>
+</ol>
+<textarea class="resp" placeholder="Escribe aquí tu respuesta. Se guarda en este navegador." rows="5"></textarea>
+<div class="sol" data-label="T6">
+<ol>
+<li>Falta <code>#include &lt;iostream&gt;</code> (línea 1): sin la biblioteca, <code>cout</code> no está declarado (<strong>compilación</strong>).</li>
+<li><code>Cout</code> con mayúscula (línea 4): C++ distingue mayúsculas; el nombre no existe (<strong>compilación</strong>).</li>
+<li>Falta <code>;</code> al final de la línea 5 (<strong>compilación</strong>; el error se reporta en la línea 6).</li>
+<li>Comillas sin cerrar en la línea 6: <code>"...\n;</code> debe ser <code>"...\n";</code> (<strong>compilación</strong>).</li>
+</ol>
+<div class="codewrap" data-mode="run" data-src="I2luY2x1ZGUgPGlvc3RyZWFtPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwppbnQgbWFpbigpCnsKICAgIGNvdXQgPDwgIkhPUkFSSU8gREUgTEFCT1JBVE9SSU9cbiI7CiAgICBjb3V0IDw8ICJMdW5lczpcdFx0ODowMCAtIDEwOjAwXG4iOwogICAgY291dCA8PCAiTWllcmNvbGVzOlx0MTI6MDAgLSAxNDowMFxuIjsKICAgIGNvdXQgPDwgIlZpZXJuZXM6XHQ5OjAwIC0gMTE6MDBcbiI7CiAgICByZXR1cm4gMDsKfQ==" data-title="horario.cpp"><figure class="code keep"><div class="code-t"><span>horario.cpp</span><span><span class="cbadge">C++</span></span></div><table class="src"><tr><td class="ln">1</td><td class="cl"><span class="cp">#</span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span></td></tr><tr><td class="ln">2</td><td class="cl"><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span></td></tr><tr><td class="ln">3</td><td class="cl"><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="p">)</span></td></tr><tr><td class="ln">4</td><td class="cl"><span class="p">{</span></td></tr><tr><td class="ln">5</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">HORARIO DE LABORATORIO</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">6</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Lunes:</span><span class="se">\t</span><span class="se">\t</span><span class="s">8:00 - 10:00</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">7</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Miercoles:</span><span class="se">\t</span><span class="s">12:00 - 14:00</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">8</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Viernes:</span><span class="se">\t</span><span class="s">9:00 - 11:00</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">9</td><td class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td></tr><tr><td class="ln">10</td><td class="cl"><span class="p">}</span></td></tr></table></figure><div class="term"><div class="term-t"><span>▶ Salida en consola</span></div><pre>HORARIO DE LABORATORIO
+Lunes:		8:00 - 10:00
+Miercoles:	12:00 - 14:00
+Viernes:	9:00 - 11:00</pre></div></div>
+</div>
+</div>
+<div class="caja c-tarea" data-ruta="B" id="t7">
+<div class="tarea-h">
+<div class="tarea-t">T7. Imagina el viaje del programa (imaginación)</div>
+<div class="tarea-m"><span class="ruta rb">Ruta B</span><span class="dur">⏱ 15 min</span></div>
+<div class="tarea-e"><span class="ef ef-r">Imaginación</span></div>
+</div>
+<p><strong>Contexto.</strong> Este programa declara una función <code>saludar</code> (adelanto del Tema 10) pero nunca la define.</p>
+<div class="codewrap" data-mode="display" data-src="I2luY2x1ZGUgPGlvc3RyZWFtPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwp2b2lkIHNhbHVkYXIoKTsgICAgICAgICAgLy8gcHJvdG90aXBvOiAiZXhpc3RlIHVuYSBmdW5jaW9uIHNhbHVkYXIiCmludCBtYWluKCkKewogICAgLy8gY29tZW50YXJpbyBxdWUgZGVzYXBhcmVjZQogICAgc2FsdWRhcigpOwogICAgcmV0dXJuIDA7Cn0=" data-title="viaje.cpp"><figure class="code keep"><div class="code-t"><span>viaje.cpp</span><span><span class="cbadge">C++</span><span class="cbadge cb-frag">fragmento</span></span></div><table class="src"><tr><td class="ln">1</td><td class="cl"><span class="cp">#</span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span></td></tr><tr><td class="ln">2</td><td class="cl"><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span></td></tr><tr><td class="ln">3</td><td class="cl"><span class="kt">void</span><span class="w"> </span><span class="nf">saludar</span><span class="p">(</span><span class="p">)</span><span class="p">;</span><span class="w">          </span><span class="c1">// prototipo: &quot;existe una funcion saludar&quot;</span></td></tr><tr><td class="ln">4</td><td class="cl"><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="p">)</span></td></tr><tr><td class="ln">5</td><td class="cl"><span class="p">{</span></td></tr><tr><td class="ln">6</td><td class="cl"><span class="w">    </span><span class="c1">// comentario que desaparece</span></td></tr><tr><td class="ln">7</td><td class="cl"><span class="w">    </span><span class="n">saludar</span><span class="p">(</span><span class="p">)</span><span class="p">;</span></td></tr><tr><td class="ln">8</td><td class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td></tr><tr><td class="ln">9</td><td class="cl"><span class="p">}</span></td></tr></table></figure></div>
+<p><strong>Sin compilarlo</strong>, imagina el recorrido por la cadena de la Figura 1 y responde:</p>
+<ol>
+<li>¿Qué le hace el <strong>preprocesador</strong> a las líneas 1 y 6?</li>
+<li>¿El <strong>compilador</strong> encuentra algún error? ¿Por qué sí o por qué no?</li>
+<li>¿Qué ocurre en el <strong>enlazador</strong>? Escribe el mensaje que esperas ver.</li>
+<li>Ahora compílalo y compara tu predicción con el mensaje real.</li>
+</ol>
+<textarea class="resp" placeholder="Escribe aquí tu respuesta. Se guarda en este navegador." rows="5"></textarea>
+<div class="sol" data-label="T7">
+<ol>
+<li>Sustituye la línea 1 por el contenido de <code>&lt;iostream&gt;</code> y elimina el comentario de la línea 6.</li>
+<li>No: la línea 3 (prototipo) le promete al compilador que <code>saludar</code> existe, así que la llamada de la línea 7 es válida sintácticamente.</li>
+<li>El enlazador busca la <strong>definición</strong> de <code>saludar</code> para unirla con <code>main</code> y no la encuentra:</li>
+</ol>
+<div class="codewrap" data-mode="err" data-src="I2luY2x1ZGUgPGlvc3RyZWFtPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwp2b2lkIHNhbHVkYXIoKTsKaW50IG1haW4oKQp7CiAgICBzYWx1ZGFyKCk7CiAgICByZXR1cm4gMDsKfQ=="><figure class="code keep"><table class="src"><tr><td class="ln">1</td><td class="cl"><span class="cp">#</span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span></td></tr><tr><td class="ln">2</td><td class="cl"><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span></td></tr><tr><td class="ln">3</td><td class="cl"><span class="kt">void</span><span class="w"> </span><span class="nf">saludar</span><span class="p">(</span><span class="p">)</span><span class="p">;</span></td></tr><tr><td class="ln">4</td><td class="cl"><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="p">)</span></td></tr><tr><td class="ln">5</td><td class="cl"><span class="p">{</span></td></tr><tr><td class="ln">6</td><td class="cl"><span class="w">    </span><span class="n">saludar</span><span class="p">(</span><span class="p">)</span><span class="p">;</span></td></tr><tr><td class="ln">7</td><td class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td></tr><tr><td class="ln">8</td><td class="cl"><span class="p">}</span></td></tr></table></figure><div class="term err"><div class="term-t"><span>▶ Mensaje del compilador (g++)</span></div><pre>/usr/bin/ld: ccqz8qss.o: in function `main&#x27;:
+main.cpp:(.text+0x9): undefined reference to `saludar()&#x27;
+collect2: error: ld returned 1 exit status</pre></div></div>
+<p>Se corrige agregando la definición: <code>void saludar() { cout &lt;&lt; "Hola\n"; }</code>.</p>
+</div>
+</div>
+<div class="caja c-tarea" data-ruta="AB" id="t8">
+<div class="tarea-h">
+<div class="tarea-t">T8. La cadena de compilación en vivo (reto colaborativo)</div>
+<div class="tarea-m"><span class="ruta ra">Ruta A</span> <span class="ruta rb">Ruta B</span><span class="dur">⏱ 30 min</span></div>
+<div class="tarea-e"><span class="ef ef-r">Memoria colectiva de trabajo</span> <span class="ef ef-x">Movimiento humano</span></div>
+</div>
+<div class="caja c-colab">
+<div class="caja-h"><span class="ico">👥</span><span class="kick">Reto colaborativo</span><span>Organización</span></div>
+<p><strong>Equipos de 4, heterogéneos</strong> (al menos un integrante de Ruta B). Roles: <strong>Programador</strong>, <strong>Preprocesador</strong>, <strong>Compilador</strong>, <strong>Enlazador</strong>. Cada integrante procesa solo su parte: así la carga del problema se reparte entre cuatro memorias de trabajo.</p>
+</div>
+<div class="caja c-movimiento">
+<div class="caja-h"><span class="ico">🙋</span><span class="kick">Actividad en el aula · movimiento humano</span><span>La hoja viaja por el salón</span></div>
+<ol>
+<li>El <strong>Programador</strong> escribe en una hoja un programa corto (5–8 líneas) que use <code>cout</code> y <strong>una función</strong> declarada con prototipo.</li>
+<li>Entrega la hoja (físicamente) al <strong>Preprocesador</strong>, que tacha los comentarios y pega una tarjeta que dice «contenido de iostream» sobre cada <code>#include</code>.</li>
+<li>El <strong>Compilador</strong> revisa línea por línea: <code>;</code>, llaves, comillas, mayúsculas. Si encuentra un error, marca <code>línea:columna</code> y devuelve la hoja al Programador.</li>
+<li>El <strong>Enlazador</strong> verifica que cada función llamada tenga una definición. Si falta, escribe <em>undefined reference</em>.</li>
+<li>Si la hoja pasa todas las fases, el equipo la escribe en la computadora y la ejecuta. Luego <strong>rotan roles</strong>.</li>
+</ol>
+</div>
+<p><strong>Producto del equipo:</strong> escriban un programa con <strong>un error de compilación, uno de enlace y uno de lógica</strong> y entréguenlo a otro equipo para que lo depure y explique cada error.</p>
+<div class="sol" data-label="T8">
+<p>Ejemplo de programa con un error de cada tipo (para el equipo que depura):</p>
+<ul>
+<li><strong>Compilación:</strong> falta <code>;</code> en un <code>cout</code>.</li>
+<li><strong>Enlace:</strong> se llama a <code>void despedir();</code> que solo tiene prototipo.</li>
+<li><strong>Lógica:</strong> el programa debe mostrar «Hoy es lunes» y muestra «Hoy es martes» (compila y corre, pero el resultado es incorrecto).</li>
+</ul>
+<p>La depuración se hace en ese orden: primero el compilador, luego el enlazador y, por último, la comparación de la salida con lo esperado.</p>
+</div>
+</div>
+<div class="caja c-tarea" data-ruta="B" id="t9">
+<div class="tarea-h">
+<div class="tarea-t">T9. Mejora este material (autogestión)</div>
+<div class="tarea-m"><span class="ruta rb">Ruta B</span><span class="dur">⏱ 20 min</span></div>
+<div class="tarea-e"><span class="ef ef-x">Autogestión</span> <span class="ef ef-n">Atención dividida</span> <span class="ef ef-n">Redundancia</span></div>
+</div>
+<p><strong>Contexto.</strong> Un sitio web explica el «Hola mundo» así:</p>
+<div class="caja c-autog">
+<div class="caja-h"><span class="ico">🛠</span><span class="kick">Autogestión: mejora este material</span><span>Material original (mal diseñado)</span></div>
+<p><em>El programa comienza con una directiva al preprocesador que incluye la biblioteca de flujos de entrada y salida, luego se indica el uso del espacio de nombres estándar, después se declara la función principal que devuelve un entero y dentro de su bloque se envía al flujo de salida la cadena literal Hola mundo seguida de un salto de línea y finalmente se devuelve cero. El programa comienza con una directiva al preprocesador…</em> (el párrafo se repite debajo del código, y el código aparece dos páginas después).</p>
+</div>
+<p>Identifica sus problemas de diseño (atención dividida, redundancia, texto excesivo) y <strong>rediséñalo</strong>: código a la izquierda y una explicación breve pegada a cada línea, sin repetir información. Compara tu versión con la solución.</p>
+<div class="sol" data-label="T9">
+<p>Problemas: (1) el texto está <strong>separado</strong> del código (atención dividida), (2) el párrafo se <strong>repite</strong> (redundancia), (3) un solo bloque de texto largo sin señalizar qué parte del código explica. Rediseño:</p>
+<div class="codewrap" data-mode="run" data-src="I2luY2x1ZGUgPGlvc3RyZWFtPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwppbnQgbWFpbigpCnsKICAgIGNvdXQgPDwgIkhvbGEgbXVuZG9cbiI7CiAgICByZXR1cm4gMDsKfQ==" data-title="hola_redisenado.cpp"><figure class="code anot keep"><div class="code-t"><span>hola_redisenado.cpp</span><span><span class="cbadge">C++</span></span></div><table class="src"><tr><td class="ln">1</td><td class="cl"><span class="cp">#</span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span></td><td class="an">Trae <code>cout</code> (biblioteca de E/S)</td></tr><tr><td class="ln">2</td><td class="cl"><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span></td><td class="an">Permite omitir <code>std::</code></td></tr><tr><td class="ln">3</td><td class="cl"><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="p">)</span></td><td class="an">Aquí empieza la ejecución</td></tr><tr><td class="ln">4</td><td class="cl"><span class="p">{</span></td><td class="an"></td></tr><tr><td class="ln">5</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Hola mundo</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td><td class="an">Envía el texto a la pantalla y salta de línea</td></tr><tr><td class="ln">6</td><td class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td><td class="an">Termina: «todo bien»</td></tr><tr><td class="ln">7</td><td class="cl"><span class="p">}</span></td><td class="an"></td></tr></table></figure><div class="term"><div class="term-t"><span>▶ Salida en consola</span></div><pre>Hola mundo</pre></div></div>
+</div>
+</div>
+</div>
+<footer class="panel-f"><button class="btn btn-hecho" type="button" data-paso="tareas" aria-pressed="false">Marcar este paso como terminado</button><a class="btn btn-sig" href="#protocolo" data-ir="protocolo">Siguiente paso: Protocolo verbal</a></footer>
+</section><section class="panel p-protocolo" id="protocolo" data-paso="protocolo" aria-labelledby="h-protocolo">
+<header class="panel-h"><p class="panel-n">Paso 4 de 5</p><h2 id="h-protocolo">Protocolo verbal</h2><p>Una experta resuelve un problema en voz alta: qué hace (cómo) y por qué lo hace.</p></header>
+<div class="contenido">
+<div class="caja c-protocolo">
+<div class="caja-h"><span class="ico">🎙</span><span class="kick">Protocolo verbal</span><span>Protocolo verbal · Una experta resuelve un problema nuevo pensando en voz alta</span><span class="h-ef"><span class="ef ef-n">Modalidad</span> <span class="ef ef-n">Ejemplo resuelto</span></span></div>
+<p><em>Guion para narración en audio (≈ 3 min). Para evitar el efecto de </em><em>información transitoria</em><em>, grábalo en 4 segmentos cortos que el estudiante pueda pausar y repetir, mostrando en pantalla el código mientras se escucha (sin el texto del guion, para no generar </em><em>redundancia</em><em>).</em></p>
+<p><strong>Problema:</strong> «Mostrar el recibo de una papelería con tres productos y el total, alineado en columnas».</p>
+<p><strong>Segmento 1 — Planear antes de teclear.</strong> <span class="tag-como">Cómo</span> Primero dibujo en papel cómo quiero que se vea la salida: un encabezado, tres renglones de producto y precio, y el total. <span class="tag-porque">Por qué</span> Si no sé qué quiero ver, no sé qué sentencias escribir; cada renglón de la salida será un <code>cout</code>.</p>
+<p><strong>Segmento 2 — Esqueleto y primera compilación.</strong> <span class="tag-como">Cómo</span> Escribo la plantilla: <code>#include &lt;iostream&gt;</code>, <code>using namespace std;</code>, <code>int main()</code>, llaves y <code>return 0;</code>. Compilo <strong>ya</strong>, aunque no haga nada. <span class="tag-porque">Por qué</span> Si hay un error ahora, sé que está en cinco líneas y no en cincuenta.</p>
+<p><strong>Segmento 3 — Agregar de a poco.</strong> <span class="tag-como">Cómo</span> Agrego el encabezado y compilo; luego los productos con <code>\t</code> entre nombre y precio. Veo que «Cuaderno» desalinea la columna porque es más largo, así que a los nombres cortos les pongo dos <code>\t</code>. <span class="tag-porque">Por qué</span> El tabulador salta a la siguiente columna fija (cada 8 caracteres); los textos de distinta longitud necesitan distinto número de saltos.</p>
+<p><strong>Segmento 4 — Leer el error, no adivinarlo.</strong> <span class="tag-como">Cómo</span> Al compilar aparece <code>recibo.cpp:9:5: error: expected ';' before 'cout'</code>. Voy a la línea <strong>9</strong>… pero el <code>;</code> que falta está al final de la <strong>8</strong>. <span class="tag-porque">Por qué</span> El compilador descubre que faltaba el <code>;</code> cuando ya está leyendo lo siguiente. Corrijo, compilo y comparo la salida con mi dibujo inicial.</p>
+<div class="codewrap" data-mode="run" data-src="I2luY2x1ZGUgPGlvc3RyZWFtPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwppbnQgbWFpbigpCnsKICAgIGNvdXQgPDwgIlBBUEVMRVJJQSBFTCBMQVBJWlxuIjsKICAgIGNvdXQgPDwgIlByb2R1Y3RvXHRQcmVjaW9cbiI7CiAgICBjb3V0IDw8ICJDdWFkZXJub1x0JDQwXG4iOwogICAgY291dCA8PCAiTGFwaXpcdFx0JDhcbiI7CiAgICBjb3V0IDw8ICJHb21hXHRcdCQ2XG4iOwogICAgY291dCA8PCAiVE9UQUxcdFx0JDU0XG4iOwogICAgcmV0dXJuIDA7Cn0=" data-title="recibo.cpp"><figure class="code keep"><div class="code-t"><span>recibo.cpp</span><span><span class="cbadge">C++</span></span></div><table class="src"><tr><td class="ln">1</td><td class="cl"><span class="cp">#</span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span></td></tr><tr><td class="ln">2</td><td class="cl"><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span></td></tr><tr><td class="ln">3</td><td class="cl"><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="p">)</span></td></tr><tr><td class="ln">4</td><td class="cl"><span class="p">{</span></td></tr><tr><td class="ln">5</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">PAPELERIA EL LAPIZ</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">6</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Producto</span><span class="se">\t</span><span class="s">Precio</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">7</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Cuaderno</span><span class="se">\t</span><span class="s">$40</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">8</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Lapiz</span><span class="se">\t</span><span class="se">\t</span><span class="s">$8</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">9</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Goma</span><span class="se">\t</span><span class="se">\t</span><span class="s">$6</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">10</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">TOTAL</span><span class="se">\t</span><span class="se">\t</span><span class="s">$54</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">11</td><td class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td></tr><tr><td class="ln">12</td><td class="cl"><span class="p">}</span></td></tr></table></figure><div class="term"><div class="term-t"><span>▶ Salida en consola</span></div><pre>PAPELERIA EL LAPIZ
+Producto	Precio
+Cuaderno	$40
+Lapiz		$8
+Goma		$6
+TOTAL		$54</pre></div></div>
+</div>
+</div>
+<footer class="panel-f"><button class="btn btn-hecho" type="button" data-paso="protocolo" aria-pressed="false">Marcar este paso como terminado</button><a class="btn btn-sig" href="#evaluacion" data-ir="evaluacion">Siguiente paso: Evaluación</a></footer>
+</section><section class="panel p-evaluacion" id="evaluacion" data-paso="evaluacion" aria-labelledby="h-evaluacion">
+<header class="panel-h"><p class="panel-n">Paso 5 de 5</p><h2 id="h-evaluacion">Evaluación</h2><p>Recall test, comprehension test y autorregistro. Tus respuestas se guardan en este navegador.</p></header>
+<div class="contenido">
+<div class="caja c-recall">
+<div class="caja-h"><span class="ico"></span><span class="kick">Recall test</span><span>5.1 Recall test · conocimiento declarativo (10 reactivos)</span></div>
+<ol>
+<li>¿Cuál es el punto de entrada de todo programa en C++?
+   a) <code>inicio()</code> · b) <code>main()</code> · c) <code>#include</code> · d) <code>cout</code></li>
+<li>¿Qué biblioteca debe incluirse para usar <code>cout</code>?
+   a) <code>&lt;string&gt;</code> · b) <code>&lt;cmath&gt;</code> · c) <code>&lt;iostream&gt;</code> · d) <code>&lt;cstdio&gt;</code></li>
+<li>¿Qué símbolo marca el final de una sentencia? _____</li>
+<li>Relaciona cada fase con lo que produce: (1) Preprocesamiento, (2) Compilación, (3) Enlace.
+   a) Ejecutable · b) Código fuente expandido · c) Código objeto</li>
+<li>Verdadero o falso: <code>Cout</code> y <code>cout</code> son el mismo nombre para el compilador.</li>
+<li>¿Qué hace la secuencia de escape <code>\t</code>?</li>
+<li>¿Cómo se escribe un comentario que ocupa varias líneas?</li>
+<li>El mensaje <em>undefined reference to main</em> aparece en la fase de:
+   a) edición · b) preprocesamiento · c) compilación · d) enlace</li>
+<li>¿Qué significa <code>return 0;</code> al final de <code>main</code>?</li>
+<li>Explica en una oración la diferencia entre un error de <strong>sintaxis</strong> y un error de <strong>lógica</strong>.</li>
+</ol>
+</div>
+<div class="caja c-compr">
+<div class="caja-h"><span class="ico"></span><span class="kick">Comprehension test</span><span>5.2 Comprehension test · conocimiento procedimental</span></div>
+<p><strong>P1. Predice la salida</strong> exacta (marca con ⏎ los saltos de línea):</p>
+<div class="codewrap" data-mode="check" data-src="I2luY2x1ZGUgPGlvc3RyZWFtPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwppbnQgbWFpbigpCnsKICAgIGNvdXQgPDwgIlVubyI7CiAgICBjb3V0IDw8ICJEb3NcbiI7CiAgICBjb3V0IDw8ICJUcmVzIiA8PCBlbmRsIDw8ICJDdWF0cm9cblxuIjsKICAgIGNvdXQgPDwgIkZpbiI7CiAgICByZXR1cm4gMDsKfQ==" data-title="p1.cpp"><figure class="code keep"><div class="code-t"><span>p1.cpp</span><span><span class="cbadge">C++</span></span></div><table class="src"><tr><td class="ln">1</td><td class="cl"><span class="cp">#</span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span></td></tr><tr><td class="ln">2</td><td class="cl"><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span></td></tr><tr><td class="ln">3</td><td class="cl"><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="p">)</span></td></tr><tr><td class="ln">4</td><td class="cl"><span class="p">{</span></td></tr><tr><td class="ln">5</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Uno</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">6</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Dos</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">7</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Tres</span><span class="s">&quot;</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="n">endl</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Cuatro</span><span class="se">\n</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">8</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Fin</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">9</td><td class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td></tr><tr><td class="ln">10</td><td class="cl"><span class="p">}</span></td></tr></table></figure></div>
+<p><strong>P2. Corrige</strong> el programa (tiene tres errores) y explica en qué fase se detecta cada uno:</p>
+<div class="codewrap" data-mode="display" data-src="I2luY2x1ZGUgPGlvc3RyZWFtPgp1c2luZyBuYW1lc3BhY2Ugc3RkCmludCBtYWluKCkKewogICAgY291dCA8PCAiUHJ1ZWJhIGRlIGVycm9yZXNcbiI7CiAgICBjb3V0IDw8ICJMaW5lYSBkb3NcbjsKICAgIHJldHVybiAwOw==" data-title="p2.cpp"><figure class="code keep"><div class="code-t"><span>p2.cpp</span><span><span class="cbadge">C++</span><span class="cbadge cb-frag">fragmento</span></span></div><table class="src"><tr><td class="ln">1</td><td class="cl"><span class="cp">#</span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span></td></tr><tr><td class="ln">2</td><td class="cl"><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span></td></tr><tr><td class="ln">3</td><td class="cl"><span class="nn">int</span><span class="w"> </span><span class="nn">main</span><span class="p">(</span><span class="p">)</span></td></tr><tr><td class="ln">4</td><td class="cl"><span class="p">{</span></td></tr><tr><td class="ln">5</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Prueba de errores</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">6</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Linea dos</span><span class="se">\n</span><span class="s">;</span></td></tr><tr><td class="ln">7</td><td class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td></tr></table></figure></div>
+<p><strong>P3. Ordena las líneas</strong> para formar un programa válido que muestre <code>Listo</code>:
+<code>}</code> · <code>return 0;</code> · <code>#include &lt;iostream&gt;</code> · <code>{</code> · <code>int main()</code> · <code>std::cout &lt;&lt; "Listo\n";</code></p>
+<p><strong>P4. Escribe un programa</strong> que muestre tu horario de clases de un día con tres materias, una por renglón, con la hora y la materia alineadas por <code>\t</code>, y un comentario de bloque con tu nombre.</p>
+</div>
+<div class="caja c-registro">
+<div class="caja-h"><span class="ico">📊</span><span class="kick">Autorregistro</span><span>5.3 Autorregistro</span></div>
+<p>Marca lo que ya puedes hacer:</p>
+<ul class="checks">
+<li>Escribo la plantilla de un programa sin mirar la tarjeta.</li>
+<li>Uso <code>cout</code>, <code>\n</code>, <code>endl</code> y <code>\t</code> para dar formato a la salida.</li>
+<li>Explico qué hace cada fase de la cadena de compilación.</li>
+<li>Leo un mensaje de error y voy a la línea y columna correctas.</li>
+</ul>
+<p><strong>¿Cuánto esfuerzo mental te exigió este tema?</strong> (escala de Paas, 1 = muy, muy bajo · 9 = muy, muy alto)</p>
+<div class="escala"><span><b>1</b></span><span><b>2</b></span><span><b>3</b></span><span><b>4</b></span><span><b>5</b></span><span><b>6</b></span><span><b>7</b></span><span><b>8</b></span><span><b>9</b></span></div>
+</div>
+<div class="sol" data-label="Evaluación 5.1 (recall)">
+<p>1 b · 2 c · 3 <code>;</code> · 4 (1)-b, (2)-c, (3)-a · 5 Falso · 6 Inserta un tabulador (salta a la siguiente columna) · 7 Entre <code>/*</code> y <code>*/</code> · 8 d · 9 Termina <code>main</code> e informa al sistema operativo que el programa finalizó correctamente · 10 Un error de sintaxis viola las reglas del lenguaje y lo detecta el compilador; un error de lógica compila y se ejecuta, pero produce un resultado incorrecto.</p>
+</div>
+<div class="sol" data-label="Evaluación 5.2 (comprehension)">
+<p><strong>P1.</strong> Salida real:</p>
+<div class="codewrap" data-mode="run" data-src="I2luY2x1ZGUgPGlvc3RyZWFtPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwppbnQgbWFpbigpCnsKICAgIGNvdXQgPDwgIlVubyI7CiAgICBjb3V0IDw8ICJEb3NcbiI7CiAgICBjb3V0IDw8ICJUcmVzIiA8PCBlbmRsIDw8ICJDdWF0cm9cblxuIjsKICAgIGNvdXQgPDwgIkZpbiI7CiAgICByZXR1cm4gMDsKfQ==" data-title="p1.cpp"><figure class="code keep"><div class="code-t"><span>p1.cpp</span><span><span class="cbadge">C++</span></span></div><table class="src"><tr><td class="ln">1</td><td class="cl"><span class="cp">#</span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span></td></tr><tr><td class="ln">2</td><td class="cl"><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span></td></tr><tr><td class="ln">3</td><td class="cl"><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="p">)</span></td></tr><tr><td class="ln">4</td><td class="cl"><span class="p">{</span></td></tr><tr><td class="ln">5</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Uno</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">6</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Dos</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">7</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Tres</span><span class="s">&quot;</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="n">endl</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Cuatro</span><span class="se">\n</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">8</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Fin</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">9</td><td class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td></tr><tr><td class="ln">10</td><td class="cl"><span class="p">}</span></td></tr></table></figure><div class="term"><div class="term-t"><span>▶ Salida en consola</span></div><pre>UnoDos
+Tres
+Cuatro
+
+Fin</pre></div></div>
+<p><strong>P2.</strong> (1) Falta <code>;</code> después de <code>using namespace std</code> — compilación. (2) Comillas sin cerrar en <code>"Linea dos\n;</code> — compilación. (3) Falta la llave de cierre <code>}</code> de <code>main</code> — compilación.</p>
+<p><strong>P3.</strong> <code>#include &lt;iostream&gt;</code> → <code>int main()</code> → <code>{</code> → <code>std::cout &lt;&lt; "Listo\n";</code> → <code>return 0;</code> → <code>}</code>.</p>
+<p><strong>P4.</strong> Ejemplo:</p>
+<div class="codewrap" data-mode="run" data-src="LyogSG9yYXJpbyBkZWwgbHVuZXMKICAgQXV0b3I6IEx1aXMgUGVyZXogKi8KI2luY2x1ZGUgPGlvc3RyZWFtPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwppbnQgbWFpbigpCnsKICAgIGNvdXQgPDwgIjA3OjAwXHRNYXRlbWF0aWNhc1xuIjsKICAgIGNvdXQgPDwgIjA5OjAwXHRQcm9ncmFtYWNpb25cbiI7CiAgICBjb3V0IDw8ICIxMTowMFx0RmlzaWNhXG4iOwogICAgcmV0dXJuIDA7Cn0=" data-title="horario.cpp"><figure class="code keep"><div class="code-t"><span>horario.cpp</span><span><span class="cbadge">C++</span></span></div><table class="src"><tr><td class="ln">1</td><td class="cl"><span class="cm">/* Horario del lunes</span></td></tr><tr><td class="ln">2</td><td class="cl"><span class="cm">   Autor: Luis Perez */</span></td></tr><tr><td class="ln">3</td><td class="cl"><span class="cp">#</span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span></td></tr><tr><td class="ln">4</td><td class="cl"><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span></td></tr><tr><td class="ln">5</td><td class="cl"><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="p">)</span></td></tr><tr><td class="ln">6</td><td class="cl"><span class="p">{</span></td></tr><tr><td class="ln">7</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">07:00</span><span class="se">\t</span><span class="s">Matematicas</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">8</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">09:00</span><span class="se">\t</span><span class="s">Programacion</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">9</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">11:00</span><span class="se">\t</span><span class="s">Fisica</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">10</td><td class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td></tr><tr><td class="ln">11</td><td class="cl"><span class="p">}</span></td></tr></table></figure><div class="term"><div class="term-t"><span>▶ Salida en consola</span></div><pre>07:00	Matematicas
+09:00	Programacion
+11:00	Fisica</pre></div></div>
+</div></div>
+<footer class="panel-f"><button class="btn btn-hecho" type="button" data-paso="evaluacion" aria-pressed="false">Marcar este paso como terminado</button><a class="btn btn-sig" href="#glosario" data-ir="glosario">Ver glosario y fuentes</a></footer>
+</section><section class="panel p-glosario" id="glosario" data-paso="glosario" aria-labelledby="h-glosario">
+<header class="panel-h"><h2 id="h-glosario">Glosario y fuentes</h2><p>Términos clave en español e inglés, útiles para leer el <i>C++ Crash Course</i> y la documentación.</p></header>
+<div class="contenido"><div class="tabla-scroll"><table class="tb glos"><thead><tr><th>Español</th><th>English</th><th>Significado</th></tr></thead><tbody><tr><td><b>código fuente</b></td><td><i>source code</i></td><td>Texto del programa escrito en C++ (archivo <code>.cpp</code>).</td></tr><tr><td><b>compilador</b></td><td><i>compiler</i></td><td>Programa que traduce el código fuente a código objeto (lenguaje máquina).</td></tr><tr><td><b>preprocesador</b></td><td><i>preprocessor</i></td><td>Fase previa que procesa las directivas <code>#</code> (por ejemplo, copia el contenido de <code>&lt;iostream&gt;</code>).</td></tr><tr><td><b>enlazador</b></td><td><i>linker</i></td><td>Une los archivos objeto con las bibliotecas y produce el ejecutable.</td></tr><tr><td><b>archivo objeto</b></td><td><i>object file</i></td><td>Resultado de compilar un <code>.cpp</code> (<code>.o</code> en g++, <code>.obj</code> en Visual Studio).</td></tr><tr><td><b>ejecutable</b></td><td><i>executable</i></td><td>Archivo que el sistema operativo puede ejecutar (<code>.exe</code> en Windows).</td></tr><tr><td><b>cadena de herramientas</b></td><td><i>tool chain</i></td><td>Conjunto preprocesador + compilador + enlazador.</td></tr><tr><td><b>sentencia / instrucción</b></td><td><i>statement</i></td><td>Unidad de acción del programa; en C++ termina en <code>;</code>.</td></tr><tr><td><b>directiva</b></td><td><i>directive</i></td><td>Instrucción para el preprocesador; empieza con <code>#</code>.</td></tr><tr><td><b>biblioteca</b></td><td><i>library</i></td><td>Código ya escrito que se incorpora al programa (p. ej., <code>&lt;iostream&gt;</code>).</td></tr><tr><td><b>flujo de salida</b></td><td><i>output stream</i></td><td><code>cout</code>: canal por el que el programa envía texto a la pantalla.</td></tr><tr><td><b>literal de cadena</b></td><td><i>string literal</i></td><td>Texto entre comillas dobles, como <code>"Hola"</code>.</td></tr><tr><td><b>secuencia de escape</b></td><td><i>escape sequence</i></td><td>Combinación con <code>\</code> que representa un carácter especial: <code>\n</code>, <code>\t</code>.</td></tr><tr><td><b>espacio de nombres</b></td><td><i>namespace</i></td><td>Agrupación de nombres; la biblioteca estándar vive en <code>std</code>.</td></tr><tr><td><b>punto de entrada</b></td><td><i>entry point</i></td><td>Lugar donde inicia la ejecución: la función <code>main</code>.</td></tr><tr><td><b>error de compilación</b></td><td><i>compile-time error</i></td><td>Error detectado al traducir (sintaxis, nombres no declarados).</td></tr><tr><td><b>error de enlace</b></td><td><i>link-time error</i></td><td>Error detectado al unir piezas (función declarada pero no definida).</td></tr><tr><td><b>error en tiempo de ejecución</b></td><td><i>runtime error</i></td><td>Error que aparece cuando el programa ya se está ejecutando.</td></tr><tr><td><b>depurador</b></td><td><i>debugger</i></td><td>Herramienta para ejecutar paso a paso e inspeccionar el programa (GDB, Visual Studio).</td></tr></tbody></table></div><h3>Fuentes del tema</h3><ul class="fuentes"><li>Betancourt Uscátegui, J. F. y Polanco Guzmán, I. Y. (2021). <em>115 ejercicios resueltos de programación C++</em>. Ediciones de la U / Ra-Ma. Cap. 1: §1.1 Características, §1.2.1 Instrucciones, §1.2.3 Bibliotecas, §1.2.6 Comentarios, §1.2.7 Delimitadores, §1.3 Fases de la ejecución, §1.4 Tipos de errores, §1.5 Ejemplo de un programa.</li><li>Lospinoso, J. (2019). <em>C++ Crash Course</em>. No Starch Press. Cap. 1 «Up and Running»: The Structure of a Basic C++ Program, The Compiler Tool Chain, Comments, Debugging.</li></ul></div>
+</section><section class="panel p-docente" id="docente" data-paso="docente" aria-labelledby="h-docente">
+<header class="panel-h"><h2 id="h-docente">Ficha de diseño instruccional</h2><p>Para el docente: objetivos por ruta, evaluación, efectos de la teoría de la carga cognitiva por componente, instrucción diferenciada y plan de implementación (Fases 1 a 3 del modelo).</p></header>
+<div class="contenido"><div class="ficha-wrap">
+<div class="kv"><div><span>Tema</span><b>01. Estructura de un programa en C++ y cadena de compilación</b></div><div><span>Duración sugerida</span><b>4 h · 2 sesiones de 2 h</b></div><div><span>Conocimientos previos</span><b>Ninguno (tema de entrada). Uso básico de la computadora y de un editor de texto.</b></div></div>
+<h3>1. Objetivos de aprendizaje por nivel</h3>
+<p class="mini">Ruta A: estudiantes <b>sin</b> conocimientos previos del tema · Ruta B: estudiantes <b>con</b> conocimientos previos (el <a href="diagnostico.html">diagnóstico</a> de la Fase 1 decide la ruta; ver la <a href="guia.html">guía docente</a>).</p>
+<div class="tabla-scroll"><table class="tb obj"><thead><tr><th><span class="ruta ra">Ruta A</span> Al terminar podrás…</th><th><span class="ruta rb">Ruta B</span> Al terminar podrás…</th></tr></thead><tbody><tr><td><ul><li>Identificar las partes de un programa básico: comentarios, directivas <code>#include</code>, función <code>main</code>, bloque <code>{ }</code>, sentencias y <code>return 0;</code>.</li><li>Escribir, compilar y ejecutar programas que muestren texto en pantalla con <code>cout</code>, <code>\n</code>, <code>endl</code> y <code>\t</code>.</li><li>Describir con sus palabras las fases de edición, preprocesamiento, compilación, enlace y ejecución.</li><li>Distinguir errores de compilación, de enlace, de ejecución y de lógica, y corregir los errores de sintaxis más comunes.</li></ul></td><td><ul><li>Explicar qué recibe y qué produce cada fase de la cadena de compilación (<code>.cpp</code>, <code>.o/.obj</code>, <code>.exe</code>).</li><li>Interpretar mensajes de g++ con el formato <code>archivo:línea:columna</code> y corregir varios errores encadenados empezando por el primero.</li><li>Explicar por qué un prototipo sin definición produce un error de <strong>enlace</strong> y no de compilación.</li><li>Comparar la salida con <code>cout</code> (C++) y con <code>printf</code> (C), como la usa el <em>C++ Crash Course</em>.</li></ul></td></tr></tbody></table></div>
+<h3>2. Métodos de evaluación</h3>
+<div class="tabla-scroll"><table class="tb "><thead><tr><th>Instrumento</th><th>Tipo de conocimiento</th><th>Contenido en este tema</th></tr></thead><tbody><tr><td><strong>Recall test</strong> (sección 5.1)</td><td>Declarativo</td><td>Reactivos de opción múltiple, relación y verdadero/falso sobre conceptos y sintaxis.</td></tr><tr><td><strong>Comprehension test</strong> (sección 5.2)</td><td>Procedimental (transferencia cercana)</td><td>Predecir salidas, corregir errores y escribir un programa nuevo.</td></tr><tr><td>Carga cognitiva, CIS, IMMS y MSLQ</td><td>Percepción y motivación</td><td>Al cerrar el bloque de temas; instrumentos en los anexos A.1, A.4, A.5 y A.7 de la tesis (ver Tema 00).</td></tr></tbody></table></div>
+<h3>3. Preselección de efectos de la TCC por componente 4C/ID</h3>
+<div class="tabla-scroll"><table class="tb efx"><thead><tr><th>Componente</th><th>Efecto</th><th>Cómo se aplica en este tema</th></tr></thead><tbody><tr><td><strong>Información de soporte</strong></td><td><span class="ef ef-n">Elementos aislados</span></td><td>La anatomía del programa se presenta pieza por pieza (main → cout → using → \n/\t → comentarios) antes del programa completo.</td></tr><tr><td></td><td><span class="ef ef-n">Atención dividida</span></td><td>Código anotado línea por línea: la explicación está pegada a cada línea, no en un párrafo aparte.</td></tr><tr><td></td><td><span class="ef ef-n">Ejemplo resuelto</span></td><td>Tarjeta de bienvenida: algoritmo → pseudocódigo → C++ comentado → salida real.</td></tr><tr><td></td><td><span class="ef ef-n">Modalidad</span></td><td>El diagrama de la cadena de compilación se acompaña con el guion narrado del protocolo verbal (audio breve).</td></tr><tr><td><strong>Información procedimental</strong></td><td><span class="ef ef-n">Variabilidad</span></td><td>Errores frecuentes mostrados en contextos distintos, con el mensaje real de g++.</td></tr><tr><td></td><td><span class="ef ef-n">Redundancia</span></td><td>La tarjeta de sintaxis evita repetir teoría: solo plantillas y reglas mínimas para consultar.</td></tr><tr><td></td><td><span class="ef ef-r">Autoexplicación</span></td><td>Preguntas «¿por qué falla?» antes de mostrar cada corrección.</td></tr><tr><td><strong>Tareas de aprendizaje</strong></td><td><span class="ef ef-n">Ejemplo resuelto</span></td><td>T1: cartel resuelto + problema gemelo.</td></tr><tr><td></td><td><span class="ef ef-n">Problema por completar</span></td><td>T2 con pistas; T3 sin pistas y con más huecos.</td></tr><tr><td></td><td><span class="ef ef-r">Desvanecimiento de guía</span></td><td>Secuencia T1 → T2 → T3 → T4 (de resuelto a convencional).</td></tr><tr><td></td><td><span class="ef ef-r">Solución libre</span></td><td>T5: dibujar una figura con todas las formas de salida que conozcas.</td></tr><tr><td></td><td><span class="ef ef-r">Autoexplicación</span></td><td>T6: encontrar, explicar y corregir errores en el programa de un compañero.</td></tr><tr><td></td><td><span class="ef ef-r">Imaginación</span></td><td>T7 (Ruta B): imaginar el viaje de un programa por la cadena antes de compilarlo.</td></tr><tr><td></td><td><span class="ef ef-r">Memoria colectiva de trabajo</span></td><td>T8: la cadena de compilación en vivo, por equipos heterogéneos.</td></tr><tr><td></td><td><span class="ef ef-x">Movimiento humano</span></td><td>T8: cada integrante representa una fase y «mueve» el programa físicamente.</td></tr><tr><td></td><td><span class="ef ef-x">Autogestión</span></td><td>T9: rediseñar una explicación mal diseñada aplicando los efectos de la TCC.</td></tr></tbody></table></div>
+<h3>4. Matriz de instrucción diferenciada (Tomlinson × 4C/ID)</h3>
+<div class="tabla-scroll"><table class="tb dif"><thead><tr><th>Elemento</th><th>Componente 4C/ID</th><th>Ruta A · sin previos</th><th>Ruta B · con previos</th></tr></thead><tbody><tr><td><strong>Contenido</strong></td><td>Información de soporte</td><td>Conceptos aislados con ejemplos resueltos y código anotado; uso de compilador en línea para no instalar nada.</td><td>Lectura de la sección completa como repaso; foco en el error de enlace y la comparación <code>cout</code> vs <code>printf</code>.</td></tr><tr><td><strong>Proceso</strong></td><td>Tareas de aprendizaje</td><td>T1 → T4 en orden, en pares con un estudiante de Ruta B como apoyo; el instructor retira la ayuda gradualmente.</td><td>T3, T6, T7 y T9 de forma autónoma; actúan como «copilotos» en la T8.</td></tr><tr><td><strong>Producto</strong></td><td>Tareas de aprendizaje</td><td>Programa «tarjeta de presentación» (T4) funcionando.</td><td>Un programa con tres errores sembrados (uno de cada tipo) para que otro equipo lo depure.</td></tr><tr><td><strong>Entorno</strong></td><td>Información procedimental</td><td>IDE o compilador en línea, con la tarjeta de sintaxis impresa a un lado.</td><td>Terminal con <code>g++ -Wall</code>; lectura directa de mensajes del compilador.</td></tr></tbody></table></div>
+<h3>5. Plan de implementación (Fase 3)</h3>
+<div class="tabla-scroll"><table class="tb plan"><thead><tr><th>Momento</th><th>Componente</th><th>Actividad</th><th>Tiempo</th></tr></thead><tbody><tr><td>Apertura</td><td>Soporte</td><td>Analogía de la receta y pregunta «¿cómo entiende la computadora tu texto?». Mostrar un juego hecho en C++ (relevancia).</td><td>10 min</td></tr><tr><td>Desarrollo</td><td>Soporte + protocolo</td><td>Conceptos 1 a 6 (uno a la vez), anatomía anotada, cadena de compilación narrada y ejemplo resuelto 1.6.</td><td>60 min</td></tr><tr><td>Práctica guiada</td><td>Tareas + procedimental</td><td>Ruta A: T1 → T2 → T3. Ruta B: T3, T6, T7. Tarjeta de sintaxis a la vista.</td><td>60 min</td></tr><tr><td>Práctica colaborativa</td><td>Tareas</td><td>T8 por equipos heterogéneos (4 integrantes).</td><td>30 min</td></tr><tr><td>Autónoma y cierre</td><td>Tareas + evaluación</td><td>T4 (todos), T5 (A), T9 (B); recall test, comprehension test y autorregistro.</td><td>80 min</td></tr></tbody></table></div></div></div>
+</section></div>
+</div>
+<nav class="tema-nav" aria-label="Temas vecinos"><span></span><a class="next" href="tema-02.html"><small>Tema siguiente</small>02. Tipos, variables y E/S</a></nav>
+</div>
+</main>
+<footer class="pie">
+  <p>Material diseñado con el modelo instruccional <b>mapa de ruta CLT4BP</b> (Sandoval Medina, 2026): teoría de la carga cognitiva, 4C/ID, ARCS, instrucción diferenciada y protocolos verbales.</p>
+  <p>Fuentes: Betancourt Uscátegui y Polanco Guzmán (2021), <i>115 ejercicios resueltos de programación C++</i>; Lospinoso (2019), <i>C++ Crash Course</i>. Los programas se compilaron con g++ (C++20) y sus salidas son reales.</p>
+  <p>Tu progreso se guarda solo en este navegador. Puedes exportarlo desde <a href="progreso.html">Mi progreso</a>.</p>
+</footer>
+<script src="assets/datos.js"></script>
+<script>window.PAGE={"tipo": "tema", "num": "01", "bloque": "I"};</script>
+<script src="assets/curso.js"></script>
+</body>
+</html>

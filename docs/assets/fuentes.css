@@ -1,0 +1,17 @@
+/* Fuentes autoalojadas (SIL Open Font License; DejaVu: licencia Bitstream Vera). Ver fonts/LICENCIAS.txt */
+@font-face{ font-family:"Overpass"; font-style:normal; font-weight:400; font-display:swap; src:url(fonts/overpass-latin-400-normal.woff2) format("woff2"); }
+@font-face{ font-family:"Overpass"; font-style:italic; font-weight:400; font-display:swap; src:url(fonts/overpass-latin-400-italic.woff2) format("woff2"); }
+@font-face{ font-family:"Overpass"; font-style:normal; font-weight:600; font-display:swap; src:url(fonts/overpass-latin-600-normal.woff2) format("woff2"); }
+@font-face{ font-family:"Overpass"; font-style:normal; font-weight:700; font-display:swap; src:url(fonts/overpass-latin-700-normal.woff2) format("woff2"); }
+@font-face{ font-family:"Overpass"; font-style:normal; font-weight:800; font-display:swap; src:url(fonts/overpass-latin-800-normal.woff2) format("woff2"); }
+@font-face{ font-family:"Overpass Mono"; font-style:normal; font-weight:400; font-display:swap; src:url(fonts/overpass-mono-latin-400-normal.woff2) format("woff2"); }
+@font-face{ font-family:"Overpass Mono"; font-style:normal; font-weight:600; font-display:swap; src:url(fonts/overpass-mono-latin-600-normal.woff2) format("woff2"); }
+/* Inter y DejaVu Sans Mono: solo para los diagramas SVG (se generaron con sus métricas) */
+@font-face{ font-family:"Inter"; font-style:normal; font-weight:400; font-display:swap; src:url(fonts/inter-latin-400-normal.woff2) format("woff2"); }
+@font-face{ font-family:"Inter"; font-style:normal; font-weight:600; font-display:swap; src:url(fonts/inter-latin-600-normal.woff2) format("woff2"); }
+@font-face{ font-family:"Inter"; font-style:normal; font-weight:700; font-display:swap; src:url(fonts/inter-latin-700-normal.woff2) format("woff2"); }
+@font-face{ font-family:"DejaVu Sans Mono"; font-style:normal; font-weight:400; font-display:swap; src:url(fonts/dejavu-sans-mono-subset.woff2) format("woff2"); }
+/* El punto medio (·) de Overpass casi no deja espacio a la derecha: se toma de Inter */
+@font-face{ font-family:"PuntoMedio"; font-weight:400; src:url(fonts/inter-latin-400-normal.woff2) format("woff2"); unicode-range:U+00B7; }
+@font-face{ font-family:"PuntoMedio"; font-weight:600; src:url(fonts/inter-latin-600-normal.woff2) format("woff2"); unicode-range:U+00B7; }
+@font-face{ font-family:"PuntoMedio"; font-weight:700 800; src:url(fonts/inter-latin-700-normal.woff2) format("woff2"); unicode-range:U+00B7; }

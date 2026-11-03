@@ -1,0 +1,1371 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guía docente · Programación básica en C++</title>
+<meta name="description" content="Curso interactivo de programación básica en C++ diseñado con el mapa de ruta CLT4BP.">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/fuentes.css">
+<link rel="stylesheet" href="assets/curso.css">
+<script>try{var t=localStorage.getItem('clt4bp-tema');if(t)document.documentElement.dataset.theme=t;}catch(e){}document.documentElement.classList.add('js');</script>
+</head>
+<body>
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+<header class="sitio">
+  <a class="marca" href="index.html"><svg class="logo" viewBox="0 0 40 40" aria-hidden="true"><path d="M2 15.5 H38" stroke="var(--ra)" stroke-width="4.5" stroke-linecap="round"/><path d="M2 24.5 H38" stroke="var(--rb)" stroke-width="4.5" stroke-linecap="round"/><rect x="13" y="7" width="14" height="26" rx="7" fill="var(--surface)" stroke="var(--ink)" stroke-width="3"/></svg><span><b>Programación básica en C++</b><small>Curso interactivo con el mapa de ruta CLT4BP</small></span></a>
+  <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-principal">Menú</button>
+  <nav id="nav-principal" class="nav" aria-label="Secciones del curso"><a href="index.html">Mapa del curso</a><a href="diagnostico.html">Diagnóstico</a><a href="progreso.html">Mi progreso</a><a href="glosario.html">Glosario</a><a href="guia.html" aria-current="page">Guía docente</a>
+    <button class="tema-btn" type="button" title="Cambiar entre modo claro y oscuro"><span class="tema-ico" aria-hidden="true"></span><span class="tema-txt">Tema</span></button>
+  </nav>
+</header>
+<main id="contenido">
+<section class="pagina-h"><h1>Guía docente</h1><p class="lede">Guía del instructor: aplicar el mapa de ruta CLT4BP al curso de programación básica en C++</p></section>
+<div class="guia"><nav class="guia-toc" aria-label="Contenido de la guía"><p class="rail-t">Contenido</p><ol><li><a href="#1-como-usar-este-material">1. Cómo usar este material</a><ol><li><a href="#1-1-anatomia-de-cada-cuadernillo">1.1 Anatomía de cada cuadernillo</a></li><li><a href="#1-2-convenciones-visuales">1.2 Convenciones visuales</a></li><li><a href="#1-3-fuentes-y-alcance">1.3 Fuentes y alcance</a></li></ol></li><li><a href="#2-mapa-de-temas-y-prerrequisitos">2. Mapa de temas y prerrequisitos</a><ol><li><a href="#2-1-formato-de-objetivos-de-aprendizaje-tabla-5-1-completado">2.1 Formato de objetivos de aprendizaje (Tabla 5.1, completado para el curso)</a></li></ol></li><li><a href="#3-fase-1-analisis">3. Fase 1 · Análisis</a><ol><li><a href="#3-1-objetivos-y-metodos-de-evaluacion">3.1 Objetivos y métodos de evaluación</a></li><li><a href="#3-2-entorno-grupal">3.2 Entorno grupal</a></li><li><a href="#3-3-prueba-diagnostica-de-entrada-bloques-i-y-ii">3.3 Prueba diagnóstica de entrada (Bloques I y II)</a></li><li><a href="#3-4-preseleccion-de-efectos-por-tema-tabla-5-6-completada">3.4 Preselección de efectos por tema (Tabla 5.6, completada)</a></li></ol></li><li><a href="#4-fase-2-diseno-y-desarrollo">4. Fase 2 · Diseño y desarrollo</a><ol><li><a href="#4-1-como-se-construyo-cada-componente">4.1 Cómo se construyó cada componente</a></li><li><a href="#4-2-motivacion-el-modelo-arcs-en-el-material">4.2 Motivación: el modelo ARCS en el material</a></li><li><a href="#4-3-instruccion-diferenciada-tabla-5-8">4.3 Instrucción diferenciada (Tabla 5.8)</a></li><li><a href="#4-4-protocolos-verbales-como-grabarlos">4.4 Protocolos verbales: cómo grabarlos</a></li></ol></li><li><a href="#5-fase-3-aplicacion-y-evaluacion">5. Fase 3 · Aplicación y evaluación</a><ol><li><a href="#5-1-plan-de-implementacion-de-una-sesion-tipica">5.1 Plan de implementación de una sesión típica</a></li><li><a href="#5-2-cronograma-sugerido-16-semanas-6-h-por-semana">5.2 Cronograma sugerido (16 semanas · 6 h por semana)</a></li><li><a href="#5-3-registro-y-analisis-de-resultados">5.3 Registro y análisis de resultados</a></li><li><a href="#5-4-revision-de-resultados-iterar">5.4 Revisión de resultados: ¿iterar?</a></li></ol></li><li><a href="#6-formatos-para-el-instructor">6. Formatos para el instructor</a><ol><li><a href="#referencias-de-los-instrumentos-y-del-marco-teorico">Referencias de los instrumentos y del marco teórico</a></li></ol></li><li><a href="#fichas-y-pdf">Fichas de diseño y cuadernillos PDF</a></li></ol></nav>
+<article class="guia-art contenido"><div class="caja c-nota guia-web"><div class="caja-h"><span class="ico">📝</span><span>En la versión web</span></div>
+<ul><li>El <a href="diagnostico.html">diagnóstico</a> es una versión calificada automáticamente de la prueba de la sección 3.3: 8 reactivos por bloque y el mismo criterio de 70 % para sugerir la Ruta B.</li>
+<li>En cada tema, las tareas de la otra ruta aparecen plegadas, los problemas por completar se califican al instante y las soluciones están junto a cada tarea.</li>
+<li>El recall test, el comprehension test, el autorregistro (escala de esfuerzo mental de Paas) y la encuesta de carga cognitiva del anexo A.7 se responden en línea. Cada alumno puede exportar sus resultados en JSON o CSV desde «Mi progreso» para alimentar las tablas 5.2 y 5.13.</li></ul></div><section class="guia-sec" id="1-como-usar-este-material"><h2>1. Cómo usar este material</h2>
+<p>Esta colección es el producto de las <strong>Fases 1 y 2</strong> del modelo instruccional <strong>mapa de ruta CLT4BP</strong> (<em>Cognitive Load Theory for Basic Programming</em>) aplicado a un curso completo de programación básica en C++, y una propuesta lista para la <strong>Fase 3</strong>. Consta de esta guía y de <strong>17 cuadernillos</strong>, uno por tema, que pueden usarse completos (un semestre) o por separado (un tema o una unidad), como prevé el modelo.</p>
+<div class="caja c-resumen">
+<div class="caja-h"><span class="ico">🗺</span><span class="kick">Resumen visual</span><span>El mapa de ruta CLT4BP</span></div>
+<figure class="fig" style="max-width:100%"><svg class="dg" width="1160" height="524"
+ viewBox="0.00 0.00 869.60 392.60" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(10.8 381.8)">
+<title>G</title>
+<g id="clust1" class="cluster">
+<title>cluster1</title>
+<path fill="#f8fbff" stroke="#93c5fd" d="M20,-8C20,-8 212,-8 212,-8 218,-8 224,-14 224,-20 224,-20 224,-351 224,-351 224,-357 218,-363 212,-363 212,-363 20,-363 20,-363 14,-363 8,-357 8,-351 8,-351 8,-20 8,-20 8,-14 14,-8 20,-8"/>
+<text text-anchor="middle" x="116" y="-350.2" font-family="Inter Display" font-size="11.00" fill="#1d4ed8">FASE 1 · ANÁLISIS</text>
+</g>
+<g id="clust2" class="cluster">
+<title>cluster2</title>
+<path fill="#fbfaff" stroke="#c4b5fd" d="M247,-16.5C247,-16.5 405,-16.5 405,-16.5 411,-16.5 417,-22.5 417,-28.5 417,-28.5 417,-351 417,-351 417,-357 411,-363 405,-363 405,-363 247,-363 247,-363 241,-363 235,-357 235,-351 235,-351 235,-28.5 235,-28.5 235,-22.5 241,-16.5 247,-16.5"/>
+<text text-anchor="middle" x="326" y="-350.2" font-family="Inter Display" font-size="11.00" fill="#6d28d9">FASE 2 · DISEÑO Y DESARROLLO</text>
+</g>
+<g id="clust3" class="cluster">
+<title>cluster3</title>
+<path fill="#fffafa" stroke="#fda4af" d="M586,-23C586,-23 828,-23 828,-23 834,-23 840,-29 840,-35 840,-35 840,-351 840,-351 840,-357 834,-363 828,-363 828,-363 586,-363 586,-363 580,-363 574,-357 574,-351 574,-351 574,-35 574,-35 574,-29 580,-23 586,-23"/>
+<text text-anchor="middle" x="707" y="-350.2" font-family="Inter Display" font-size="11.00" fill="#be123c">FASE 3 · APLICACIÓN Y EVALUACIÓN</text>
+</g>
+
+<g id="node1" class="node">
+<title>a1</title>
+<path fill="#eff6ff" stroke="#2563eb" stroke-width="1.3" d="M187,-335C187,-335 45,-335 45,-335 39,-335 33,-329 33,-323 33,-323 33,-300 33,-300 33,-294 39,-288 45,-288 45,-288 187,-288 187,-288 193,-288 199,-294 199,-300 199,-300 199,-323 199,-323 199,-329 193,-335 187,-335"/>
+<text text-anchor="middle" x="116" y="-321.8" font-family="Inter" font-size="11.50">Objetivos de aprendizaje</text>
+<text text-anchor="middle" x="116" y="-308.8" font-family="Inter" font-size="11.50">y métodos de evaluación</text>
+<text text-anchor="middle" x="116" y="-295.8" font-family="Inter" font-size="11.50">(recall · comprehension)</text>
+</g>
+
+<g id="node2" class="node">
+<title>a2</title>
+<path fill="#eff6ff" stroke="#2563eb" stroke-width="1.3" d="M187,-263C187,-263 45,-263 45,-263 39,-263 33,-257 33,-251 33,-251 33,-228 33,-228 33,-222 39,-216 45,-216 45,-216 187,-216 187,-216 193,-216 199,-222 199,-228 199,-228 199,-251 199,-251 199,-257 193,-263 187,-263"/>
+<text text-anchor="middle" x="116" y="-249.8" font-family="Inter" font-size="11.50">Entorno grupal:</text>
+<text text-anchor="middle" x="116" y="-236.8" font-family="Inter" font-size="11.50">motivación (MSLQ),</text>
+<text text-anchor="middle" x="116" y="-223.8" font-family="Inter" font-size="11.50">previos, estrategias</text>
+</g>
+
+<g id="edge1" class="edge">
+<title>a1&#45;&gt;a2</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M116,-287.97C116,-282.46 116,-276.48 116,-270.67"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="118.45,-270.47 116,-263.47 113.55,-270.47 118.45,-270.47"/>
+</g>
+
+<g id="node5" class="node">
+<title>b0</title>
+<path fill="#ecfdf5" stroke="#059669" stroke-width="1.3" d="M397,-335C397,-335 255,-335 255,-335 249,-335 243,-329 243,-323 243,-323 243,-300 243,-300 243,-294 249,-288 255,-288 255,-288 397,-288 397,-288 403,-288 409,-294 409,-300 409,-300 409,-323 409,-323 409,-329 403,-335 397,-335"/>
+<text text-anchor="middle" x="326" y="-321.8" font-family="Inter" font-size="11.50">Estrategias diferenciadas</text>
+<text text-anchor="middle" x="326" y="-308.8" font-family="Inter" font-size="11.50">(Tomlinson)</text>
+<text text-anchor="middle" x="326" y="-295.8" font-family="Inter" font-size="11.50">Ruta A &#160;· &#160;Ruta B</text>
+</g>
+
+
+<g id="node3" class="node">
+<title>a3</title>
+<path fill="#eff6ff" stroke="#2563eb" stroke-width="1.3" d="M187.67,-165C187.67,-165 44.33,-165 44.33,-165 38.67,-165 33,-159.33 33,-153.67 33,-153.67 33,-142.33 33,-142.33 33,-136.67 38.67,-131 44.33,-131 44.33,-131 187.67,-131 187.67,-131 193.33,-131 199,-136.67 199,-142.33 199,-142.33 199,-153.67 199,-153.67 199,-159.33 193.33,-165 187.67,-165"/>
+<text text-anchor="middle" x="116" y="-151.8" font-family="Inter" font-size="11.50">Preselección de efectos</text>
+<text text-anchor="middle" x="116" y="-138.8" font-family="Inter" font-size="11.50">de la TCC por tema</text>
+</g>
+
+<g id="edge2" class="edge">
+<title>a2&#45;&gt;a3</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M116,-215.92C116,-202.55 116,-185.64 116,-172.17"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="118.45,-172.08 116,-165.08 113.55,-172.08 118.45,-172.08"/>
+</g>
+
+<g id="node4" class="node">
+<title>d1</title>
+<polygon fill="#fff7ed" stroke="#c2410c" stroke-width="1.3" points="116,-80 16,-48 116,-16 216,-48 116,-80"/>
+<text text-anchor="middle" x="116" y="-51.2" font-family="Inter" font-size="11.00">¿Previos</text>
+<text text-anchor="middle" x="116" y="-39.2" font-family="Inter" font-size="11.00">heterogéneos?</text>
+</g>
+
+<g id="edge3" class="edge">
+<title>a3&#45;&gt;d1</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M116,-130.82C116,-119.04 116,-102.59 116,-87.53"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="118.45,-87.27 116,-80.27 113.55,-87.27 118.45,-87.27"/>
+</g>
+
+<g id="edge13" class="edge">
+<title>d1&#45;&gt;b0</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M164.62,-64.54C184.66,-70.34 208.25,-76.38 230,-80 283.48,-88.89 472.84,-75.08 504,-116 549.59,-175.87 481.08,-219.06 420,-263 409,-270.91 396.5,-278.22 384.28,-284.62"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="383.04,-282.5 377.93,-287.88 385.27,-286.86 383.04,-282.5"/>
+<text text-anchor="middle" x="510.5" y="-195.2" font-family="Inter" font-size="11.00" fill="#334155"> sí</text>
+</g>
+
+<g id="node6" class="node">
+<title>b1</title>
+<path fill="#ecfdf5" stroke="#059669" stroke-width="1.3" d="M397.67,-256.5C397.67,-256.5 254.33,-256.5 254.33,-256.5 248.67,-256.5 243,-250.83 243,-245.17 243,-245.17 243,-233.83 243,-233.83 243,-228.17 248.67,-222.5 254.33,-222.5 254.33,-222.5 397.67,-222.5 397.67,-222.5 403.33,-222.5 409,-228.17 409,-233.83 409,-233.83 409,-245.17 409,-245.17 409,-250.83 403.33,-256.5 397.67,-256.5"/>
+<text text-anchor="middle" x="326" y="-243.3" font-family="Inter" font-size="11.50">Tareas de aprendizaje</text>
+<text text-anchor="middle" x="326" y="-230.3" font-family="Inter" font-size="11.50">(ARCS · DI · efectos TCC)</text>
+</g>
+
+<g id="edge14" class="edge">
+<title>d1&#45;&gt;b1</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M166.86,-63.74C186.5,-69.2 209.21,-75.21 230,-80 313.75,-99.29 365.17,-49.81 420,-116 438.14,-137.91 433.81,-155.13 420,-180 410.52,-197.06 393.78,-209.79 377.02,-218.94"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="375.45,-217 370.37,-222.4 377.71,-221.34 375.45,-217"/>
+<text text-anchor="middle" x="465.5" y="-145.2" font-family="Inter" font-size="11.00" fill="#334155"> no: una ruta</text>
+</g>
+
+<g id="edge4" class="edge">
+<title>b0&#45;&gt;b1</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M326,-287.97C326,-280.29 326,-271.7 326,-263.96"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="328.45,-263.56 326,-256.56 323.55,-263.56 328.45,-263.56"/>
+</g>
+
+<g id="node9" class="node">
+<title>c1</title>
+<path fill="#eff6ff" stroke="#2563eb" stroke-width="1.3" d="M767.5,-335C767.5,-335 594.5,-335 594.5,-335 588.5,-335 582.5,-329 582.5,-323 582.5,-323 582.5,-300 582.5,-300 582.5,-294 588.5,-288 594.5,-288 594.5,-288 767.5,-288 767.5,-288 773.5,-288 779.5,-294 779.5,-300 779.5,-300 779.5,-323 779.5,-323 779.5,-329 773.5,-335 767.5,-335"/>
+<text text-anchor="middle" x="681" y="-321.8" font-family="Inter" font-size="11.50">Plan de implementación:</text>
+<text text-anchor="middle" x="681" y="-308.8" font-family="Inter" font-size="11.50">soporte → tareas</text>
+<text text-anchor="middle" x="681" y="-295.8" font-family="Inter" font-size="11.50">(+ procedimental justo a tiempo)</text>
+</g>
+
+
+<g id="node7" class="node">
+<title>b2</title>
+<path fill="#eff6ff" stroke="#2563eb" stroke-width="1.3" d="M397.67,-165C397.67,-165 254.33,-165 254.33,-165 248.67,-165 243,-159.33 243,-153.67 243,-153.67 243,-142.33 243,-142.33 243,-136.67 248.67,-131 254.33,-131 254.33,-131 397.67,-131 397.67,-131 403.33,-131 409,-136.67 409,-142.33 409,-142.33 409,-153.67 409,-153.67 409,-159.33 403.33,-165 397.67,-165"/>
+<text text-anchor="middle" x="326" y="-151.8" font-family="Inter" font-size="11.50">Información de soporte</text>
+<text text-anchor="middle" x="326" y="-138.8" font-family="Inter" font-size="11.50">(ARCS · DI · efectos TCC)</text>
+</g>
+
+<g id="edge5" class="edge">
+<title>b1&#45;&gt;b2</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M326,-222.5C326,-208.59 326,-188.24 326,-172.48"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="328.45,-172.16 326,-165.16 323.55,-172.16 328.45,-172.16"/>
+</g>
+
+<g id="node8" class="node">
+<title>b3</title>
+<path fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.3" d="M397,-71.5C397,-71.5 255,-71.5 255,-71.5 249,-71.5 243,-65.5 243,-59.5 243,-59.5 243,-36.5 243,-36.5 243,-30.5 249,-24.5 255,-24.5 255,-24.5 397,-24.5 397,-24.5 403,-24.5 409,-30.5 409,-36.5 409,-36.5 409,-59.5 409,-59.5 409,-65.5 403,-71.5 397,-71.5"/>
+<text text-anchor="middle" x="326" y="-58.3" font-family="Inter" font-size="11.50">Información procedimental</text>
+<text text-anchor="middle" x="326" y="-45.3" font-family="Inter" font-size="11.50">(isomórficos · guías ·</text>
+<text text-anchor="middle" x="326" y="-32.3" font-family="Inter" font-size="11.50">protocolos verbales)</text>
+</g>
+
+<g id="edge6" class="edge">
+<title>b2&#45;&gt;b3</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M326,-130.82C326,-116.74 326,-95.97 326,-78.88"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="328.45,-78.81 326,-71.81 323.55,-78.81 328.45,-78.81"/>
+</g>
+
+<g id="edge15" class="edge">
+<title>b3&#45;&gt;c1</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M409.08,-60.88C455.96,-67.26 515.66,-74.85 569,-80 609.57,-83.91 715.46,-73.95 752,-92 821.89,-126.52 833.82,-197.86 791,-263 785.43,-271.47 777.99,-278.44 769.6,-284.17"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="768.25,-282.13 763.65,-287.94 770.87,-286.27 768.25,-282.13"/>
+</g>
+
+<g id="node10" class="node">
+<title>c2</title>
+<path fill="#eff6ff" stroke="#2563eb" stroke-width="1.3" d="M768,-263C768,-263 594,-263 594,-263 588,-263 582,-257 582,-251 582,-251 582,-228 582,-228 582,-222 588,-216 594,-216 594,-216 768,-216 768,-216 774,-216 780,-222 780,-228 780,-228 780,-251 780,-251 780,-257 774,-263 768,-263"/>
+<text text-anchor="middle" x="681" y="-249.8" font-family="Inter" font-size="11.50">Evaluación: recall y</text>
+<text text-anchor="middle" x="681" y="-236.8" font-family="Inter" font-size="11.50">comprehension, carga cognitiva,</text>
+<text text-anchor="middle" x="681" y="-223.8" font-family="Inter" font-size="11.50">CIS, IMMS, MSLQ final</text>
+</g>
+
+<g id="edge7" class="edge">
+<title>c1&#45;&gt;c2</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M681,-287.97C681,-282.46 681,-276.48 681,-270.67"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="683.45,-270.47 681,-263.47 678.55,-270.47 683.45,-270.47"/>
+</g>
+
+<g id="node11" class="node">
+<title>d2</title>
+<polygon fill="#fff7ed" stroke="#c2410c" stroke-width="1.3" points="681,-180 600,-148 681,-116 762,-148 681,-180"/>
+<text text-anchor="middle" x="681" y="-151.2" font-family="Inter" font-size="11.00">¿Objetivos</text>
+<text text-anchor="middle" x="681" y="-139.2" font-family="Inter" font-size="11.00">cumplidos?</text>
+</g>
+
+<g id="edge8" class="edge">
+<title>c2&#45;&gt;d2</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M681,-215.92C681,-207.16 681,-196.9 681,-187.08"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="683.45,-187.03 681,-180.03 678.55,-187.03 683.45,-187.03"/>
+</g>
+
+<g id="node12" class="node">
+<title>fin</title>
+<path fill="#0f172a" stroke="#0f172a" stroke-width="1.3" d="M674.83,-61C674.83,-61 591.17,-61 591.17,-61 586.83,-61 582.5,-56.67 582.5,-52.33 582.5,-52.33 582.5,-43.67 582.5,-43.67 582.5,-39.33 586.83,-35 591.17,-35 591.17,-35 674.83,-35 674.83,-35 679.17,-35 683.5,-39.33 683.5,-43.67 683.5,-43.67 683.5,-52.33 683.5,-52.33 683.5,-56.67 679.17,-61 674.83,-61"/>
+<text text-anchor="middle" x="633" y="-45.3" font-family="Inter" font-size="11.50" fill="#ffffff">Fin del ciclo</text>
+</g>
+
+<g id="edge9" class="edge">
+<title>d2&#45;&gt;fin</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M668.26,-121C660.03,-104.18 649.5,-82.69 642.1,-67.58"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="644.22,-66.34 638.94,-61.13 639.82,-68.49 644.22,-66.34"/>
+<text text-anchor="middle" x="665.5" y="-95.2" font-family="Inter" font-size="11.00" fill="#334155"> sí</text>
+</g>
+
+<g id="node13" class="node">
+<title>it</title>
+<path fill="#fff1f2" stroke="#be123c" stroke-width="1.3" stroke-dasharray="5,2" d="M820.67,-65C820.67,-65 717.33,-65 717.33,-65 711.67,-65 706,-59.33 706,-53.67 706,-53.67 706,-42.33 706,-42.33 706,-36.67 711.67,-31 717.33,-31 717.33,-31 820.67,-31 820.67,-31 826.33,-31 832,-36.67 832,-42.33 832,-42.33 832,-53.67 832,-53.67 832,-59.33 826.33,-65 820.67,-65"/>
+<text text-anchor="middle" x="769" y="-51.8" font-family="Inter" font-size="11.50" fill="#9f1239">Iterar: volver a la</text>
+<text text-anchor="middle" x="769" y="-38.8" font-family="Inter" font-size="11.50" fill="#9f1239">Fase 1 o a la Fase 2</text>
+</g>
+
+<g id="edge10" class="edge">
+<title>d2&#45;&gt;it</title>
+<path fill="none" stroke="#be123c" stroke-width="1.2" d="M701.85,-123.78C716.34,-107.64 735.5,-86.3 749.65,-70.55"/>
+<polygon fill="#be123c" stroke="#be123c" stroke-width="1.2" points="751.76,-71.86 754.62,-65.02 748.12,-68.59 751.76,-71.86"/>
+<text text-anchor="middle" x="738.5" y="-95.2" font-family="Inter" font-size="11.00" fill="#be123c"> no</text>
+</g>
+</g>
+</svg>
+</figure>
+<p><em>Basado en la Figura 4.3 y las Tablas 5.7, 5.9 y 5.10 de Sandoval Medina (2026).</em></p>
+</div>
+<h2 id="1-1-anatomia-de-cada-cuadernillo">1.1 Anatomía de cada cuadernillo</h2>
+<p>Todos los temas tienen la misma estructura, para que estudiantes e instructor sepan siempre dónde encontrar cada cosa (esto reduce la carga extrínseca de «orientarse» en el material):</p>
+<div class="tabla-scroll"><table>
+<thead>
+<tr>
+<th>Sección del PDF</th>
+<th>Elemento del modelo CLT4BP</th>
+<th>Contenido</th>
+<th>Quién la usa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Portada</strong></td>
+<td>Mapa de ruta</td>
+<td>Número, título, lema, rutas A/B y fuentes del tema.</td>
+<td>Todos</td>
+</tr>
+<tr>
+<td><strong>0. Ficha de diseño instruccional</strong></td>
+<td>Fases 1, 2 y 3</td>
+<td>Objetivos por ruta (cf. Tabla 5.14), métodos de evaluación, efectos de la TCC por componente (cf. Tablas 5.6 y 5.15), matriz Tomlinson × 4C/ID (Tabla 5.8) y plan de implementación (Tabla 5.10).</td>
+<td>Instructor</td>
+</tr>
+<tr>
+<td><strong>1. Información de soporte</strong></td>
+<td>Componente 4C/ID</td>
+<td>Analogía, pregunta para pensar, relevancia (ARCS), conceptos uno por uno, actividad de movimiento humano, ejemplo resuelto y mapa del tema.</td>
+<td>Estudiantes (antes de las tareas)</td>
+</tr>
+<tr>
+<td><strong>2. Información procedimental</strong></td>
+<td>Componente 4C/ID</td>
+<td>Tarjetas de sintaxis, guía de preguntas de rutina, errores frecuentes y ejemplos isomórficos.</td>
+<td>Estudiantes (durante las tareas)</td>
+</tr>
+<tr>
+<td><strong>3. Tareas de aprendizaje</strong></td>
+<td>Componente 4C/ID</td>
+<td>8 o 9 tareas con desvanecimiento de guía, marcadas por ruta.</td>
+<td>Estudiantes</td>
+</tr>
+<tr>
+<td><strong>4. Protocolo verbal</strong></td>
+<td>Información procedimental</td>
+<td>Guion segmentado de un experto (CÓMO y POR QUÉ) para grabar o leer en voz alta.</td>
+<td>Instructor → estudiantes</td>
+</tr>
+<tr>
+<td><strong>5. Evaluación</strong></td>
+<td>Fase 3</td>
+<td>Recall test, comprehension test y autorregistro con escala de esfuerzo mental.</td>
+<td>Instructor / estudiantes</td>
+</tr>
+<tr>
+<td><strong>Glosario y Anexo</strong></td>
+<td>—</td>
+<td>Términos español–inglés (para leer el <em>C++ Crash Course</em>) y soluciones de tareas y evaluación.</td>
+<td>Todos</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="1-2-convenciones-visuales">1.2 Convenciones visuales</h2>
+<div class="leyenda">
+<div style="--c:var(--sop)"><b>Azul · Información de soporte</b>Modelos mentales y conceptos; se presenta antes de las tareas y queda disponible.</div>
+<div style="--c:var(--pro)"><b>Violeta · Información procedimental</b>Reglas «cómo se hace», consultadas justo a tiempo.</div>
+<div style="--c:var(--tar)"><b>Verde · Tareas de aprendizaje</b>De menor a mayor complejidad, con ayuda que se desvanece.</div>
+<div style="--c:var(--pv)"><b>Naranja · Protocolo verbal</b>Razonamiento experto en voz alta, en segmentos.</div>
+<div style="--c:var(--ev)"><b>Rosa · Evaluación</b>Recall test, comprehension test y autorregistro.</div>
+<div style="--c:var(--fi)"><b>Gris · Ficha del instructor</b>Decisiones de diseño de las Fases 1–3.</div>
+</div>
+<ul>
+<li><strong>Rutas.</strong> <span class="ruta ra">Ruta A</span> tareas para estudiantes <strong>sin</strong> conocimientos previos del tema; <span class="ruta rb">Ruta B</span> para estudiantes <strong>con</strong> conocimientos previos; <span class="ruta ra">Ruta A</span> <span class="ruta rb">Ruta B</span> para ambos.</li>
+<li><strong>Efectos de la TCC</strong> (clasificación de la Tabla 4.2 de la tesis): <span class="ef ef-n">Ejemplo resuelto</span> naranja = efecto para <strong>nuevos conocimientos</strong>; <span class="ef ef-r">Autoexplicación</span> violeta = efecto para <strong>reforzar conocimientos previos</strong>; <span class="ef ef-x">Movimiento humano</span> gris = aplicable a <strong>ambos</strong> (movimiento humano y autogestión). Cada recuadro y cada tarea indica los efectos que aplica.</li>
+<li><strong>ARCS.</strong> La etiqueta <span class="arcs">ARCS · Relevancia</span> señala dónde se trabaja explícitamente una categoría motivacional de Keller.</li>
+<li><strong>Protocolos.</strong> Las etiquetas <span class="tag-como">Cómo</span> y <span class="tag-porque">Por qué</span> separan el procedimiento de su justificación.</li>
+</ul>
+<p>Así se ven los recuadros de código. Todo programa con salida fue <strong>compilado y ejecutado</strong> con g++ al generar el material, de modo que las salidas y los mensajes de error que aparecen son reales:</p>
+<div class="cols">
+<div>
+<div class="codewrap" data-mode="run" data-src="I2luY2x1ZGUgPGlvc3RyZWFtPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwppbnQgbWFpbigpCnsKICAgIGludCBuOwogICAgY291dCA8PCAiTnVtZXJvOiAiOwogICAgY2luID4+IG47CiAgICBjb3V0IDw8ICJDdWFkcmFkbzogIiA8PCBuICogbiA8PCAiXG4iOwogICAgcmV0dXJuIDA7Cn0=" data-stdin="Nwo=" data-title="ejemplo.cpp"><figure class="code anot keep"><div class="code-t"><span>ejemplo.cpp</span><span><span class="cbadge">C++</span></span></div><table class="src"><tr><td class="ln">1</td><td class="cl"><span class="cp">#</span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span></td><td class="an"></td></tr><tr><td class="ln">2</td><td class="cl"><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span></td><td class="an"></td></tr><tr><td class="ln">3</td><td class="cl"><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="p">)</span></td><td class="an"></td></tr><tr><td class="ln">4</td><td class="cl"><span class="p">{</span></td><td class="an"></td></tr><tr><td class="ln">5</td><td class="cl"><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">;</span></td><td class="an"></td></tr><tr><td class="ln">6</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Numero: </span><span class="s">&quot;</span><span class="p">;</span></td><td class="an">Anotación al margen</td></tr><tr><td class="ln">7</td><td class="cl"><span class="w">    </span><span class="n">cin</span><span class="w"> </span><span class="o">&gt;</span><span class="o">&gt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span></td><td class="an"></td></tr><tr><td class="ln">8</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Cuadrado: </span><span class="s">&quot;</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td><td class="an"></td></tr><tr><td class="ln">9</td><td class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td><td class="an"></td></tr><tr><td class="ln">10</td><td class="cl"><span class="p">}</span></td><td class="an"></td></tr></table></figure><div class="term"><div class="term-t"><span>▶ Salida en consola</span><span class="term-in"><b>resaltado</b> = lo que se teclea</span></div><pre>Numero: <span class="kin">7</span>
+Cuadrado: 49</pre></div></div>
+<p><em>En la consola, el texto resaltado es lo que teclea el usuario.</em></p>
+</div>
+<div>
+<div class="codewrap" data-mode="display" data-src="aW50IGRvYmxlKGludCB4KQp7CiAgICByZXR1cm4gX18xX187ICAgLy8gMTogY29tcGxldGEKfQ==" data-blank="1" data-title="por_completar.cpp"><figure class="code keep"><div class="code-t"><span>por_completar.cpp</span><span><span class="cbadge">C++</span><span class="cbadge cb-blank">por completar</span></span></div><table class="src"><tr><td class="ln">1</td><td class="cl"><span class="kt">int</span><span class="w"> </span><span class="nf">doble</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">)</span></td></tr><tr><td class="ln">2</td><td class="cl"><span class="p">{</span></td></tr><tr><td class="ln">3</td><td class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n"><input class="hole" data-n="1" aria-label="Hueco 1" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="①"></span><span class="p">;</span><span class="w">   </span><span class="c1">// 1: completa</span></td></tr><tr><td class="ln">4</td><td class="cl"><span class="p">}</span></td></tr></table></figure></div>
+<p><em>Problema por completar: los huecos numerados se resuelven en el Anexo.</em></p>
+<div class="codewrap" data-mode="err" data-src="aW50IG1haW4oKQp7CiAgICBpbnQgdG90YWwgPSA1OwogICAgcmV0dXJuIHRvdGw7Cn0="><figure class="code keep"><table class="src"><tr><td class="ln">1</td><td class="cl"><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="p">)</span></td></tr><tr><td class="ln">2</td><td class="cl"><span class="p">{</span></td></tr><tr><td class="ln">3</td><td class="cl"><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">total</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span></td></tr><tr><td class="ln">4</td><td class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">totl</span><span class="p">;</span></td></tr><tr><td class="ln">5</td><td class="cl"><span class="p">}</span></td></tr></table></figure><div class="term err"><div class="term-t"><span>▶ Mensaje del compilador (g++)</span></div><pre>main.cpp:4:12: error: ‘totl’ was not declared in this scope; did you mean ‘total’?
+    4 |     return totl;
+      |            ^~~~
+      |            total
+main.cpp:3:9: warning: unused variable ‘total’ [-Wunused-variable]</pre></div></div>
+<p><em>Mensaje real del compilador (abreviado).</em></p>
+</div>
+</div>
+<h2 id="1-3-fuentes-y-alcance">1.3 Fuentes y alcance</h2>
+<div class="caja c-nota">
+<div class="caja-h"><span class="ico">📝</span><span class="kick">Nota</span><span>Sobre los libros base</span></div>
+<ul>
+<li><strong>Betancourt y Polanco (2021)</strong> organiza el temario (capítulos 1 a 13: estructura del lenguaje, secuenciales, selectivas, repetitivas, arreglos, matrices, funciones, recursividad, cadenas, estructuras, archivos y POO). El archivo disponible para este trabajo contenía el <strong>índice y los capítulos 1 y 2</strong>; de los capítulos 3 a 13 se tomó la <strong>estructura temática del índice</strong> (las secciones se citan en cada cuadernillo) y los ejemplos y ejercicios de esos temas son <strong>originales</strong>, alineados con ella.</li>
+<li><strong>Lospinoso (2019)</strong> aporta el enfoque moderno de C++ (inicialización con llaves, <code>enum class</code>, referencias, <code>nullptr</code>, ciclo de vida de los objetos, <em>streams</em>). Se tomaron solo sus capítulos de <strong>programación básica</strong>; quedan fuera los temas avanzados (herencia, plantillas, excepciones, biblioteca estándar en profundidad, concurrencia).</li>
+<li><strong>La tesis</strong> aporta el modelo y numerosos ejemplos que se reutilizan: la analogía de las casas y direcciones (punteros), la estructura <code>Empleado</code>/<code>Fecha</code> (estructuras anidadas), la secuencia de desvanecimiento de guía para ciclos, la solución libre de ordenamiento, el cuadrado mágico colaborativo y el manejo de archivos del segundo piloto.</li>
+</ul>
+</div>
+<div class="caja c-tip">
+<div class="caja-h"><span class="ico">✔</span><span class="kick">Consejo</span><span>Entorno técnico recomendado</span></div>
+<p>Cualquier compilador moderno de C++ (g++, clang o MSVC) con un IDE que tenga <strong>depurador</strong> (Code::Blocks, Visual Studio Code, Dev-C++, CLion u otro), porque varias tareas piden observar variables paso a paso. Los programas se verificaron con <code>g++ -std=c++20 -Wall -Wextra</code>.</p>
+</div>
+</section><section class="guia-sec" id="2-mapa-de-temas-y-prerrequisitos"><h2>2. Mapa de temas y prerrequisitos</h2>
+<figure class="fig" style="max-width:100%"><svg class="dg" width="941" height="456"
+ viewBox="0.00 0.00 705.60 341.60" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(10.8 330.8)">
+<title>G</title>
+<g id="clust1" class="cluster">
+<title>cluster_b1</title>
+<path fill="transparent" stroke="#93c5fd" d="M40,-242C40,-242 664,-242 664,-242 670,-242 676,-248 676,-254 676,-254 676,-300 676,-300 676,-306 670,-312 664,-312 664,-312 40,-312 40,-312 34,-312 28,-306 28,-300 28,-300 28,-254 28,-254 28,-248 34,-242 40,-242"/>
+<text text-anchor="middle" x="352" y="-299.2" font-family="Inter Display" font-size="11.00" fill="#1d4ed8">Bloque I · Fundamentos</text>
+</g>
+<g id="clust2" class="cluster">
+<title>cluster_b2</title>
+<path fill="transparent" stroke="#6ee7b7" d="M20,-164C20,-164 538,-164 538,-164 544,-164 550,-170 550,-176 550,-176 550,-222 550,-222 550,-228 544,-234 538,-234 538,-234 20,-234 20,-234 14,-234 8,-228 8,-222 8,-222 8,-176 8,-176 8,-170 14,-164 20,-164"/>
+<text text-anchor="middle" x="279" y="-221.2" font-family="Inter Display" font-size="11.00" fill="#047857">Bloque II · Repetición y arreglos</text>
+</g>
+<g id="clust3" class="cluster">
+<title>cluster_b3</title>
+<path fill="transparent" stroke="#c4b5fd" d="M40,-86C40,-86 536,-86 536,-86 542,-86 548,-92 548,-98 548,-98 548,-144 548,-144 548,-150 542,-156 536,-156 536,-156 40,-156 40,-156 34,-156 28,-150 28,-144 28,-144 28,-98 28,-98 28,-92 34,-86 40,-86"/>
+<text text-anchor="middle" x="288" y="-143.2" font-family="Inter Display" font-size="11.00" fill="#6d28d9">Bloque III · Modularidad y datos</text>
+</g>
+<g id="clust4" class="cluster">
+<title>cluster_b4</title>
+<path fill="transparent" stroke="#fdba74" d="M40,-8C40,-8 534,-8 534,-8 540,-8 546,-14 546,-20 546,-20 546,-66 546,-66 546,-72 540,-78 534,-78 534,-78 40,-78 40,-78 34,-78 28,-72 28,-66 28,-66 28,-20 28,-20 28,-14 34,-8 40,-8"/>
+<text text-anchor="middle" x="287" y="-65.2" font-family="Inter Display" font-size="11.00" fill="#c2410c">Bloque IV · Memoria, archivos y objetos</text>
+</g>
+
+<g id="node1" class="node">
+<title>t01</title>
+<path fill="#eff6ff" stroke="#2563eb" stroke-width="1.3" d="M136.67,-284C136.67,-284 47.33,-284 47.33,-284 41.67,-284 36,-278.33 36,-272.67 36,-272.67 36,-261.33 36,-261.33 36,-255.67 41.67,-250 47.33,-250 47.33,-250 136.67,-250 136.67,-250 142.33,-250 148,-255.67 148,-261.33 148,-261.33 148,-272.67 148,-272.67 148,-278.33 142.33,-284 136.67,-284"/>
+<text text-anchor="middle" x="92" y="-270.8" font-family="Inter" font-size="11.50">01 Estructura</text>
+<text text-anchor="middle" x="92" y="-257.8" font-family="Inter" font-size="11.50">y compilación</text>
+</g>
+
+<g id="node2" class="node">
+<title>t02</title>
+<path fill="#eff6ff" stroke="#2563eb" stroke-width="1.3" d="M266.67,-284C266.67,-284 177.33,-284 177.33,-284 171.67,-284 166,-278.33 166,-272.67 166,-272.67 166,-261.33 166,-261.33 166,-255.67 171.67,-250 177.33,-250 177.33,-250 266.67,-250 266.67,-250 272.33,-250 278,-255.67 278,-261.33 278,-261.33 278,-272.67 278,-272.67 278,-278.33 272.33,-284 266.67,-284"/>
+<text text-anchor="middle" x="222" y="-270.8" font-family="Inter" font-size="11.50">02 Tipos,</text>
+<text text-anchor="middle" x="222" y="-257.8" font-family="Inter" font-size="11.50">variables y E/S</text>
+</g>
+
+<g id="edge13" class="edge">
+<title>t01&#45;&gt;t02</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M148.11,-267C151.6,-267 155.08,-267 158.57,-267"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="158.72,-269.45 165.72,-267 158.72,-264.55 158.72,-269.45"/>
+</g>
+
+<g id="node6" class="node">
+<title>t06</title>
+<path fill="#ecfdf5" stroke="#059669" stroke-width="1.3" d="M126.67,-206C126.67,-206 27.33,-206 27.33,-206 21.67,-206 16,-200.33 16,-194.67 16,-194.67 16,-183.33 16,-183.33 16,-177.67 21.67,-172 27.33,-172 27.33,-172 126.67,-172 126.67,-172 132.33,-172 138,-177.67 138,-183.33 138,-183.33 138,-194.67 138,-194.67 138,-200.33 132.33,-206 126.67,-206"/>
+<text text-anchor="middle" x="77" y="-192.8" font-family="Inter" font-size="11.50">06 while, do&#45;while</text>
+<text text-anchor="middle" x="77" y="-179.8" font-family="Inter" font-size="11.50">y for</text>
+</g>
+
+
+<g id="node3" class="node">
+<title>t03</title>
+<path fill="#eff6ff" stroke="#2563eb" stroke-width="1.3" d="M396.67,-284C396.67,-284 307.33,-284 307.33,-284 301.67,-284 296,-278.33 296,-272.67 296,-272.67 296,-261.33 296,-261.33 296,-255.67 301.67,-250 307.33,-250 307.33,-250 396.67,-250 396.67,-250 402.33,-250 408,-255.67 408,-261.33 408,-261.33 408,-272.67 408,-272.67 408,-278.33 402.33,-284 396.67,-284"/>
+<text text-anchor="middle" x="352" y="-270.8" font-family="Inter" font-size="11.50">03 Operadores</text>
+<text text-anchor="middle" x="352" y="-257.8" font-family="Inter" font-size="11.50">y secuencia</text>
+</g>
+
+<g id="edge14" class="edge">
+<title>t02&#45;&gt;t03</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M278.11,-267C281.6,-267 285.08,-267 288.57,-267"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="288.72,-269.45 295.72,-267 288.72,-264.55 288.72,-269.45"/>
+</g>
+
+<g id="node7" class="node">
+<title>t07</title>
+<path fill="#ecfdf5" stroke="#059669" stroke-width="1.3" d="M270.67,-206C270.67,-206 167.33,-206 167.33,-206 161.67,-206 156,-200.33 156,-194.67 156,-194.67 156,-183.33 156,-183.33 156,-177.67 161.67,-172 167.33,-172 167.33,-172 270.67,-172 270.67,-172 276.33,-172 282,-177.67 282,-183.33 282,-183.33 282,-194.67 282,-194.67 282,-200.33 276.33,-206 270.67,-206"/>
+<text text-anchor="middle" x="219" y="-192.8" font-family="Inter" font-size="11.50">07 Ciclos anidados,</text>
+<text text-anchor="middle" x="219" y="-179.8" font-family="Inter" font-size="11.50">break y continue</text>
+</g>
+
+
+<g id="node4" class="node">
+<title>t04</title>
+<path fill="#eff6ff" stroke="#2563eb" stroke-width="1.3" d="M526.67,-284C526.67,-284 437.33,-284 437.33,-284 431.67,-284 426,-278.33 426,-272.67 426,-272.67 426,-261.33 426,-261.33 426,-255.67 431.67,-250 437.33,-250 437.33,-250 526.67,-250 526.67,-250 532.33,-250 538,-255.67 538,-261.33 538,-261.33 538,-272.67 538,-272.67 538,-278.33 532.33,-284 526.67,-284"/>
+<text text-anchor="middle" x="482" y="-270.8" font-family="Inter" font-size="11.50">04 if, if&#45;else</text>
+<text text-anchor="middle" x="482" y="-257.8" font-family="Inter" font-size="11.50">y anidados</text>
+</g>
+
+<g id="edge15" class="edge">
+<title>t03&#45;&gt;t04</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M408.11,-267C411.6,-267 415.08,-267 418.57,-267"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="418.72,-269.45 425.72,-267 418.72,-264.55 418.72,-269.45"/>
+</g>
+
+<g id="node8" class="node">
+<title>t08</title>
+<path fill="#ecfdf5" stroke="#059669" stroke-width="1.3" d="M400.67,-206C400.67,-206 311.33,-206 311.33,-206 305.67,-206 300,-200.33 300,-194.67 300,-194.67 300,-183.33 300,-183.33 300,-177.67 305.67,-172 311.33,-172 311.33,-172 400.67,-172 400.67,-172 406.33,-172 412,-177.67 412,-183.33 412,-183.33 412,-194.67 412,-194.67 412,-200.33 406.33,-206 400.67,-206"/>
+<text text-anchor="middle" x="356" y="-192.8" font-family="Inter" font-size="11.50">08 Arreglos</text>
+<text text-anchor="middle" x="356" y="-179.8" font-family="Inter" font-size="11.50">(vectores)</text>
+</g>
+
+
+<g id="node5" class="node">
+<title>t05</title>
+<path fill="#eff6ff" stroke="#2563eb" stroke-width="1.3" d="M656.67,-284C656.67,-284 567.33,-284 567.33,-284 561.67,-284 556,-278.33 556,-272.67 556,-272.67 556,-261.33 556,-261.33 556,-255.67 561.67,-250 567.33,-250 567.33,-250 656.67,-250 656.67,-250 662.33,-250 668,-255.67 668,-261.33 668,-261.33 668,-272.67 668,-272.67 668,-278.33 662.33,-284 656.67,-284"/>
+<text text-anchor="middle" x="612" y="-270.8" font-family="Inter" font-size="11.50">05 switch</text>
+<text text-anchor="middle" x="612" y="-257.8" font-family="Inter" font-size="11.50">y menús</text>
+</g>
+
+<g id="edge16" class="edge">
+<title>t04&#45;&gt;t05</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M538.11,-267C541.6,-267 545.08,-267 548.57,-267"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="548.72,-269.45 555.72,-267 548.72,-264.55 548.72,-269.45"/>
+</g>
+
+<g id="edge27" class="edge">
+<title>t04&#45;&gt;t06</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M444.79,-249.92C435.84,-246.71 426.21,-243.79 417,-242 358.07,-230.57 204.43,-251.47 147,-234 130.95,-229.12 114.97,-219.52 102.33,-210.53"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="103.51,-208.36 96.41,-206.19 100.61,-212.31 103.51,-208.36"/>
+</g>
+
+<g id="node9" class="node">
+<title>t09</title>
+<path fill="#ecfdf5" stroke="#059669" stroke-width="1.3" d="M533.33,-202C533.33,-202 438.67,-202 438.67,-202 434.33,-202 430,-197.67 430,-193.33 430,-193.33 430,-184.67 430,-184.67 430,-180.33 434.33,-176 438.67,-176 438.67,-176 533.33,-176 533.33,-176 537.67,-176 542,-180.33 542,-184.67 542,-184.67 542,-193.33 542,-193.33 542,-197.67 537.67,-202 533.33,-202"/>
+<text text-anchor="middle" x="486" y="-186.3" font-family="Inter" font-size="11.50">09 Matrices</text>
+</g>
+
+
+<g id="edge17" class="edge">
+<title>t06&#45;&gt;t07</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M138.02,-189C141.52,-189 145.03,-189 148.53,-189"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="148.73,-191.45 155.73,-189 148.73,-186.55 148.73,-191.45"/>
+</g>
+
+<g id="node10" class="node">
+<title>t10</title>
+<path fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.3" d="M139.33,-124C139.33,-124 44.67,-124 44.67,-124 40.33,-124 36,-119.67 36,-115.33 36,-115.33 36,-106.67 36,-106.67 36,-102.33 40.33,-98 44.67,-98 44.67,-98 139.33,-98 139.33,-98 143.67,-98 148,-102.33 148,-106.67 148,-106.67 148,-115.33 148,-115.33 148,-119.67 143.67,-124 139.33,-124"/>
+<text text-anchor="middle" x="92" y="-108.3" font-family="Inter" font-size="11.50">10 Funciones</text>
+</g>
+
+
+<g id="edge18" class="edge">
+<title>t07&#45;&gt;t08</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M282.15,-189C285.63,-189 289.11,-189 292.6,-189"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="292.75,-191.45 299.75,-189 292.75,-186.55 292.75,-191.45"/>
+</g>
+
+<g id="node11" class="node">
+<title>t11</title>
+<path fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.3" d="M269.33,-124C269.33,-124 174.67,-124 174.67,-124 170.33,-124 166,-119.67 166,-115.33 166,-115.33 166,-106.67 166,-106.67 166,-102.33 170.33,-98 174.67,-98 174.67,-98 269.33,-98 269.33,-98 273.67,-98 278,-102.33 278,-106.67 278,-106.67 278,-115.33 278,-115.33 278,-119.67 273.67,-124 269.33,-124"/>
+<text text-anchor="middle" x="222" y="-108.3" font-family="Inter" font-size="11.50">11 Recursividad</text>
+</g>
+
+
+<g id="edge19" class="edge">
+<title>t08&#45;&gt;t09</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M412.11,-189C415.6,-189 419.08,-189 422.57,-189"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="422.72,-191.45 429.72,-189 422.72,-186.55 422.72,-191.45"/>
+</g>
+
+<g id="edge28" class="edge">
+<title>t08&#45;&gt;t10</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M318.4,-172C309.56,-168.83 300.07,-165.9 291,-164 232.61,-151.76 213.49,-175.18 157,-156 139.92,-150.2 123.13,-138.64 110.89,-128.82"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="112.23,-126.75 105.27,-124.18 109.11,-130.52 112.23,-126.75"/>
+</g>
+
+<g id="node12" class="node">
+<title>t12</title>
+<path fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.3" d="M399.33,-124C399.33,-124 304.67,-124 304.67,-124 300.33,-124 296,-119.67 296,-115.33 296,-115.33 296,-106.67 296,-106.67 296,-102.33 300.33,-98 304.67,-98 304.67,-98 399.33,-98 399.33,-98 403.67,-98 408,-102.33 408,-106.67 408,-106.67 408,-115.33 408,-115.33 408,-119.67 403.67,-124 399.33,-124"/>
+<text text-anchor="middle" x="352" y="-108.3" font-family="Inter" font-size="11.50">12 Cadenas</text>
+</g>
+
+
+<g id="node13" class="node">
+<title>t13</title>
+<path fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.3" d="M528.67,-128C528.67,-128 437.33,-128 437.33,-128 431.67,-128 426,-122.33 426,-116.67 426,-116.67 426,-105.33 426,-105.33 426,-99.67 431.67,-94 437.33,-94 437.33,-94 528.67,-94 528.67,-94 534.33,-94 540,-99.67 540,-105.33 540,-105.33 540,-116.67 540,-116.67 540,-122.33 534.33,-128 528.67,-128"/>
+<text text-anchor="middle" x="483" y="-114.8" font-family="Inter" font-size="11.50">13 Estructuras</text>
+<text text-anchor="middle" x="483" y="-101.8" font-family="Inter" font-size="11.50">y enumeraciones</text>
+</g>
+
+
+<g id="edge20" class="edge">
+<title>t10&#45;&gt;t11</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M148.11,-111C151.6,-111 155.08,-111 158.57,-111"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="158.72,-113.45 165.72,-111 158.72,-108.55 158.72,-113.45"/>
+</g>
+
+<g id="edge21" class="edge">
+<title>t10&#45;&gt;t12</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M109.08,-124.14C121.87,-133.65 140.01,-146.45 157,-156 160.82,-158.14 161.72,-159.09 166,-160 190.35,-165.17 253.65,-165.17 278,-160 299.23,-155.49 319.51,-141.11 333.45,-129.08"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="335.43,-130.6 339.02,-124.11 332.16,-126.94 335.43,-130.6"/>
+</g>
+
+<g id="node14" class="node">
+<title>t14</title>
+<path fill="#fff7ed" stroke="#c2410c" stroke-width="1.3" d="M136.67,-50C136.67,-50 47.33,-50 47.33,-50 41.67,-50 36,-44.33 36,-38.67 36,-38.67 36,-27.33 36,-27.33 36,-21.67 41.67,-16 47.33,-16 47.33,-16 136.67,-16 136.67,-16 142.33,-16 148,-21.67 148,-27.33 148,-27.33 148,-38.67 148,-38.67 148,-44.33 142.33,-50 136.67,-50"/>
+<text text-anchor="middle" x="92" y="-36.8" font-family="Inter" font-size="11.50">14 Punteros</text>
+<text text-anchor="middle" x="92" y="-23.8" font-family="Inter" font-size="11.50">y referencias</text>
+</g>
+
+
+<g id="node15" class="node">
+<title>t15</title>
+<path fill="#fff7ed" stroke="#c2410c" stroke-width="1.3" d="M266.67,-50C266.67,-50 177.33,-50 177.33,-50 171.67,-50 166,-44.33 166,-38.67 166,-38.67 166,-27.33 166,-27.33 166,-21.67 171.67,-16 177.33,-16 177.33,-16 266.67,-16 266.67,-16 272.33,-16 278,-21.67 278,-27.33 278,-27.33 278,-38.67 278,-38.67 278,-44.33 272.33,-50 266.67,-50"/>
+<text text-anchor="middle" x="222" y="-36.8" font-family="Inter" font-size="11.50">15 Memoria</text>
+<text text-anchor="middle" x="222" y="-23.8" font-family="Inter" font-size="11.50">dinámica</text>
+</g>
+
+
+<g id="edge22" class="edge">
+<title>t12&#45;&gt;t13</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M408.03,-111C411.57,-111 415.1,-111 418.64,-111"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="418.9,-113.45 425.9,-111 418.9,-108.55 418.9,-113.45"/>
+</g>
+
+<g id="node16" class="node">
+<title>t16</title>
+<path fill="#fff7ed" stroke="#c2410c" stroke-width="1.3" d="M396.67,-50C396.67,-50 307.33,-50 307.33,-50 301.67,-50 296,-44.33 296,-38.67 296,-38.67 296,-27.33 296,-27.33 296,-21.67 301.67,-16 307.33,-16 307.33,-16 396.67,-16 396.67,-16 402.33,-16 408,-21.67 408,-27.33 408,-27.33 408,-38.67 408,-38.67 408,-44.33 402.33,-50 396.67,-50"/>
+<text text-anchor="middle" x="352" y="-36.8" font-family="Inter" font-size="11.50">16 Archivos</text>
+<text text-anchor="middle" x="352" y="-23.8" font-family="Inter" font-size="11.50">de texto</text>
+</g>
+
+
+<g id="edge24" class="edge">
+<title>t13&#45;&gt;t14</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M445.19,-93.93C436.11,-90.72 426.34,-87.79 417,-86 360.23,-75.1 212,-95.79 157,-78 141.98,-73.14 127.25,-63.67 115.62,-54.76"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="116.84,-52.61 109.83,-50.18 113.8,-56.45 116.84,-52.61"/>
+</g>
+
+<g id="edge25" class="edge">
+<title>t13&#45;&gt;t16</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M447.58,-93.98C437.54,-89.13 426.71,-83.6 417,-78 404.55,-70.82 391.33,-62.09 380.08,-54.3"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="381.19,-52.09 374.05,-50.09 378.39,-56.1 381.19,-52.09"/>
+</g>
+
+<g id="node17" class="node">
+<title>t17</title>
+<path fill="#fff7ed" stroke="#c2410c" stroke-width="1.3" d="M526.67,-50C526.67,-50 437.33,-50 437.33,-50 431.67,-50 426,-44.33 426,-38.67 426,-38.67 426,-27.33 426,-27.33 426,-21.67 431.67,-16 437.33,-16 437.33,-16 526.67,-16 526.67,-16 532.33,-16 538,-21.67 538,-27.33 538,-27.33 538,-38.67 538,-38.67 538,-44.33 532.33,-50 526.67,-50"/>
+<text text-anchor="middle" x="482" y="-36.8" font-family="Inter" font-size="11.50">17 Clases</text>
+<text text-anchor="middle" x="482" y="-23.8" font-family="Inter" font-size="11.50">y objetos</text>
+</g>
+
+
+<g id="edge23" class="edge">
+<title>t14&#45;&gt;t15</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M148.11,-33C151.6,-33 155.08,-33 158.57,-33"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="158.72,-35.45 165.72,-33 158.72,-30.55 158.72,-35.45"/>
+</g>
+
+<g id="edge26" class="edge">
+<title>t14&#45;&gt;t17</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M109.35,-50.03C123.31,-62.26 144.14,-77.36 166,-82 179.15,-84.79 394.85,-84.79 408,-82 427.12,-77.94 445.47,-65.87 459.11,-54.73"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="460.89,-56.42 464.65,-50.03 457.73,-52.68 460.89,-56.42"/>
+</g>
+</g>
+</svg>
+</figure>
+<p><em>Cada flecha indica un prerrequisito directo; la ficha de cada tema detalla todos sus conocimientos previos. Los temas 11 (recursividad) y 16 (archivos) pueden moverse dentro de su bloque sin romper la secuencia.</em></p>
+<h2 id="2-1-formato-de-objetivos-de-aprendizaje-tabla-5-1-completado">2.1 Formato de objetivos de aprendizaje (Tabla 5.1, completado para el curso)</h2>
+<div class="tabla-scroll"><table>
+<thead>
+<tr>
+<th>Tema</th>
+<th>Objetivo de aprendizaje general</th>
+<th>Temas a completar</th>
+<th>Duración</th>
+<th>Fuentes adicionales de consulta</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>01</strong></td>
+<td>Escribir, compilar y ejecutar un programa en C++ y explicar su estructura.</td>
+<td><code>main</code>, <code>#include</code>, <code>cout</code>, comentarios, compilación y tipos de error.</td>
+<td>4 h</td>
+<td>Betancourt y Polanco, cap. 1 · Lospinoso, cap. 1</td>
+</tr>
+<tr>
+<td><strong>02</strong></td>
+<td>Declarar variables y constantes de tipos fundamentales y realizar entrada/salida.</td>
+<td>Tipos, identificadores, <code>const</code>, <code>cin</code>, <code>getline</code>, formato de salida.</td>
+<td>4 h</td>
+<td>B&amp;P, cap. 1 · L, caps. 1–2</td>
+</tr>
+<tr>
+<td><strong>03</strong></td>
+<td>Construir expresiones y resolver problemas con estructura secuencial.</td>
+<td>Operadores, precedencia, conversiones, <code>&lt;cmath&gt;</code>, secuencia E–P–S.</td>
+<td>4 h</td>
+<td>B&amp;P, caps. 1–2 · L, cap. 7</td>
+</tr>
+<tr>
+<td><strong>04</strong></td>
+<td>Resolver problemas de decisión con <code>if</code>, <code>if-else</code> y decisiones anidadas.</td>
+<td>Condiciones simples y compuestas, escaleras <code>else if</code>, validación.</td>
+<td>4 h</td>
+<td>B&amp;P, cap. 3 · L, caps. 1, 7, 8</td>
+</tr>
+<tr>
+<td><strong>05</strong></td>
+<td>Resolver selección múltiple con <code>switch</code> y construir menús.</td>
+<td><code>case</code>, <code>break</code>, <code>default</code>, caída de casos, <code>enum class</code>.</td>
+<td>3 h</td>
+<td>B&amp;P, cap. 4 · L, caps. 2, 8</td>
+</tr>
+<tr>
+<td><strong>06</strong></td>
+<td>Resolver problemas repetitivos con <code>while</code>, <code>do-while</code> y <code>for</code>.</td>
+<td>Contadores, acumuladores, centinelas, validación con ciclos.</td>
+<td>6 h</td>
+<td>B&amp;P, cap. 5 · L, caps. 2, 8</td>
+</tr>
+<tr>
+<td><strong>07</strong></td>
+<td>Resolver problemas con ciclos anidados y control de flujo.</td>
+<td>Patrones, tablas, <code>break</code>, <code>continue</code>, banderas.</td>
+<td>4 h</td>
+<td>B&amp;P, cap. 5 · L, cap. 8</td>
+</tr>
+<tr>
+<td><strong>08</strong></td>
+<td>Almacenar y procesar colecciones con arreglos unidimensionales.</td>
+<td>Declaración, recorrido, búsqueda, máximos, ordenamiento.</td>
+<td>6 h</td>
+<td>B&amp;P, cap. 6 · L, caps. 2, 13</td>
+</tr>
+<tr>
+<td><strong>09</strong></td>
+<td>Procesar datos tabulares con matrices.</td>
+<td>Recorridos por filas y columnas, diagonales, operaciones.</td>
+<td>5 h</td>
+<td>B&amp;P, cap. 7 · L, cap. 2</td>
+</tr>
+<tr>
+<td><strong>10</strong></td>
+<td>Descomponer problemas en funciones reutilizables.</td>
+<td>Parámetros por valor y referencia, retorno, ámbito, sobrecarga.</td>
+<td>6 h</td>
+<td>B&amp;P, cap. 8 · L, caps. 1, 3, 4, 9</td>
+</tr>
+<tr>
+<td><strong>11</strong></td>
+<td>Resolver problemas con funciones recursivas.</td>
+<td>Caso base, caso recursivo, pila de llamadas, recursión vs. iteración.</td>
+<td>4 h</td>
+<td>B&amp;P, cap. 9 · L, cap. 4</td>
+</tr>
+<tr>
+<td><strong>12</strong></td>
+<td>Manipular texto con arreglos de <code>char</code> y <code>std::string</code>.</td>
+<td>Lectura, recorrido, búsqueda, comparación, conversión.</td>
+<td>5 h</td>
+<td>B&amp;P, cap. 10 · L, caps. 2, 15</td>
+</tr>
+<tr>
+<td><strong>13</strong></td>
+<td>Modelar registros con estructuras y enumeraciones.</td>
+<td><code>struct</code>, anidamiento, arreglos de estructuras, <code>enum class</code>.</td>
+<td>5 h</td>
+<td>B&amp;P, cap. 11 · L, caps. 2, 8</td>
+</tr>
+<tr>
+<td><strong>14</strong></td>
+<td>Usar punteros y referencias para acceder a datos de forma indirecta.</td>
+<td><code>&amp;</code>, <code>*</code>, <code>-&gt;</code>, aritmética de punteros, paso por puntero.</td>
+<td>6 h</td>
+<td>B&amp;P, caps. 1, 8 · L, cap. 3</td>
+</tr>
+<tr>
+<td><strong>15</strong></td>
+<td>Gestionar memoria dinámica de forma segura.</td>
+<td><code>new</code>/<code>delete</code>, arreglos dinámicos, fugas, punteros colgantes.</td>
+<td>5 h</td>
+<td>L, caps. 3–4 · tesis, §5.4</td>
+</tr>
+<tr>
+<td><strong>16</strong></td>
+<td>Hacer persistentes los datos con archivos de texto.</td>
+<td><code>ifstream</code>, <code>ofstream</code>, modos, lectura por línea, actualización.</td>
+<td>5 h</td>
+<td>B&amp;P, cap. 12 · L, cap. 16</td>
+</tr>
+<tr>
+<td><strong>17</strong></td>
+<td>Modelar entidades con clases y objetos.</td>
+<td>Atributos, métodos, encapsulamiento, constructores, destructor.</td>
+<td>6 h</td>
+<td>B&amp;P, cap. 13 · L, caps. 2–4</td>
+</tr>
+</tbody>
+</table></div>
+<p><em>B&amp;P = Betancourt y Polanco (2021); L = Lospinoso (2019). Total: 82 h de instrucción.</em></p>
+</section><section class="guia-sec" id="3-fase-1-analisis"><h2>3. Fase 1 · Análisis</h2>
+<h2 id="3-1-objetivos-y-metodos-de-evaluacion">3.1 Objetivos y métodos de evaluación</h2>
+<p>Los objetivos de cada tema están redactados <strong>por ruta</strong> en la ficha del cuadernillo (sección 0.1), siguiendo la matriz de objetivos y métodos de evaluación por nivel del estudio piloto (Tabla 5.14). Los instrumentos del modelo son:</p>
+<div class="tabla-scroll"><table>
+<thead>
+<tr>
+<th>Instrumento</th>
+<th>Mide</th>
+<th>Cuándo</th>
+<th>Formato</th>
+<th>Dónde</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Recall test</strong></td>
+<td>Conocimiento declarativo (conceptos, sintaxis, definiciones).</td>
+<td>Inicio del tema (diagnóstico) y final (desempeño).</td>
+<td>10 reactivos breves.</td>
+<td>Sección 5.1 de cada tema</td>
+</tr>
+<tr>
+<td><strong>Comprehension test</strong></td>
+<td>Conocimiento procedimental y transferencia (predecir, corregir, desarrollar).</td>
+<td>Final del tema.</td>
+<td>3–4 problemas.</td>
+<td>Sección 5.2 de cada tema</td>
+</tr>
+<tr>
+<td><strong>MSLQ</strong> (Pintrich et al., 1991)</td>
+<td>Motivación (31 ítems) y estrategias de aprendizaje (50 ítems).</td>
+<td>Inicio y final del curso.</td>
+<td>Likert 1–7.</td>
+<td>Anexo A.1 de la tesis</td>
+</tr>
+<tr>
+<td><strong>CIS</strong> (Keller, 2010)</td>
+<td>Percepción de <strong>cómo enseña el instructor</strong> (ARCS).</td>
+<td>Final del curso o de la unidad.</td>
+<td>34 ítems, Likert 1–5.</td>
+<td>Anexo A.4</td>
+</tr>
+<tr>
+<td><strong>IMMS</strong> (Keller, 2010)</td>
+<td>Reacción motivacional al <strong>material</strong> (ARCS).</td>
+<td>Final del curso o de la unidad.</td>
+<td>36 ítems, Likert 1–5.</td>
+<td>Anexo A.5</td>
+</tr>
+<tr>
+<td><strong>Encuesta de carga cognitiva</strong> (Morrison et al., 2014)</td>
+<td>Carga intrínseca (ítems 1–3), extrínseca (4–6) y pertinente (7–10).</td>
+<td>Al cerrar cada bloque de temas.</td>
+<td>10 ítems, escala 0–10.</td>
+<td>Anexo A.7</td>
+</tr>
+<tr>
+<td><strong>Autorregistro</strong> (escala de Paas, 1992)</td>
+<td>Esfuerzo mental percibido por tema.</td>
+<td>Final de cada tema.</td>
+<td>Escala 1–9.</td>
+<td>Sección 5.3 de cada tema</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="3-2-entorno-grupal">3.2 Entorno grupal</h2>
+<div class="caja c-checklist">
+<div class="caja-h"><span class="ico">☑</span><span class="kick">Guía de preguntas de rutina</span><span>Guía de preguntas de rutina 3.2 · Diagnóstico del grupo</span></div>
+<ul class="checks">
+<li><b>Motivación.</b> Aplica la sección de motivación del MSLQ en la primera sesión. Explica para qué sirve y promete retroalimentación individual: así se fomentan el interés y la honestidad en las respuestas. Registra los resultados en la Tabla 5.3.</li>
+<li><b>Estrategias cognitivas y metacognitivas.</b> Aplica la sección de estrategias del MSLQ y registra cada subescala en la Tabla 5.4. Si casi nadie usa estrategias metacognitivas (como ocurrió en el piloto, Tabla 5.13), da peso al autorregistro y a las tareas de autoexplicación.</li>
+<li><b>Conocimientos previos.</b> Aplica la prueba diagnóstica (sección 3.3) y, al iniciar cada bloque, el recall test del primer tema del bloque. Clasifica a cada estudiante en «con previos» (Ruta B) o «sin previos» (Ruta A).</li>
+<li><b>Resumen.</b> Concentra todo en la Tabla 5.5 y redacta un diagnóstico de cuatro renglones como el de la Tabla 5.13 (motivación, estrategias cognitivas, metacognitivas y previos).</li>
+<li><b>Decisión de rutas.</b> Si el grupo es heterogéneo en conocimientos previos, usa las dos rutas; si es homogéneo, sigue una sola ruta (la que corresponda) comenzando directamente por las tareas de aprendizaje. Aun con un grupo homogéneo, puedes diferenciar si lo consideras útil: el proceso no se afecta.</li>
+</ul>
+</div>
+<div class="caja c-cuidado">
+<div class="caja-h"><span class="ico">⚠️</span><span class="kick">¡Cuidado!</span><span>Criterio sugerido para asignar rutas</span></div>
+<p>La tesis plantea solo dos caminos (sí/no). Como criterio inicial, ajustable por el instructor: <strong>Ruta B</strong> si el estudiante obtiene <strong>70 o más</strong> sobre 100 en el diagnóstico; <strong>Ruta A</strong> en otro caso. Considera al grupo <strong>heterogéneo</strong> cuando ambos perfiles reúnen al menos una quinta parte del grupo, o cuando una prueba estadística muestra diferencias significativas entre ellos. La asignación <strong>no es permanente</strong>: se revisa al inicio de cada bloque, porque un estudiante puede pasar de A a B (efecto de reversión de la experiencia).</p>
+</div>
+<h2 id="3-3-prueba-diagnostica-de-entrada-bloques-i-y-ii">3.3 Prueba diagnóstica de entrada (Bloques I y II)</h2>
+<div class="caja c-recall">
+<div class="caja-h"><span class="ico"></span><span class="kick">Recall test</span><span>Parte 1 · Recall (4 puntos cada reactivo · 40 puntos)</span></div>
+<ol>
+<li>¿Cuál es la función por la que empieza a ejecutarse todo programa en C++?</li>
+<li>¿Qué tipo de dato usarías para guardar el precio 3.75? ¿Y para guardar una letra?</li>
+<li>¿Qué hace la instrucción <code>cin &gt;&gt; edad;</code>?</li>
+<li>¿Cuánto vale la expresión <code>17 % 5</code>? ¿Y <code>7 / 2</code> si ambos son enteros?</li>
+<li>¿Qué diferencia hay entre <code>=</code> y <code>==</code>?</li>
+<li>¿Cuántas veces se repite el cuerpo de <code>for (int i = 0; i &lt; 4; i++)</code>?</li>
+<li>¿Qué diferencia hay entre <code>while</code> y <code>do-while</code>?</li>
+<li>En el arreglo <code>int a[5];</code>, ¿cuál es el índice del primer elemento? ¿Y del último?</li>
+<li>¿Qué significa que una función sea <code>void</code>?</li>
+<li>Verdadero o falso: dentro de un <code>switch</code>, si se omite <code>break</code>, la ejecución continúa con el siguiente <code>case</code>.</li>
+</ol>
+</div>
+<div class="caja c-compr">
+<div class="caja-h"><span class="ico"></span><span class="kick">Comprehension test</span><span>Parte 2 · Comprehension (15 puntos cada problema · 60 puntos)</span></div>
+<p><strong>P1. Predice la salida.</strong></p>
+<div class="codewrap" data-mode="check" data-src="I2luY2x1ZGUgPGlvc3RyZWFtPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwppbnQgbWFpbigpCnsKICAgIGludCBzdW1hID0gMDsKICAgIGZvciAoaW50IGkgPSAxOyBpIDw9IDY7IGkrKykKICAgIHsKICAgICAgICBpZiAoaSAlIDIgPT0gMCkKICAgICAgICAgICAgc3VtYSArPSBpOwogICAgICAgIGVsc2UKICAgICAgICAgICAgY291dCA8PCBpIDw8ICIgIjsKICAgIH0KICAgIGNvdXQgPDwgInwgIiA8PCBzdW1hIDw8ICJcbiI7CiAgICByZXR1cm4gMDsKfQ==" data-title="diag_p1.cpp"><figure class="code keep"><div class="code-t"><span>diag_p1.cpp</span><span><span class="cbadge">C++</span></span></div><table class="src"><tr><td class="ln">1</td><td class="cl"><span class="cp">#</span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span></td></tr><tr><td class="ln">2</td><td class="cl"><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span></td></tr><tr><td class="ln">3</td><td class="cl"><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="p">)</span></td></tr><tr><td class="ln">4</td><td class="cl"><span class="p">{</span></td></tr><tr><td class="ln">5</td><td class="cl"><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">suma</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td></tr><tr><td class="ln">6</td><td class="cl"><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="o">=</span><span class="w"> </span><span class="mi">6</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">+</span><span class="o">+</span><span class="p">)</span></td></tr><tr><td class="ln">7</td><td class="cl"><span class="w">    </span><span class="p">{</span></td></tr><tr><td class="ln">8</td><td class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">=</span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span></td></tr><tr><td class="ln">9</td><td class="cl"><span class="w">            </span><span class="n">suma</span><span class="w"> </span><span class="o">+</span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="p">;</span></td></tr><tr><td class="ln">10</td><td class="cl"><span class="w">        </span><span class="k">else</span></td></tr><tr><td class="ln">11</td><td class="cl"><span class="w">            </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s"> </span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">12</td><td class="cl"><span class="w">    </span><span class="p">}</span></td></tr><tr><td class="ln">13</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">| </span><span class="s">&quot;</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="n">suma</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">14</td><td class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td></tr><tr><td class="ln">15</td><td class="cl"><span class="p">}</span></td></tr></table></figure></div>
+<p><strong>P2. Encuentra y corrige los errores</strong> (hay tres):</p>
+<div class="codewrap" data-mode="display" data-src="I2luY2x1ZGUgPGlvc3RyZWFtPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwppbnQgbWFpbigpCnsKICAgIGludCBjYWxpZgogICAgY291dCA8PCAiQ2FsaWZpY2FjaW9uOiAiOwogICAgY2luID4+IGNhbGlmOwogICAgaWYgKGNhbGlmID0gMTApCiAgICAgICAgY291dCA8PCAiRXhjZWxlbnRlXG4iOwogICAgZWxzZSBpZiAoY2FsaWYgPj0gNikKICAgICAgICBjb3V0IDw8ICJBcHJvYmFkb1xuIgogICAgZWxzZQogICAgICAgIGNvdXQgPDwgIlJlcHJvYmFkb1xuIjsKICAgIHJldHVybiAwOwp9" data-title="diag_p2.cpp"><figure class="code keep"><div class="code-t"><span>diag_p2.cpp</span><span><span class="cbadge">C++</span><span class="cbadge cb-frag">fragmento</span></span></div><table class="src"><tr><td class="ln">1</td><td class="cl"><span class="cp">#</span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span></td></tr><tr><td class="ln">2</td><td class="cl"><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span></td></tr><tr><td class="ln">3</td><td class="cl"><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="p">)</span></td></tr><tr><td class="ln">4</td><td class="cl"><span class="p">{</span></td></tr><tr><td class="ln">5</td><td class="cl"><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">calif</span></td></tr><tr><td class="ln">6</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Calificacion: </span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">7</td><td class="cl"><span class="w">    </span><span class="n">cin</span><span class="w"> </span><span class="o">&gt;</span><span class="o">&gt;</span><span class="w"> </span><span class="n">calif</span><span class="p">;</span></td></tr><tr><td class="ln">8</td><td class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">calif</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span></td></tr><tr><td class="ln">9</td><td class="cl"><span class="w">        </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Excelente</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">10</td><td class="cl"><span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">calif</span><span class="w"> </span><span class="o">&gt;</span><span class="o">=</span><span class="w"> </span><span class="mi">6</span><span class="p">)</span></td></tr><tr><td class="ln">11</td><td class="cl"><span class="w">        </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Aprobado</span><span class="se">\n</span><span class="s">&quot;</span></td></tr><tr><td class="ln">12</td><td class="cl"><span class="w">    </span><span class="k">else</span></td></tr><tr><td class="ln">13</td><td class="cl"><span class="w">        </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Reprobado</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">14</td><td class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td></tr><tr><td class="ln">15</td><td class="cl"><span class="p">}</span></td></tr></table></figure></div>
+<p><strong>P3. Desarrolla</strong> un programa que lea 5 números enteros y muestre el mayor y el promedio.</p>
+<p><strong>P4. Rastrea</strong> el arreglo: ¿qué contiene <code>v</code> al terminar?</p>
+<div class="codewrap" data-mode="check" data-src="I2luY2x1ZGUgPGlvc3RyZWFtPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwppbnQgbWFpbigpCnsKICAgIGludCB2WzVdID0gezQsIDEsIDMsIDUsIDJ9OwogICAgZm9yIChpbnQgaSA9IDA7IGkgPCA0OyBpKyspCiAgICAgICAgaWYgKHZbaV0gPiB2W2kgKyAxXSkKICAgICAgICB7CiAgICAgICAgICAgIGludCB0ID0gdltpXTsKICAgICAgICAgICAgdltpXSA9IHZbaSArIDFdOwogICAgICAgICAgICB2W2kgKyAxXSA9IHQ7CiAgICAgICAgfQogICAgZm9yIChpbnQgeCA6IHYpIGNvdXQgPDwgeCA8PCAiICI7CiAgICBjb3V0IDw8ICJcbiI7CiAgICByZXR1cm4gMDsKfQ==" data-title="diag_p4.cpp"><figure class="code keep"><div class="code-t"><span>diag_p4.cpp</span><span><span class="cbadge">C++</span></span></div><table class="src"><tr><td class="ln">1</td><td class="cl"><span class="cp">#</span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span></td></tr><tr><td class="ln">2</td><td class="cl"><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span></td></tr><tr><td class="ln">3</td><td class="cl"><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="p">)</span></td></tr><tr><td class="ln">4</td><td class="cl"><span class="p">{</span></td></tr><tr><td class="ln">5</td><td class="cl"><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">}</span><span class="p">;</span></td></tr><tr><td class="ln">6</td><td class="cl"><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">+</span><span class="o">+</span><span class="p">)</span></td></tr><tr><td class="ln">7</td><td class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="p">)</span></td></tr><tr><td class="ln">8</td><td class="cl"><span class="w">        </span><span class="p">{</span></td></tr><tr><td class="ln">9</td><td class="cl"><span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">;</span></td></tr><tr><td class="ln">10</td><td class="cl"><span class="w">            </span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="p">;</span></td></tr><tr><td class="ln">11</td><td class="cl"><span class="w">            </span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="p">;</span></td></tr><tr><td class="ln">12</td><td class="cl"><span class="w">        </span><span class="p">}</span></td></tr><tr><td class="ln">13</td><td class="cl"><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">v</span><span class="p">)</span><span class="w"> </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s"> </span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">14</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">15</td><td class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td></tr><tr><td class="ln">16</td><td class="cl"><span class="p">}</span></td></tr></table></figure></div>
+</div>
+<div class="sol" data-label="Prueba diagnóstica · Parte 1">
+<p>1 <code>main</code> · 2 <code>double</code> (o <code>float</code>); <code>char</code> · 3 Lee un valor del teclado y lo guarda en la variable <code>edad</code> · 4 <code>2</code>; <code>3</code> (división entera) · 5 <code>=</code> asigna un valor; <code>==</code> compara si dos valores son iguales · 6 4 veces (i = 0, 1, 2, 3) · 7 <code>while</code> evalúa la condición antes de entrar (puede no ejecutarse nunca); <code>do-while</code> la evalúa al final (se ejecuta al menos una vez) · 8 <code>0</code>; <code>4</code> · 9 Que no devuelve ningún valor · 10 Verdadero.</p>
+</div>
+<div class="sol" data-label="Prueba diagnóstica · Parte 2">
+<p><strong>P1.</strong> Imprime los impares y acumula los pares (2 + 4 + 6 = 12):</p>
+<div class="codewrap" data-mode="run" data-src="I2luY2x1ZGUgPGlvc3RyZWFtPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwppbnQgbWFpbigpCnsKICAgIGludCBzdW1hID0gMDsKICAgIGZvciAoaW50IGkgPSAxOyBpIDw9IDY7IGkrKykKICAgIHsKICAgICAgICBpZiAoaSAlIDIgPT0gMCkKICAgICAgICAgICAgc3VtYSArPSBpOwogICAgICAgIGVsc2UKICAgICAgICAgICAgY291dCA8PCBpIDw8ICIgIjsKICAgIH0KICAgIGNvdXQgPDwgInwgIiA8PCBzdW1hIDw8ICJcbiI7CiAgICByZXR1cm4gMDsKfQ==" data-title="diag_p1.cpp"><figure class="code keep"><div class="code-t"><span>diag_p1.cpp</span><span><span class="cbadge">C++</span></span></div><table class="src"><tr><td class="ln">1</td><td class="cl"><span class="cp">#</span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span></td></tr><tr><td class="ln">2</td><td class="cl"><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span></td></tr><tr><td class="ln">3</td><td class="cl"><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="p">)</span></td></tr><tr><td class="ln">4</td><td class="cl"><span class="p">{</span></td></tr><tr><td class="ln">5</td><td class="cl"><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">suma</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td></tr><tr><td class="ln">6</td><td class="cl"><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="o">=</span><span class="w"> </span><span class="mi">6</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">+</span><span class="o">+</span><span class="p">)</span></td></tr><tr><td class="ln">7</td><td class="cl"><span class="w">    </span><span class="p">{</span></td></tr><tr><td class="ln">8</td><td class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">=</span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span></td></tr><tr><td class="ln">9</td><td class="cl"><span class="w">            </span><span class="n">suma</span><span class="w"> </span><span class="o">+</span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="p">;</span></td></tr><tr><td class="ln">10</td><td class="cl"><span class="w">        </span><span class="k">else</span></td></tr><tr><td class="ln">11</td><td class="cl"><span class="w">            </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s"> </span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">12</td><td class="cl"><span class="w">    </span><span class="p">}</span></td></tr><tr><td class="ln">13</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">| </span><span class="s">&quot;</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="n">suma</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">14</td><td class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td></tr><tr><td class="ln">15</td><td class="cl"><span class="p">}</span></td></tr></table></figure><div class="term"><div class="term-t"><span>▶ Salida en consola</span></div><pre>1 3 5 | 12</pre></div></div>
+<p><strong>P2.</strong> (1) Falta <code>;</code> en <code>int calif;</code>. (2) <code>if (calif = 10)</code> asigna en vez de comparar: <code>if (calif == 10)</code>. (3) Falta <code>;</code> después de <code>"Aprobado\n"</code>.</p>
+<p><strong>P3.</strong> Una solución:</p>
+<div class="codewrap" data-mode="run" data-src="I2luY2x1ZGUgPGlvc3RyZWFtPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwppbnQgbWFpbigpCnsKICAgIGludCBuLCBtYXlvciA9IDAsIHN1bWEgPSAwOwogICAgZm9yIChpbnQgaSA9IDE7IGkgPD0gNTsgaSsrKQogICAgewogICAgICAgIGNvdXQgPDwgIk51bWVybyAiIDw8IGkgPDwgIjogIjsKICAgICAgICBjaW4gPj4gbjsKICAgICAgICBpZiAoaSA9PSAxIHx8IG4gPiBtYXlvcikgbWF5b3IgPSBuOwogICAgICAgIHN1bWEgKz0gbjsKICAgIH0KICAgIGNvdXQgPDwgIk1heW9yOiAiIDw8IG1heW9yIDw8ICJcblByb21lZGlvOiAiIDw8IHN1bWEgLyA1LjAgPDwgIlxuIjsKICAgIHJldHVybiAwOwp9" data-stdin="OAoxNQozCjEyCjcK" data-title="diag_p3.cpp"><figure class="code keep"><div class="code-t"><span>diag_p3.cpp</span><span><span class="cbadge">C++</span></span></div><table class="src"><tr><td class="ln">1</td><td class="cl"><span class="cp">#</span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span></td></tr><tr><td class="ln">2</td><td class="cl"><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span></td></tr><tr><td class="ln">3</td><td class="cl"><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="p">)</span></td></tr><tr><td class="ln">4</td><td class="cl"><span class="p">{</span></td></tr><tr><td class="ln">5</td><td class="cl"><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">mayor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">suma</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td></tr><tr><td class="ln">6</td><td class="cl"><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">+</span><span class="o">+</span><span class="p">)</span></td></tr><tr><td class="ln">7</td><td class="cl"><span class="w">    </span><span class="p">{</span></td></tr><tr><td class="ln">8</td><td class="cl"><span class="w">        </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Numero </span><span class="s">&quot;</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">: </span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">9</td><td class="cl"><span class="w">        </span><span class="n">cin</span><span class="w"> </span><span class="o">&gt;</span><span class="o">&gt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span></td></tr><tr><td class="ln">10</td><td class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">|</span><span class="o">|</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">mayor</span><span class="p">)</span><span class="w"> </span><span class="n">mayor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">;</span></td></tr><tr><td class="ln">11</td><td class="cl"><span class="w">        </span><span class="n">suma</span><span class="w"> </span><span class="o">+</span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">;</span></td></tr><tr><td class="ln">12</td><td class="cl"><span class="w">    </span><span class="p">}</span></td></tr><tr><td class="ln">13</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s">Mayor: </span><span class="s">&quot;</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="n">mayor</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Promedio: </span><span class="s">&quot;</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="n">suma</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">5.0</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">14</td><td class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td></tr><tr><td class="ln">15</td><td class="cl"><span class="p">}</span></td></tr></table></figure><div class="term"><div class="term-t"><span>▶ Salida en consola</span><span class="term-in"><b>resaltado</b> = lo que se teclea</span></div><pre>Numero 1: <span class="kin">8</span>
+Numero 2: <span class="kin">15</span>
+Numero 3: <span class="kin">3</span>
+Numero 4: <span class="kin">12</span>
+Numero 5: <span class="kin">7</span>
+Mayor: 15
+Promedio: 9</pre></div></div>
+<p><em>Criterio:</em> lectura en ciclo (4 pts), mayor correcto incluso con negativos (4), acumulador (3), promedio con división real (4).</p>
+<p><strong>P4.</strong> Es una pasada del método de la burbuja: el mayor (5) «sube» al final.</p>
+<div class="codewrap" data-mode="run" data-src="I2luY2x1ZGUgPGlvc3RyZWFtPgp1c2luZyBuYW1lc3BhY2Ugc3RkOwppbnQgbWFpbigpCnsKICAgIGludCB2WzVdID0gezQsIDEsIDMsIDUsIDJ9OwogICAgZm9yIChpbnQgaSA9IDA7IGkgPCA0OyBpKyspCiAgICAgICAgaWYgKHZbaV0gPiB2W2kgKyAxXSkKICAgICAgICB7CiAgICAgICAgICAgIGludCB0ID0gdltpXTsKICAgICAgICAgICAgdltpXSA9IHZbaSArIDFdOwogICAgICAgICAgICB2W2kgKyAxXSA9IHQ7CiAgICAgICAgfQogICAgZm9yIChpbnQgeCA6IHYpIGNvdXQgPDwgeCA8PCAiICI7CiAgICBjb3V0IDw8ICJcbiI7CiAgICByZXR1cm4gMDsKfQ==" data-title="diag_p4.cpp"><figure class="code keep"><div class="code-t"><span>diag_p4.cpp</span><span><span class="cbadge">C++</span></span></div><table class="src"><tr><td class="ln">1</td><td class="cl"><span class="cp">#</span><span class="cp">include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span></td></tr><tr><td class="ln">2</td><td class="cl"><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span></td></tr><tr><td class="ln">3</td><td class="cl"><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="p">)</span></td></tr><tr><td class="ln">4</td><td class="cl"><span class="p">{</span></td></tr><tr><td class="ln">5</td><td class="cl"><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">}</span><span class="p">;</span></td></tr><tr><td class="ln">6</td><td class="cl"><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">+</span><span class="o">+</span><span class="p">)</span></td></tr><tr><td class="ln">7</td><td class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="p">)</span></td></tr><tr><td class="ln">8</td><td class="cl"><span class="w">        </span><span class="p">{</span></td></tr><tr><td class="ln">9</td><td class="cl"><span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="p">;</span></td></tr><tr><td class="ln">10</td><td class="cl"><span class="w">            </span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="p">;</span></td></tr><tr><td class="ln">11</td><td class="cl"><span class="w">            </span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="p">;</span></td></tr><tr><td class="ln">12</td><td class="cl"><span class="w">        </span><span class="p">}</span></td></tr><tr><td class="ln">13</td><td class="cl"><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">v</span><span class="p">)</span><span class="w"> </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="s"> </span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">14</td><td class="cl"><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;</span><span class="o">&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span></td></tr><tr><td class="ln">15</td><td class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td></tr><tr><td class="ln">16</td><td class="cl"><span class="p">}</span></td></tr></table></figure><div class="term"><div class="term-t"><span>▶ Salida en consola</span></div><pre>1 3 4 2 5 </pre></div></div>
+<p><strong>Uso del resultado:</strong> quien domina las partes que corresponden a un bloque (reactivos 1–5 y P1–P2 para el Bloque I; 6–10 y P3–P4 para el Bloque II) puede seguir la Ruta B en ese bloque.</p>
+</div>
+<h2 id="3-4-preseleccion-de-efectos-por-tema-tabla-5-6-completada">3.4 Preselección de efectos por tema (Tabla 5.6, completada)</h2>
+<p>La ficha de cada tema (sección 0.3) detalla <strong>cómo</strong> se aplica cada efecto. Este es el resumen del curso:</p>
+<div class="tabla-scroll"><table>
+<thead>
+<tr>
+<th>Tema</th>
+<th>Efectos a aplicar (además de los comunes)</th>
+<th>Herramientas / estrategias de aplicación</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Todos</strong></td>
+<td><span class="ef ef-n">Ejemplo resuelto</span> <span class="ef ef-n">Problema por completar</span> <span class="ef ef-n">Elementos aislados</span> <span class="ef ef-n">Atención dividida</span> <span class="ef ef-n">Variabilidad</span> <span class="ef ef-r">Autoexplicación</span> <span class="ef ef-r">Imaginación</span> <span class="ef ef-r">Solución libre</span> <span class="ef ef-r">Memoria colectiva de trabajo</span> <span class="ef ef-r">Desvanecimiento de guía</span></td>
+<td>Código anotado al margen, diagramas integrados con el código, tareas T1–T8 con desvanecimiento, reto colaborativo final.</td>
+</tr>
+<tr>
+<td><strong>01</strong></td>
+<td><span class="ef ef-n">Modalidad</span> <span class="ef ef-n">Redundancia</span> <span class="ef ef-x">Autogestión</span> <span class="ef ef-x">Movimiento humano</span></td>
+<td>Diagrama de compilación con guion narrado; tarjeta de sintaxis sin repetir teoría; «La hoja viaja por el salón»; T9: rediseñar una explicación mal diseñada.</td>
+</tr>
+<tr>
+<td><strong>02</strong></td>
+<td><span class="ef ef-n">Redundancia</span> <span class="ef ef-x">Movimiento humano</span></td>
+<td>Tarjeta de sintaxis que resume sin repetir; «Casilleros humanos».</td>
+</tr>
+<tr>
+<td><strong>03</strong></td>
+<td><span class="ef ef-x">Movimiento humano</span></td>
+<td>«Árbol de expresión humano» para la precedencia de operadores.</td>
+</tr>
+<tr>
+<td><strong>04</strong></td>
+<td><span class="ef ef-x">Movimiento humano</span></td>
+<td>«Diagrama de flujo en el piso».</td>
+</tr>
+<tr>
+<td><strong>05</strong></td>
+<td><span class="ef ef-x">Movimiento humano</span></td>
+<td>«El switch humano».</td>
+</tr>
+<tr>
+<td><strong>06</strong></td>
+<td><span class="ef ef-x">Autogestión</span> <span class="ef ef-x">Movimiento humano</span></td>
+<td>Secuencia de desvanecimiento de la tesis (pares → factorial → Fibonacci → tabla); «Vueltas a la pista»; T9: rediseñar una explicación de <code>for</code>.</td>
+</tr>
+<tr>
+<td><strong>07</strong></td>
+<td><span class="ef ef-n">Interactividad de elementos</span> <span class="ef ef-x">Movimiento humano</span></td>
+<td>Plantilla «una fila = un ciclo interno + salto de línea»; «El reloj humano».</td>
+</tr>
+<tr>
+<td><strong>08</strong></td>
+<td><span class="ef ef-x">Autogestión</span> <span class="ef ef-x">Movimiento humano</span></td>
+<td>«Burbuja humana»; T9: rediseñar el material de la burbuja (tesis, §6.1.17).</td>
+</tr>
+<tr>
+<td><strong>09</strong></td>
+<td><span class="ef ef-n">Interactividad de elementos</span> <span class="ef ef-x">Movimiento humano</span></td>
+<td>Plantillas separadas para filas, columnas y diagonales; «Matriz humana».</td>
+</tr>
+<tr>
+<td><strong>10</strong></td>
+<td><span class="ef ef-x">Movimiento humano</span></td>
+<td>«La llamada telefónica» (pila de llamadas).</td>
+</tr>
+<tr>
+<td><strong>11</strong></td>
+<td><span class="ef ef-x">Movimiento humano</span></td>
+<td>«¿Cuántos hay detrás de ti?» (llamadas recursivas).</td>
+</tr>
+<tr>
+<td><strong>12</strong></td>
+<td><span class="ef ef-x">Movimiento humano</span></td>
+<td>«La cadena humana».</td>
+</tr>
+<tr>
+<td><strong>13</strong></td>
+<td><span class="ef ef-x">Movimiento humano</span></td>
+<td>«Fichas humanas» (estructuras anidadas).</td>
+</tr>
+<tr>
+<td><strong>14</strong></td>
+<td><span class="ef ef-n">Modalidad</span> <span class="ef ef-x">Autogestión</span> <span class="ef ef-x">Movimiento humano</span></td>
+<td>Analogía de casas y direcciones; diagramas de memoria con guion narrado; «Notas y casas»; cada estudiante dibuja su propio diagrama de memoria.</td>
+</tr>
+<tr>
+<td><strong>15</strong></td>
+<td><span class="ef ef-n">Modalidad</span></td>
+<td>Guion narrado sobre los diagramas de pila y montón.</td>
+</tr>
+<tr>
+<td><strong>16</strong></td>
+<td>—</td>
+<td>Contenido de cada archivo mostrado junto al programa que lo lee o escribe (atención dividida).</td>
+</tr>
+<tr>
+<td><strong>17</strong></td>
+<td><span class="ef ef-x">Movimiento humano</span></td>
+<td>«Objetos humanos» con atributos privados.</td>
+</tr>
+</tbody>
+</table></div>
+<p><em>Efectos que se aplican en el diseño y no como actividad: <span class="ef ef-n">Información transitoria</span> (los protocolos verbales se entregan también por escrito y en segmentos breves) y <span class="ef ef-r">Reversión de la experiencia</span> (la Ruta B omite ejemplos resueltos y problemas por completar).</em></p>
+</section><section class="guia-sec" id="4-fase-2-diseno-y-desarrollo"><h2>4. Fase 2 · Diseño y desarrollo</h2>
+<h2 id="4-1-como-se-construyo-cada-componente">4.1 Cómo se construyó cada componente</h2>
+<div class="tabla-scroll"><table>
+<thead>
+<tr>
+<th>Componente 4C/ID</th>
+<th>Recomendaciones del marco de trabajo (Tabla 5.9)</th>
+<th>Cómo aparecen en los cuadernillos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Tareas de aprendizaje</strong></td>
+<td>Dificultad creciente, escenarios auténticos, establecer el POR QUÉ y el PARA QUÉ; ARCS y estrategias diferenciadas.</td>
+<td>Cada tarea abre con un <strong>contexto</strong> realista (tienda, cine, laboratorio, videojuego). La secuencia típica se muestra abajo.</td>
+</tr>
+<tr>
+<td><strong>Información de soporte</strong></td>
+<td>Seleccionar la información relevante, elegir herramientas de entrega, contenido accesible; ARCS, DI y efectos de la TCC.</td>
+<td>Analogía + pregunta para pensar (atención) + relevancia; conceptos <strong>uno por uno</strong> con código y diagrama integrados; ejemplo resuelto en pasos (análisis → algoritmo → código → verificación).</td>
+</tr>
+<tr>
+<td><strong>Información procedimental</strong></td>
+<td>Ejemplos isomórficos, guías de preguntas de rutina, mapas y tablas de sintaxis; protocolos verbales del instructor o de un desarrollador profesional (CÓMO y POR QUÉ, en video o audio).</td>
+<td>Tarjetas de sintaxis, listas de verificación, errores frecuentes con el mensaje real del compilador y un ejemplo isomórfico; protocolo verbal segmentado en la sección 4.</td>
+</tr>
+</tbody>
+</table></div>
+<figure class="fig" style="max-width:100%"><svg class="dg" width="1068" height="88"
+ viewBox="0.00 0.00 800.60 65.60" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(10.8 54.8)">
+<title>G</title>
+
+<g id="node1" class="node">
+<title>t1</title>
+<path fill="#d1fae5" stroke="#059669" stroke-width="1.3" d="M81,-44C81,-44 12,-44 12,-44 6,-44 0,-38 0,-32 0,-32 0,-12 0,-12 0,-6 6,0 12,0 12,0 81,0 81,0 87,0 93,-6 93,-12 93,-12 93,-32 93,-32 93,-38 87,-44 81,-44"/>
+<text text-anchor="middle" x="46.5" y="-31.6" font-family="Inter" font-size="10.50">T1</text>
+<text text-anchor="middle" x="46.5" y="-19.6" font-family="Inter" font-size="10.50">Ejemplo resuelto</text>
+<text text-anchor="middle" x="46.5" y="-7.6" font-family="Inter" font-size="10.50">+ gemelo</text>
+</g>
+
+<g id="node2" class="node">
+<title>t2</title>
+<path fill="#ecfdf5" stroke="#059669" stroke-width="1.3" d="M179,-44C179,-44 121,-44 121,-44 115,-44 109,-38 109,-32 109,-32 109,-12 109,-12 109,-6 115,0 121,0 121,0 179,0 179,0 185,0 191,-6 191,-12 191,-12 191,-32 191,-32 191,-38 185,-44 179,-44"/>
+<text text-anchor="middle" x="150" y="-31.6" font-family="Inter" font-size="10.50">T2</text>
+<text text-anchor="middle" x="150" y="-19.6" font-family="Inter" font-size="10.50">Por completar</text>
+<text text-anchor="middle" x="150" y="-7.6" font-family="Inter" font-size="10.50">con pistas</text>
+</g>
+
+<g id="edge1" class="edge">
+<title>t1&#45;&gt;t2</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M93.2,-22C96,-22 98.81,-22 101.62,-22"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="101.98,-24.45 108.98,-22 101.98,-19.55 101.98,-24.45"/>
+</g>
+
+<g id="node3" class="node">
+<title>t3</title>
+<path fill="#ecfdf5" stroke="#059669" stroke-width="1.3" d="M277,-44C277,-44 219,-44 219,-44 213,-44 207,-38 207,-32 207,-32 207,-12 207,-12 207,-6 213,0 219,0 219,0 277,0 277,0 283,0 289,-6 289,-12 289,-12 289,-32 289,-32 289,-38 283,-44 277,-44"/>
+<text text-anchor="middle" x="248" y="-31.6" font-family="Inter" font-size="10.50">T3</text>
+<text text-anchor="middle" x="248" y="-19.6" font-family="Inter" font-size="10.50">Por completar</text>
+<text text-anchor="middle" x="248" y="-7.6" font-family="Inter" font-size="10.50">sin pistas</text>
+</g>
+
+<g id="edge2" class="edge">
+<title>t2&#45;&gt;t3</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M191.16,-22C193.89,-22 196.65,-22 199.41,-22"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="199.7,-24.45 206.7,-22 199.7,-19.55 199.7,-24.45"/>
+</g>
+
+<g id="node4" class="node">
+<title>t4</title>
+<path fill="#ecfdf5" stroke="#059669" stroke-width="1.3" d="M370,-44C370,-44 317,-44 317,-44 311,-44 305,-38 305,-32 305,-32 305,-12 305,-12 305,-6 311,0 317,0 317,0 370,0 370,0 376,0 382,-6 382,-12 382,-12 382,-32 382,-32 382,-38 376,-44 370,-44"/>
+<text text-anchor="middle" x="343.5" y="-31.6" font-family="Inter" font-size="10.50">T4</text>
+<text text-anchor="middle" x="343.5" y="-19.6" font-family="Inter" font-size="10.50">Problema</text>
+<text text-anchor="middle" x="343.5" y="-7.6" font-family="Inter" font-size="10.50">convencional</text>
+</g>
+
+<g id="edge3" class="edge">
+<title>t3&#45;&gt;t4</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M289.2,-22C291.93,-22 294.69,-22 297.45,-22"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="297.71,-24.45 304.71,-22 297.71,-19.55 297.71,-24.45"/>
+</g>
+
+<g id="node5" class="node">
+<title>t5</title>
+<path fill="#ecfdf5" stroke="#059669" stroke-width="1.3" d="M458,-44C458,-44 410,-44 410,-44 404,-44 398,-38 398,-32 398,-32 398,-12 398,-12 398,-6 404,0 410,0 410,0 458,0 458,0 464,0 470,-6 470,-12 470,-12 470,-32 470,-32 470,-38 464,-44 458,-44"/>
+<text text-anchor="middle" x="434" y="-31.6" font-family="Inter" font-size="10.50">T5</text>
+<text text-anchor="middle" x="434" y="-19.6" font-family="Inter" font-size="10.50">Solución</text>
+<text text-anchor="middle" x="434" y="-7.6" font-family="Inter" font-size="10.50">libre</text>
+</g>
+
+<g id="edge4" class="edge">
+<title>t4&#45;&gt;t5</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M382.03,-22C384.84,-22 387.67,-22 390.51,-22"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="390.94,-24.45 397.94,-22 390.94,-19.55 390.94,-24.45"/>
+</g>
+
+<g id="node6" class="node">
+<title>t6</title>
+<path fill="#ecfdf5" stroke="#059669" stroke-width="1.3" d="M586,-44C586,-44 498,-44 498,-44 492,-44 486,-38 486,-32 486,-32 486,-12 486,-12 486,-6 492,0 498,0 498,0 586,0 586,0 592,0 598,-6 598,-12 598,-12 598,-32 598,-32 598,-38 592,-44 586,-44"/>
+<text text-anchor="middle" x="542" y="-31.6" font-family="Inter" font-size="10.50">T6</text>
+<text text-anchor="middle" x="542" y="-19.6" font-family="Inter" font-size="10.50">Autoexplicación</text>
+<text text-anchor="middle" x="542" y="-7.6" font-family="Inter" font-size="10.50">(código con errores)</text>
+</g>
+
+<g id="edge5" class="edge">
+<title>t5&#45;&gt;t6</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M470,-22C472.69,-22 475.45,-22 478.25,-22"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="478.73,-24.45 485.73,-22 478.73,-19.55 478.73,-24.45"/>
+</g>
+
+<g id="node7" class="node">
+<title>t7</title>
+<path fill="#ecfdf5" stroke="#059669" stroke-width="1.3" d="M678,-44C678,-44 626,-44 626,-44 620,-44 614,-38 614,-32 614,-32 614,-12 614,-12 614,-6 620,0 626,0 626,0 678,0 678,0 684,0 690,-6 690,-12 690,-12 690,-32 690,-32 690,-38 684,-44 678,-44"/>
+<text text-anchor="middle" x="652" y="-31.6" font-family="Inter" font-size="10.50">T7</text>
+<text text-anchor="middle" x="652" y="-19.6" font-family="Inter" font-size="10.50">Imaginación</text>
+<text text-anchor="middle" x="652" y="-7.6" font-family="Inter" font-size="10.50">(sin ejecutar)</text>
+</g>
+
+<g id="edge6" class="edge">
+<title>t6&#45;&gt;t7</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M598.27,-22C601.08,-22 603.89,-22 606.66,-22"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="606.89,-24.45 613.89,-22 606.89,-19.55 606.89,-24.45"/>
+</g>
+
+<g id="node8" class="node">
+<title>t8</title>
+<path fill="#a7f3d0" stroke="#059669" stroke-width="1.3" d="M767,-44C767,-44 718,-44 718,-44 712,-44 706,-38 706,-32 706,-32 706,-12 706,-12 706,-6 712,0 718,0 718,0 767,0 767,0 773,0 779,-6 779,-12 779,-12 779,-32 779,-32 779,-38 773,-44 767,-44"/>
+<text text-anchor="middle" x="742.5" y="-31.6" font-family="Inter" font-size="10.50">T8</text>
+<text text-anchor="middle" x="742.5" y="-19.6" font-family="Inter" font-size="10.50">Reto</text>
+<text text-anchor="middle" x="742.5" y="-7.6" font-family="Inter" font-size="10.50">colaborativo</text>
+</g>
+
+<g id="edge7" class="edge">
+<title>t7&#45;&gt;t8</title>
+<path fill="none" stroke="#475569" stroke-width="1.2" d="M690.02,-22C692.79,-22 695.59,-22 698.39,-22"/>
+<polygon fill="#475569" stroke="#475569" stroke-width="1.2" points="698.76,-24.45 705.76,-22 698.76,-19.55 698.76,-24.45"/>
+</g>
+</g>
+</svg>
+</figure>
+<p><em>Secuencia típica de tareas: la guía se desvanece de izquierda a derecha. La Ruta A recorre T1 → T4 con apoyo del instructor; la Ruta B inicia en T3 o T4 y trabaja T5–T7 de forma autónoma; ambas se reúnen en T8 con equipos de niveles mezclados.</em></p>
+<h2 id="4-2-motivacion-el-modelo-arcs-en-el-material">4.2 Motivación: el modelo ARCS en el material</h2>
+<div class="tabla-scroll"><table>
+<thead>
+<tr>
+<th>Categoría</th>
+<th>Subcomponente (Tablas 5.11 y 5.12)</th>
+<th>Dónde se aplica en los cuadernillos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Atención</strong></td>
+<td>Entusiasmo perceptivo; por indagación; variabilidad.</td>
+<td>Analogía inicial y recuadro «Pregunta para pensar»; diagramas; contextos variados en cada tarea.</td>
+</tr>
+<tr>
+<td><strong>Relevancia</strong></td>
+<td>Orientación a objetivos; concordancia de motivos; familiaridad.</td>
+<td>Recuadro «¿Por qué y para qué?» con usos reales (videojuegos, bancos, sensores); problemas de la vida cotidiana.</td>
+</tr>
+<tr>
+<td><strong>Confianza</strong></td>
+<td>Requisitos de aprendizaje; oportunidades de éxito; control personal.</td>
+<td>Objetivos explícitos por ruta; ejemplos resueltos y problemas por completar antes de la práctica autónoma; soluciones en el anexo.</td>
+</tr>
+<tr>
+<td><strong>Satisfacción</strong></td>
+<td>Refuerzo intrínseco; recompensa extrínseca; equidad.</td>
+<td>Programas que funcionan y se prueban con valores extremos; autorregistro; mensajes del compilador explicados como oportunidad de mejora.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="4-3-instruccion-diferenciada-tabla-5-8">4.3 Instrucción diferenciada (Tabla 5.8)</h2>
+<p>Cada ficha incluye su <strong>matriz Tomlinson × 4C/ID</strong> ya completada. El criterio general del curso:</p>
+<div class="tabla-scroll"><table>
+<thead>
+<tr>
+<th>Elemento</th>
+<th>Ruta A · sin conocimientos previos</th>
+<th>Ruta B · con conocimientos previos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Contenido</strong></td>
+<td>Conceptos esenciales, uno por uno.</td>
+<td>Conceptos esenciales más extensiones marcadas «Ruta B» (buenas prácticas, casos límite, C++ moderno).</td>
+</tr>
+<tr>
+<td><strong>Proceso</strong></td>
+<td>Ejemplos resueltos → problemas por completar → problema convencional, con el instructor cerca.</td>
+<td>Autoexplicación, imaginación y solución libre de forma autónoma; papel de «arquitecto» en el reto colaborativo.</td>
+</tr>
+<tr>
+<td><strong>Producto</strong></td>
+<td>Un programa funcional y bien probado del contexto de la tarea T4.</td>
+<td>Un programa más abierto o integrador (T5 o T8).</td>
+</tr>
+<tr>
+<td><strong>Entorno</strong></td>
+<td>Tarjetas de sintaxis impresas, depurador paso a paso, trabajo en parejas.</td>
+<td>Proyecto en el IDE, consulta del <em>C++ Crash Course</em> en inglés, trabajo individual y luego en equipo.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="4-4-protocolos-verbales-como-grabarlos">4.4 Protocolos verbales: cómo grabarlos</h2>
+<div class="caja c-checklist">
+<div class="caja-h"><span class="ico">☑</span><span class="kick">Guía de preguntas de rutina</span><span>Guía de preguntas de rutina 4.4 · Grabar un protocolo verbal</span></div>
+<ul class="checks">
+<li>Usa el guion de la sección 4 del tema: resuelve un problema <b>isomórfico</b> a las tareas, no una de ellas.</li>
+<li>Graba un segmento por paso (de 30 a 60 s cada uno): así se evita la <b>información transitoria</b> y el estudiante puede volver a cada segmento.</li>
+<li>Di siempre el <b>CÓMO</b> y el <b>POR QUÉ</b>; incluye un error típico y cómo lo detectas.</li>
+<li>Muestra en pantalla solo lo que narras (modalidad): código y diagrama, sin repetir en texto lo que dices (redundancia).</li>
+<li>Si lo graba un desarrollador profesional, pídele que se centre en el proceso y el razonamiento, no en el resultado.</li>
+<li>Entrega el guion escrito junto con el video o audio.</li>
+</ul>
+</div>
+</section><section class="guia-sec" id="5-fase-3-aplicacion-y-evaluacion"><h2>5. Fase 3 · Aplicación y evaluación</h2>
+<h2 id="5-1-plan-de-implementacion-de-una-sesion-tipica">5.1 Plan de implementación de una sesión típica</h2>
+<div class="tabla-scroll"><table>
+<thead>
+<tr>
+<th>Momento</th>
+<th>Componente</th>
+<th>Qué hace el instructor</th>
+<th>Ruta A</th>
+<th>Ruta B</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Apertura</strong> (10 min)</td>
+<td>Soporte</td>
+<td>Presenta un ejemplo real y la «Pregunta para pensar» (¿cómo crees que funciona?).</td>
+<td>Todo el grupo</td>
+<td>Todo el grupo</td>
+</tr>
+<tr>
+<td><strong>Soporte</strong> (30–40 min)</td>
+<td>Soporte</td>
+<td>Conceptos uno por uno, actividad de movimiento humano, ejemplo resuelto. El material queda disponible todo el tema.</td>
+<td>Atiende todo</td>
+<td>Puede saltar a conceptos «Ruta B»</td>
+</tr>
+<tr>
+<td><strong>Tareas</strong> (50–60 min)</td>
+<td>Tareas + procedimental</td>
+<td>Acompaña a la Ruta A y retira la ayuda gradualmente; la información procedimental se usa «justo a tiempo».</td>
+<td>T1 → T4</td>
+<td>T3/T4 → T5–T7</td>
+</tr>
+<tr>
+<td><strong>Protocolo verbal</strong></td>
+<td>Procedimental</td>
+<td>Se reproduce antes del primer problema convencional (T4) o cuando varios estudiantes se atascan.</td>
+<td>Sí</td>
+<td>Opcional</td>
+</tr>
+<tr>
+<td><strong>Cierre</strong> (10 min)</td>
+<td>Evaluación</td>
+<td>Autorregistro con escala de esfuerzo mental; dudas para la siguiente sesión.</td>
+<td>Sí</td>
+<td>Sí</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="5-2-cronograma-sugerido-16-semanas-6-h-por-semana">5.2 Cronograma sugerido (16 semanas · 6 h por semana)</h2>
+<div class="tabla-scroll"><table>
+<thead>
+<tr>
+<th>Semana</th>
+<th>Temas</th>
+<th>Instrumentos de evaluación</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Fase 1 (2 h) · 01 Estructura y compilación</td>
+<td>MSLQ inicial, prueba diagnóstica, recall de 01 como diagnóstico</td>
+</tr>
+<tr>
+<td><strong>2–4</strong></td>
+<td>02 Tipos y E/S · 03 Operadores · 04 if · 05 switch</td>
+<td>Recall y comprehension de cada tema · encuesta de carga cognitiva (fin del Bloque I)</td>
+</tr>
+<tr>
+<td><strong>4–8</strong></td>
+<td>06 Ciclos · 07 Ciclos anidados · 08 Arreglos · 09 Matrices</td>
+<td>Diagnóstico del Bloque II · tests por tema · carga cognitiva (fin del Bloque II)</td>
+</tr>
+<tr>
+<td><strong>8–11</strong></td>
+<td>10 Funciones · 11 Recursividad · 12 Cadenas · 13 Estructuras</td>
+<td>Diagnóstico del Bloque III · tests por tema · carga cognitiva (fin del Bloque III)</td>
+</tr>
+<tr>
+<td><strong>11–15</strong></td>
+<td>14 Punteros · 15 Memoria dinámica · 16 Archivos · 17 Clases</td>
+<td>Diagnóstico del Bloque IV · tests por tema · carga cognitiva (fin del Bloque IV)</td>
+</tr>
+<tr>
+<td><strong>16</strong></td>
+<td>Cierre y revisión de resultados</td>
+<td>CIS, IMMS, MSLQ final · decisión de iterar (sección 5.4)</td>
+</tr>
+</tbody>
+</table></div>
+<p><em>Con otra carga horaria, conserva el orden de los bloques y la proporción de tiempo entre soporte (≈ 30 %) y tareas (≈ 60 %).</em></p>
+<h2 id="5-3-registro-y-analisis-de-resultados">5.3 Registro y análisis de resultados</h2>
+<ul>
+<li><strong>Desempeño:</strong> registra recall y comprehension de cada estudiante (Tabla 5.2) y compara con el diagnóstico (y, si existe, con un grupo de control) para identificar diferencias estadísticamente significativas.</li>
+<li><strong>Carga cognitiva:</strong> promedia los ítems 1–3 (intrínseca), 4–6 (extrínseca) y 7–10 (pertinente) por bloque. Junto con el desempeño, permite estimar la <strong>eficiencia mental</strong> del material.</li>
+<li><strong>Motivación y percepción:</strong> compara el MSLQ inicial y el final; analiza el CIS (enseñanza) y el IMMS (material) por categoría ARCS.</li>
+</ul>
+<h2 id="5-4-revision-de-resultados-iterar">5.4 Revisión de resultados: ¿iterar?</h2>
+<p>Si se cumplen los objetivos, el ciclo termina. Si no, el modelo indica <strong>regresar a la Fase 1 o 2</strong> según los hallazgos:</p>
+<div class="tabla-scroll"><table>
+<thead>
+<tr>
+<th>Si observas…</th>
+<th>Regresa a…</th>
+<th>Ajuste sugerido</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Recall bajo, comprehension aceptable</td>
+<td>Fase 2 · soporte</td>
+<td>Reforzar conceptos con más ejemplos resueltos y glosario; repasar el mapa del tema.</td>
+</tr>
+<tr>
+<td>Recall aceptable, comprehension baja</td>
+<td>Fase 2 · tareas</td>
+<td>Más problemas por completar y ejemplos isomórficos; desvanecer la guía más despacio.</td>
+</tr>
+<tr>
+<td>Carga <strong>extrínseca</strong> alta (ítems 4–6)</td>
+<td>Fase 2 · diseño</td>
+<td>Revisar atención dividida, redundancia y claridad de instrucciones; segmentar los protocolos verbales.</td>
+</tr>
+<tr>
+<td>Carga <strong>intrínseca</strong> alta (ítems 1–3) con bajo desempeño</td>
+<td>Fase 2 · secuencia</td>
+<td>Aplicar elementos aislados con más pasos intermedios; revisar prerrequisitos.</td>
+</tr>
+<tr>
+<td>Carga <strong>pertinente</strong> baja (ítems 7–10)</td>
+<td>Fase 2 · tareas</td>
+<td>Más autoexplicación, imaginación y variabilidad (sobre todo para la Ruta B).</td>
+</tr>
+<tr>
+<td>Ruta B aburrida o Ruta A frustrada</td>
+<td>Fase 1 · rutas</td>
+<td>Reasignar estudiantes; recalibrar el criterio de 70 puntos.</td>
+</tr>
+<tr>
+<td>Motivación (MSLQ, IMMS) a la baja</td>
+<td>Fase 2 · ARCS</td>
+<td>Contextos más cercanos al grupo, retos con elección del tema, retroalimentación inmediata.</td>
+</tr>
+</tbody>
+</table></div>
+</section><section class="guia-sec" id="6-formatos-para-el-instructor"><h2>6. Formatos para el instructor</h2>
+<p><em>Plantillas en blanco de la Fase 1 (Sandoval Medina, 2026, Tablas 5.1–5.6 y 5.8). Pueden fotocopiarse o reproducirse en una hoja de cálculo.</em></p>
+<p><strong>Tabla 5.2 · Registro de resultados de las pruebas finales de desempeño</strong> (tema: <strong><em>_</em></strong><strong><em>_</em></strong>______)</p>
+<div class="tabla-scroll"><table class="tb plantilla"><thead><tr><th>ID</th><th>Ruta</th><th>Recall test inicial · calificación</th><th>Recall test final · calificación</th><th>Comprehension test final · calificación</th><th>Esfuerzo mental (1–9)</th></tr></thead><tbody><tr><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div>
+
+<p><strong>Tabla 5.3 · Registro de indicadores de motivación y autoeficacia</strong> (MSLQ, escala 1–7)</p>
+<div class="tabla-scroll"><table class="tb plantilla"><thead><tr><th>ID</th><th>Orientación intrínseca</th><th>Orientación extrínseca</th><th>Valor de la tarea</th><th>Autoeficacia</th><th>Ansiedad</th><th>Promedio</th></tr></thead><tbody><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div>
+
+<p><strong>Tabla 5.4 · Estrategias cognitivas, metacognitivas y manejo de recursos</strong> (MSLQ, escala 1–7)</p>
+<div class="tabla-scroll"><table class="tb plantilla"><thead><tr><th>ID</th><th>Cog. · Repetición</th><th>Cog. · Elaboración</th><th>Cog. · Organización</th><th>Metacog. · Control de la comprensión</th><th>Rec. · Gestión del tiempo y estudio</th><th>Rec. · Regulación del esfuerzo</th><th>Rec. · Búsqueda de ayuda</th><th>Rec. · Entorno de aprendizaje</th></tr></thead><tbody><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div>
+
+<p><strong>Tabla 5.5 · Resumen estadístico de variables de aprendizaje y motivación</strong> (grupo: <strong><em>_</em></strong>_____)</p>
+<div class="tabla-scroll"><table class="tb plantilla"><thead><tr><th>Dato</th><th>Motivación (promedio)</th><th>Previos: sí</th><th>Previos: no</th><th>Cognitivas (1–3)</th><th>Metacognitivas: sí</th><th>Metacognitivas: no</th><th>Recursos (1–4)</th></tr></thead><tbody><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div>
+
+<p><strong>Tabla 5.13 · Resumen de diagnóstico del entorno grupal</strong></p>
+<div class="tabla-scroll"><table class="tb plantilla"><thead><tr><th>Dimensión de análisis (motivación · estrategias cognitivas · metacognitivas · conocimientos previos)</th><th>Resultados del grupo</th></tr></thead><tbody><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr></tbody></table></div>
+
+<p><strong>Tabla 5.8 · Matriz de planificación: instrucción diferenciada y modelo 4C/ID</strong> (tema: <strong><em>_</em></strong>_____)</p>
+<div class="tabla-scroll"><table class="tb plantilla"><thead><tr><th>Elemento (contenido · proceso · producto · entorno)</th><th>Tema(s)</th><th>Componente 4C/ID</th><th>Con previos (Ruta B)</th><th>Sin previos (Ruta A)</th></tr></thead><tbody><tr><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div>
+
+<p><strong>Tabla 5.6 · Plan de aplicación de efectos de la carga cognitiva por tema</strong> (para temas nuevos)</p>
+<div class="tabla-scroll"><table class="tb plantilla"><thead><tr><th>Tema</th><th>Efecto(s) a aplicar</th><th>Herramientas / estrategias de aplicación</th></tr></thead><tbody><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></tbody></table></div>
+
+<h2 id="referencias-de-los-instrumentos-y-del-marco-teorico">Referencias de los instrumentos y del marco teórico</h2>
+<ul>
+<li>Keller, J. M. (2010). <em>Motivational design for learning and performance: The ARCS model approach</em>. Springer. (CIS e IMMS.)</li>
+<li>Morrison, B. B., Dorn, B. y Guzdial, M. (2014). Measuring cognitive load in introductory CS: Adaptation of an instrument. En <em>Proceedings of the Tenth Annual Conference on International Computing Education Research (ICER '14)</em> (pp. 131–138). ACM.</li>
+<li>Paas, F. (1992). Training strategies for attaining transfer of problem-solving skill in statistics: A cognitive-load approach. <em>Journal of Educational Psychology, 84</em>(4), 429–434.</li>
+<li>Pintrich, P. R., Smith, D. A. F., García, T. y McKeachie, W. J. (1991). <em>A manual for the use of the Motivated Strategies for Learning Questionnaire (MSLQ)</em>. University of Michigan.</li>
+<li>Sweller, J., van Merriënboer, J. J. G. y Paas, F. (2019). Cognitive architecture and instructional design: 20 years later. <em>Educational Psychology Review, 31</em>, 261–292.</li>
+<li>Tomlinson, C. A. (2017). <em>How to differentiate instruction in academically diverse classrooms</em> (3.ª ed.). ASCD.</li>
+<li>van Merriënboer, J. J. G. y Kirschner, P. A. (2018). <em>Ten steps to complex learning</em> (3.ª ed.). Routledge.</li>
+</ul></section><section class="guia-sec" id="fichas-y-pdf"><h2>Fichas de diseño y cuadernillos PDF</h2>
+<p>La ficha de cada tema está en su pestaña «Ficha docente». Los cuadernillos PDF son la versión imprimible del mismo material, con todas las soluciones en un anexo.</p>
+<ul class="lista-fichas"><li><a href="tema-01.html#docente">01. Estructura y compilación</a> · <a href="pdf/Tema01_Estructura_programa_y_compilacion.pdf" download>PDF</a></li><li><a href="tema-02.html#docente">02. Tipos, variables y E/S</a> · <a href="pdf/Tema02_Tipos_variables_constantes_ES.pdf" download>PDF</a></li><li><a href="tema-03.html#docente">03. Operadores y secuencia</a> · <a href="pdf/Tema03_Operadores_expresiones_estructura_secuencial.pdf" download>PDF</a></li><li><a href="tema-04.html#docente">04. if, if-else y anidados</a> · <a href="pdf/Tema04_Estructuras_selectivas_if.pdf" download>PDF</a></li><li><a href="tema-05.html#docente">05. switch y menús</a> · <a href="pdf/Tema05_Estructura_selectiva_switch.pdf" download>PDF</a></li><li><a href="tema-06.html#docente">06. while, do-while y for</a> · <a href="pdf/Tema06_Estructuras_repetitivas_while_do_for.pdf" download>PDF</a></li><li><a href="tema-07.html#docente">07. Ciclos anidados</a> · <a href="pdf/Tema07_Ciclos_anidados_break_continue.pdf" download>PDF</a></li><li><a href="tema-08.html#docente">08. Arreglos (vectores)</a> · <a href="pdf/Tema08_Arreglos_unidimensionales_vectores.pdf" download>PDF</a></li><li><a href="tema-09.html#docente">09. Matrices</a> · <a href="pdf/Tema09_Arreglos_bidimensionales_matrices.pdf" download>PDF</a></li><li><a href="tema-10.html#docente">10. Funciones</a> · <a href="pdf/Tema10_Funciones_parametros_ambito.pdf" download>PDF</a></li><li><a href="tema-11.html#docente">11. Recursividad</a> · <a href="pdf/Tema11_Recursividad.pdf" download>PDF</a></li><li><a href="tema-12.html#docente">12. Cadenas</a> · <a href="pdf/Tema12_Cadenas_de_caracteres.pdf" download>PDF</a></li><li><a href="tema-13.html#docente">13. Estructuras (struct)</a> · <a href="pdf/Tema13_Registros_estructuras_enumeraciones.pdf" download>PDF</a></li><li><a href="tema-14.html#docente">14. Punteros y referencias</a> · <a href="pdf/Tema14_Punteros_y_referencias.pdf" download>PDF</a></li><li><a href="tema-15.html#docente">15. Memoria dinámica</a> · <a href="pdf/Tema15_Memoria_dinamica.pdf" download>PDF</a></li><li><a href="tema-16.html#docente">16. Archivos</a> · <a href="pdf/Tema16_Archivos_de_texto.pdf" download>PDF</a></li><li><a href="tema-17.html#docente">17. Clases y objetos</a> · <a href="pdf/Tema17_Introduccion_POO_clases_objetos.pdf" download>PDF</a></li><li><a href="pdf/Tema00_Guia_del_instructor_CLT4BP.pdf" download>Esta guía en PDF</a></li></ul></section></article></div>
+</main>
+<footer class="pie">
+  <p>Material diseñado con el modelo instruccional <b>mapa de ruta CLT4BP</b> (Sandoval Medina, 2026): teoría de la carga cognitiva, 4C/ID, ARCS, instrucción diferenciada y protocolos verbales.</p>
+  <p>Fuentes: Betancourt Uscátegui y Polanco Guzmán (2021), <i>115 ejercicios resueltos de programación C++</i>; Lospinoso (2019), <i>C++ Crash Course</i>. Los programas se compilaron con g++ (C++20) y sus salidas son reales.</p>
+  <p>Tu progreso se guarda solo en este navegador. Puedes exportarlo desde <a href="progreso.html">Mi progreso</a>.</p>
+</footer>
+<script src="assets/datos.js"></script>
+<script>window.PAGE={"tipo": "guia"};</script>
+<script src="assets/curso.js"></script>
+</body>
+</html>
