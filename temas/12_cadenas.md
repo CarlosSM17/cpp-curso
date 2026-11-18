@@ -1,32 +1,33 @@
 ---
 num: "12"
 archivo: "Tema12_Cadenas_de_caracteres"
-titulo: "Cadenas de caracteres: char[] y std::string"
+titulo: "Cadenas de caracteres: arreglos de char y <string.h>"
 corto: "Cadenas"
-lema: "Un texto es un arreglo de caracteres: se recorre, se compara, se busca y se transforma letra por letra."
+lema: "Un texto es un arreglo de caracteres con un tope al final: se recorre, se compara, se busca y se transforma letra por letra."
 duracion: "5 h · 3 sesiones"
-previos: "Tema 02 (`char`, ASCII, `string`, `getline`), Tema 08 (arreglos) y Tema 10 (funciones)."
+previos: "Tema 02 (`char`, ASCII, `%s`, `%[^\\n]`), Tema 08 (arreglos) y Tema 10 (funciones y arreglos como parámetro)."
 fuentes:
-  - "Betancourt Uscátegui, J. F. y Polanco Guzmán, I. Y. (2021). *115 ejercicios resueltos de programación C++*. Cap. 10: Cadenas de caracteres (§10.1 Cadena de caracteres, §10.2 Tipo de dato string, §10.3 Entrada y salida, §10.4 Operaciones predefinidas, §10.5 Ejercicios)."
-  - "Lospinoso, J. (2019). *C++ Crash Course*. Cap. 2: C-Style Strings. Cap. 15: std::string (Constructing, Element Access, Comparisons, Manipulating Elements, Search, Numeric Conversions)."
+  - "Kernighan, B. W. y Ritchie, D. M. (1988). *The C Programming Language* (2.ª ed.). Prentice Hall. Cap. 1: §1.9 Character Arrays. Cap. 5: §5.5 Character Pointers and Functions. Apéndice B: §B2 «Character Class Tests: <ctype.h>», §B3 «String Functions: <string.h>»."
+  - "King, K. N. (2008). *C Programming: A Modern Approach* (2.ª ed.). W. W. Norton. Cap. 13 «Strings»: §13.1–§13.6. Cap. 23 (encabezados `<ctype.h>` y `<string.h>`)."
+  - "Seacord, R. C. (2020). *Effective C*. No Starch Press. Cap. 7 «Characters and Strings»."
   - "Sandoval Medina, C. (2026). Tesis doctoral, §6.1.6: autoexplicación con ejemplos con errores (comparar cadenas sin `strcmp`, `strcpy` ni `strlen`)."
 objetivos:
   A:
-    - "Distinguir las cadenas de estilo C (`char[]` terminadas en `'\\0'`) y `std::string`."
-    - "Leer y mostrar cadenas (`cin >>`, `getline`) y acceder a cada carácter por su índice."
-    - "Recorrer cadenas para contar y clasificar caracteres con `<cctype>` (`isalpha`, `isdigit`, `toupper`…)."
-    - "Usar las operaciones de `string`: `size`, `+`, `==`, `<`, `substr`, `find`, `insert`, `erase`, `replace`."
+    - "Explicar cómo se guarda una cadena en C (arreglo de `char` terminado en `'\\0'`) y reservar espacio suficiente."
+    - "Leer cadenas (`scanf(\"%s\")`, `fgets`) y acceder a cada carácter por su índice."
+    - "Recorrer cadenas para contar y clasificar caracteres con `<ctype.h>` (`isalpha`, `isdigit`, `toupper`…)."
+    - "Usar las funciones de `<string.h>`: `strlen`, `strcpy`, `strcat`, `strcmp`, `strchr`, `strstr`."
   B:
-    - "Implementar a mano longitud, copia y comparación de cadenas de C."
-    - "Convertir entre texto y números (`stoi`, `stod`, `to_string`)."
-    - "Validar formatos de texto (contraseñas, identificadores) con funciones."
+    - "Implementar a mano longitud, copia y comparación de cadenas."
+    - "Convertir entre texto y números (`atoi`, `atof`, `strtol`, `snprintf`)."
+    - "Prevenir desbordamientos de búfer (tamaño del arreglo, `snprintf`, `strncat`)."
     - "Resolver problemas de palabras: invertir, palíndromos, contar palabras, cifrar."
 efectos:
   soporte:
-    - ["Elementos aislados", "char[] y '\\0' → string → lectura → recorrido → cctype → operaciones → conversiones → C-strings a mano."]
+    - ["Elementos aislados", "char[] y '\\0' → <string.h> → lectura → recorrido → <ctype.h> → búsqueda → conversiones → funciones a mano."]
     - ["Atención dividida", "Casillas del texto (con índices y '\\0') junto a cada operación."]
     - ["Ejemplo resuelto", "Analizador de frases: vocales, consonantes, dígitos, espacios y palabras."]
-    - ["Movimiento humano", "«Cadena humana»: cada estudiante es una letra; insertar y borrar los obliga a moverse."]
+    - ["Movimiento humano", "«Cadena humana»: cada estudiante es una letra; mover el tope cambia dónde termina el texto."]
   procedimental:
     - ["Variabilidad", "Mismas operaciones aplicadas a nombres, contraseñas, frases y mensajes cifrados."]
     - ["Autoexplicación", "Errores con cadenas presentados como casos para explicar."]
@@ -36,16 +37,16 @@ efectos:
     - ["Desvanecimiento de guía", "T1 → T4."]
     - ["Solución libre", "T5: descubrir todo lo posible sobre una frase."]
     - ["Autoexplicación", "T6: comparar cadenas sin funciones de biblioteca (ejemplo con errores de la tesis §6.1.6)."]
-    - ["Imaginación", "T7: imaginar el estado de un `string` tras varias operaciones."]
+    - ["Imaginación", "T7: imaginar el contenido de dos cadenas (y su `'\\0'`) tras varias operaciones."]
     - ["Memoria colectiva de trabajo", "T8: el juego del ahorcado por equipos."]
 diferenciada:
   Contenido:
     comp: "Información de soporte"
-    A: "`string`, índices, recorrido, `<cctype>`, `find`/`substr`."
-    B: "Cadenas de C y su manejo manual, conversiones numéricas, `string::npos`."
+    A: "Arreglos de `char`, `'\\0'`, recorrido, `<ctype.h>`, `strlen`/`strcpy`/`strcat`/`strcmp`."
+    B: "Búsqueda con `strchr`/`strstr` (punteros), conversiones numéricas, desbordamiento de búfer."
   Proceso:
     comp: "Tareas de aprendizaje"
-    A: "T1 → T4, dibujando las casillas del texto en papel."
+    A: "T1 → T4, dibujando las casillas del texto en papel (con su `'\\0'`)."
     B: "T5, T6, T7 autónomas; T8 como integradores."
   Producto:
     comp: "Tareas de aprendizaje"
@@ -54,30 +55,30 @@ diferenciada:
   Entorno:
     comp: "Información procedimental"
     A: "Tabla ASCII impresa a la mano."
-    B: "Documentación de `std::string` (cppreference) para explorar más operaciones."
+    B: "Manual de la biblioteca de C (`man 3 strcpy` o cppreference, sección C) y `-fsanitize=address` para detectar desbordamientos."
 plan:
   - ["Sesión 1", "Soporte + tareas", "Cadena humana; conceptos 1–5; ejemplo resuelto; T1, T2.", "100 min"]
   - ["Sesión 2", "Soporte + tareas", "Conceptos 6–8; T3, T4; Ruta B: T6, T7.", "100 min"]
   - ["Sesión 3", "Tareas + evaluación", "T5, T8 ahorcado; protocolo verbal; tests.", "100 min"]
 glosario:
-  - ["cadena de caracteres", "string", "Secuencia de caracteres que representa un texto."]
-  - ["cadena estilo C", "C-style string", "Arreglo de `char` terminado con el carácter nulo `'\\0'`."]
-  - ["carácter nulo", "null terminator", "`'\\0'`: marca el final de una cadena de C."]
-  - ["literal de cadena", "string literal", "Texto entre comillas dobles; en C++ es un arreglo de `const char`."]
-  - ["longitud", "length / size", "Número de caracteres (`s.size()`, `strlen(c)`)."]
-  - ["concatenar", "concatenate", "Unir cadenas: `s1 + s2`."]
-  - ["subcadena", "substring", "Parte de una cadena: `s.substr(pos, n)`."]
-  - ["buscar", "find", "`s.find(x)` devuelve la posición o `string::npos`."]
-  - ["orden lexicográfico", "lexicographic order", "Orden de diccionario, carácter por carácter según su código."]
-  - ["clasificación de caracteres", "character classification", "Funciones de `<cctype>`: `isalpha`, `isdigit`, `isspace`…"]
-  - ["conversión numérica", "numeric conversion", "`stoi`, `stod` (texto → número), `to_string` (número → texto)."]
+  - ["cadena de caracteres", "string", "Secuencia de caracteres que representa un texto; en C, un arreglo de `char` terminado en `'\\0'`."]
+  - ["carácter nulo", "null terminator", "`'\\0'`: marca el final de una cadena."]
+  - ["literal de cadena", "string literal", "Texto entre comillas dobles; en C es un arreglo de `char` que no debe modificarse."]
+  - ["longitud", "length", "Número de caracteres antes del `'\\0'`: `strlen(s)`."]
+  - ["concatenar", "concatenate", "Unir cadenas: `strcat(destino, origen)`."]
+  - ["subcadena", "substring", "Parte de una cadena; en C se copia con `strncpy` o un ciclo y se cierra con `'\\0'`."]
+  - ["buscar", "search", "`strchr` (un carácter) y `strstr` (un texto) devuelven un puntero a la posición o `NULL`."]
+  - ["orden lexicográfico", "lexicographic order", "Orden de diccionario, carácter por carácter según su código; lo calcula `strcmp`."]
+  - ["clasificación de caracteres", "character classification", "Funciones de `<ctype.h>`: `isalpha`, `isdigit`, `isspace`…"]
+  - ["conversión numérica", "numeric conversion", "`atoi`, `atof`, `strtol` (texto → número); `snprintf` (número → texto)."]
+  - ["desbordamiento de búfer", "buffer overflow", "Escribir más caracteres de los que caben en el arreglo; daña otras variables."]
   - ["palíndromo", "palindrome", "Texto que se lee igual al derecho y al revés."]
 ---
 
 # 1. Información de soporte {.soporte}
 
-:::analogia | Un collar de cuentas con letras
-Imagina un collar de cuentas, cada una con una letra: H-O-L-A. Puedes contar las cuentas, mirar la tercera, cambiar una, añadir cuentas al final o cortar un trozo. En un collar **de C** hay además una cuenta especial al final, un **tope** (`'\0'`), que indica dónde termina. Una cadena de caracteres es eso: un **arreglo de `char`** con operaciones para manipularlo.
+:::analogia | Un collar de cuentas con letras y un tope
+Imagina un collar de cuentas, cada una con una letra: H-O-L-A. Puedes contar las cuentas, mirar la tercera, cambiar una o agregar cuentas al final. En un collar **de C** hay además una cuenta especial, un **tope** (`'\0'`), que indica dónde termina el texto: lo que haya después del tope no cuenta. Una cadena de caracteres es eso: un **arreglo de `char`** con su tope, y un juego de funciones para manipularlo.
 :::
 
 :::pregunta
@@ -87,24 +88,23 @@ Cuando una página web te dice «tu contraseña debe tener al menos 8 caracteres
 :::
 
 :::relevancia
-Casi todo lo que hace un usuario es texto: nombres, correos, contraseñas, mensajes de chat, comandos de un juego, búsquedas. Validar un formulario, buscar una palabra en un documento, generar nombres de usuario o cifrar un mensaje son tareas de **procesamiento de cadenas**. {{arcs:Relevancia}}
+Casi todo lo que hace un usuario es texto: nombres, correos, contraseñas, mensajes de chat, comandos de un juego, búsquedas. Validar un formulario, buscar una palabra en un documento, generar nombres de usuario o cifrar un mensaje son tareas de **procesamiento de cadenas**. En C, además, manejar bien el tamaño de cada cadena es una cuestión de **seguridad**: muchos ataques informáticos históricos aprovecharon cadenas que se desbordaban. {{arcs:Relevancia}}
 :::
 
 ## 1.1 Conceptos, uno por uno
 
 :::concepto | 1 | Cadenas de C: arreglos de `char` con tope | Elementos aislados, Atención dividida
-El *C++ Crash Course* (cap. 2) recuerda que, heredado de C, un texto puede guardarse en un arreglo de `char` que termina con el carácter nulo `'\0'`:
+En C no existe un tipo «texto»: un texto se guarda en un arreglo de `char` que termina con el carácter nulo `'\0'`.
 
-```cpp run title="cstring.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="cadena.c"
+#include <stdio.h>
+int main(void)
 {
-    char saludo[] = "Hola";                     //> El compilador reserva 5 casillas: 4 letras + '\0'
-    cout << saludo << "\n";                     //> cout muestra hasta encontrar '\0'
-    cout << "Tamanio del arreglo: " << sizeof(saludo) << "\n";
-    saludo[0] = 'B';                            //> Cada casilla es un char modificable
-    cout << saludo << "\n";
+    char saludo[] = "Hola";                         //> El compilador reserva 5 casillas: 4 letras + '\0'
+    printf("%s\n", saludo);                         //> `%s` muestra hasta encontrar '\0'
+    printf("Tamanio del arreglo: %zu\n", sizeof(saludo));
+    saludo[0] = 'B';                                //> Cada casilla es un char modificable
+    printf("%s\n", saludo);
     return 0;
 }
 ```
@@ -114,88 +114,87 @@ name: saludo
 type: "char[5]"
 vals: ["'B'", "'o'", "'l'", "'a'", "'\\0'"]
 hl: [0]
-figcaption: "Figura 1. Cuatro letras y el tope '\\0'. Sin el tope, cout seguiría leyendo memoria ajena."
+figcaption: "Figura 1. Cuatro letras y el tope '\\0'. Sin el tope, printf seguiría leyendo memoria ajena."
 ```
 :::
 
-:::concepto | 2 | `std::string`: el texto «inteligente» | Elementos aislados, Atención dividida
-`std::string` (biblioteca `<string>`) administra su memoria, conoce su tamaño y permite operar con `+`, `==`, `<`:
+:::concepto | 2 | Las funciones básicas de `<string.h>` | Elementos aislados, Atención dividida
+Con arreglos de `char` **no** se puede usar `=` para copiar, `+` para unir ni `==` para comparar. Para eso existe la cabecera `<string.h>`:
 
-```cpp run title="string_basico.cpp"
-#include <iostream>
-#include <string>
-using namespace std;
-int main()
+```c run title="string_basico.c"
+#include <stdio.h>
+#include <string.h>
+int main(void)
 {
-    string nombre = "Ada";
-    string apellido = "Lovelace";
-    string completo = nombre + " " + apellido;           //> `+` concatena
-    cout << completo << " tiene " << completo.size() << " caracteres\n";  //> `.size()` (o `.length()`)
-    cout << "Primera letra: " << completo[0] << ", ultima: " << completo[completo.size() - 1] << "\n";
-    completo[0] = 'a';                                   //> Acceso por índice, como en un arreglo
-    cout << completo << "\n";
-    cout << boolalpha << (nombre == "Ada") << " " << (string("abc") < "abd") << "\n";  //> Comparan contenido
+    char nombre[30] = "Ada";
+    char completo[60];
+    strcpy(completo, nombre);                       //> Copia: completo ← "Ada" (el destino va primero)
+    strcat(completo, " Lovelace");                  //> Concatena: agrega al final de completo
+    printf("%s tiene %zu caracteres\n", completo, strlen(completo));   //> strlen: letras antes del '\0'
+    printf("Primera: %c, ultima: %c\n", completo[0], completo[strlen(completo) - 1]);
+    completo[0] = 'a';                              //> Acceso por índice, como en cualquier arreglo
+    printf("%s\n", completo);
+    printf("%d %d\n", strcmp(nombre, "Ada"), strcmp("abc", "abd") < 0);  //> strcmp: 0 = iguales; negativo = va antes
     return 0;
 }
 ```
-Las comparaciones `<` y `>` siguen el **orden de diccionario** según el código ASCII: las mayúsculas (65–90) van antes que las minúsculas (97–122).
+`strcmp(a, b)` compara en **orden de diccionario** según el código ASCII: devuelve 0 si son iguales, un número negativo si `a` va antes y uno positivo si va después. Las mayúsculas (65–90) van antes que las minúsculas (97–122). **Responsabilidad tuya:** el destino de `strcpy` y `strcat` debe tener espacio para todo el texto **más** el `'\0'`.
 :::
 
 :::concepto | 3 | Leer texto: palabra o línea | Elementos aislados
-Repaso del Tema 02: `cin >> s` lee **una palabra** (se detiene en el espacio); `getline(cin, s)` lee **la línea completa**. Si antes hubo un `cin >>`, usa `cin.ignore()` para descartar el Enter pendiente.
+`scanf("%29s", s)` lee **una palabra** (se detiene en el espacio). Para leer **la línea completa** está `fgets(s, tamaño, stdin)`, que respeta el tamaño del arreglo pero **guarda también el Enter** (`'\n'`) al final: se quita con `strcspn`.
 
-```cpp run title="lectura.cpp" stdin="25\nCalle Juarez 104\n"
-#include <iostream>
-#include <string>
-using namespace std;
-int main()
+```c run title="lectura.c" stdin="25\nCalle Juarez 104\n"
+#include <stdio.h>
+#include <string.h>
+int main(void)
 {
     int edad;
-    string direccion;
-    cout << "Edad: ";
-    cin >> edad;
-    cin.ignore();                       //> Descarta el '\n' que dejó `cin >>`
-    cout << "Direccion: ";
-    getline(cin, direccion);            //> Lee con espacios
-    cout << "[" << direccion << "] (" << direccion.size() << " caracteres)\n";
+    char direccion[50];
+    printf("Edad: ");
+    scanf("%d", &edad);
+    getchar();                                      //> Descarta el '\n' que dejó scanf
+    printf("Direccion: ");
+    fgets(direccion, sizeof direccion, stdin);      //> Lee la línea, como máximo 49 caracteres + '\0'
+    direccion[strcspn(direccion, "\n")] = '\0';     //> strcspn da la posición del '\n': ahí se pone el tope
+    printf("[%s] (%zu caracteres)\n", direccion, strlen(direccion));
     return 0;
 }
 ```
+Si no te importa conservar espacios al inicio, `scanf(" %49[^\n]", direccion)` del Tema 02 también funciona y no guarda el Enter.
 :::
 
 :::concepto | 4 | Recorrer una cadena carácter por carácter | Elementos aislados, Atención dividida
-Igual que un arreglo: índice de `0` a `size() − 1`, o el `for` de rango.
+Igual que un arreglo, pero sin necesitar el tamaño: se avanza **hasta encontrar el tope**.
 
-```cpp run title="recorrer.cpp"
-#include <iostream>
-#include <string>
-using namespace std;
-int main()
+```c run title="recorrer.c"
+#include <stdio.h>
+int main(void)
 {
-    string frase = "Murcielago";
+    char frase[] = "Murcielago";
     int vocales = 0;
-    for (int i = 0; i < static_cast<int>(frase.size()); i++)   //> Recorrido con índice
+    for (int i = 0; frase[i] != '\0'; i++)         //> Termina al llegar al '\0'
     {
         char c = frase[i];
         if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' ||
             c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U')
             vocales++;
     }
-    cout << "Vocales: " << vocales << "\n";
-    for (char c : frase)                                       //> for de rango: cada carácter
-        cout << c << '-';
-    cout << "\n";
+    printf("Vocales: %d\n", vocales);
+    for (int i = 0; frase[i] != '\0'; i++)
+        printf("%c-", frase[i]);
+    printf("\n");
     return 0;
 }
 ```
-`size()` devuelve un entero **sin signo**; por eso se convierte con `static_cast<int>` al compararlo con `i` (evita avisos del compilador).
+Escribir `i < strlen(frase)` también funciona, pero recalcula la longitud en cada vuelta; comparar con `'\0'` es la forma idiomática en C.
 :::
 
 :::movimiento | La cadena humana (10 min)
-Cinco estudiantes forman la palabra `GATOS` con tarjetas; un sexto sostiene un letrero `'\0'` al final. El instructor pide operaciones y el grupo predice antes qué pasará: «`s[1] = 'O'`» (un estudiante cambia su tarjeta), «insertar `R` en la posición 2» (todos los de la derecha deben **recorrerse** un lugar), «borrar la posición 0» (todos se recorren a la izquierda), «¿dónde está la `T`?» (*find*). Pregunta final: ¿qué operaciones son «caras» porque obligan a mover a muchos?
+Cinco estudiantes forman la palabra `GATOS` con tarjetas; un sexto sostiene un letrero `'\0'` al final. El instructor pide operaciones y el grupo predice antes qué pasará: «`s[1] = 'O'`» (un estudiante cambia su tarjeta), «`s[3] = '\0'`» (el estudiante de la posición 3 cambia su tarjeta por un tope: ¿qué texto «se lee» ahora?), «`strcat(s, "IN")`» (¿dónde se colocan las nuevas letras?), «¿dónde está la `T`?» (`strchr`). Pregunta final: ¿qué pasa si alguien olvida su letrero de tope?
 :::
 
-:::concepto | 5 | Clasificar y transformar caracteres con `<cctype>` | Elementos aislados
+:::concepto | 5 | Clasificar y transformar caracteres con `<ctype.h>` | Elementos aislados
 | Función | Devuelve verdadero si `c` es… | Función | Hace |
 |---|---|---|---|
 | `isalpha(c)` | letra | `toupper(c)` | mayúscula de `c` |
@@ -205,94 +204,116 @@ Cinco estudiantes forman la palabra `GATOS` con tarjetas; un sexto sostiene un l
 | `isupper(c)` / `islower(c)` | mayúscula / minúscula | | |
 | `ispunct(c)` | signo de puntuación | | |
 
-```cpp run title="cctype.cpp"
-#include <iostream>
-#include <string>
-#include <cctype>
-using namespace std;
-int main()
+```c run title="ctype.c"
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+int main(void)
 {
-    string s = "Hola Mundo 2026!";
-    string grito = s;
-    for (char& c : grito)                 //> `char&`: referencia, para MODIFICAR cada carácter
-        c = toupper(c);
+    char s[] = "Hola Mundo 2026!";
+    char grito[30];
+    strcpy(grito, s);
+    for (int i = 0; grito[i] != '\0'; i++)       //> Se modifica cada casilla del arreglo
+        grito[i] = toupper(grito[i]);
     int letras = 0, digitos = 0;
-    for (char c : s)
+    for (int i = 0; s[i] != '\0'; i++)
     {
-        if (isalpha(c)) letras++;
-        else if (isdigit(c)) digitos++;
+        if (isalpha(s[i])) letras++;
+        else if (isdigit(s[i])) digitos++;
     }
-    cout << grito << " | letras: " << letras << ", digitos: " << digitos << "\n";
+    printf("%s | letras: %d, digitos: %d\n", grito, letras, digitos);
     return 0;
 }
 ```
 :::
 
-:::concepto | 6 | Operaciones predefinidas de `string` | Elementos aislados, Atención dividida
-```cpp run title="operaciones.cpp"
-#include <iostream>
-#include <string>
-using namespace std;
-int main()
+:::concepto | 6 | Buscar y extraer: `strchr`, `strstr` y `strncpy` | Elementos aislados, Atención dividida
+`strchr(s, c)` busca un carácter y `strstr(s, texto)` busca un texto. Ambas devuelven un **puntero** a la posición encontrada (una dirección dentro de `s`) o `NULL` si no lo encuentran. Restar `p - s` da el índice. (Los punteros se estudian en el Tema 14.)
+
+```c run title="buscar.c"
+#include <stdio.h>
+#include <string.h>
+int main(void)
 {
-    string s = "programar en C es divertido";
-    cout << s.substr(0, 9) << "\n";              //> substr(pos, n): 9 caracteres desde la posición 0
-    size_t p = s.find("C");                      //> find: posición de la primera aparición
-    cout << "C en la posicion " << p << "\n";
-    s.replace(p, 1, "C++");                      //> replace(pos, n, nuevo): cambia 1 carácter por "C++"
-    s.insert(0, "Me gusta ");                    //> insert(pos, texto)
-    s.erase(s.size() - 9, 9);                    //> erase(pos, n): borra "divertido"
-    s += "genial";                               //> += agrega al final
-    cout << s << "\n";
-    if (s.find("Python") == string::npos)        //> npos = «no se encontró»
-        cout << "No menciona Python\n";
+    char s[] = "programar en C es divertido";
+    char *p = strchr(s, 'C');                       //> Puntero a la primera 'C', o NULL
+    if (p != NULL)
+        printf("C en la posicion %d\n", (int)(p - s));   //> p - s: cuántas casillas desde el inicio
+    char *q = strstr(s, "es");
+    if (q != NULL)
+        printf("Desde \"es\": %s\n", q);           //> Un puntero dentro de una cadena también es una cadena: muestra el resto
+    if (strstr(s, "Python") == NULL)               //> NULL = «no se encontró»
+        printf("No menciona Python\n");
+    char primera[10];
+    strncpy(primera, s, 9);                        //> Copia como máximo 9 caracteres…
+    primera[9] = '\0';                             //> …pero strncpy no pone el tope: hay que ponerlo
+    printf("%s\n", primera);
     return 0;
 }
 ```
 :::
 
 :::concepto | 7 | Ruta B · De texto a número y de número a texto | Elementos aislados, Reversión de la experiencia
-```cpp run title="conversiones.cpp"
-#include <iostream>
-#include <string>
-using namespace std;
-int main()
+```c run title="conversiones.c"
+#include <stdio.h>
+#include <stdlib.h>                                //> atoi, atof, strtol
+int main(void)
 {
-    string edadTxt = "17", precioTxt = "249.90";
-    int edad = stoi(edadTxt);                  //> string → int
-    double precio = stod(precioTxt);           //> string → double
-    cout << edad + 1 << " " << precio * 2 << "\n";
-    string folio = "PED-" + to_string(1000 + edad);   //> número → string, para armar textos
-    cout << folio << "\n";
-    cout << "17" + string("1") << " vs " << 17 + 1 << "\n";   //> Con texto, `+` concatena; con números, suma
+    char edadTxt[] = "17", precioTxt[] = "249.90";
+    int edad = atoi(edadTxt);                      //> texto → int
+    double precio = atof(precioTxt);               //> texto → double
+    printf("%d %.2f\n", edad + 1, precio * 2);
+    char folio[20];
+    snprintf(folio, sizeof folio, "PED-%d", 1000 + edad);   //> número → texto: «printf hacia una cadena»
+    printf("%s\n", folio);
+    char *fin;
+    long n = strtol("42abc", &fin, 10);            //> strtol dice además dónde se detuvo
+    printf("%ld, sobro: \"%s\"\n", n, fin);
     return 0;
 }
 ```
+`atoi("abc")` devuelve 0 sin avisar del error; cuando necesites validar, usa `strtol` y revisa dónde se detuvo.
 :::
 
-:::concepto | 8 | Ruta B · Cadenas de C a mano y `<cstring>` | Elementos aislados, Reversión de la experiencia
-Con arreglos de `char` no existen `+` ni `==`: se usan funciones de `<cstring>` (`strlen`, `strcpy`, `strcmp`, `strcat`) o se programan recorriendo hasta `'\0'`:
+:::concepto | 8 | Ruta B · Funciones de cadena a mano y el desbordamiento de búfer | Elementos aislados, Reversión de la experiencia
+Las funciones de `<string.h>` no hacen magia: recorren el arreglo hasta el `'\0'`. Programarlas a mano ayuda a entenderlas:
 
-```cpp run title="cstring_mano.cpp"
-#include <iostream>
-#include <cstring>
-using namespace std;
+```c run title="cadenas_mano.c"
+#include <stdio.h>
+#include <string.h>
 int longitud(const char s[])
 {
     int n = 0;
     while (s[n] != '\0') n++;          //> Cuenta hasta encontrar el tope
     return n;
 }
-int main()
+void copiar(char destino[], const char origen[])
+{
+    int i = 0;
+    while (origen[i] != '\0')
+    {
+        destino[i] = origen[i];
+        i++;
+    }
+    destino[i] = '\0';                 //> ¡El tope también se copia!
+}
+int main(void)
 {
     char a[20] = "gato", b[20];
-    strcpy(b, a);                      //> Copia a en b (b debe tener espacio suficiente)
-    cout << longitud(a) << " " << strlen(b) << " " << strcmp(a, b) << "\n";  //> strcmp: 0 si son iguales
-    cout << (a == b ? "== compara direcciones" : "a == b es falso aunque el texto sea igual") << "\n";
+    copiar(b, a);
+    printf("%d %zu %d\n", longitud(a), strlen(b), strcmp(a, b));   //> strcmp: 0 si son iguales
+    char corto[5];
+    snprintf(corto, sizeof corto, "%s", "computadora");             //> Copia segura: corta el texto para que quepa
+    printf("[%s]\n", corto);
     return 0;
 }
 ```
-Por eso en C++ moderno se prefiere `std::string`: evita desbordamientos y compara contenido con `==`.
+
+Con `snprintf`, gcc incluso avisa al compilar que el texto no cabe (*directive output truncated*): la función lo corta a 4 letras más el `'\0'` sin dañar la memoria.
+
+:::cuidado | Desbordamiento de búfer
+`strcpy` y `strcat` **no revisan** el tamaño del destino: `char corto[5]; strcpy(corto, "computadora");` escribe 12 bytes en un arreglo de 5 y daña la memoria vecina. Es el origen de muchas fallas de seguridad. Calcula siempre el espacio (`strlen + 1`), usa `snprintf` o `strncat` cuando el texto venga del usuario y prueba con `-fsanitize=address`.
+:::
 :::
 
 ## 1.2 Ejemplo resuelto: analizador de frases
@@ -300,7 +321,7 @@ Por eso en C++ moderno se prefiere `std::string`: evita desbordamientos y compar
 :::ejemplo | Contar vocales, consonantes, dígitos, espacios y palabras | Ejemplo resuelto, Atención dividida
 **Problema.** Leer una frase y mostrar cuántas vocales, consonantes, dígitos y espacios tiene, cuántas palabras, y la frase en mayúsculas.
 
-**A. Algoritmo:** 1) Leer la frase completa. 2) Recorrerla carácter por carácter: si es letra, decidir si es vocal o consonante; si es dígito, contarlo; si es espacio, contarlo. 3) Contar palabras: una palabra empieza cuando hay una letra o dígito y el carácter anterior era espacio (o es el inicio). 4) Mostrar los conteos y la frase en mayúsculas.
+**A. Algoritmo:** 1) Leer la frase completa. 2) Recorrerla carácter por carácter: si es letra, decidir si es vocal o consonante; si es dígito, contarlo; si es espacio, contarlo. 3) Contar palabras: una palabra empieza cuando hay un carácter que no es espacio y el anterior era espacio (o es el inicio). 4) Mostrar los conteos y la frase en mayúsculas.
 
 **B. Pseudocódigo**
 
@@ -320,13 +341,13 @@ Algoritmo Analizador
 FinAlgoritmo
 ```
 
-**C. Código en C++**
+**C. Código en C**
 
-```cpp run title="analizador.cpp" stdin="En 2026 programo  en C++ con 3 amigos\n"
-#include <iostream>
-#include <string>
-#include <cctype>
-using namespace std;
+```c run title="analizador.c" stdin="En 2026 programo  en C con 3 amigos\n"
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+#include <stdbool.h>
 
 bool esVocal(char c)                                   //> Función auxiliar: una tarea, un nombre
 {
@@ -334,12 +355,13 @@ bool esVocal(char c)                                   //> Función auxiliar: un
     return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u';
 }
 
-int main()
+int main(void)
 {
-    string frase;
-    getline(cin, frase);                               //> 1) La frase tiene espacios
+    char frase[100];
+    fgets(frase, sizeof frase, stdin);                 //> 1) La frase tiene espacios
+    frase[strcspn(frase, "\n")] = '\0';
     int vocales = 0, consonantes = 0, digitos = 0, espacios = 0, palabras = 0;
-    for (int i = 0; i < static_cast<int>(frase.size()); i++)   //> 2) Recorrido
+    for (int i = 0; frase[i] != '\0'; i++)             //> 2) Recorrido hasta el tope
     {
         char c = frase[i];
         if (isalpha(c))
@@ -352,10 +374,12 @@ int main()
         bool inicioPalabra = !isspace(c) && (i == 0 || isspace(frase[i - 1]));  //> 3) Empieza palabra
         if (inicioPalabra) palabras++;
     }
-    string mayus = frase;
-    for (char& c : mayus) c = toupper(c);              //> 4) Transformación
-    cout << "Vocales " << vocales << ", consonantes " << consonantes << ", digitos " << digitos
-         << ", espacios " << espacios << ", palabras " << palabras << "\n" << mayus << "\n";
+    char mayus[100];
+    strcpy(mayus, frase);
+    for (int i = 0; mayus[i] != '\0'; i++)              //> 4) Transformación
+        mayus[i] = toupper(mayus[i]);
+    printf("Vocales %d, consonantes %d, digitos %d, espacios %d, palabras %d\n%s\n",
+           vocales, consonantes, digitos, espacios, palabras, mayus);
     return 0;
 }
 ```
@@ -366,94 +390,109 @@ int main()
 :::resumen | Mapa del tema
 ```dot
 rankdir=LR; nodesep=0.16; ranksep=0.3;
-@term(t, "Cadena")
-@proc(c, "estilo C: char[] + '\\0'\n<cstring>: strlen strcpy strcmp")
-@proc(s, "std::string\nsize · [i] · + · == · <")
-@io(l, "cin >> (palabra)\ngetline (línea)")
-@proc(r, "recorrido carácter\npor carácter")
-@sub(cc, "<cctype>: isalpha isdigit\ntoupper tolower")
-@sub(op, "substr · find · insert\nerase · replace · npos")
-@hl(cv, "stoi · stod · to_string")
-t -> c; t -> s; s -> l; s -> r; r -> cc; s -> op; s -> cv [style=dashed];
+@term(t, "Cadena en C\nchar s[N] + '\\0'")
+@proc(f, "<string.h>: strlen strcpy\nstrcat strcmp")
+@io(l, "scanf(\"%s\") (palabra)\nfgets (línea)")
+@proc(r, "recorrido hasta '\\0'\nfor (i = 0; s[i] != '\\0'; i++)")
+@sub(cc, "<ctype.h>: isalpha isdigit\ntoupper tolower")
+@sub(b, "buscar: strchr · strstr\n(puntero o NULL)")
+@hl(cv, "atoi · strtol · snprintf\n¡cuidado con el tamaño!")
+t -> f; t -> l; t -> r; r -> cc; f -> b; t -> cv [style=dashed];
 ```
 :::
 
 # 2. Información procedimental {.procedimental}
 
-:::sintaxis | Tarjeta de sintaxis 2.1 · `std::string`
-| Quiero… | Código | Ejemplo con `s = "Hola mundo"` |
+:::sintaxis | Tarjeta de sintaxis 2.1 · Cadenas en C
+| Quiero… | Código | Ejemplo con `s` = `"Hola mundo"` |
 |---|---|---|
-| Longitud | `s.size()` | `10` |
-| Carácter en `i` | `s[i]` · `s.at(i)` (verifica rango) | `s[0]` → `'H'` |
-| Último carácter | `s[s.size() - 1]` o `s.back()` | `'o'` |
-| Unir | `s + "!"` · `s += "!"` | `"Hola mundo!"` |
-| Subcadena | `s.substr(pos, n)` | `s.substr(5, 5)` → `"mundo"` |
-| Buscar | `s.find("mu")` | `5` (o `string::npos`) |
-| Insertar | `s.insert(pos, txt)` | `s.insert(4, ",")` → `"Hola, mundo"` |
-| Borrar | `s.erase(pos, n)` | `s.erase(0, 5)` → `"mundo"` |
-| Reemplazar | `s.replace(pos, n, txt)` | `s.replace(0, 4, "Adios")` |
-| Comparar | `==`, `!=`, `<`, `>` | `"ana" < "beto"` → `true` |
-| Vacía | `s.empty()` · `s = ""` | |
-| Texto → número | `stoi(s)`, `stod(s)` | `stoi("42")` → `42` |
-| Número → texto | `to_string(x)` | `to_string(7)` → `"7"` |
-| A mayúsculas | `for (char& c : s) c = toupper(c);` | `"HOLA MUNDO"` |
+| Declarar | `char s[50] = "Hola mundo";` | 50 casillas, 11 usadas |
+| Longitud | `strlen(s)` | `10` |
+| Carácter en `i` | `s[i]` | `s[0]` → `'H'` |
+| Último carácter | `s[strlen(s) - 1]` | `'o'` |
+| Copiar | `strcpy(d, s);` · seguro: `snprintf(d, sizeof d, "%s", s);` | |
+| Unir | `strcat(d, "!");` | `"Hola mundo!"` |
+| Comparar | `strcmp(a, b)` → `0` iguales · `< 0` antes · `> 0` después | `strcmp("ana", "beto") < 0` |
+| Buscar carácter | `strchr(s, 'm')` → puntero o `NULL`; índice `p - s` | `5` |
+| Buscar texto | `strstr(s, "mu")` → puntero o `NULL` | |
+| Leer palabra | `scanf("%49s", s);` | |
+| Leer línea | `fgets(s, sizeof s, stdin); s[strcspn(s, "\n")] = '\0';` | |
+| Texto → número | `atoi("42")`, `atof("3.5")`, `strtol(…)` | `42` |
+| Número → texto | `snprintf(buf, sizeof buf, "%d", x);` | |
+| A mayúsculas | `for (int i = 0; s[i] != '\0'; i++) s[i] = toupper(s[i]);` | `"HOLA MUNDO"` |
 
-Bibliotecas: `<string>`, `<cctype>` (clasificar caracteres), `<cstring>` (cadenas de C).
+Cabeceras: `<string.h>` (cadenas), `<ctype.h>` (clasificar caracteres), `<stdlib.h>` (`atoi`, `strtol`).
 :::
 
 :::checklist | Guía de preguntas de rutina 2.2
 <ul class="checks">
-<li>¿El texto puede tener espacios? Entonces <code>getline</code> (y <code>cin.ignore()</code> si antes hubo <code>cin &gt;&gt;</code>).</li>
-<li>¿Mis índices van de <code>0</code> a <code>size() − 1</code>? ¿Uso <code>s[i + 1]</code> sin salirme?</li>
+<li>¿El arreglo tiene espacio para todo el texto <b>más</b> el <code>'\0'</code>?</li>
+<li>¿El texto puede tener espacios? Entonces <code>fgets</code> (y quitar el <code>'\n'</code>), o <code>" %[^\n]"</code>.</li>
+<li>¿Mis recorridos terminan en <code>s[i] != '\0'</code>? ¿Uso <code>s[i + 1]</code> sin salirme?</li>
 <li>¿Considero mayúsculas y minúsculas? (Normaliza con <code>tolower</code> antes de comparar.)</li>
-<li>¿Comparo el resultado de <code>find</code> con <code>string::npos</code> antes de usarlo?</li>
+<li>¿Reviso que <code>strchr</code>/<code>strstr</code> no hayan devuelto <code>NULL</code> antes de usar el resultado?</li>
 <li>¿Distingo <code>'a'</code> (un <code>char</code>) de <code>"a"</code> (una cadena)?</li>
-<li>Con cadenas de C: ¿hay espacio para el <code>'\0'</code>? ¿Uso <code>strcmp</code> en lugar de <code>==</code>?</li>
+<li>¿Copio con <code>strcpy</code> y comparo con <code>strcmp</code>, nunca con <code>=</code> ni <code>==</code>?</li>
 </ul>
 :::
 
 :::errores | Errores frecuentes 2.3 | Variabilidad, Autoexplicación
-**a) Comparar un `char` con una cadena.** `"a"` es un texto, no un carácter:
+**a) Comparar un `char` con una cadena.** `"c"` es un texto (la dirección de un arreglo), no un carácter:
 
-```cpp err
-#include <string>
-int main()
+```c warn
+#include <stdio.h>
+int main(void)
 {
-    std::string s = "casa";
+    char s[] = "casa";
     if (s[0] == "c")
-        return 1;
+        printf("Empieza con c\n");
     return 0;
 }
 ```
 *Corrección:* `s[0] == 'c'` (comillas simples).
 
-**b) Usar `find` sin verificar `npos`.** Si no se encuentra, `find` devuelve un número enorme y `substr` falla en ejecución. Verifica: `if (p != string::npos) …`.
+**b) Asignar texto con `=`.** Un arreglo no se puede asignar completo (Tema 08):
 
-**c) Comparar cadenas de C con `==`.** Compara **direcciones**, no contenido (concepto 8): usa `strcmp(a, b) == 0` o `std::string`.
+```c err
+#include <stdio.h>
+int main(void)
+{
+    char nombre[20];
+    nombre = "Ana";
+    printf("%s\n", nombre);
+    return 0;
+}
+```
+*Corrección:* `strcpy(nombre, "Ana");` o inicializar al declarar: `char nombre[20] = "Ana";`.
 
-**d) Olvidar el `'\0'` al construir una cadena de C a mano.** `char c[4] = {'H', 'o', 'l', 'a'};` no tiene tope: `cout << c` sigue leyendo memoria. Debe ser `char c[5] = "Hola";`.
+**c) Comparar cadenas con `==`.** Compara **direcciones**, no contenido: usa `strcmp(a, b) == 0`.
 
-**e) `getline` después de `cin >>` sin `cin.ignore()`:** devuelve una línea vacía (Tema 02).
+**d) Olvidar el espacio del `'\0'`.** `char c[4] = {'H', 'o', 'l', 'a'};` no tiene tope y `printf("%s", c)` sigue leyendo memoria. En C, incluso `char c[4] = "Hola";` compila sin aviso: el `'\0'` no cabe y se omite en silencio. Debe ser `char c[5] = "Hola";` (o `char c[] = "Hola";`).
+
+**e) Usar el resultado de `strstr` sin verificar `NULL`.** Si no se encuentra, `p - s` no tiene sentido y `printf("%s", p)` puede detener el programa. Verifica: `if (p != NULL) …`.
+
+**f) `fgets` que guarda el Enter.** Sin `s[strcspn(s, "\n")] = '\0';`, el texto incluye un `'\n'` y comparaciones como `strcmp(s, "si")` fallan.
 :::
 
 :::isomorfo | Ejemplo isomórfico 2.4 · Censurar palabras | Variabilidad
 Mismo patrón (buscar y reemplazar en ciclo), otro contexto: un chat que censura una palabra.
 
-```cpp run title="censura.cpp"
-#include <iostream>
-#include <string>
-using namespace std;
-int main()
+```c run title="censura.c"
+#include <stdio.h>
+#include <string.h>
+int main(void)
 {
-    string msg = "eres un tonto, muy tonto";
-    string mala = "tonto";
-    size_t p = msg.find(mala);
-    while (p != string::npos)                          //> Mientras siga apareciendo…
+    char msg[] = "eres un tonto, muy tonto";
+    const char *mala = "tonto";
+    size_t n = strlen(mala);
+    char *p = strstr(msg, mala);
+    while (p != NULL)                                  //> Mientras siga apareciendo…
     {
-        msg.replace(p, mala.size(), string(mala.size(), '*'));   //> …reemplaza por asteriscos
-        p = msg.find(mala, p + 1);                     //> Busca la siguiente, después de la actual
+        for (size_t k = 0; k < n; k++)
+            p[k] = '*';                                //> …reemplaza sus letras por asteriscos
+        p = strstr(msg, mala);                         //> La ya censurada no vuelve a coincidir
     }
-    cout << msg << "\n";
+    printf("%s\n", msg);
     return 0;
 }
 ```
@@ -461,29 +500,31 @@ int main()
 
 # 3. Tareas de aprendizaje {.tareas}
 
-{{ef:Desvanecimiento de guía}} Cuando dudes, escribe el texto en casillas con sus índices.
+{{ef:Desvanecimiento de guía}} Cuando dudes, escribe el texto en casillas con sus índices y su `'\0'`.
 
 :::tarea A | T1. Iniciales de un nombre: ejemplo y gemelo | 20 min | Ejemplo resuelto, Variabilidad
 **Paso 1 · Estudia:**
 
-```cpp run title="iniciales.cpp" stdin="ana sofia lopez\n"
-#include <iostream>
-#include <string>
-#include <cctype>
-using namespace std;
-int main()
+```c run title="iniciales.c" stdin="ana sofia lopez\n"
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+int main(void)
 {
-    string nombre, ini;
-    getline(cin, nombre);
-    for (int i = 0; i < static_cast<int>(nombre.size()); i++)
+    char nombre[60], ini[20];
+    int k = 0;                                                     //> Siguiente casilla libre de ini
+    fgets(nombre, sizeof nombre, stdin);
+    nombre[strcspn(nombre, "\n")] = '\0';
+    for (int i = 0; nombre[i] != '\0'; i++)
     {
-        if (nombre[i] != ' ' && (i == 0 || nombre[i - 1] == ' '))   //> Inicio de palabra
+        if (nombre[i] != ' ' && (i == 0 || nombre[i - 1] == ' '))  //> Inicio de palabra
         {
-            ini += static_cast<char>(toupper(nombre[i]));          //> Agrega la letra en mayúscula
-            ini += '.';
+            ini[k++] = toupper(nombre[i]);                         //> Agrega la letra en mayúscula
+            ini[k++] = '.';
         }
     }
-    cout << "Iniciales: " << ini << "\n";
+    ini[k] = '\0';                                                 //> Cerramos la cadena construida
+    printf("Iniciales: %s\n", ini);
     return 0;
 }
 ```
@@ -491,239 +532,248 @@ int main()
 **Paso 2 · Gemelo.** Genera un **nombre de usuario**: primera letra del nombre + primer apellido completo, todo en minúsculas, + los dos últimos dígitos de un año que se lee después. Ejemplo: `Luis Perez Gil` y `2026` → `lperez26`.
 
 :::solucion | T1
-```cpp run title="usuario.cpp" stdin="Luis Perez Gil\n2026\n"
-#include <iostream>
-#include <string>
-#include <cctype>
-using namespace std;
-int main()
+```c run title="usuario.c" stdin="Luis Perez Gil\n2026\n"
+#include <stdio.h>
+#include <ctype.h>
+int main(void)
 {
-    string nombre;
+    char nombre[20], apellido[20], usuario[50];
     int anio;
-    getline(cin, nombre);
-    cin >> anio;
-    size_t esp1 = nombre.find(' ');
-    size_t esp2 = nombre.find(' ', esp1 + 1);
-    string apellido = nombre.substr(esp1 + 1, esp2 - esp1 - 1);
-    string usuario = string(1, nombre[0]) + apellido + to_string(anio % 100);
-    for (char& c : usuario) c = tolower(c);
-    cout << usuario << "\n";
+    scanf("%19s %19s %*s %d", nombre, apellido, &anio);   // %*s lee el segundo apellido y lo descarta
+    snprintf(usuario, sizeof usuario, "%c%s%02d", nombre[0], apellido, anio % 100);
+    for (int i = 0; usuario[i] != '\0'; i++)
+        usuario[i] = tolower(usuario[i]);
+    printf("%s\n", usuario);
     return 0;
 }
 ```
+`snprintf` arma el texto con el mismo formato de `printf`, pero lo guarda en `usuario`.
 :::
 :::
 
 :::tarea A | T2. ¿Es palíndromo? (completa con pistas) | 25 min | Problema por completar
 **Contexto.** «Anita lava la tina» se lee igual al revés si se ignoran espacios y mayúsculas. Primero se **limpia** la frase (solo letras, en minúsculas) y luego se compara cada extremo.
 
-```cpp blank title="palindromo.cpp"
-#include <iostream>
-#include <string>
-#include <cctype>
-using namespace std;
-int main()
+```c blank title="palindromo.c"
+#include <stdio.h>
+#include <ctype.h>
+#include <stdbool.h>
+int main(void)
 {
-    string frase, limpia;
-    getline(cin, frase);
-    for (char c : frase)
+    char frase[100], limpia[100];
+    int n = 0;
+    fgets(frase, sizeof frase, stdin);
+    for (int i = 0; frase[i] != '\0'; i++)
         if (__1__)                                   // 1: solo letras
-            limpia += static_cast<char>(__2__);      // 2: en minuscula
+            limpia[n++] = __2__;                     // 2: en minuscula
+    limpia[n] = '\0';
     bool es = true;
-    int n = limpia.size();
     for (int i = 0; i < __3__; i++)                  // 3: basta revisar la mitad
         if (limpia[i] != limpia[__4__])              // 4: el caracter "espejo" de i
         {
             es = false;
             __5__;                                   // 5: ya no hace falta seguir
         }
-    cout << (es ? "Es palindromo\n" : "No es palindromo\n");
+    printf(es ? "Es palindromo\n" : "No es palindromo\n");
     return 0;
 }
 ```
 
 :::solucion | T2
-{{c:1}} `isalpha(c)` · {{c:2}} `tolower(c)` · {{c:3}} `n / 2` · {{c:4}} `n - 1 - i` · {{c:5}} `break`
+{{c:1}} `isalpha(frase[i])` · {{c:2}} `tolower(frase[i])` · {{c:3}} `n / 2` · {{c:4}} `n - 1 - i` · {{c:5}} `break`
 
-```cpp run title="palindromo.cpp" runs="Anita lava la tina|Programar es divertido"
-#include <iostream>
-#include <string>
-#include <cctype>
-using namespace std;
-int main()
+```c run title="palindromo.c" runs="Anita lava la tina|Programar es divertido"
+#include <stdio.h>
+#include <ctype.h>
+#include <stdbool.h>
+int main(void)
 {
-    string frase, limpia;
-    getline(cin, frase);
-    for (char c : frase)
-        if (isalpha(c))
-            limpia += static_cast<char>(tolower(c));
+    char frase[100], limpia[100];
+    int n = 0;
+    fgets(frase, sizeof frase, stdin);
+    for (int i = 0; frase[i] != '\0'; i++)
+        if (isalpha(frase[i]))
+            limpia[n++] = tolower(frase[i]);
+    limpia[n] = '\0';
     bool es = true;
-    int n = limpia.size();
     for (int i = 0; i < n / 2; i++)
         if (limpia[i] != limpia[n - 1 - i])
         {
             es = false;
             break;
         }
-    cout << (es ? "Es palindromo\n" : "No es palindromo\n");
+    printf(es ? "Es palindromo\n" : "No es palindromo\n");
     return 0;
 }
 ```
+Aquí no hace falta quitar el `'\n'` de `fgets`: `isalpha` lo descarta junto con los espacios.
 :::
 :::
 
 :::tarea AB | T3. ¿Contraseña segura? (completa sin pistas) | 25 min | Problema por completar, Desvanecimiento de guía
-**Contexto.** Una contraseña es segura si tiene al menos 8 caracteres, una mayúscula, una minúscula, un dígito y un símbolo (cualquier carácter que no sea letra ni dígito). El programa muestra qué requisitos faltan.
+**Contexto.** Una contraseña es segura si tiene al menos 8 caracteres, una mayúscula, una minúscula, un dígito y un símbolo (cualquier carácter que no sea letra ni dígito). La función escribe en `faltan` qué requisitos no se cumplen.
 
-```cpp blank title="password.cpp"
-#include <iostream>
-#include <string>
-#include <cctype>
-using namespace std;
-bool segura(const string& p, string& faltan)
+```c blank title="password.c"
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+#include <stdbool.h>
+bool segura(const char p[], char faltan[])
 {
     bool may = false, min = false, dig = false, sim = false;
-    for (char c : p)
+    for (int i = 0; p[i] != '\0'; i++)
     {
         if (__1__) may = true;
         else if (__2__) min = true;
         else if (__3__) dig = true;
         else __4__;
     }
-    faltan = "";
-    if (__5__) faltan += " longitud";
-    if (!may) faltan += " mayuscula";
-    if (!min) faltan += " minuscula";
-    if (!dig) faltan += " digito";
-    if (!sim) faltan += " simbolo";
+    faltan[0] = '\0';
+    if (__5__) strcat(faltan, " longitud");
+    if (!may) strcat(faltan, " mayuscula");
+    if (!min) strcat(faltan, " minuscula");
+    if (!dig) strcat(faltan, " digito");
+    if (!sim) strcat(faltan, " simbolo");
     return __6__;
 }
-int main()
+int main(void)
 {
-    string p, faltan;
-    cin >> p;
-    if (segura(p, faltan)) cout << "Segura\n";
-    else cout << "Insegura, falta:" << faltan << "\n";
+    char p[50], faltan[80];
+    scanf("%49s", p);
+    if (segura(p, faltan)) printf("Segura\n");
+    else printf("Insegura, falta:%s\n", faltan);
     return 0;
 }
 ```
 
 :::solucion | T3
-{{c:1}} `isupper(c)` · {{c:2}} `islower(c)` · {{c:3}} `isdigit(c)` · {{c:4}} `sim = true` · {{c:5}} `p.size() < 8` · {{c:6}} `faltan.empty()`
+{{c:1}} `isupper(p[i])` · {{c:2}} `islower(p[i])` · {{c:3}} `isdigit(p[i])` · {{c:4}} `sim = true` · {{c:5}} `strlen(p) < 8` · {{c:6}} `faltan[0] == '\0'`
 
-```cpp run title="password.cpp" runs="hola123|Gato#2026|ABCdefgh"
-#include <iostream>
-#include <string>
-#include <cctype>
-using namespace std;
-bool segura(const string& p, string& faltan)
+```c run title="password.c" runs="hola123|Gato#2026|ABCdefgh"
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+#include <stdbool.h>
+bool segura(const char p[], char faltan[])
 {
     bool may = false, min = false, dig = false, sim = false;
-    for (char c : p)
+    for (int i = 0; p[i] != '\0'; i++)
     {
-        if (isupper(c)) may = true;
-        else if (islower(c)) min = true;
-        else if (isdigit(c)) dig = true;
+        if (isupper(p[i])) may = true;
+        else if (islower(p[i])) min = true;
+        else if (isdigit(p[i])) dig = true;
         else sim = true;
     }
-    faltan = "";
-    if (p.size() < 8) faltan += " longitud";
-    if (!may) faltan += " mayuscula";
-    if (!min) faltan += " minuscula";
-    if (!dig) faltan += " digito";
-    if (!sim) faltan += " simbolo";
-    return faltan.empty();
+    faltan[0] = '\0';
+    if (strlen(p) < 8) strcat(faltan, " longitud");
+    if (!may) strcat(faltan, " mayuscula");
+    if (!min) strcat(faltan, " minuscula");
+    if (!dig) strcat(faltan, " digito");
+    if (!sim) strcat(faltan, " simbolo");
+    return faltan[0] == '\0';
 }
-int main()
+int main(void)
 {
-    string p, faltan;
-    cin >> p;
-    if (segura(p, faltan)) cout << "Segura\n";
-    else cout << "Insegura, falta:" << faltan << "\n";
+    char p[50], faltan[80];
+    scanf("%49s", p);
+    if (segura(p, faltan)) printf("Segura\n");
+    else printf("Insegura, falta:%s\n", faltan);
     return 0;
 }
 ```
+`faltan[0] = '\0'` deja la cadena **vacía** (tope en la primera casilla) para que `strcat` empiece desde ahí.
 :::
 :::
 
 :::tarea AB | T4. Cifrado César (problema convencional) | 35 min | Variabilidad
-**Contexto.** Julio César cifraba sus mensajes desplazando cada letra `k` posiciones en el alfabeto (con `k = 3`: A→D, B→E, …, X→A, Y→B, Z→C). Escribe `string cifrar(string msg, int k)` que respete mayúsculas y minúsculas, deje igual lo que no sea letra y dé la vuelta al llegar a la Z. Descifra usando la misma función con `26 − k`. Prueba con «Ataque al amanecer, 7am».
+**Contexto.** Julio César cifraba sus mensajes desplazando cada letra `k` posiciones en el alfabeto (con `k = 3`: A→D, B→E, …, X→A, Y→B, Z→C). Escribe `void cifrar(char msg[], int k)` que modifique el texto respetando mayúsculas y minúsculas, deje igual lo que no sea letra y dé la vuelta al llegar a la Z. Descifra usando la misma función con `26 − k`. Prueba con «Ataque al amanecer, 7am».
 
 :::solucion | T4
-```cpp run title="cesar.cpp"
-#include <iostream>
-#include <string>
-#include <cctype>
-using namespace std;
-string cifrar(string msg, int k)
+```c run title="cesar.c"
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+void cifrar(char msg[], int k)
 {
-    for (char& c : msg)
+    for (int i = 0; msg[i] != '\0'; i++)
     {
-        if (isupper(c)) c = static_cast<char>('A' + (c - 'A' + k) % 26);
-        else if (islower(c)) c = static_cast<char>('a' + (c - 'a' + k) % 26);
+        if (isupper(msg[i])) msg[i] = 'A' + (msg[i] - 'A' + k) % 26;
+        else if (islower(msg[i])) msg[i] = 'a' + (msg[i] - 'a' + k) % 26;
     }
-    return msg;
 }
-int main()
+int main(void)
 {
-    string original = "Ataque al amanecer, 7am";
-    string secreto = cifrar(original, 3);
-    cout << secreto << "\n" << cifrar(secreto, 26 - 3) << "\n";
+    char secreto[50];
+    strcpy(secreto, "Ataque al amanecer, 7am");
+    cifrar(secreto, 3);                  // el arreglo se modifica en su lugar
+    printf("%s\n", secreto);
+    cifrar(secreto, 26 - 3);
+    printf("%s\n", secreto);
     return 0;
 }
 ```
-`c - 'A'` convierte la letra en su posición (0–25); `% 26` da la vuelta; `'A' + …` la convierte de nuevo en letra.
+`msg[i] - 'A'` convierte la letra en su posición (0–25); `% 26` da la vuelta; `'A' + …` la convierte de nuevo en letra. Como los arreglos se pasan por dirección (Tema 10), la función modifica el texto original.
 :::
 :::
 
 :::tarea A | T5. Todo sobre una frase (solución libre) | 25 min | Solución libre
-**Contexto.** Dada la frase `"Programar en C++ es divertido desde 2026"`, **descubre y muestra todo lo que puedas**: longitud, número de palabras, la palabra más larga, la frase al revés, cuántas veces aparece cada vocal, si contiene «C++», la frase sin espacios, en formato «Título» (cada palabra con mayúscula inicial)… No hay lista obligatoria.
+**Contexto.** Dada la frase `"Programar en C es divertido desde 2026"`, **descubre y muestra todo lo que puedas**: longitud, número de palabras, la palabra más larga, la frase al revés, cuántas veces aparece cada vocal, si contiene «en C», la frase sin espacios, en formato «Título» (cada palabra con mayúscula inicial)… No hay lista obligatoria.
 
 :::solucion | T5
 Una exploración posible:
 
-```cpp run title="explora_frase.cpp"
-#include <iostream>
-#include <string>
-#include <cctype>
-using namespace std;
-int main()
+```c run title="explora_frase.c"
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+int main(void)
 {
-    string f = "Programar en C++ es divertido desde 2026";
-    string reves(f.rbegin(), f.rend()), sinEsp, titulo = f, palabra, larga;
-    int cuenta[5] = {}, palabras = 0;
-    string voc = "aeiou";
-    for (int i = 0; i < static_cast<int>(f.size()); i++)
+    char f[] = "Programar en C es divertido desde 2026";
+    int n = strlen(f);
+    char reves[60], sinEsp[60], titulo[60];
+    int k = 0, palabras = 0, cuenta[5] = {0};
+    int iniLarga = 0, lenLarga = 0, iniActual = 0;
+    const char *voc = "aeiou";
+    strcpy(titulo, f);
+    for (int i = 0; i < n; i++)
     {
         char c = f[i];
-        if (c != ' ') sinEsp += c;
-        size_t v = voc.find(static_cast<char>(tolower(c)));
-        if (v != string::npos) cuenta[v]++;
-        if (c != ' ' && (i == 0 || f[i - 1] == ' ')) { palabras++; titulo[i] = static_cast<char>(toupper(c)); }
-        if (c != ' ') palabra += c;
-        if (c == ' ' || i == static_cast<int>(f.size()) - 1)
+        reves[n - 1 - i] = c;
+        if (c != ' ') sinEsp[k++] = c;
+        char *v = strchr(voc, tolower(c));
+        if (v != NULL) cuenta[v - voc]++;               // posicion de la vocal en "aeiou"
+        if (c != ' ' && (i == 0 || f[i - 1] == ' '))
         {
-            if (palabra.size() > larga.size()) larga = palabra;
-            palabra = "";
+            palabras++;
+            titulo[i] = toupper(c);
+            iniActual = i;
+        }
+        if (c != ' ' && (i == n - 1 || f[i + 1] == ' ') && i - iniActual + 1 > lenLarga)
+        {
+            lenLarga = i - iniActual + 1;               // fin de palabra: ¿es la mas larga?
+            iniLarga = iniActual;
         }
     }
-    cout << "Longitud " << f.size() << ", palabras " << palabras << ", mas larga: " << larga << "\n";
-    cout << "Al reves: " << reves << "\nSin espacios: " << sinEsp << "\nTitulo: " << titulo << "\n";
-    for (int k = 0; k < 5; k++) cout << voc[k] << "=" << cuenta[k] << " ";
-    cout << "\nContiene C++: " << (f.find("C++") != string::npos ? "si" : "no") << "\n";
+    reves[n] = '\0';
+    sinEsp[k] = '\0';
+    printf("Longitud %d, palabras %d, mas larga: %.*s\n", n, palabras, lenLarga, f + iniLarga);
+    printf("Al reves: %s\nSin espacios: %s\nTitulo: %s\n", reves, sinEsp, titulo);
+    for (int j = 0; j < 5; j++) printf("%c=%d ", voc[j], cuenta[j]);
+    printf("\nContiene \"en C\": %s\n", strstr(f, "en C") != NULL ? "si" : "no");
     return 0;
 }
 ```
+`%.*s` muestra solo `lenLarga` caracteres a partir de `f + iniLarga`: una forma de imprimir una subcadena sin copiarla.
 :::
 :::
 
 :::tarea B | T6. Comparar cadenas sin `strcmp` (autoexplicación, tesis §6.1.6) | 25 min | Autoexplicación, Reversión de la experiencia
 **Contexto.** «La maestra dejó un ejercicio del tema de cadenas visto en la clase: realizar un programa que, dadas dos cadenas de caracteres, las compare y diga si son **iguales o diferentes** (sin utilizar las funciones `strcmp`, `strcpy` y `strlen`). Uno de tus compañeros ya programó su solución, pero no funciona adecuadamente. **¿Puedes identificar cuál es el error (o errores), explicar por qué no funciona, y proponer una solución con su explicación?**»
 
-```cpp run title="compara_bug.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="compara_bug.c"
+#include <stdio.h>
+#include <stdbool.h>
+int main(void)
 {
     char a[30] = "programa", b[30] = "programas";
     bool iguales = true;
@@ -735,7 +785,7 @@ int main()
         i++;
     }
     if (a == b) iguales = true;
-    cout << (iguales ? "Iguales\n" : "Diferentes\n");
+    printf(iguales ? "Iguales\n" : "Diferentes\n");
     return 0;
 }
 ```
@@ -743,11 +793,11 @@ int main()
 {{lineas:5}}
 
 :::solucion | T6
-**Errores:** (1) el ciclo solo recorre `a`: si `b` es más larga pero empieza igual («programa» / «programas»), nunca detecta la diferencia; hay que verificar que **ambas** terminen al mismo tiempo. (2) `a == b` compara **direcciones** de los arreglos, no su contenido; aquí es falso y no afecta, pero es un error conceptual (y si fuera verdadero, ocultaría diferencias). (3) No se detiene en la primera diferencia (no es un error, pero hace trabajo de más).
+**Errores:** (1) el ciclo solo recorre `a`: si `b` es más larga pero empieza igual («programa» / «programas»), nunca detecta la diferencia; hay que verificar que **ambas** terminen al mismo tiempo. (2) `a == b` compara las **direcciones** de los arreglos, no su contenido; aquí es falso y no afecta, pero es un error conceptual (y si fuera verdadero, ocultaría diferencias). Con `-Wall`, gcc lo señala: *comparison between two arrays*. (3) No se detiene en la primera diferencia (no es un error, pero hace trabajo de más).
 
-```cpp run title="compara.cpp"
-#include <iostream>
-using namespace std;
+```c run title="compara.c"
+#include <stdio.h>
+#include <stdbool.h>
 bool sonIguales(const char a[], const char b[])
 {
     int i = 0;
@@ -758,32 +808,34 @@ bool sonIguales(const char a[], const char b[])
     }
     return a[i] == b[i];                 // iguales solo si AMBAS terminaron
 }
-int main()
+int main(void)
 {
     char a[30] = "programa", b[30] = "programas", c[30] = "programa";
-    cout << (sonIguales(a, b) ? "Iguales" : "Diferentes") << " / "
-         << (sonIguales(a, c) ? "Iguales" : "Diferentes") << "\n";
+    printf("%s / %s\n", sonIguales(a, b) ? "Iguales" : "Diferentes",
+           sonIguales(a, c) ? "Iguales" : "Diferentes");
     return 0;
 }
 ```
 :::
 :::
 
-:::tarea B | T7. ¿Cómo queda la cadena? (imaginación) | 20 min | Imaginación
-**Sin ejecutar**, imagina el contenido de `s` después de **cada** línea (dibuja las casillas) y la salida final. Después compruébalo.
+:::tarea B | T7. ¿Cómo quedan las cadenas? (imaginación) | 20 min | Imaginación
+**Sin ejecutar**, imagina el contenido de `s` y de `t` después de **cada** línea (dibuja las casillas **con** su `'\0'`) y la salida final. Después compruébalo.
 
-```cpp check title="imagina_string.cpp"
-#include <iostream>
-#include <string>
-using namespace std;
-int main()
+```c check title="imagina_cadena.c"
+#include <stdio.h>
+#include <string.h>
+int main(void)
 {
-    string s = "MESA";
-    s.insert(2, "TE");
-    s.erase(0, 1);
-    s.replace(s.find("T"), 2, "ND");
-    s += s.substr(0, 2);
-    cout << s << " " << s.size() << "\n";
+    char s[20] = "MESA";
+    char t[20];
+    strcat(s, "TERO");
+    s[4] = '\0';
+    s[0] = 'P';
+    strcpy(t, s);
+    strcat(t, "DO");
+    t[1] = t[3];
+    printf("%s %s %zu %zu %zu\n", s, t, strlen(s), strlen(t), sizeof(s));
     return 0;
 }
 ```
@@ -791,20 +843,22 @@ int main()
 {{lineas:4}}
 
 :::solucion | T7
-`"MESA"` → `insert(2, "TE")` → `"METESA"` → `erase(0, 1)` → `"ETESA"` → `find("T")` = 1, `replace(1, 2, "ND")` → `"ENDSA"` → `+= "EN"` → `"ENDSAEN"`, tamaño 7.
+`s = "MESA"` → `strcat` → `"MESATERO"` → `s[4] = '\0'` → se lee `"MESA"` (las letras `TERO` siguen en memoria, pero después del tope ya no cuentan) → `s[0] = 'P'` → `"PESA"` → `strcpy(t, s)`: `t = "PESA"` (copia independiente) → `strcat(t, "DO")` → `"PESADO"` → `t[1] = t[3]` → `"PASADO"`; `s` no cambia. `strlen` cuenta letras (4 y 6); `sizeof` mide el arreglo completo (20).
 
-```cpp run title="imagina_string.cpp"
-#include <iostream>
-#include <string>
-using namespace std;
-int main()
+```c run title="imagina_cadena.c"
+#include <stdio.h>
+#include <string.h>
+int main(void)
 {
-    string s = "MESA";
-    s.insert(2, "TE");
-    s.erase(0, 1);
-    s.replace(s.find("T"), 2, "ND");
-    s += s.substr(0, 2);
-    cout << s << " " << s.size() << "\n";
+    char s[20] = "MESA";
+    char t[20];
+    strcat(s, "TERO");
+    s[4] = '\0';
+    s[0] = 'P';
+    strcpy(t, s);
+    strcat(t, "DO");
+    t[1] = t[3];
+    printf("%s %s %zu %zu %zu\n", s, t, strlen(s), strlen(t), sizeof(s));
     return 0;
 }
 ```
@@ -814,7 +868,7 @@ int main()
 :::tarea AB | T8. El ahorcado (reto colaborativo) | 45 min | Memoria colectiva de trabajo, Variabilidad
 :::colab | Organización
 Equipos de 4, niveles mezclados. Palabra secreta fija (por ejemplo, `"compilador"`), 6 vidas.
-- **Integrante 1:** `string mascara(const string& secreta, const string& usadas)` → `c o _ _ _ _ _ _ o _`.
+- **Integrante 1:** `void mascara(const char secreta[], const char usadas[], char m[])` → `c o _ _ _ _ _ _ o _`.
 - **Integrante 2:** procesar un intento: validar que sea letra, que no se haya usado antes, y si no está en la palabra, restar una vida.
 - **Integrante 3:** detectar victoria (no quedan `_`) y derrota (vidas = 0).
 - **Integrante 4:** el ciclo del juego y los mensajes; probar con una partida ganada y una perdida.
@@ -823,39 +877,39 @@ Equipos de 4, niveles mezclados. Palabra secreta fija (por ejemplo, `"compilador
 :::solucion | T8
 Partida simulada (entrada: `o a c x i l z m p r d`):
 
-```cpp run title="ahorcado.cpp" stdin="o\na\nc\nx\ni\nl\nz\nm\np\nr\nd\n"
-#include <iostream>
-#include <string>
-#include <cctype>
-using namespace std;
-string mascara(const string& secreta, const string& usadas)
+```c run title="ahorcado.c" stdin="o\na\nc\nx\ni\nl\nz\nm\np\nr\nd\n"
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+void mascara(const char secreta[], const char usadas[], char m[])
 {
-    string m;
-    for (char c : secreta)
+    int k = 0;
+    for (int i = 0; secreta[i] != '\0'; i++)
     {
-        m += (usadas.find(c) != string::npos) ? c : '_';
-        m += ' ';
+        m[k++] = strchr(usadas, secreta[i]) != NULL ? secreta[i] : '_';
+        m[k++] = ' ';
     }
-    return m;
+    m[k] = '\0';
 }
-int main()
+int main(void)
 {
-    const string secreta = "compilador";
-    string usadas;
-    int vidas = 6;
+    const char secreta[] = "compilador";
+    char usadas[30] = "", m[30];
+    int nu = 0, vidas = 6;
     while (vidas > 0)
     {
-        string m = mascara(secreta, usadas);
-        if (m.find('_') == string::npos) { cout << m << "\nGanaste!\n"; return 0; }
-        cout << m << " (vidas: " << vidas << ") letra: ";
+        mascara(secreta, usadas, m);
+        if (strchr(m, '_') == NULL) { printf("%s\nGanaste!\n", m); return 0; }
+        printf("%s (vidas: %d) letra: ", m, vidas);
         char c;
-        cin >> c;
-        c = static_cast<char>(tolower(c));
-        if (!isalpha(c) || usadas.find(c) != string::npos) { cout << "No valida o repetida\n"; continue; }
-        usadas += c;
-        if (secreta.find(c) == string::npos) vidas--;
+        scanf(" %c", &c);
+        c = tolower(c);
+        if (!isalpha(c) || strchr(usadas, c) != NULL) { printf("No valida o repetida\n"); continue; }
+        usadas[nu++] = c;
+        usadas[nu] = '\0';
+        if (strchr(secreta, c) == NULL) vidas--;
     }
-    cout << "\nPerdiste. Era: " << secreta << "\n";
+    printf("\nPerdiste. Era: %s\n", secreta);
     return 0;
 }
 ```
@@ -873,28 +927,26 @@ int main()
 
 **Segmento 2 — Cambiar la pregunta.** {{como}} En lugar de contar espacios, cuento **inicios de palabra**: un carácter que no es espacio y cuyo anterior sí lo es (o que está en la posición 0). {{porque}} Cada palabra tiene exactamente un inicio, sin importar cuántos espacios haya alrededor.
 
-**Segmento 3 — Cuidar el borde izquierdo.** {{como}} Escribo la condición `i == 0 || isspace(f[i - 1])` con el `i == 0` **primero**. {{porque}} Por el cortocircuito de `||`, si `i` es 0 nunca se evalúa `f[-1]`, que estaría fuera de la cadena.
+**Segmento 3 — Cuidar el borde izquierdo y el Enter.** {{como}} Escribo la condición `i == 0 || isspace(f[i - 1])` con el `i == 0` **primero**, y uso `isspace` para que el `'\n'` que guarda `fgets` cuente como espacio. {{porque}} Por el cortocircuito de `||`, si `i` es 0 nunca se evalúa `f[-1]`, que estaría fuera de la cadena.
 
-**Segmento 4 — Probar los casos extremos.** {{como}} Pruebo la frase normal, la de espacios de más, una frase vacía y una de una sola palabra. {{porque}} Los errores en cadenas casi siempre están en los extremos: inicio, final y texto vacío.
+**Segmento 4 — Probar los casos extremos.** {{como}} Pruebo la frase normal, la de espacios de más y una de una sola palabra. {{porque}} Los errores en cadenas casi siempre están en los extremos: inicio, final y texto vacío.
 
-```cpp run title="contar_palabras.cpp" runs="Hola mundo cruel|   hola    mundo  |unica"
-#include <iostream>
-#include <string>
-#include <cctype>
-using namespace std;
-int contarPalabras(const string& f)
+```c run title="contar_palabras.c" runs="Hola mundo cruel|   hola    mundo  |unica"
+#include <stdio.h>
+#include <ctype.h>
+int contarPalabras(const char f[])
 {
     int n = 0;
-    for (int i = 0; i < static_cast<int>(f.size()); i++)
+    for (int i = 0; f[i] != '\0'; i++)
         if (!isspace(f[i]) && (i == 0 || isspace(f[i - 1])))
             n++;
     return n;
 }
-int main()
+int main(void)
 {
-    string f;
-    getline(cin, f);
-    cout << contarPalabras(f) << " palabras\n";
+    char f[100];
+    fgets(f, sizeof f, stdin);
+    printf("%d palabras\n", contarPalabras(f));
     return 0;
 }
 ```
@@ -903,46 +955,45 @@ int main()
 # 5. Evaluación {.evaluacion}
 
 :::recall | 5.1 Recall test · conocimiento declarativo
-1. ¿Qué carácter marca el final de una cadena de C?
+1. ¿Qué carácter marca el final de una cadena en C?
 2. ¿Cuántas casillas ocupa `char x[] = "Sol";`?
-3. ¿Qué diferencia hay entre `cin >> s` y `getline(cin, s)`?
-4. ¿Qué devuelve `s.find("x")` cuando no encuentra el texto?
-5. Escribe la instrucción que obtiene los 3 primeros caracteres de `s`.
+3. ¿Qué diferencia hay entre `scanf("%49s", s)` y `fgets(s, 50, stdin)`?
+4. ¿Qué devuelve `strstr(s, "x")` cuando no encuentra el texto?
+5. ¿Qué devuelve `strcmp(a, b)` cuando las dos cadenas son iguales?
 6. ¿Qué hace `toupper('m')`?
 7. Verdadero o falso: con cadenas de C, `a == b` compara el texto.
 8. ¿Qué función convierte `"42"` en el entero 42?
-9. ¿Por qué `"Zorro" < "abeja"` es verdadero?
-10. ¿Para qué sirve el `char&` en `for (char& c : s) c = toupper(c);`?
+9. ¿Por qué `strcmp("Zorro", "abeja")` es negativo?
+10. ¿Por qué no se puede escribir `nombre = "Ana";` si `nombre` es `char nombre[20]`? ¿Qué se escribe en su lugar?
 :::
 
 :::compr | 5.2 Comprehension test · conocimiento procedimental
 **P1. Predice la salida:**
 
-```cpp check title="p1.cpp"
-#include <iostream>
-#include <string>
-using namespace std;
-int main()
+```c check title="p1.c"
+#include <stdio.h>
+#include <string.h>
+int main(void)
 {
-    string s = "computadora";
-    cout << s.size() << " " << s[3] << " " << s.substr(4, 3) << " ";
-    cout << s.find('o') << " " << s.find("dora") << "\n";
+    char s[] = "computadora";
+    printf("%zu %c %s ", strlen(s), s[3], strstr(s, "dora"));
+    printf("%d %d\n", (int)(strchr(s, 'o') - s), strcmp(s, "computador") > 0);
     return 0;
 }
 ```
 
-**P2.** Escribe una función `string invertir(const string& s)` sin usar funciones de biblioteca.
+**P2.** Escribe una función `void invertir(const char s[], char r[])` que deje en `r` el texto de `s` al revés, sin usar funciones de biblioteca.
 
-**P3. Corrige:** `string s; cin >> s; for (int i = 0; i <= s.size(); i++) if (s[i] == "a") s[i] = 'A';`
+**P3. Corrige:** `char s[20]; scanf("%19s", s); for (int i = 0; i <= strlen(s); i++) if (s[i] == "a") s[i] = 'A';`
 
 **P4. Escribe un programa** que lea un correo electrónico y valide que tenga exactamente una `@`, al menos un carácter antes de ella y un punto después de ella; si es válido, muestra el usuario (antes de la `@`) y el dominio (después).
 :::
 
 :::registro | 5.3 Autorregistro
 <ul class="checks">
-<li>Distingo cadenas de C y <code>std::string</code>, y sé por qué existe el <code>'\0'</code>.</li>
-<li>Recorro cadenas y clasifico caracteres con <code>&lt;cctype&gt;</code>.</li>
-<li>Uso <code>substr</code>, <code>find</code>, <code>insert</code>, <code>erase</code> y <code>replace</code>.</li>
+<li>Explico cómo se guarda una cadena en C y por qué existe el <code>'\0'</code>.</li>
+<li>Recorro cadenas y clasifico caracteres con <code>&lt;ctype.h&gt;</code>.</li>
+<li>Uso <code>strlen</code>, <code>strcpy</code>, <code>strcat</code>, <code>strcmp</code>, <code>strchr</code> y <code>strstr</code> sin desbordar los arreglos.</li>
 <li>Pruebo mis programas con textos vacíos, con espacios de más y con mayúsculas.</li>
 </ul>
 **Esfuerzo mental invertido** (1 = muy, muy bajo · 9 = muy, muy alto):
@@ -950,46 +1001,46 @@ int main()
 :::
 
 :::solucion | Evaluación 5.1 (recall)
-1 `'\0'` · 2 4 (3 letras + `'\0'`) · 3 `cin >>` lee hasta el primer espacio; `getline` lee la línea completa · 4 `string::npos` · 5 `s.substr(0, 3)` · 6 Devuelve `'M'` · 7 Falso: compara direcciones · 8 `stoi` · 9 Porque se compara por código ASCII y `'Z'` (90) es menor que `'a'` (97) · 10 Para modificar cada carácter de la cadena original (sin `&` se modificaría una copia).
+1 `'\0'` · 2 4 (3 letras + `'\0'`) · 3 `scanf("%s")` lee hasta el primer espacio; `fgets` lee la línea completa (con su `'\n'`) sin pasarse del tamaño · 4 `NULL` · 5 `0` · 6 Devuelve `'M'` · 7 Falso: compara direcciones · 8 `atoi` (o `strtol`) · 9 Porque se compara por código ASCII y `'Z'` (90) es menor que `'a'` (97) · 10 Porque un arreglo no se puede asignar completo; se usa `strcpy(nombre, "Ana");`.
 :::
 
 :::solucion | Evaluación 5.2 (comprehension)
-**P1.**
+**P1.** `strstr` devuelve un puntero a `"dora"` (y `%s` muestra desde ahí); la primera `'o'` está en la posición 1; `"computadora"` va después de `"computador"` porque es más larga con el mismo inicio.
 
-```cpp run title="p1.cpp"
-#include <iostream>
-#include <string>
-using namespace std;
-int main()
+```c run title="p1.c"
+#include <stdio.h>
+#include <string.h>
+int main(void)
 {
-    string s = "computadora";
-    cout << s.size() << " " << s[3] << " " << s.substr(4, 3) << " ";
-    cout << s.find('o') << " " << s.find("dora") << "\n";
+    char s[] = "computadora";
+    printf("%zu %c %s ", strlen(s), s[3], strstr(s, "dora"));
+    printf("%d %d\n", (int)(strchr(s, 'o') - s), strcmp(s, "computador") > 0);
     return 0;
 }
 ```
 
-**P2.** `string invertir(const string& s) { string r; for (int i = s.size() - 1; i >= 0; i--) r += s[i]; return r; }`
+**P2.** `void invertir(const char s[], char r[]) { int n = 0; while (s[n] != '\0') n++; for (int i = 0; i < n; i++) r[i] = s[n - 1 - i]; r[n] = '\0'; }`
 
-**P3.** `i < s.size()` (no `<=`) y `'a'` con comillas simples: `for (int i = 0; i < (int)s.size(); i++) if (s[i] == 'a') s[i] = 'A';`
+**P3.** Recorre hasta el tope (`s[i] != '\0'`) en lugar de `i <= strlen(s)` (que además mezcla `int` con `size_t`), y usa `'a'` con comillas simples: `for (int i = 0; s[i] != '\0'; i++) if (s[i] == 'a') s[i] = 'A';`
 
 **P4.**
 
-```cpp run title="correo.cpp" runs="ana.lopez@escuela.edu.mx|sin_arroba.com|@dominio.com"
-#include <iostream>
-#include <string>
-using namespace std;
-int main()
+```c run title="correo.c" runs="ana.lopez@escuela.edu.mx|sin_arroba.com|@dominio.com"
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+int main(void)
 {
-    string c;
-    cin >> c;
-    size_t a = c.find('@');
-    bool valido = a != string::npos && a > 0 && c.find('@', a + 1) == string::npos
-                  && c.find('.', a + 1) != string::npos;
+    char c[80];
+    scanf("%79s", c);
+    char *a = strchr(c, '@');
+    bool valido = a != NULL && a != c                 // hay @ y no esta al inicio
+                  && strchr(a + 1, '@') == NULL       // no hay otra @ despues
+                  && strchr(a + 1, '.') != NULL;      // hay un punto despues
     if (valido)
-        cout << "Usuario: " << c.substr(0, a) << "  Dominio: " << c.substr(a + 1) << "\n";
+        printf("Usuario: %.*s  Dominio: %s\n", (int)(a - c), c, a + 1);
     else
-        cout << "Correo invalido\n";
+        printf("Correo invalido\n");
     return 0;
 }
 ```

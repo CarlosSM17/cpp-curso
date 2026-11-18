@@ -7,8 +7,9 @@ lema: "Cuando la pregunta tiene respuestas exactas y conocidas, switch abre dire
 duracion: "3 h · 2 sesiones de 1.5 h"
 previos: "Tema 04 (if, if-else, escaleras y condiciones)."
 fuentes:
-  - "Betancourt Uscátegui, J. F. y Polanco Guzmán, I. Y. (2021). *115 ejercicios resueltos de programación C++*. Cap. 4: Estructura selectiva switch (§4.1) y ejercicios resueltos (§4.2)."
-  - "Lospinoso, J. (2019). *C++ Crash Course*. Cap. 2: Enumeration Types (enum class con switch). Cap. 8: switch Statements; Attributes (`[[fallthrough]]`)."
+  - "Kernighan, B. W. y Ritchie, D. M. (1988). *The C Programming Language* (2.ª ed.). Prentice Hall. Cap. 2: §2.3 Constants (constantes de enumeración). Cap. 3: §3.4 Switch."
+  - "King, K. N. (2008). *C Programming: A Modern Approach* (2.ª ed.). W. W. Norton. Cap. 5: §5.3 The switch Statement. Cap. 16: §16.5 Enumerations."
+  - "Seacord, R. C. (2020). *Effective C*. No Starch Press. Cap. 2 (tipos enumerados). Cap. 5 «Control Flow»: switch."
 objetivos:
   A:
     - "Explicar cuándo conviene `switch` en lugar de una escalera `if-else` (valores discretos y conocidos)."
@@ -16,13 +17,13 @@ objetivos:
     - "Construir menús de opciones y agrupar varios `case` para una misma acción."
     - "Representar un `switch` con un diagrama de flujo de selección múltiple y con `Segun` en PSeInt."
   B:
-    - "Usar `switch` con `enum class` y explicar su ventaja frente a los «números mágicos»."
-    - "Explicar el *fall-through*: cuándo es un error y cuándo es intencional (`[[fallthrough]]`)."
+    - "Usar `switch` con `enum` y explicar su ventaja frente a los «números mágicos»."
+    - "Explicar la caída (*fall-through*): cuándo es un error y cuándo es intencional (comentario `/* fall through */` que reconoce `-Wextra`)."
     - "Transformar rangos en casos discretos (p. ej., `nota / 10`) y reconocer los límites de `switch`."
     - "Declarar variables dentro de un `case` usando un bloque `{ }`."
 efectos:
   soporte:
-    - ["Elementos aislados", "Motivación → anatomía → break → default → agrupar casos → char → límites → enum class."]
+    - ["Elementos aislados", "Motivación → anatomía → break → default → agrupar casos → char → límites → enum."]
     - ["Atención dividida", "Diagrama de selección múltiple al lado del código; anotaciones en línea."]
     - ["Ejemplo resuelto", "Calculadora con menú de operador, incluida la división entre cero."]
     - ["Movimiento humano", "«switch humano»: el valor recorre puertas y se detiene donde hay un `break`."]
@@ -35,13 +36,13 @@ efectos:
     - ["Desvanecimiento de guía", "T1 → T4."]
     - ["Solución libre", "T5: de calificación numérica a letra, de todas las formas posibles."]
     - ["Autoexplicación", "T6: máquina expendedora con errores de `break`."]
-    - ["Imaginación", "T7: predecir un *fall-through* intencional y reescribirlo con `enum class`."]
+    - ["Imaginación", "T7: predecir una caída intencional y reescribirla con `enum`."]
     - ["Memoria colectiva de trabajo", "T8: cajero automático por equipos."]
 diferenciada:
   Contenido:
     comp: "Información de soporte"
     A: "Anatomía de `switch`, `break`, `default`, casos agrupados, menús con números y letras."
-    B: "`enum class`, `[[fallthrough]]`, bloques en `case`, transformación de rangos."
+    B: "`enum`, caída intencional marcada, bloques en `case`, transformación de rangos."
   Proceso:
     comp: "Tareas de aprendizaje"
     A: "T1 → T4 con diagrama de flujo; pares mixtos."
@@ -49,11 +50,11 @@ diferenciada:
   Producto:
     comp: "Tareas de aprendizaje"
     A: "Convertidor de unidades con menú (T4)."
-    B: "Versión con `enum class` de un menú (T7) y explicación del *fall-through*."
+    B: "Versión con `enum` de un menú (T7) y explicación de la caída."
   Entorno:
     comp: "Información procedimental"
     A: "Plantilla de menú impresa; prueba de cada opción y de una opción inválida."
-    B: "Compilación con `-Wall -Wextra` (avisa *fall-through* implícito con `-Wimplicit-fallthrough`)."
+    B: "Compilación con `-Wall -Wextra` (avisa la caída implícita con `-Wimplicit-fallthrough` y los valores de `enum` sin `case` con `-Wswitch`)."
 plan:
   - ["Apertura", "Soporte", "Pregunta: «¿cómo sabe un elevador a qué piso ir?». Comparar escalera vs switch.", "10 min"]
   - ["Desarrollo", "Soporte", "Conceptos 1–7; switch humano; ejemplo resuelto.", "50 min"]
@@ -67,11 +68,11 @@ glosario:
   - ["caso por omisión", "default case", "Camino que se toma si ningún `case` coincide."]
   - ["romper", "break", "Sentencia que termina el `switch` (o un ciclo) inmediatamente."]
   - ["caída", "fall-through", "Continuar ejecutando el siguiente `case` por no haber `break`."]
-  - ["enumeración", "enumeration (`enum class`)", "Tipo con un conjunto fijo de valores con nombre."]
+  - ["enumeración", "enumeration (`enum`)", "Tipo con un conjunto fijo de constantes enteras con nombre."]
   - ["número mágico", "magic number", "Literal sin nombre cuyo significado no es evidente (`if (op == 3)`)."]
   - ["menú", "menu", "Lista de opciones que el usuario elige por número o letra."]
   - ["expresión de control", "controlling expression", "Valor entero o carácter que evalúa el `switch`."]
-  - ["atributo", "attribute", "Indicación al compilador entre `[[ ]]`, como `[[fallthrough]]`."]
+  - ["expresión constante", "constant expression", "Valor que el compilador conoce al compilar: literales, `#define` y constantes de `enum`."]
 ---
 
 # 1. Información de soporte {.soporte}
@@ -87,7 +88,7 @@ Piensa en el menú de un cajero automático: «1. Consultar saldo 2. Depositar 3
 :::
 
 :::relevancia
-Menús de cajeros, máquinas expendedoras, opciones de un videojuego, comandos de un robot («A» avanza, «I» gira a la izquierda), estados de un semáforo: cuando las respuestas son **valores exactos y conocidos**, `switch` produce código más claro y fácil de ampliar que una larga escalera de `if`. {{arcs:Relevancia}}
+Menús de cajeros, máquinas expendedoras, opciones de un videojuego, comandos de un robot («A» avanza, «I» gira a la izquierda), estados de un semáforo: cuando las respuestas son **valores exactos y conocidos**, `switch` produce código más claro y fácil de ampliar que una larga escalera de `if`. En los sistemas embebidos escritos en C, casi todas las «máquinas de estados» se programan con `switch`. {{arcs:Relevancia}}
 :::
 
 ## 1.1 Conceptos, uno por uno
@@ -96,19 +97,19 @@ Menús de cajeros, máquinas expendedoras, opciones de un videojuego, comandos d
 <div class="cols eq">
 <div>
 
-```cpp check title="con escalera if"
-#include <iostream>
-int main()
+```c check title="con escalera if"
+#include <stdio.h>
+int main(void)
 {
     int op = 2;
     if (op == 1)
-        std::cout << "Saldo\n";
+        printf("Saldo\n");
     else if (op == 2)
-        std::cout << "Deposito\n";
+        printf("Deposito\n");
     else if (op == 3)
-        std::cout << "Retiro\n";
+        printf("Retiro\n");
     else
-        std::cout << "Invalida\n";
+        printf("Invalida\n");
     return 0;
 }
 ```
@@ -116,17 +117,17 @@ int main()
 </div>
 <div>
 
-```cpp check title="con switch"
-#include <iostream>
-int main()
+```c check title="con switch"
+#include <stdio.h>
+int main(void)
 {
     int op = 2;
     switch (op)
     {
-        case 1: std::cout << "Saldo\n";    break;
-        case 2: std::cout << "Deposito\n"; break;
-        case 3: std::cout << "Retiro\n";   break;
-        default: std::cout << "Invalida\n";
+        case 1: printf("Saldo\n");    break;
+        case 2: printf("Deposito\n"); break;
+        case 3: printf("Retiro\n");   break;
+        default: printf("Invalida\n");
     }
     return 0;
 }
@@ -139,29 +140,28 @@ Ambas hacen lo mismo. Con `switch`, la variable `op` se escribe **una sola vez**
 :::
 
 :::concepto | 2 | Anatomía de `switch` | Elementos aislados, Atención dividida
-```cpp run title="semaforo.cpp" runs="V|A|R|X"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="semaforo.c" runs="V|A|R|X"
+#include <stdio.h>
+int main(void)
 {
     char luz;
-    cout << "Luz del semaforo (V/A/R): ";
-    cin >> luz;
+    printf("Luz del semaforo (V/A/R): ");
+    scanf(" %c", &luz);
     switch (luz)                       //> Expresión de control: entero o carácter
     {                                  //> Las llaves agrupan todos los casos
         case 'V':                      //> `case` + valor CONSTANTE + dos puntos
-            cout << "Avanza\n";
+            printf("Avanza\n");
             break;                     //> `break` sale del switch
         case 'A':
-            cout << "Precaucion\n";
+            printf("Precaucion\n");
             break;
         case 'R':
-            cout << "Alto\n";
+            printf("Alto\n");
             break;
         default:                       //> Si ningún case coincide
-            cout << "Luz desconocida\n";
+            printf("Luz desconocida\n");
     }
-    cout << "Fin\n";                   //> Después de `break` se continúa aquí
+    printf("Fin\n");                   //> Después de `break` se continúa aquí
     return 0;
 }
 ```
@@ -183,24 +183,23 @@ v -> j [arrowhead=none]; a -> j [arrowhead=none]; r -> j [arrowhead=none]; d -> 
 :::concepto | 3 | `break` y la «caída» (*fall-through*) | Elementos aislados, Atención dividida
 `case` **no** es un bloque cerrado: es solo una **etiqueta de entrada**. Si no hay `break`, la ejecución **sigue cayendo** a los casos de abajo.
 
-```cpp run stdin="2\n"
-#include <iostream>
-using namespace std;
-int main()
+```c run stdin="2\n"
+#include <stdio.h>
+int main(void)
 {
     int op;
-    cin >> op;
+    scanf("%d", &op);
     switch (op)
     {
-        case 1: cout << "Uno\n";     //> Sin break
-        case 2: cout << "Dos\n";     //> Entra aquí con op = 2...
-        case 3: cout << "Tres\n";    //> ...y sigue cayendo
-        default: cout << "Otro\n";   //> ...hasta el final
+        case 1: printf("Uno\n");     //> Sin break
+        case 2: printf("Dos\n");     //> Entra aquí con op = 2...
+        case 3: printf("Tres\n");    //> ...y sigue cayendo
+        default: printf("Otro\n");   //> ...hasta el final
     }
     return 0;
 }
 ```
-**Regla:** termina cada `case` con `break`, salvo que quieras la caída a propósito (concepto 5 y Ruta B).
+**Regla:** termina cada `case` con `break`, salvo que quieras la caída a propósito (concepto 5 y Ruta B). Con `-Wextra`, gcc avisa en cada caída: *this statement may fall through*.
 :::
 
 :::movimiento | El switch humano (10 min)
@@ -212,24 +211,23 @@ Cuatro estudiantes se paran en fila como «puertas»: `case 1`, `case 2`, `case 
 :::
 
 :::concepto | 5 | Varios casos, una misma acción | Elementos aislados, Atención dividida
-Escribir varias etiquetas seguidas es una caída **intencional** muy útil:
+Escribir varias etiquetas seguidas es una caída **intencional** muy útil (gcc no avisa cuando las etiquetas están juntas, sin sentencias entre ellas):
 
-```cpp run runs="e|K|U"
-#include <iostream>
-using namespace std;
-int main()
+```c run runs="e|K|U"
+#include <stdio.h>
+int main(void)
 {
     char c;
-    cout << "Letra: ";
-    cin >> c;
+    printf("Letra: ");
+    scanf(" %c", &c);
     switch (c)
     {
         case 'a': case 'e': case 'i': case 'o': case 'u':   //> Cinco etiquetas, un solo camino
         case 'A': case 'E': case 'I': case 'O': case 'U':   //> Mayúsculas también
-            cout << "Vocal\n";
+            printf("Vocal\n");
             break;
         default:
-            cout << "No es vocal\n";
+            printf("No es vocal\n");
     }
     return 0;
 }
@@ -237,47 +235,46 @@ int main()
 :::
 
 :::concepto | 6 | Lo que `switch` no puede hacer | Elementos aislados
-- La expresión debe ser **entera** (`int`, `char`, `bool`, `enum`): **no** `double` ni `string`.
-- Cada `case` lleva un valor **constante** y **único**: no variables, no rangos (`case nota >= 9:` no existe).
+- La expresión debe ser **entera** (`int`, `char`, `enum`): **no** `double` ni cadenas de texto.
+- Cada `case` lleva un valor **constante** (un literal, una constante de `#define` o de `enum`) y **único**: no variables, no rangos (`case nota >= 9:` no existe).
 - Para rangos usa `if-else`… o **transforma** el rango en un número: con calificaciones de 0 a 100, `nota / 10` produce 0…10 (ver T5).
 
-```cpp err
-#include <iostream>
-#include <string>
-int main()
+```c err
+#include <stdio.h>
+int main(void)
 {
-    std::string cmd = "start";
+    char cmd[10] = "start";
     switch (cmd)
     {
-        case "start": std::cout << "Inicio\n"; break;
+        case "start": printf("Inicio\n"); break;
     }
     return 0;
 }
 ```
 :::
 
-:::concepto | 7 | Ruta B · `switch` con `enum class` | Elementos aislados, Reversión de la experiencia
-El *C++ Crash Course* (cap. 2 y 8) combina `switch` con **enumeraciones**: tipos con un conjunto fijo de valores **con nombre**, que eliminan los números mágicos.
+:::concepto | 7 | Ruta B · `switch` con `enum` | Elementos aislados, Reversión de la experiencia
+Una **enumeración** es un tipo con un conjunto fijo de **constantes enteras con nombre**: elimina los números mágicos y combina perfecto con `switch`.
 
-```cpp run
-#include <iostream>
-using namespace std;
-enum class Raza { Dinosaurio, Mamut, Humano };      //> Tres valores posibles con nombre
+```c run
+#include <stdio.h>
+enum raza { DINOSAURIO, MAMUT, HUMANO };       //> Tres constantes con nombre: valen 0, 1 y 2
 
-int main()
+int main(void)
 {
-    Raza r = Raza::Mamut;                           //> Se usa con el prefijo `Raza::`
+    enum raza r = MAMUT;                       //> Variable del tipo `enum raza`
     switch (r)
     {
-        case Raza::Dinosaurio: cout << "Extinto hace 66 millones de anios\n"; break;
-        case Raza::Mamut:      cout << "Extinto hace 4 mil anios\n";          break;
-        case Raza::Humano:     cout << "Aun por aqui\n";                     break;
+        case DINOSAURIO: printf("Extinto hace 66 millones de anios\n"); break;
+        case MAMUT:      printf("Extinto hace 4 mil anios\n");          break;
+        case HUMANO:     printf("Aun por aqui\n");                      break;
     }
+    printf("MAMUT vale %d\n", MAMUT);          //> En C, un enum es un entero con nombre
     return 0;
 }
 ```
 
-Si quieres una caída intencional, márcala con `[[fallthrough]];` antes del siguiente `case`: el compilador ya no la tomará como un olvido. Y si necesitas declarar una variable dentro de un `case`, encierra ese `case` en llaves `{ }`.
+Si olvidas un valor del `enum` en el `switch`, `-Wall` te avisa (*enumeration value not handled in switch*). Si quieres una caída intencional entre casos con sentencias, escribe el comentario `/* fall through */` justo antes del siguiente `case`: gcc con `-Wextra` lo reconoce y deja de advertir (C23 añade además `[[fallthrough]];`). Y si necesitas declarar una variable dentro de un `case`, encierra ese `case` en llaves `{ }`.
 :::
 
 ## 1.2 Ejemplo resuelto: calculadora con menú de operador
@@ -333,30 +330,29 @@ z -> di [label="Sí"]; z -> e0 [label="No"];
 </div>
 </div>
 
-**C. Código en C++**
+**C. Código en C**
 
-```cpp run title="calculadora.cpp" runs="12 + 5|12 / 5|7 / 0|3 ^ 2"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="calculadora.c" runs="12 + 5|12 / 5|7 / 0|3 ^ 2"
+#include <stdio.h>
+int main(void)
 {
     double a, b;
     char op;
-    cout << "Operacion (ej. 12 + 5): ";
-    cin >> a >> op >> b;                  //> `cin` separa número, carácter y número
+    printf("Operacion (ej. 12 + 5): ");
+    scanf("%lf %c %lf", &a, &op, &b);            //> Número, carácter (el espacio salta los blancos) y número
     switch (op)
     {
-        case '+': cout << "= " << a + b << "\n"; break;
-        case '-': cout << "= " << a - b << "\n"; break;
-        case '*': cout << "= " << a * b << "\n"; break;
+        case '+': printf("= %.2f\n", a + b); break;
+        case '-': printf("= %.2f\n", a - b); break;
+        case '*': printf("= %.2f\n", a * b); break;
         case '/':
-            if (b != 0)                         //> Un if DENTRO de un case: decisiones combinadas
-                cout << "= " << a / b << "\n";
+            if (b != 0)                            //> Un if DENTRO de un case: decisiones combinadas
+                printf("= %.2f\n", a / b);
             else
-                cout << "Error: division entre cero\n";
+                printf("Error: division entre cero\n");
             break;
         default:
-            cout << "Operador invalido: " << op << "\n";
+            printf("Operador invalido: %c\n", op);
     }
     return 0;
 }
@@ -373,8 +369,8 @@ rankdir=LR; nodesep=0.18; ranksep=0.3;
 @proc(b, "break;\nsale del switch")
 @proc(d, "default:\nningún case coincidió")
 @proc(g, "case agrupados\n(caída intencional)")
-@hl(no, "No: double, string,\nrangos, variables")
-@sub(e, "enum class\n[[fallthrough]]")
+@hl(no, "No: double, cadenas,\nrangos, variables")
+@sub(e, "enum\n/* fall through */")
 s -> c; c -> b; s -> d; c -> g; s -> no [style=dashed]; s -> e [style=dashed];
 ```
 :::
@@ -382,27 +378,26 @@ s -> c; c -> b; s -> d; c -> g; s -> no [style=dashed]; s -> e [style=dashed];
 # 2. Información procedimental {.procedimental}
 
 :::sintaxis | Tarjeta de sintaxis 2.1 · Plantilla de menú
-```cpp run title="plantilla_menu.cpp" stdin="2\n"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="plantilla_menu.c" stdin="2\n"
+#include <stdio.h>
+int main(void)
 {
     int opcion;
-    cout << "1. Opcion uno\n2. Opcion dos\n3. Salir\nElige: ";
-    cin >> opcion;
+    printf("1. Opcion uno\n2. Opcion dos\n3. Salir\nElige: ");
+    scanf("%d", &opcion);
     switch (opcion)
     {
         case 1:
-            cout << "Elegiste uno\n";
+            printf("Elegiste uno\n");
             break;
         case 2:
-            cout << "Elegiste dos\n";
+            printf("Elegiste dos\n");
             break;
         case 3:
-            cout << "Hasta luego\n";
+            printf("Hasta luego\n");
             break;
         default:
-            cout << "Opcion invalida\n";
+            printf("Opcion invalida\n");
     }
     return 0;
 }
@@ -411,15 +406,16 @@ int main()
 | Situación | Patrón |
 |---|---|
 | Opción con número | `case 1:` |
-| Opción con letra, sin importar mayúsculas | `case 'a': case 'A':` |
+| Opción con letra, sin importar mayúsculas | `case 'a': case 'A':` (lee con `scanf(" %c", &c)`) |
+| Etiqueta con nombre | `#define SALIR 4` … `case SALIR:` · o `enum { SALDO = 1, DEPOSITO, RETIRO, SALIR };` |
 | Rango 0–100 en bloques de 10 | `switch (nota / 10) { case 10: case 9: … }` |
 | Variable local dentro de un caso | `case 2: { int x = 5; … break; }` |
-| Caída intencional (C++17) | `[[fallthrough]];` |
+| Caída intencional | `/* fall through */` antes del siguiente `case` |
 :::
 
 :::checklist | Guía de preguntas de rutina 2.2
 <ul class="checks">
-<li>¿La expresión del <code>switch</code> es entera o <code>char</code> (no <code>double</code> ni <code>string</code>)?</li>
+<li>¿La expresión del <code>switch</code> es entera o <code>char</code> (no <code>double</code> ni cadena)?</li>
 <li>¿Cada <code>case</code> tiene un valor constante, distinto de los demás, y termina en dos puntos?</li>
 <li>¿Cada <code>case</code> termina con <code>break</code> (salvo caída intencional)?</li>
 <li>¿Hay un <code>default</code> para opciones inválidas?</li>
@@ -431,34 +427,34 @@ int main()
 :::errores | Errores frecuentes 2.3 | Variabilidad, Autoexplicación
 **a) Olvidar `break` (error de lógica).** ¿Por qué con la opción 1 aparecen dos mensajes?
 
-```cpp run stdin="1\n"
-#include <iostream>
-using namespace std;
-int main()
+```c run stdin="1\n"
+#include <stdio.h>
+int main(void)
 {
     int op;
-    cin >> op;
+    scanf("%d", &op);
     switch (op)
     {
-        case 1: cout << "Cafe: $30\n";   //> Falta break
-        case 2: cout << "Te: $25\n";  break;
-        default: cout << "No disponible\n";
+        case 1: printf("Cafe: $30\n");   //> Falta break
+        case 2: printf("Te: $25\n");  break;
+        default: printf("No disponible\n");
     }
     return 0;
 }
 ```
+*Corrección:* `break;` al final del `case 1`. `gcc -Wextra` lo habría señalado: *this statement may fall through*.
 
 **b) Valor repetido en dos `case`.**
 
-```cpp err
-#include <iostream>
-int main()
+```c err
+#include <stdio.h>
+int main(void)
 {
     int op = 1;
     switch (op)
     {
-        case 1: std::cout << "A\n"; break;
-        case 1: std::cout << "B\n"; break;
+        case 1: printf("A\n"); break;
+        case 1: printf("B\n"); break;
     }
     return 0;
 }
@@ -466,61 +462,60 @@ int main()
 
 **c) Usar una variable como etiqueta.** Las etiquetas deben conocerse al compilar.
 
-```cpp err
-#include <iostream>
-int main()
+```c err
+#include <stdio.h>
+int main(void)
 {
     int op = 1, limite = 3;
     switch (op)
     {
-        case limite: std::cout << "Limite\n"; break;
+        case limite: printf("Limite\n"); break;
     }
     return 0;
 }
 ```
-*Corrección:* `const int limite = 3;` o una escalera `if`.
+*Corrección:* `#define LIMITE 3` (o una constante de `enum`) o una escalera `if`. Ojo: en C, ni siquiera `const int limite = 3;` sirve como etiqueta, porque `const` crea una variable de solo lectura, no una constante del compilador.
 
-**d) Declarar una variable en un `case` sin llaves.**
+**d) Declarar una variable justo después de un `case`.** En C17 estándar una etiqueta debe ir seguida de una *sentencia*, y una declaración no lo es. gcc lo acepta como extensión, pero con `-Wpedantic` (que exige el estándar) lo señala; además, `doble` sería visible, sin inicializar, en los demás casos.
 
-```cpp err
-#include <iostream>
-int main()
+```c warn flags="-Wpedantic"
+#include <stdio.h>
+int main(void)
 {
     int op = 2;
     switch (op)
     {
         case 1:
             int doble = op * 2;
-            std::cout << doble;
+            printf("%d\n", doble);
             break;
         case 2:
-            std::cout << "dos";
+            printf("dos\n");
             break;
     }
     return 0;
 }
 ```
-*Corrección:* `case 1: { int doble = op * 2; std::cout << doble; break; }`.
+*Corrección:* `case 1: { int doble = op * 2; printf("%d\n", doble); break; }`. Las llaves crean un bloque: la variable existe solo dentro de su caso. (En C23 la declaración tras la etiqueta ya es válida, pero las llaves siguen siendo la forma más clara.)
 
-**e) Comparar con `'1'` cuando se leyó un `int`** (o al revés): si `op` es `int`, usa `case 1:`; si es `char`, usa `case '1':`.
+**e) Comparar con `'1'` cuando se leyó un `int`** (o al revés): si `op` es `int` (`%d`), usa `case 1:`; si es `char` (`%c`), usa `case '1':`.
 :::
 
 :::isomorfo | Ejemplo isomórfico 2.4 · Comandos de un robot | Variabilidad
-```cpp run title="robot.cpp" runs="A|i|X"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="robot.c" runs="A|i|X"
+#include <stdio.h>
+int main(void)
 {
     char cmd;
-    cout << "Comando (A=avanzar, R=retroceder, I=izq, D=der): ";
-    cin >> cmd;
+    printf("Comando (A=avanzar, R=retroceder, I=izq, D=der): ");
+    scanf(" %c", &cmd);
     switch (cmd)
     {
-        case 'A': case 'a': cout << "Motores hacia adelante\n"; break;
-        case 'R': case 'r': cout << "Motores en reversa\n";     break;
-        case 'I': case 'i': cout << "Girando a la izquierda\n"; break;
-        case 'D': case 'd': cout << "Girando a la derecha\n";   break;
-        default:            cout << "Comando desconocido\n";
+        case 'A': case 'a': printf("Motores hacia adelante\n"); break;
+        case 'R': case 'r': printf("Motores en reversa\n");     break;
+        case 'I': case 'i': printf("Girando a la izquierda\n"); break;
+        case 'D': case 'd': printf("Girando a la derecha\n");   break;
+        default:            printf("Comando desconocido\n");
     }
     return 0;
 }
@@ -534,55 +529,53 @@ int main()
 :::tarea A | T1. Día de la semana: estudia el ejemplo y resuelve el gemelo | 15 min | Ejemplo resuelto, Variabilidad
 **Contexto.** Una app de calendario recibe el número de día (1 = lunes … 7 = domingo).
 
-```cpp run title="dia.cpp" runs="3|7|9"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="dia.c" runs="3|7|9"
+#include <stdio.h>
+int main(void)
 {
     int d;
-    cout << "Dia (1-7): ";
-    cin >> d;
+    printf("Dia (1-7): ");
+    scanf("%d", &d);
     switch (d)
     {
-        case 1: cout << "Lunes\n";     break;   //> Una línea por caso: se lee como una tabla
-        case 2: cout << "Martes\n";    break;
-        case 3: cout << "Miercoles\n"; break;
-        case 4: cout << "Jueves\n";    break;
-        case 5: cout << "Viernes\n";   break;
-        case 6: cout << "Sabado\n";    break;
-        case 7: cout << "Domingo\n";   break;
-        default: cout << "Dia invalido\n";      //> Cualquier otro número
+        case 1: printf("Lunes\n");     break;   //> Una línea por caso: se lee como una tabla
+        case 2: printf("Martes\n");    break;
+        case 3: printf("Miercoles\n"); break;
+        case 4: printf("Jueves\n");    break;
+        case 5: printf("Viernes\n");   break;
+        case 6: printf("Sabado\n");    break;
+        case 7: printf("Domingo\n");   break;
+        default: printf("Dia invalido\n");      //> Cualquier otro número
     }
     return 0;
 }
 ```
 
-**Gemelo.** Escribe `mes.cpp`: lee un número de mes (1–12) y muestra su nombre; si no existe, «Mes inválido».
+**Gemelo.** Escribe `mes.c`: lee un número de mes (1–12) y muestra su nombre; si no existe, «Mes inválido».
 
 :::solucion | T1
-```cpp run title="mes.cpp" runs="2|12|13"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="mes.c" runs="2|12|13"
+#include <stdio.h>
+int main(void)
 {
     int m;
-    cout << "Mes (1-12): ";
-    cin >> m;
+    printf("Mes (1-12): ");
+    scanf("%d", &m);
     switch (m)
     {
-        case 1:  cout << "Enero\n";      break;
-        case 2:  cout << "Febrero\n";    break;
-        case 3:  cout << "Marzo\n";      break;
-        case 4:  cout << "Abril\n";      break;
-        case 5:  cout << "Mayo\n";       break;
-        case 6:  cout << "Junio\n";      break;
-        case 7:  cout << "Julio\n";      break;
-        case 8:  cout << "Agosto\n";     break;
-        case 9:  cout << "Septiembre\n"; break;
-        case 10: cout << "Octubre\n";    break;
-        case 11: cout << "Noviembre\n";  break;
-        case 12: cout << "Diciembre\n";  break;
-        default: cout << "Mes invalido\n";
+        case 1:  printf("Enero\n");      break;
+        case 2:  printf("Febrero\n");    break;
+        case 3:  printf("Marzo\n");      break;
+        case 4:  printf("Abril\n");      break;
+        case 5:  printf("Mayo\n");       break;
+        case 6:  printf("Junio\n");      break;
+        case 7:  printf("Julio\n");      break;
+        case 8:  printf("Agosto\n");     break;
+        case 9:  printf("Septiembre\n"); break;
+        case 10: printf("Octubre\n");    break;
+        case 11: printf("Noviembre\n");  break;
+        case 12: printf("Diciembre\n");  break;
+        default: printf("Mes invalido\n");
     }
     return 0;
 }
@@ -593,25 +586,24 @@ int main()
 :::tarea A | T2. Menú de la cafetería (completa con pistas) | 20 min | Problema por completar
 **Contexto.** La cafetería escolar quiere un menú en su pantalla táctil. El cliente elige producto y cantidad; el programa muestra el total.
 
-```cpp blank title="cafeteria.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c blank title="cafeteria.c"
+#include <stdio.h>
+int main(void)
 {
     int opcion, cantidad;
     double precio = 0;
-    cout << "1. Torta $35\n2. Jugo $20\n3. Fruta $15\nOpcion y cantidad: ";
-    cin >> opcion >> cantidad;
+    printf("1. Torta $35\n2. Jugo $20\n3. Fruta $15\nOpcion y cantidad: ");
+    scanf("%d %d", &opcion, &cantidad);
     __1__ (opcion)                         // 1: palabra clave de seleccion multiple
     {
         case 1: precio = 35; __2__;        // 2: termina este caso
         __3__ 2: precio = 20; break;       // 3: etiqueta
         case 3: precio = 15; break;
         __4__:                             // 4: opcion por omision
-            cout << "Opcion invalida\n";
+            printf("Opcion invalida\n");
     }
     if (precio > 0)
-        cout << "Total: $" << __5__ << "\n";   // 5: expresion del total
+        printf("Total: $%.2f\n", __5__);  // 5: expresion del total
     return 0;
 }
 ```
@@ -619,25 +611,24 @@ int main()
 :::solucion | T2
 {{c:1}} `switch` · {{c:2}} `break` · {{c:3}} `case` · {{c:4}} `default` · {{c:5}} `precio * cantidad`
 
-```cpp run title="cafeteria.cpp" runs="1 2|3 4|5 1"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="cafeteria.c" runs="1 2|3 4|5 1"
+#include <stdio.h>
+int main(void)
 {
     int opcion, cantidad;
     double precio = 0;
-    cout << "1. Torta $35\n2. Jugo $20\n3. Fruta $15\nOpcion y cantidad: ";
-    cin >> opcion >> cantidad;
+    printf("1. Torta $35\n2. Jugo $20\n3. Fruta $15\nOpcion y cantidad: ");
+    scanf("%d %d", &opcion, &cantidad);
     switch (opcion)
     {
         case 1: precio = 35; break;
         case 2: precio = 20; break;
         case 3: precio = 15; break;
         default:
-            cout << "Opcion invalida\n";
+            printf("Opcion invalida\n");
     }
     if (precio > 0)
-        cout << "Total: $" << precio * cantidad << "\n";
+        printf("Total: $%.2f\n", precio * cantidad);
     return 0;
 }
 ```
@@ -647,30 +638,29 @@ int main()
 :::tarea AB | T3. ¿Cuántos días tiene el mes? (completa sin pistas) | 20 min | Problema por completar, Desvanecimiento de guía
 **Contexto.** Una agenda necesita saber cuántos días tiene un mes. Usa casos **agrupados** y reutiliza la condición de año bisiesto del Tema 04 (T3).
 
-```cpp blank title="dias_mes.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c blank title="dias_mes.c"
+#include <stdio.h>
+int main(void)
 {
     int mes, anio;
-    cout << "Mes y anio: ";
-    cin >> mes >> anio;
+    printf("Mes y anio: ");
+    scanf("%d %d", &mes, &anio);
     switch (mes)
     {
         case 1: case 3: case 5: case 7: __1__ case 10: case 12:
-            cout << "31 dias\n";
+            printf("31 dias\n");
             __2__
         case 4: case 6: __3__ case 11:
-            cout << "30 dias\n";
+            printf("30 dias\n");
             break;
         case 2:
             if (__4__)
-                cout << "29 dias\n";
+                printf("29 dias\n");
             else
-                cout << "28 dias\n";
+                printf("28 dias\n");
             break;
         __5__
-            cout << "Mes invalido\n";
+            printf("Mes invalido\n");
     }
     return 0;
 }
@@ -679,30 +669,29 @@ int main()
 :::solucion | T3
 {{c:1}} `case 8:` · {{c:2}} `break;` · {{c:3}} `case 9:` · {{c:4}} `(anio % 4 == 0 && anio % 100 != 0) || anio % 400 == 0` · {{c:5}} `default:`
 
-```cpp run title="dias_mes.cpp" runs="8 2025|9 2025|2 2024|2 1900|14 2025"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="dias_mes.c" runs="8 2025|9 2025|2 2024|2 1900|14 2025"
+#include <stdio.h>
+int main(void)
 {
     int mes, anio;
-    cout << "Mes y anio: ";
-    cin >> mes >> anio;
+    printf("Mes y anio: ");
+    scanf("%d %d", &mes, &anio);
     switch (mes)
     {
         case 1: case 3: case 5: case 7: case 8: case 10: case 12:
-            cout << "31 dias\n";
+            printf("31 dias\n");
             break;
         case 4: case 6: case 9: case 11:
-            cout << "30 dias\n";
+            printf("30 dias\n");
             break;
         case 2:
             if ((anio % 4 == 0 && anio % 100 != 0) || anio % 400 == 0)
-                cout << "29 dias\n";
+                printf("29 dias\n");
             else
-                cout << "28 dias\n";
+                printf("28 dias\n");
             break;
         default:
-            cout << "Mes invalido\n";
+            printf("Mes invalido\n");
     }
     return 0;
 }
@@ -714,25 +703,24 @@ int main()
 **Contexto.** Diseña un convertidor con menú: `1` kilómetros → millas (× 0.621371), `2` kilogramos → libras (× 2.20462), `3` Celsius → Fahrenheit, `4` litros → galones (× 0.264172). El usuario elige la opción y escribe el valor; el programa muestra el resultado con dos decimales o «Opción inválida». Usa constantes para los factores.
 
 :::solucion | T4
-```cpp run title="convertidor.cpp" runs="1 42.195|3 36.5|4 50|7 1"
-#include <iostream>
-#include <iomanip>
-using namespace std;
-int main()
+```c run title="convertidor.c" runs="1 42.195|3 36.5|4 50|7 1"
+#include <stdio.h>
+#define KM_MI 0.621371
+#define KG_LB 2.20462
+#define L_GAL 0.264172
+int main(void)
 {
-    const double KM_MI = 0.621371, KG_LB = 2.20462, L_GAL = 0.264172;
     int op;
     double v;
-    cout << "1) km->mi 2) kg->lb 3) C->F 4) L->gal\nOpcion y valor: ";
-    cin >> op >> v;
-    cout << fixed << setprecision(2);
+    printf("1) km->mi 2) kg->lb 3) C->F 4) L->gal\nOpcion y valor: ");
+    scanf("%d %lf", &op, &v);
     switch (op)
     {
-        case 1: cout << v << " km = " << v * KM_MI << " mi\n"; break;
-        case 2: cout << v << " kg = " << v * KG_LB << " lb\n"; break;
-        case 3: cout << v << " C = " << 9.0 / 5 * v + 32 << " F\n"; break;
-        case 4: cout << v << " L = " << v * L_GAL << " gal\n"; break;
-        default: cout << "Opcion invalida\n";
+        case 1: printf("%.2f km = %.2f mi\n", v, v * KM_MI); break;
+        case 2: printf("%.2f kg = %.2f lb\n", v, v * KG_LB); break;
+        case 3: printf("%.2f C = %.2f F\n", v, 9.0 / 5 * v + 32); break;
+        case 4: printf("%.2f L = %.2f gal\n", v, v * L_GAL); break;
+        default: printf("Opcion invalida\n");
     }
     return 0;
 }
@@ -746,13 +734,12 @@ int main()
 :::solucion | T5
 Dos de las soluciones posibles. La clave del `switch` es `nota / 10`: 87 / 10 = 8 (división entera).
 
-```cpp run title="letra.cpp" runs="100|87|60|42"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="letra.c" runs="100|87|60|42"
+#include <stdio.h>
+int main(void)
 {
     int nota;
-    cin >> nota;
+    scanf("%d", &nota);
     // Version 1: escalera
     char l1;
     if (nota >= 90) l1 = 'A';
@@ -770,7 +757,7 @@ int main()
         case 6: l2 = 'D'; break;
         default: l2 = 'F';
     }
-    cout << "Escalera: " << l1 << "  switch: " << l2 << "\n";
+    printf("Escalera: %c  switch: %c\n", l1, l2);
     return 0;
 }
 ```
@@ -780,20 +767,19 @@ int main()
 :::tarea B | T6. La máquina expendedora rebelde (autoexplicación) | 20 min | Autoexplicación, Reversión de la experiencia
 **Contexto.** Con la opción `B` la máquina entrega papas **y** galletas **y** dice «opción inválida». Con la `c` minúscula no entrega nada. **Explica** cada comportamiento y corrige el programa.
 
-```cpp run title="expendedora_bug.cpp" runs="B|c"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="expendedora_bug.c" runs="B|c"
+#include <stdio.h>
+int main(void)
 {
     char sel;
-    cout << "Seleccion: ";
-    cin >> sel;
+    printf("Seleccion: ");
+    scanf(" %c", &sel);
     switch (sel)
     {
-        case 'A': cout << "Refresco\n"; break;
-        case 'B': cout << "Papas\n";
-        case 'C': cout << "Galletas\n";
-        default: cout << "Opcion invalida\n";
+        case 'A': printf("Refresco\n"); break;
+        case 'B': printf("Papas\n");
+        case 'C': printf("Galletas\n");
+        default: printf("Opcion invalida\n");
     }
     return 0;
 }
@@ -802,22 +788,21 @@ int main()
 {{lineas:3}}
 
 :::solucion | T6
-Con `B` entra en `case 'B'` y, sin `break`, **cae** en `case 'C'` y en `default`. Con `c` no coincide con `'C'` (C++ distingue mayúsculas) y llega a `default`… que en la salida sí aparece: «Opción inválida», pero el usuario esperaba galletas. Corrección: `break` en cada caso y etiquetas para minúsculas.
+Con `B` entra en `case 'B'` y, sin `break`, **cae** en `case 'C'` y en `default`. Con `c` no coincide con `'C'` (C distingue mayúsculas) y llega a `default`… que en la salida sí aparece: «Opción inválida», pero el usuario esperaba galletas. Corrección: `break` en cada caso y etiquetas para minúsculas.
 
-```cpp run title="expendedora.cpp" runs="B|c|z"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="expendedora.c" runs="B|c|z"
+#include <stdio.h>
+int main(void)
 {
     char sel;
-    cout << "Seleccion: ";
-    cin >> sel;
+    printf("Seleccion: ");
+    scanf(" %c", &sel);
     switch (sel)
     {
-        case 'A': case 'a': cout << "Refresco\n"; break;
-        case 'B': case 'b': cout << "Papas\n";    break;
-        case 'C': case 'c': cout << "Galletas\n"; break;
-        default: cout << "Opcion invalida\n";
+        case 'A': case 'a': printf("Refresco\n"); break;
+        case 'B': case 'b': printf("Papas\n");    break;
+        case 'C': case 'c': printf("Galletas\n"); break;
+        default: printf("Opcion invalida\n");
     }
     return 0;
 }
@@ -825,26 +810,25 @@ int main()
 :::
 :::
 
-:::tarea B | T7. Niveles de acceso (imaginación + `enum class`) | 25 min | Imaginación
+:::tarea B | T7. Niveles de acceso (imaginación + `enum`) | 25 min | Imaginación
 **Contexto.** En un juego, cada rol tiene los permisos de los roles inferiores **más** los suyos. El programa usa una caída **intencional**.
 
 1. **Imagina** (sin ejecutar) qué imprime para `nivel = 2`, `nivel = 0` y `nivel = 5`.
-2. Reescríbelo con `enum class Rol { Invitado, Jugador, Moderador, Admin };` y marca las caídas con `[[fallthrough]];`.
+2. Reescríbelo con `enum rol { INVITADO, JUGADOR, MODERADOR, ADMIN };` y marca las caídas con el comentario `/* fall through */`.
 
-```cpp check title="permisos.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c check title="permisos.c"
+#include <stdio.h>
+int main(void)
 {
     int nivel;
-    cin >> nivel;
+    scanf("%d", &nivel);
     switch (nivel)
     {
-        case 3: cout << "- Borrar servidores\n";
-        case 2: cout << "- Expulsar jugadores\n";
-        case 1: cout << "- Chatear\n";
-        case 0: cout << "- Ver partidas\n"; break;
-        default: cout << "Nivel desconocido\n";
+        case 3: printf("- Borrar servidores\n");
+        case 2: printf("- Expulsar jugadores\n");
+        case 1: printf("- Chatear\n");
+        case 0: printf("- Ver partidas\n"); break;
+        default: printf("Nivel desconocido\n");
     }
     return 0;
 }
@@ -853,28 +837,27 @@ int main()
 {{lineas:3}}
 
 :::solucion | T7
-`nivel = 2` → Expulsar, Chatear, Ver partidas · `nivel = 0` → Ver partidas · `nivel = 5` → Nivel desconocido.
+`nivel = 2` → Expulsar, Chatear, Ver partidas · `nivel = 0` → Ver partidas · `nivel = 5` → Nivel desconocido. Con los comentarios, `gcc -Wextra` compila esta versión sin avisos:
 
-```cpp run title="permisos_enum.cpp"
-#include <iostream>
-using namespace std;
-enum class Rol { Invitado, Jugador, Moderador, Admin };
-int main()
+```c run title="permisos_enum.c"
+#include <stdio.h>
+enum rol { INVITADO, JUGADOR, MODERADOR, ADMIN };
+int main(void)
 {
-    Rol r = Rol::Moderador;
+    enum rol r = MODERADOR;
     switch (r)
     {
-        case Rol::Admin:
-            cout << "- Borrar servidores\n";
-            [[fallthrough]];
-        case Rol::Moderador:
-            cout << "- Expulsar jugadores\n";
-            [[fallthrough]];
-        case Rol::Jugador:
-            cout << "- Chatear\n";
-            [[fallthrough]];
-        case Rol::Invitado:
-            cout << "- Ver partidas\n";
+        case ADMIN:
+            printf("- Borrar servidores\n");
+            /* fall through */
+        case MODERADOR:
+            printf("- Expulsar jugadores\n");
+            /* fall through */
+        case JUGADOR:
+            printf("- Chatear\n");
+            /* fall through */
+        case INVITADO:
+            printf("- Ver partidas\n");
             break;
     }
     return 0;
@@ -891,38 +874,37 @@ Equipos de 4 con niveles mezclados. Saldo inicial: `double saldo = 2500;`. Cada 
 *En el Tema 06 este cajero repetirá el menú hasta elegir «Salir».*
 
 :::solucion | T8
-```cpp run title="cajero.cpp" runs="1|2 800|3 120|3 3000|3 500|9"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="cajero.c" runs="1|2 800|3 120|3 3000|3 500|9"
+#include <stdio.h>
+int main(void)
 {
     double saldo = 2500, monto;
     int op;
-    cout << "1) Saldo 2) Depositar 3) Retirar 4) Salir: ";
-    cin >> op;
+    printf("1) Saldo 2) Depositar 3) Retirar 4) Salir: ");
+    scanf("%d", &op);
     switch (op)
     {
         case 1:
-            cout << "Saldo: $" << saldo << "\n";
+            printf("Saldo: $%.2f\n", saldo);
             break;
         case 2:
-            cin >> monto;
-            if (monto > 0) { saldo += monto; cout << "Nuevo saldo: $" << saldo << "\n"; }
-            else cout << "Monto invalido\n";
+            scanf("%lf", &monto);
+            if (monto > 0) { saldo += monto; printf("Nuevo saldo: $%.2f\n", saldo); }
+            else printf("Monto invalido\n");
             break;
         case 3:
-            cin >> monto;
-            if (monto <= 0 || static_cast<int>(monto) % 50 != 0)
-                cout << "El retiro debe ser positivo y multiplo de 50\n";
+            scanf("%lf", &monto);
+            if (monto <= 0 || (int)monto % 50 != 0)
+                printf("El retiro debe ser positivo y multiplo de 50\n");
             else if (monto > saldo)
-                cout << "Fondos insuficientes\n";
-            else { saldo -= monto; cout << "Retire su efectivo. Saldo: $" << saldo << "\n"; }
+                printf("Fondos insuficientes\n");
+            else { saldo -= monto; printf("Retire su efectivo. Saldo: $%.2f\n", saldo); }
             break;
         case 4:
-            cout << "Gracias por su visita\n";
+            printf("Gracias por su visita\n");
             break;
         default:
-            cout << "Opcion invalida\n";
+            printf("Opcion invalida\n");
     }
     return 0;
 }
@@ -939,38 +921,37 @@ int main()
 
 **Segmento 1 — ¿switch o if?** {{como}} Veo que la decisión depende de un **número exacto** (1, 2 o 3), no de rangos. {{porque}} Eso es justo lo que `switch` hace mejor: cada opción del menú se convierte en un `case` y el código se lee como el menú.
 
-**Segmento 2 — Lecturas dentro de cada caso.** {{como}} Cada figura pide datos distintos, así que pongo los `cin` **dentro** de su `case` y declaro las variables antes del `switch`. {{porque}} Si declarara `double r` dentro del `case 3` sin llaves, el compilador se quejaría de que otros casos «saltan» su inicialización.
+**Segmento 2 — Lecturas dentro de cada caso.** {{como}} Cada figura pide datos distintos, así que pongo los `scanf` **dentro** de su `case` y declaro las variables antes del `switch`. {{porque}} En C17 estándar una etiqueta como `case 3:` no puede ir seguida de una declaración, y una variable declarada en un caso sería visible, sin inicializar, en los demás; declararlas antes evita ambos problemas.
 
 **Segmento 3 — No olvidar `break`.** {{como}} Escribo el `break` de cada caso **antes** de escribir su contenido. {{porque}} Es el error más común en `switch`: sin él, el cuadrado también calcularía el rectángulo con datos basura.
 
 **Segmento 4 — La opción que nadie elige.** {{como}} Agrego `default` y pruebo con 1, 2, 3 y 8. {{porque}} Los usuarios se equivocan; un menú sin `default` simplemente no responde y parece descompuesto.
 
-```cpp run title="areas.cpp" runs="1 4|2 3 5|3 2|8"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="areas.c" runs="1 4|2 3 5|3 2|8"
+#include <stdio.h>
+int main(void)
 {
     const double PI = 3.14159265358979;
     int fig;
     double a, b;
-    cout << "1) Cuadrado 2) Rectangulo 3) Circulo: ";
-    cin >> fig;
+    printf("1) Cuadrado 2) Rectangulo 3) Circulo: ");
+    scanf("%d", &fig);
     switch (fig)
     {
         case 1:
-            cin >> a;
-            cout << "Area: " << a * a << "\n";
+            scanf("%lf", &a);
+            printf("Area: %.2f\n", a * a);
             break;
         case 2:
-            cin >> a >> b;
-            cout << "Area: " << a * b << "\n";
+            scanf("%lf %lf", &a, &b);
+            printf("Area: %.2f\n", a * b);
             break;
         case 3:
-            cin >> a;
-            cout << "Area: " << PI * a * a << "\n";
+            scanf("%lf", &a);
+            printf("Area: %.2f\n", PI * a * a);
             break;
         default:
-            cout << "Figura invalida\n";
+            printf("Figura invalida\n");
     }
     return 0;
 }
@@ -987,47 +968,46 @@ int main()
 5. Verdadero o falso: se puede escribir `case nota >= 90:`.
 6. ¿Cómo haces que las opciones `'s'` y `'S'` ejecuten lo mismo?
 7. ¿Qué palabra usa PSeInt para la selección múltiple?
-8. ¿Para qué sirve `[[fallthrough]];`?
-9. Menciona una ventaja de `enum class` sobre usar números (1, 2, 3) como opciones.
+8. ¿Cómo indicas en C17 que una caída entre casos es intencional, para que `gcc -Wextra` no avise?
+9. Menciona una ventaja de `enum` sobre usar números (1, 2, 3) como opciones.
 10. ¿Por qué `switch (nota / 10)` permite trabajar con rangos de calificaciones?
 :::
 
 :::compr | 5.2 Comprehension test · conocimiento procedimental
 **P1. Predice la salida** para `x = 2` y para `x = 4`:
 
-```cpp check title="p1.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c check title="p1.c"
+#include <stdio.h>
+int main(void)
 {
     int x;
-    cin >> x;
+    scanf("%d", &x);
     switch (x)
     {
-        case 1: cout << "A";
-        case 2: cout << "B";
-        case 3: cout << "C"; break;
-        case 4: cout << "D";
-        default: cout << "E";
+        case 1: printf("A");
+        case 2: printf("B");
+        case 3: printf("C"); break;
+        case 4: printf("D");
+        default: printf("E");
     }
-    cout << "\n";
+    printf("\n");
     return 0;
 }
 ```
 
 **P2. Corrige** los tres errores:
 
-```cpp blank title="p2.cpp"
+```c blank title="p2.c"
 char t;
-cin >> t;
+scanf(" %c", &t);
 switch (t) {
-    case "a": cout << "alfa"; break;
-    case 'b' cout << "beta"; break;
-    case 'a': cout << "otra alfa"; break;
+    case "a": printf("alfa"); break;
+    case 'b' printf("beta"); break;
+    case 'a': printf("otra alfa"); break;
 }
 ```
 
-**P3. Convierte a `switch`** esta escalera: `if (c == 'x' || c == 'X') cout << "salir"; else if (c == 'g') cout << "guardar"; else cout << "?";`
+**P3. Convierte a `switch`** esta escalera: `if (c == 'x' || c == 'X') printf("salir"); else if (c == 'g') printf("guardar"); else printf("?");`
 
 **P4. Escribe un programa** de «piedra, papel o tijera» contra la computadora, que siempre elige **piedra**: el usuario teclea `R`, `P` o `T` y el programa dice si gana, pierde o empata (o «jugada inválida»).
 :::
@@ -1044,53 +1024,51 @@ switch (t) {
 :::
 
 :::solucion | Evaluación 5.1 (recall)
-1 Enteros: `int`, `char`, `bool`, `long`, enumeraciones · 2 Termina el `switch` y continúa después de su llave de cierre · 3 La ejecución «cae» al siguiente `case` · 4 Cuando ningún `case` coincide · 5 Falso: los `case` llevan valores constantes, no condiciones · 6 `case 's': case 'S':` seguidos · 7 `Segun … Hacer … FinSegun` · 8 Indica que la caída al siguiente caso es intencional (evita el aviso del compilador) · 9 Los valores tienen nombre (`Rol::Admin`), el código se autodocumenta y el compilador detecta valores inválidos · 10 La división entera convierte cada rango de 10 en un solo número exacto (87 → 8).
+1 Enteros: `int`, `char`, `long`, enumeraciones (no `double` ni cadenas) · 2 Termina el `switch` y continúa después de su llave de cierre · 3 La ejecución «cae» al siguiente `case` · 4 Cuando ningún `case` coincide · 5 Falso: los `case` llevan valores constantes, no condiciones · 6 `case 's': case 'S':` seguidos · 7 `Segun … Hacer … FinSegun` · 8 Con el comentario `/* fall through */` justo antes del siguiente `case` (en C23 también con `[[fallthrough]];`) · 9 Los valores tienen nombre (`ADMIN`), el código se autodocumenta y `-Wall` avisa si un valor no tiene `case` · 10 La división entera convierte cada rango de 10 en un solo número exacto (87 → 8).
 :::
 
 :::solucion | Evaluación 5.2 (comprehension)
 **P1.**
 
-```cpp run title="p1.cpp" runs="2|4"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="p1.c" runs="2|4"
+#include <stdio.h>
+int main(void)
 {
     int x;
-    cin >> x;
+    scanf("%d", &x);
     switch (x)
     {
-        case 1: cout << "A";
-        case 2: cout << "B";
-        case 3: cout << "C"; break;
-        case 4: cout << "D";
-        default: cout << "E";
+        case 1: printf("A");
+        case 2: printf("B");
+        case 3: printf("C"); break;
+        case 4: printf("D");
+        default: printf("E");
     }
-    cout << "\n";
+    printf("\n");
     return 0;
 }
 ```
 
 **P2.** `"a"` es cadena → `'a'`; falta `:` en `case 'b'`; `case 'a'` está repetido (eliminar o cambiar el valor).
 
-**P3.** `switch (c) { case 'x': case 'X': cout << "salir"; break; case 'g': cout << "guardar"; break; default: cout << "?"; }`
+**P3.** `switch (c) { case 'x': case 'X': printf("salir"); break; case 'g': printf("guardar"); break; default: printf("?"); }`
 
 **P4.**
 
-```cpp run title="ppt.cpp" runs="P|r|T|Z"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="ppt.c" runs="P|r|T|Z"
+#include <stdio.h>
+int main(void)
 {
     char j;
-    cout << "Tu jugada (R=piedra, P=papel, T=tijera): ";
-    cin >> j;
-    cout << "La computadora eligio piedra. ";
+    printf("Tu jugada (R=piedra, P=papel, T=tijera): ");
+    scanf(" %c", &j);
+    printf("La computadora eligio piedra. ");
     switch (j)
     {
-        case 'R': case 'r': cout << "Empate\n"; break;
-        case 'P': case 'p': cout << "Ganaste: papel envuelve piedra\n"; break;
-        case 'T': case 't': cout << "Perdiste: piedra rompe tijera\n"; break;
-        default: cout << "Jugada invalida\n";
+        case 'R': case 'r': printf("Empate\n"); break;
+        case 'P': case 'p': printf("Ganaste: papel envuelve piedra\n"); break;
+        case 'T': case 't': printf("Perdiste: piedra rompe tijera\n"); break;
+        default: printf("Jugada invalida\n");
     }
     return 0;
 }

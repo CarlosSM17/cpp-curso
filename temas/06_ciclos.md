@@ -7,8 +7,9 @@ lema: "Lo que harías mil veces a mano, la computadora lo repite sin cansarse: s
 duracion: "6 h · 3 sesiones de 2 h"
 previos: "Tema 04 (condiciones e if) y Tema 03 (asignación compuesta, `++`)."
 fuentes:
-  - "Betancourt Uscátegui, J. F. y Polanco Guzmán, I. Y. (2021). *115 ejercicios resueltos de programación C++*. Cap. 5: Estructuras repetitivas (§5.1 for, §5.2 while, §5.3 do-while, §5.4 ejercicios)."
-  - "Lospinoso, J. (2019). *C++ Crash Course*. Cap. 2: A Nickel Tour of for Loops. Cap. 8: Iteration Statements (while, do-while, for)."
+  - "Kernighan, B. W. y Ritchie, D. M. (1988). *The C Programming Language* (2.ª ed.). Prentice Hall. Cap. 1: §1.2 Variables and Arithmetic Expressions (ciclo while), §1.3 The For Statement. Cap. 3: §3.5 Loops—While and For, §3.6 Loops—Do-while."
+  - "King, K. N. (2008). *C Programming: A Modern Approach* (2.ª ed.). W. W. Norton. Cap. 6 «Loops»: §6.1 The while Statement, §6.2 The do Statement, §6.3 The for Statement."
+  - "Seacord, R. C. (2020). *Effective C*. No Starch Press. Cap. 5 «Control Flow»: Iteration Statements."
   - "Sandoval Medina, C. (2026). Tesis doctoral, §6.1.13: propuesta de desvanecimiento de guía para ciclos (pares 50–100, factorial, Fibonacci, tabla de multiplicar) y §6.1.1 (solución libre: serie 5, 10, 15…)."
 objetivos:
   A:
@@ -25,7 +26,7 @@ efectos:
   soporte:
     - ["Elementos aislados", "Necesidad de repetir → partes del ciclo → while → do-while → for → patrones. Los ciclos anidados quedan para el Tema 07."]
     - ["Atención dividida", "Diagrama de flujo + código + tabla de traza integrados para cada ciclo."]
-    - ["Ejemplo resuelto", "Pares de 50 a 100 con Mientras/Para (PSeInt) y while/for (C++), según la tesis (§6.1.13, fase 1)."]
+    - ["Ejemplo resuelto", "Pares de 50 a 100 con Mientras/Para (PSeInt) y while/for (C), según la tesis (§6.1.13, fase 1)."]
     - ["Movimiento humano", "«Vueltas a la pista»: un estudiante camina, otro cuenta y otro acumula."]
   procedimental:
     - ["Variabilidad", "Errores típicos de ciclos en contextos distintos."]
@@ -54,7 +55,7 @@ diferenciada:
   Entorno:
     comp: "Información procedimental"
     A: "Depurador paso a paso para observar cómo cambia la variable de control."
-    B: "Terminal; uso de `Ctrl+C` para detener ciclos infinitos y `-Wall` para `;` sospechosos."
+    B: "Terminal; uso de `Ctrl+C` para detener ciclos infinitos y `-Wall -Wextra` para `;` sospechosos."
 plan:
   - ["Sesión 1 · apertura", "Soporte", "Escribir 1..5 «a mano» y luego 1..1000: ¿por qué necesitamos ciclos?", "10 min"]
   - ["Sesión 1 · desarrollo", "Soporte", "Conceptos 1–5, vueltas a la pista, ejemplo resuelto (pares 50–100).", "60 min"]
@@ -68,7 +69,7 @@ glosario:
   - ["contador", "counter", "Variable que aumenta en una cantidad fija (`cont++`)."]
   - ["acumulador", "accumulator", "Variable que va sumando o multiplicando valores (`suma += x`)."]
   - ["centinela", "sentinel value", "Valor especial que indica el fin de los datos (p. ej., −1)."]
-  - ["bandera", "flag", "Variable `bool` que recuerda si algo ocurrió."]
+  - ["bandera", "flag", "Variable `bool` (o `int` 0/1) que recuerda si algo ocurrió."]
   - ["ciclo infinito", "infinite loop", "Ciclo cuya condición nunca se vuelve falsa."]
   - ["error por uno", "off-by-one error", "Repetir una vez de más o de menos (`<` vs `<=`)."]
   - ["prueba de escritorio / traza", "trace table / desk check", "Tabla con el valor de cada variable en cada iteración."]
@@ -79,7 +80,7 @@ glosario:
 # 1. Información de soporte {.soporte}
 
 :::analogia | Vueltas a la pista
-En la clase de educación física el profesor dice: «**Mientras** no completes 5 vueltas, sigue corriendo». Hay un **punto de partida** (vuelta 0), una **pregunta** que se hace en cada paso por la meta (¿ya van 5?), una **acción** que se repite (correr una vuelta) y algo que **cambia** cada vez (el número de vueltas). Si nadie contara las vueltas, correrías para siempre. Un ciclo en C++ tiene exactamente esas cuatro partes.
+En la clase de educación física el profesor dice: «**Mientras** no completes 5 vueltas, sigue corriendo». Hay un **punto de partida** (vuelta 0), una **pregunta** que se hace en cada paso por la meta (¿ya van 5?), una **acción** que se repite (correr una vuelta) y algo que **cambia** cada vez (el número de vueltas). Si nadie contara las vueltas, correrías para siempre. Un ciclo en C tiene exactamente esas cuatro partes.
 :::
 
 :::pregunta
@@ -89,7 +90,7 @@ Escribe en papel un programa que muestre los números del 1 al 5 con lo que ya s
 :::
 
 :::relevancia
-Un videojuego repite su «ciclo principal» 60 veces por segundo; una hoja de cálculo suma miles de celdas; un cajero repite su menú hasta que eliges «Salir»; un sensor Arduino lee la temperatura cada segundo. Como dice el modelo ARCS, **los ciclos ahorran tiempo y esfuerzo al escribir código profesional** y son la base de juegos y sitios interactivos. {{arcs:Relevancia}}
+Un videojuego repite su «ciclo principal» 60 veces por segundo; una hoja de cálculo suma miles de celdas; un cajero repite su menú hasta que eliges «Salir»; el programa en C de un microcontrolador lee un sensor cada segundo dentro de un ciclo que nunca termina. **Los ciclos ahorran tiempo y esfuerzo al escribir código profesional** y son la base de juegos y sistemas interactivos. {{arcs:Relevancia}}
 :::
 
 ## 1.1 Conceptos, uno por uno
@@ -98,16 +99,15 @@ Un videojuego repite su «ciclo principal» 60 veces por segundo; una hoja de c�
 <div class="cols eq">
 <div>
 
-```cpp run title="sin ciclo"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="sin ciclo"
+#include <stdio.h>
+int main(void)
 {
-    cout << 1 << "\n";
-    cout << 2 << "\n";
-    cout << 3 << "\n";
-    cout << 4 << "\n";
-    cout << 5 << "\n";
+    printf("%d\n", 1);
+    printf("%d\n", 2);
+    printf("%d\n", 3);
+    printf("%d\n", 4);
+    printf("%d\n", 5);
     return 0;
 }
 ```
@@ -115,15 +115,14 @@ int main()
 </div>
 <div>
 
-```cpp run title="con ciclo"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="con ciclo"
+#include <stdio.h>
+int main(void)
 {
     int i = 1;
     while (i <= 5)
     {
-        cout << i << "\n";
+        printf("%d\n", i);
         i++;
     }
     return 0;
@@ -140,18 +139,17 @@ Las dos producen lo mismo. Pero para llegar a 1000, a la izquierda tendrías que
 <div class="cols">
 <div>
 
-```cpp run title="cuenta.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="cuenta.c"
+#include <stdio.h>
+int main(void)
 {
     int i = 1;                //> ① **Inicialización**: valor de partida
     while (i <= 5)            //> ② **Condición**: se evalúa ANTES de cada vuelta
     {
-        cout << i << " ";     //> ③ **Cuerpo**: lo que se repite
+        printf("%d ", i);     //> ③ **Cuerpo**: lo que se repite
         i++;                  //> ④ **Actualización**: acerca el ciclo a su fin
     }
-    cout << "\nFin, i = " << i << "\n";  //> Al salir, i vale 6
+    printf("\nFin, i = %d\n", i);    //> Al salir, i vale 6
     return 0;
 }
 ```
@@ -176,12 +174,12 @@ ini -> c; c -> b [label=" Sí"]; b -> u; u -> c [constraint=false]; c -> f [labe
 
 | Vuelta | `i` al evaluar | ¿`i <= 5`? | Muestra | `i` después |
 |---|---|---|---|---|
-| 1 | 1 | true | 1 | 2 |
-| 2 | 2 | true | 2 | 3 |
-| 3 | 3 | true | 3 | 4 |
-| 4 | 4 | true | 4 | 5 |
-| 5 | 5 | true | 5 | 6 |
-| — | 6 | **false** | (sale) | — |
+| 1 | 1 | sí | 1 | 2 |
+| 2 | 2 | sí | 2 | 3 |
+| 3 | 3 | sí | 3 | 4 |
+| 4 | 4 | sí | 4 | 5 |
+| 5 | 5 | sí | 5 | 6 |
+| — | 6 | **no** | (sale) | — |
 
 </div>
 
@@ -191,11 +189,11 @@ La tabla de traza (prueba de escritorio) es tu mejor herramienta para entender u
 :::concepto | 3 | El ciclo infinito: olvidar la actualización | Elementos aislados
 Si el cuerpo nunca cambia la variable de la condición, la condición nunca se vuelve falsa:
 
-```cpp blank title="infinito.cpp (¡no lo ejecutes sin saber detenerlo!)"
+```c blank title="infinito.c (¡no lo ejecutes sin saber detenerlo!)"
 int i = 1;
 while (i <= 5)
 {
-    cout << i << " ";   // falta i++: siempre muestra 1
+    printf("%d ", i);   // falta i++: siempre muestra 1
 }
 ```
 Si te ocurre, detén el programa con **Ctrl + C** en la terminal (o el botón «detener» del IDE).
@@ -211,18 +209,17 @@ El `do-while` evalúa la condición **al final**: el cuerpo se ejecuta **al meno
 <div class="cols">
 <div>
 
-```cpp run title="valida_edad.cpp" stdin="-4\n150\n17\n"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="valida_edad.c" stdin="-4\n150\n17\n"
+#include <stdio.h>
+int main(void)
 {
     int edad;
     do
     {
-        cout << "Edad (0-120): ";        //> Se pregunta al menos una vez
-        cin >> edad;
-    } while (edad < 0 || edad > 120);    //> Repite MIENTRAS sea inválida. ¡Lleva `;`!
-    cout << "Edad registrada: " << edad << "\n";
+        printf("Edad (0-120): ");          //> Se pregunta al menos una vez
+        scanf("%d", &edad);
+    } while (edad < 0 || edad > 120);      //> Repite MIENTRAS sea inválida. ¡Lleva `;`!
+    printf("Edad registrada: %d\n", edad);
     return 0;
 }
 ```
@@ -245,28 +242,27 @@ l -> c; c -> l [label=" Sí"]; c -> f [label=" No"];
 :::concepto | 5 | `for`: el ciclo con contador, en una sola línea | Elementos aislados, Atención dividida
 Cuando sabes **cuántas veces** repetir, `for` reúne las partes ①, ② y ④ en su encabezado:
 
-```cpp run title="for.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="for.c"
+#include <stdio.h>
+int main(void)
 {
-    for (int i = 1; i <= 5; i++)    //> `for (① inicialización; ② condición; ④ actualización)`
+    for (int i = 1; i <= 5; i++)      //> `for (① inicialización; ② condición; ④ actualización)`
     {
-        cout << i << " ";           //> ③ cuerpo
+        printf("%d ", i);             //> ③ cuerpo
     }
-    cout << "\n";
+    printf("\n");
     for (int j = 10; j >= 0; j -= 2)  //> También puede contar hacia atrás y de 2 en 2
-        cout << j << " ";
-    cout << "\n";
+        printf("%d ", j);
+    printf("\n");
     return 0;
 }
 ```
 
 | `while` | `for` equivalente |
 |---|---|
-| `int i = 1;`<br>`while (i <= 5) {`<br>`    cout << i;`<br>`    i++;`<br>`}` | `for (int i = 1; i <= 5; i++) {`<br>`    cout << i;`<br>`}` |
+| `int i = 1;`<br>`while (i <= 5) {`<br>`    printf("%d", i);`<br>`    i++;`<br>`}` | `for (int i = 1; i <= 5; i++) {`<br>`    printf("%d", i);`<br>`}` |
 
-En el `for`, la variable `i` declarada en el encabezado **solo existe dentro del ciclo**.
+En el `for`, la variable `i` declarada en el encabezado **solo existe dentro del ciclo** (esta forma existe desde C99).
 :::
 
 :::concepto | 6 | Patrones: contador y acumulador | Elementos aislados, Atención dividida
@@ -275,23 +271,22 @@ Dos variables que aparecen en casi todos los ciclos:
 - **Contador:** aumenta en una cantidad fija → `cuantos++`.
 - **Acumulador:** va sumando (o multiplicando) valores → `suma += x;` (empieza en 0) · `producto *= x;` (empieza en 1).
 
-```cpp run title="promedio.cpp" stdin="5\n8 9.5 7 10 6.5\n"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="promedio.c" stdin="5\n8 9.5 7 10 6.5\n"
+#include <stdio.h>
+int main(void)
 {
     int n;
     double nota, suma = 0;                 //> El acumulador SIEMPRE se inicializa (0 para sumas)
     int aprobadas = 0;                     //> Contador inicializado en 0
-    cout << "Cuantas notas? ";
-    cin >> n;
+    printf("Cuantas notas? ");
+    scanf("%d", &n);
     for (int i = 1; i <= n; i++)
     {
-        cin >> nota;
+        scanf("%lf", &nota);
         suma += nota;                      //> Acumula
         if (nota >= 6) aprobadas++;        //> Cuenta solo las que cumplen
     }
-    cout << "Promedio: " << suma / n << "  Aprobadas: " << aprobadas << "\n";
+    printf("Promedio: %.2f  Aprobadas: %d\n", suma / n, aprobadas);
     return 0;
 }
 ```
@@ -300,23 +295,22 @@ int main()
 :::concepto | 7 | Patrón centinela: «hasta que escriba −1» | Elementos aislados
 Cuando **no** se sabe cuántos datos habrá, se pide un valor especial que marca el final:
 
-```cpp run title="centinela.cpp" stdin="120\n80.5\n45\n-1\n"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="centinela.c" stdin="120\n80.5\n45\n-1\n"
+#include <stdio.h>
+int main(void)
 {
     double gasto, total = 0;
     int cuantos = 0;
-    cout << "Gasto (-1 para terminar): ";
-    cin >> gasto;                       //> Lectura ANTES del ciclo
+    printf("Gasto (-1 para terminar): ");
+    scanf("%lf", &gasto);               //> Lectura ANTES del ciclo
     while (gasto != -1)                 //> El centinela no se procesa
     {
         total += gasto;
         cuantos++;
-        cout << "Gasto (-1 para terminar): ";
-        cin >> gasto;                   //> Lectura al FINAL del cuerpo
+        printf("Gasto (-1 para terminar): ");
+        scanf("%lf", &gasto);           //> Lectura al FINAL del cuerpo
     }
-    cout << cuantos << " gastos, total $" << total << "\n";
+    printf("%d gastos, total $%.2f\n", cuantos, total);
     return 0;
 }
 ```
@@ -335,7 +329,7 @@ En PSeInt: `Para i <- 1 Hasta n Con Paso 1 Hacer … FinPara`, `Mientras cond Ha
 ## 1.2 Ejemplo resuelto: números pares de 50 a 100
 
 :::ejemplo | Pares entre 50 y 100 con Mientras/Para y while/for (tesis, §6.1.13, fase 1) | Ejemplo resuelto, Atención dividida
-**Problema.** Crear dos algoritmos en PSeInt que muestren los números pares comprendidos entre 50 y 100, usando `Mientras` y `Para`. Después, pasarlos a C++ con `while` y `for`.
+**Problema.** Crear dos algoritmos en PSeInt que muestren los números pares comprendidos entre 50 y 100, usando `Mientras` y `Para`. Después, pasarlos a C con `while` y `for`.
 
 **A. Algoritmo:** 1) Empezar en 50 (primer par). 2) Mientras no pase de 100: mostrar el número y sumarle 2. 3) Terminar.
 
@@ -368,32 +362,30 @@ FinAlgoritmo
 </div>
 </div>
 
-**C. Código en C++**
+**C. Código en C**
 
-```cpp run title="pares_while.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="pares_while.c"
+#include <stdio.h>
+int main(void)
 {
     int n = 50;                 //> Inicialización: el primer par del rango
     while (n <= 100)            //> Condición: hasta 100 inclusive
     {
-        cout << n << " ";       //> Cuerpo
+        printf("%d ", n);       //> Cuerpo
         n += 2;                 //> Actualización de 2 en 2: así solo visitamos pares
     }
-    cout << "\n";
+    printf("\n");
     return 0;
 }
 ```
 
-```cpp run title="pares_for.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="pares_for.c"
+#include <stdio.h>
+int main(void)
 {
     for (int n = 50; n <= 100; n += 2)   //> Las tres partes en el encabezado
-        cout << n << " ";
-    cout << "\n";
+        printf("%d ", n);
+    printf("\n");
     return 0;
 }
 ```
@@ -418,20 +410,19 @@ c -> p; c -> w; c -> d; c -> f; w -> pt [style=dashed]; f -> pt [style=dashed]; 
 # 2. Información procedimental {.procedimental}
 
 :::sintaxis | Tarjeta de sintaxis 2.1
-```cpp run title="tres_ciclos.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="tres_ciclos.c"
+#include <stdio.h>
+int main(void)
 {
     // while: pregunta antes
     int i = 0;
-    while (i < 3) { cout << "w" << i << " "; i++; }
+    while (i < 3) { printf("w%d ", i); i++; }
     // do-while: pregunta despues (lleva ; al final)
     int j = 0;
-    do { cout << "d" << j << " "; j++; } while (j < 3);
+    do { printf("d%d ", j); j++; } while (j < 3);
     // for: inicializacion; condicion; actualizacion
-    for (int k = 0; k < 3; k++) { cout << "f" << k << " "; }
-    cout << "\n";
+    for (int k = 0; k < 3; k++) { printf("f%d ", k); }
+    printf("\n");
     return 0;
 }
 ```
@@ -442,9 +433,9 @@ int main()
 | n veces (de 0 a n−1) | `for (int i = 0; i < n; i++)` |
 | hacia atrás de n a 1 | `for (int i = n; i >= 1; i--)` |
 | de 5 en 5 hasta 100 | `for (int x = 5; x <= 100; x += 5)` |
-| hasta centinela | `cin >> x; while (x != -1) { …; cin >> x; }` |
-| hasta dato válido | `do { cin >> x; } while (x < 0);` |
-| menú repetido | `do { …menú…; cin >> op; switch(op){…} } while (op != 0);` |
+| hasta centinela | `scanf("%d", &x); while (x != -1) { …; scanf("%d", &x); }` |
+| hasta dato válido | `do { scanf("%d", &x); } while (x < 0);` |
+| menú repetido | `do { …menú…; scanf("%d", &op); switch (op) {…} } while (op != 0);` |
 :::
 
 :::checklist | Guía de preguntas de rutina 2.2
@@ -462,15 +453,14 @@ int main()
 :::errores | Errores frecuentes 2.3 | Variabilidad, Autoexplicación
 **a) Punto y coma después del `for`.** ¿Por qué solo se muestra un número?
 
-```cpp run
-#include <iostream>
-using namespace std;
-int main()
+```c run
+#include <stdio.h>
+int main(void)
 {
     int i;
-    for (i = 1; i <= 5; i++);        //> El `;` es el cuerpo (vacío): el ciclo da 5 vueltas sin hacer nada
+    for (i = 1; i <= 5; i++);            //> El `;` es el cuerpo (vacío): el ciclo da 5 vueltas sin hacer nada
     {
-        cout << "Valor: " << i << "\n";  //> Esto se ejecuta UNA vez, después, con i = 6
+        printf("Valor: %d\n", i);        //> Esto se ejecuta UNA vez, después, con i = 6
     }
     return 0;
 }
@@ -478,14 +468,13 @@ int main()
 
 **b) Error por uno.** Se pidieron 10 números y aparecen 11 (o 9):
 
-```cpp run
-#include <iostream>
-using namespace std;
-int main()
+```c run
+#include <stdio.h>
+int main(void)
 {
     for (int i = 0; i <= 10; i++)    //> De 0 a 10 inclusive son ONCE vueltas
-        cout << i << " ";
-    cout << "\n";
+        printf("%d ", i);
+    printf("\n");
     return 0;
 }
 ```
@@ -493,17 +482,17 @@ int main()
 
 **c) Acumulador sin inicializar o inicializado dentro del ciclo.** `double suma;` contiene basura; y `for (…) { double suma = 0; suma += x; }` lo reinicia en cada vuelta. Declara e inicializa **antes** del ciclo.
 
-**d) Condición que nunca cambia.** `while (n > 0) { cout << n; }` sin `n--`: ciclo infinito.
+**d) Condición que nunca cambia.** `while (n > 0) { printf("%d", n); }` sin `n--`: ciclo infinito.
 
 **e) Usar la variable del `for` fuera de él.**
 
-```cpp err
-#include <iostream>
-int main()
+```c err
+#include <stdio.h>
+int main(void)
 {
     for (int i = 0; i < 3; i++)
-        std::cout << i;
-    std::cout << "Ultimo: " << i;
+        printf("%d", i);
+    printf("Ultimo: %d\n", i);
     return 0;
 }
 ```
@@ -513,14 +502,13 @@ int main()
 :::isomorfo | Ejemplo isomórfico 2.4 · Cuenta regresiva de lanzamiento | Variabilidad
 Mismo patrón (contador con for), otro contexto y otra dirección:
 
-```cpp run title="despegue.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="despegue.c"
+#include <stdio.h>
+int main(void)
 {
     for (int t = 10; t >= 1; t--)     //> Empieza en 10, baja de 1 en 1, termina en 1
-        cout << t << "... ";
-    cout << "DESPEGUE!\n";
+        printf("%d... ", t);
+    printf("DESPEGUE!\n");
     return 0;
 }
 ```
@@ -531,26 +519,25 @@ int main()
 Esta secuencia sigue la propuesta de **desvanecimiento de guía** de la tesis (§6.1.13): fase 1 ejemplo resuelto → fase 2 problemas por completar (primero con ayuda, después con más huecos y sin ayuda) → fase 3 problema completo. {{ef:Desvanecimiento de guía}}
 
 :::tarea A | T1. Múltiplos de 5 (gemelo del ejemplo resuelto) | 20 min | Ejemplo resuelto, Variabilidad
-**Contexto.** Estudia de nuevo el ejemplo 1.2 (pares de 50 a 100). Ahora resuelve su **gemelo**: escribe dos algoritmos en PSeInt (`Mientras` y `Para`) y dos programas en C++ (`while` y `for`) que muestren los **múltiplos de 5 entre 1 y 100**.
+**Contexto.** Estudia de nuevo el ejemplo 1.2 (pares de 50 a 100). Ahora resuelve su **gemelo**: escribe dos algoritmos en PSeInt (`Mientras` y `Para`) y dos programas en C (`while` y `for`) que muestren los **múltiplos de 5 entre 1 y 100**.
 
 **Resultado esperado:** `5 10 15 … 100` (20 números).
 
 :::solucion | T1
-```cpp run title="multiplos5.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="multiplos5.c"
+#include <stdio.h>
+int main(void)
 {
     int m = 5;                          // version while
     while (m <= 100)
     {
-        cout << m << " ";
+        printf("%d ", m);
         m += 5;
     }
-    cout << "\n";
+    printf("\n");
     for (int k = 5; k <= 100; k += 5)   // version for
-        cout << k << " ";
-    cout << "\n";
+        printf("%d ", k);
+    printf("\n");
     return 0;
 }
 ```
@@ -561,14 +548,13 @@ En PSeInt: `m <- 5; Mientras m <= 100 Hacer Escribir m; m <- m + 5; FinMientras`
 :::tarea A | T2. Factorial (fase 2a: completa con ayuda en comentarios) | 25 min | Problema por completar
 **Contexto.** El factorial de `n` es `n! = 1 · 2 · 3 · … · n` (y `0! = 1`). Se usa para contar combinaciones: ¿de cuántas formas se pueden ordenar 5 libros? `5! = 120`. Completa la versión `while` y la versión `for`.
 
-```cpp blank title="factorial.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c blank title="factorial.c"
+#include <stdio.h>
+int main(void)
 {
     int n;
-    cout << "Numero: ";
-    cin >> n;
+    printf("Numero: ");
+    scanf("%d", &n);
     // Version while
     long long fact = __1__;          // 1: valor inicial de un acumulador de PRODUCTOS
     int i = 1;
@@ -577,12 +563,12 @@ int main()
         fact __3__ i;                // 3: acumula multiplicando
         i++;
     }
-    cout << "while: " << n << "! = " << fact << "\n";
+    printf("while: %d! = %lld\n", n, fact);
     // Version for
     long long f2 = 1;
     for (int k = 1; __4__; __5__)    // 4: condicion  5: actualizacion
         f2 *= k;
-    cout << "for:   " << n << "! = " << f2 << "\n";
+    printf("for:   %d! = %lld\n", n, f2);
     return 0;
 }
 ```
@@ -590,14 +576,13 @@ int main()
 :::solucion | T2
 {{c:1}} `1` · {{c:2}} `<=` · {{c:3}} `*=` · {{c:4}} `k <= n` · {{c:5}} `k++`
 
-```cpp run title="factorial.cpp" runs="5|0|15"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="factorial.c" runs="5|0|15"
+#include <stdio.h>
+int main(void)
 {
     int n;
-    cout << "Numero: ";
-    cin >> n;
+    printf("Numero: ");
+    scanf("%d", &n);
     long long fact = 1;
     int i = 1;
     while (i <= n)
@@ -605,48 +590,47 @@ int main()
         fact *= i;
         i++;
     }
-    cout << "while: " << n << "! = " << fact << "\n";
+    printf("while: %d! = %lld\n", n, fact);
     long long f2 = 1;
     for (int k = 1; k <= n; k++)
         f2 *= k;
-    cout << "for:   " << n << "! = " << f2 << "\n";
+    printf("for:   %d! = %lld\n", n, f2);
     return 0;
 }
 ```
-Observa que con `n = 0` el ciclo no se ejecuta y el resultado queda en 1: correcto, porque `0! = 1`. Se usa `long long` porque `15!` no cabe en `int`.
+Observa que con `n = 0` el ciclo no se ejecuta y el resultado queda en 1: correcto, porque `0! = 1`. Se usa `long long` (que se muestra con `%lld`) porque `15!` no cabe en `int`.
 :::
 :::
 
 :::tarea AB | T3. Serie de Fibonacci (fase 2b: más huecos, sin ayuda) | 25 min | Problema por completar, Desvanecimiento de guía
 **Contexto.** En la serie de Fibonacci cada término es la suma de los dos anteriores: `0 1 1 2 3 5 8 13…`. Aparece en la naturaleza (espirales de girasoles) y en algoritmos. Muestra los primeros `n` términos, con `while` y con `for`.
 
-```cpp blank title="fibonacci.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c blank title="fibonacci.c"
+#include <stdio.h>
+int main(void)
 {
     int n;
-    cin >> n;
+    scanf("%d", &n);
     long long a = 0, b = 1;
     int cont = 0;
     while (__1__)
     {
-        cout << a << " ";
+        printf("%lld ", a);
         long long sig = __2__;
         a = __3__;
         b = __4__;
         __5__;
     }
-    cout << "\n";
+    printf("\n");
     long long x = 0, y = 1;
     for (__6__; __7__; __8__)
     {
-        cout << x << " ";
+        printf("%lld ", x);
         long long s = x + y;
         x = y;
         y = s;
     }
-    cout << "\n";
+    printf("\n");
     return 0;
 }
 ```
@@ -654,33 +638,32 @@ int main()
 :::solucion | T3
 {{c:1}} `cont < n` · {{c:2}} `a + b` · {{c:3}} `b` · {{c:4}} `sig` · {{c:5}} `cont++` · {{c:6}} `int i = 0` · {{c:7}} `i < n` · {{c:8}} `i++`
 
-```cpp run title="fibonacci.cpp" stdin="12\n"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="fibonacci.c" stdin="12\n"
+#include <stdio.h>
+int main(void)
 {
     int n;
-    cin >> n;
+    scanf("%d", &n);
     long long a = 0, b = 1;
     int cont = 0;
     while (cont < n)
     {
-        cout << a << " ";
+        printf("%lld ", a);
         long long sig = a + b;
         a = b;
         b = sig;
         cont++;
     }
-    cout << "\n";
+    printf("\n");
     long long x = 0, y = 1;
     for (int i = 0; i < n; i++)
     {
-        cout << x << " ";
+        printf("%lld ", x);
         long long s = x + y;
         x = y;
         y = s;
     }
-    cout << "\n";
+    printf("\n");
     return 0;
 }
 ```
@@ -688,7 +671,7 @@ int main()
 :::
 
 :::tarea AB | T4. Tabla de multiplicar (fase 3: problema completo + autoexplicación) | 30 min | Autoexplicación, Desvanecimiento de guía
-**Contexto.** Genera los algoritmos en PSeInt para imprimir la **tabla de multiplicar** de un número dado por el usuario (del 1 al 10) usando `Mientras` y `Para`. Después pásalos a C++ con `while` y `for`. **Sin código de apoyo.**
+**Contexto.** Genera los algoritmos en PSeInt para imprimir la **tabla de multiplicar** de un número dado por el usuario (del 1 al 10) usando `Mientras` y `Para`. Después pásalos a C con `while` y `for`. **Sin código de apoyo.**
 
 **Autoexplicación:** al terminar, escribe paso a paso, con tus palabras, qué hace cada parte de tu ciclo y por qué termina.
 
@@ -702,23 +685,22 @@ int main()
 {{lineas:3}}
 
 :::solucion | T4
-```cpp run title="tabla.cpp" stdin="7\n"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="tabla.c" stdin="7\n"
+#include <stdio.h>
+int main(void)
 {
     int num;
-    cout << "Numero: ";
-    cin >> num;
+    printf("Numero: ");
+    scanf("%d", &num);
     int i = 1;                       // version while
     while (i <= 10)
     {
-        cout << num << " x " << i << " = " << num * i << "\n";
+        printf("%d x %d = %d\n", num, i, num * i);
         i++;
     }
-    cout << "--- version for ---\n";
+    printf("--- version for ---\n");
     for (int k = 1; k <= 10; k++)
-        cout << num << " x " << k << " = " << num * k << "\n";
+        printf("%d x %d = %d\n", num, k, num * k);
     return 0;
 }
 ```
@@ -732,10 +714,9 @@ Autoexplicación esperada (ejemplo): «`i` empieza en 1 porque la tabla empieza 
 :::solucion | T5
 Todas deben dar **1050**. Algunas versiones:
 
-```cpp run title="serie.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="serie.c"
+#include <stdio.h>
+int main(void)
 {
     int s1 = 0;                                  // 1) for de 5 en 5
     for (int x = 5; x <= 100; x += 5) s1 += x;
@@ -748,7 +729,7 @@ int main()
     int s5 = 0;                                  // 5) contar terminos: 5*1 + 5*2 + ... + 5*20
     for (int k = 1; k <= 20; k++) s5 += 5 * k;
     int s6 = 5 * (20 * 21 / 2);                  // 6) sin ciclo: formula de Gauss
-    cout << s1 << " " << s2 << " " << s3 << " " << s4 << " " << s5 << " " << s6 << "\n";
+    printf("%d %d %d %d %d %d\n", s1, s2, s3, s4, s5, s6);
     return 0;
 }
 ```
@@ -758,48 +739,47 @@ int main()
 :::tarea B | T6. Cuatro ciclos con errores (autoexplicación) | 20 min | Autoexplicación, Reversión de la experiencia
 Cada fragmento debería mostrar `1 2 3 4 5`. **Sin ejecutarlos**, explica qué hace realmente cada uno y por qué, y corrígelo.
 
-```cpp blank title="errores_ciclos.cpp"
+```c blank title="errores_ciclos.c"
 // A
 int i = 1;
 while (i <= 5)
-    cout << i << " ";
+    printf("%d ", i);
     i++;
 // B
 for (int j = 1; j < 5; j++)
-    cout << j << " ";
+    printf("%d ", j);
 // C
 int k = 1;
 do {
-    cout << k << " ";
+    printf("%d ", k);
 } while (k <= 5);
 // D
 int suma;
 for (int m = 1; m <= 5; m++)
     suma += m;
-cout << suma;   // deberia mostrar 15
+printf("%d\n", suma);   // deberia mostrar 15
 ```
 
 {{lineas:4}}
 
 :::solucion | T6
-**A:** sin llaves, el `while` solo controla `cout`; `i++` está fuera → ciclo infinito mostrando `1`. **B:** `j < 5` da cuatro vueltas (`1 2 3 4`): error por uno → `j <= 5`. **C:** falta `k++` dentro del `do` → infinito. **D:** `suma` sin inicializar contiene basura → `int suma = 0;`.
+**A:** sin llaves, el `while` solo controla `printf`; `i++` está fuera → ciclo infinito mostrando `1`. **B:** `j < 5` da cuatro vueltas (`1 2 3 4`): error por uno → `j <= 5`. **C:** falta `k++` dentro del `do` → infinito. **D:** `suma` sin inicializar contiene basura → `int suma = 0;`.
 
-```cpp run title="corregidos.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="corregidos.c"
+#include <stdio.h>
+int main(void)
 {
     int i = 1;
-    while (i <= 5) { cout << i << " "; i++; }
-    cout << "\n";
-    for (int j = 1; j <= 5; j++) cout << j << " ";
-    cout << "\n";
+    while (i <= 5) { printf("%d ", i); i++; }
+    printf("\n");
+    for (int j = 1; j <= 5; j++) printf("%d ", j);
+    printf("\n");
     int k = 1;
-    do { cout << k << " "; k++; } while (k <= 5);
-    cout << "\n";
+    do { printf("%d ", k); k++; } while (k <= 5);
+    printf("\n");
     int suma = 0;
     for (int m = 1; m <= 5; m++) suma += m;
-    cout << suma << "\n";
+    printf("%d\n", suma);
     return 0;
 }
 ```
@@ -809,13 +789,12 @@ int main()
 :::tarea B | T7. Separar los dígitos (imaginación) | 25 min | Imaginación
 **Contexto.** Este programa usa `% 10` (último dígito) y `/ 10` (quitar el último dígito). **Imagina** su ejecución con `n = 4072` y completa la tabla de traza **antes** de ejecutarlo. Después modifícalo para que también muestre el número **al revés** (2704).
 
-```cpp check title="digitos.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c check title="digitos.c"
+#include <stdio.h>
+int main(void)
 {
     int n, suma = 0, cuantos = 0;
-    cin >> n;
+    scanf("%d", &n);
     while (n > 0)
     {
         int d = n % 10;
@@ -823,7 +802,7 @@ int main()
         cuantos++;
         n /= 10;
     }
-    cout << cuantos << " digitos, suman " << suma << "\n";
+    printf("%d digitos, suman %d\n", cuantos, suma);
     return 0;
 }
 ```
@@ -842,13 +821,12 @@ int main()
 :::solucion | T7
 Traza: (4072, 2, 2, 1, 407) → (407, 7, 9, 2, 40) → (40, 0, 9, 3, 4) → (4, 4, 13, 4, 0). Con `n = 0` la condición es falsa. Versión ampliada:
 
-```cpp run title="digitos_reves.cpp" stdin="4072\n"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="digitos_reves.c" stdin="4072\n"
+#include <stdio.h>
+int main(void)
 {
     int n, suma = 0, cuantos = 0, reves = 0;
-    cin >> n;
+    scanf("%d", &n);
     while (n > 0)
     {
         int d = n % 10;
@@ -857,7 +835,7 @@ int main()
         reves = reves * 10 + d;   // desplaza y agrega el digito
         n /= 10;
     }
-    cout << cuantos << " digitos, suman " << suma << ", al reves: " << reves << "\n";
+    printf("%d digitos, suman %d, al reves: %d\n", cuantos, suma, reves);
     return 0;
 }
 ```
@@ -870,44 +848,43 @@ Retomen el cajero del Tema 05 (T8). Equipos de 4 con niveles mezclados. **Integr
 :::
 
 :::solucion | T8
-```cpp run title="cajero_ciclo.cpp" stdin="1\n2\n-50\n300\n3\n1000\n1\n4\n"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="cajero_ciclo.c" stdin="1\n2\n-50\n300\n3\n1000\n1\n4\n"
+#include <stdio.h>
+int main(void)
 {
     double saldo = 2500, monto, totDep = 0, totRet = 0;
     int op, operaciones = 0;
     do
     {
-        cout << "\n1) Saldo 2) Depositar 3) Retirar 4) Salir: ";
-        cin >> op;
+        printf("\n1) Saldo 2) Depositar 3) Retirar 4) Salir: ");
+        scanf("%d", &op);
         switch (op)
         {
             case 1:
-                cout << "Saldo: $" << saldo << "\n";
+                printf("Saldo: $%.2f\n", saldo);
                 operaciones++;
                 break;
             case 2:
                 do {
-                    cout << "Monto a depositar: ";
-                    cin >> monto;
+                    printf("Monto a depositar: ");
+                    scanf("%lf", &monto);
                 } while (monto <= 0);
                 saldo += monto; totDep += monto; operaciones++;
                 break;
             case 3:
-                cout << "Monto a retirar: ";
-                cin >> monto;
+                printf("Monto a retirar: ");
+                scanf("%lf", &monto);
                 if (monto > 0 && monto <= saldo) { saldo -= monto; totRet += monto; operaciones++; }
-                else cout << "Retiro no permitido\n";
+                else printf("Retiro no permitido\n");
                 break;
             case 4:
                 break;
             default:
-                cout << "Opcion invalida\n";
+                printf("Opcion invalida\n");
         }
     } while (op != 4);
-    cout << "Operaciones: " << operaciones << "  Depositado: $" << totDep
-         << "  Retirado: $" << totRet << "  Saldo final: $" << saldo << "\n";
+    printf("Operaciones: %d  Depositado: $%.2f  Retirado: $%.2f  Saldo final: $%.2f\n",
+           operaciones, totDep, totRet, saldo);
     return 0;
 }
 ```
@@ -941,33 +918,31 @@ Problemas: (a) **atención dividida**: código y diagrama aparecen separados en 
 
 **Segmento 4 — El caso borde.** {{como}} Antes de dividir pregunto `if (cuantas > 0)`. Pruebo con `8 11 9.5 6 -1` y también con `-1` directo. {{porque}} Si el usuario no captura nada, `suma / cuantas` dividiría entre cero; probar el caso vacío es tan importante como probar el normal.
 
-```cpp run title="grupo.cpp" runs="8\n11\n9.5\n6\n-1|-1"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="grupo.c" runs="8\n11\n9.5\n6\n-1|-1"
+#include <stdio.h>
+int main(void)
 {
     double nota, suma = 0, mayor = -1;
     int cuantas = 0;
-    cout << "Calificacion (-1 termina): ";
-    cin >> nota;
+    printf("Calificacion (-1 termina): ");
+    scanf("%lf", &nota);
     while (nota != -1)
     {
         if (nota < 0 || nota > 10)
-            cout << "Invalida, se ignora\n";
+            printf("Invalida, se ignora\n");
         else
         {
             suma += nota;
             cuantas++;
             if (nota > mayor) mayor = nota;
         }
-        cout << "Calificacion (-1 termina): ";
-        cin >> nota;
+        printf("Calificacion (-1 termina): ");
+        scanf("%lf", &nota);
     }
     if (cuantas > 0)
-        cout << cuantas << " registradas, promedio " << suma / cuantas
-             << ", mayor " << mayor << "\n";
+        printf("%d registradas, promedio %.2f, mayor %.1f\n", cuantas, suma / cuantas, mayor);
     else
-        cout << "No se registraron calificaciones\n";
+        printf("No se registraron calificaciones\n");
     return 0;
 }
 ```
@@ -991,10 +966,9 @@ int main()
 :::compr | 5.2 Comprehension test · conocimiento procedimental
 **P1. Haz la traza y predice la salida:**
 
-```cpp check title="p1.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c check title="p1.c"
+#include <stdio.h>
+int main(void)
 {
     int a = 1, s = 0;
     while (a < 20)
@@ -1002,12 +976,12 @@ int main()
         s += a;
         a *= 3;
     }
-    cout << a << " " << s << "\n";
+    printf("%d %d\n", a, s);
     return 0;
 }
 ```
 
-**P2. Convierte** a `for` y a `do-while`: `int x = 10; while (x > 0) { cout << x << " "; x -= 3; }` ¿Producen exactamente lo mismo? ¿Hay algún valor inicial de `x` con el que el `do-while` se comporte distinto?
+**P2. Convierte** a `for` y a `do-while`: `int x = 10; while (x > 0) { printf("%d ", x); x -= 3; }` ¿Producen exactamente lo mismo? ¿Hay algún valor inicial de `x` con el que el `do-while` se comporte distinto?
 
 **P3. Corrige:** el programa debe sumar los números del 1 al `n`, pero da resultados raros: `int suma; for (int i = 1; i < n; i++); suma = suma + i;`
 
@@ -1032,10 +1006,9 @@ int main()
 :::solucion | Evaluación 5.2 (comprehension)
 **P1.** Traza: `s = 1, a = 3` → `s = 4, a = 9` → `s = 13, a = 27` → sale (27 ≥ 20).
 
-```cpp run title="p1.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="p1.c"
+#include <stdio.h>
+int main(void)
 {
     int a = 1, s = 0;
     while (a < 20)
@@ -1043,31 +1016,30 @@ int main()
         s += a;
         a *= 3;
     }
-    cout << a << " " << s << "\n";
+    printf("%d %d\n", a, s);
     return 0;
 }
 ```
 
-**P2.** `for (int x = 10; x > 0; x -= 3) cout << x << " ";` y `int x = 10; do { cout << x << " "; x -= 3; } while (x > 0);`. Con `x = 10` las tres muestran `10 7 4 1`. Si `x` empieza en 0 o negativo, el `do-while` muestra un valor y las otras dos nada.
+**P2.** `for (int x = 10; x > 0; x -= 3) printf("%d ", x);` y `int x = 10; do { printf("%d ", x); x -= 3; } while (x > 0);`. Con `x = 10` las tres muestran `10 7 4 1`. Si `x` empieza en 0 o negativo, el `do-while` muestra un valor y las otras dos nada.
 
 **P3.** Inicializar `suma = 0`; quitar el `;` después del `for`; usar `i <= n`; y poner `suma += i;` dentro del ciclo.
 
 **P4.**
 
-```cpp run title="p4.cpp" stdin="7 12 3 40 9 0\n"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="p4.c" stdin="7 12 3 40 9 0\n"
+#include <stdio.h>
+int main(void)
 {
     int x, pares = 0, impares = 0, mayor = 0;
-    cin >> x;
+    scanf("%d", &x);
     while (x != 0)
     {
         if (x % 2 == 0) pares++; else impares++;
         if (x > mayor) mayor = x;
-        cin >> x;
+        scanf("%d", &x);
     }
-    cout << "Pares: " << pares << "  Impares: " << impares << "  Mayor: " << mayor << "\n";
+    printf("Pares: %d  Impares: %d  Mayor: %d\n", pares, impares, mayor);
     return 0;
 }
 ```

@@ -7,8 +7,9 @@ lema: "Muchos datos del mismo tipo, un solo nombre y un número de casilla para 
 duracion: "6 h · 3 sesiones de 2 h"
 previos: "Tema 06 y Tema 07 (ciclos `for`, contadores, acumuladores, ciclos anidados)."
 fuentes:
-  - "Betancourt Uscátegui, J. F. y Polanco Guzmán, I. Y. (2021). *115 ejercicios resueltos de programación C++*. Cap. 6: Arreglos unidimensionales (§6.1 Concepto, §6.2 Declaración, §6.3 Inicialización: en la declaración, aleatoria y por captura; §6.4 Ejercicios)."
-  - "Lospinoso, J. (2019). *C++ Crash Course*. Cap. 2: Arrays (Array Initialization, Accessing Array Elements, A Nickel Tour of for Loops, range-based for). Cap. 13: Sequence Containers (`std::array`, `std::vector`)."
+  - "Kernighan, B. W. y Ritchie, D. M. (1988). *The C Programming Language* (2.ª ed.). Prentice Hall. Cap. 1: §1.6 Arrays. Cap. 4: §4.9 Initialization (arreglos). Apéndice B, §B5 (`rand`, `srand`)."
+  - "King, K. N. (2008). *C Programming: A Modern Approach* (2.ª ed.). W. W. Norton. Cap. 8: §8.1 One-Dimensional Arrays, §8.3 Variable-Length Arrays."
+  - "Seacord, R. C. (2020). *Effective C*. No Starch Press. Cap. 2 (arreglos como tipos derivados) y Cap. 11 «Debugging, Testing, and Analysis» (AddressSanitizer)."
   - "Sandoval Medina, C. (2026). Tesis doctoral, §6.1.1–6.1.17: ejemplos de arreglos (llenado con tamaño TAM, ordenamiento burbuja y selección) para los efectos de la TCC."
 objetivos:
   A:
@@ -17,15 +18,15 @@ objetivos:
     - "Buscar un valor (búsqueda secuencial) y contar ocurrencias."
     - "Ordenar un arreglo con el método de la burbuja."
   B:
-    - "Usar el `for` de rango, `std::size`, `std::array` y `std::vector` con tamaño definido en ejecución."
-    - "Explicar el acceso fuera de rango (comportamiento indefinido) y prevenirlo (`.at()`)."
+    - "Calcular el número de elementos con `sizeof(a) / sizeof(a[0])` y explicar los arreglos de longitud variable (VLA) y sus riesgos."
+    - "Explicar el acceso fuera de rango (comportamiento indefinido) y detectarlo con `-fsanitize=address`."
     - "Implementar el ordenamiento por selección y compararlo con la burbuja."
     - "Llenar arreglos con números aleatorios (`rand`, `srand`) y verificar los resultados."
 efectos:
   soporte:
     - ["Elementos aislados", "Necesidad → declaración e índices → inicialización → recorrido → patrones → búsqueda → aleatorios → ordenamiento."]
     - ["Atención dividida", "Burbuja explicada con una traza visual integrada: explicación, estado del arreglo y código en un mismo lugar (tesis §6.1.4)."]
-    - ["Ejemplo resuelto", "Crear y llenar un arreglo de tamaño TAM: algoritmo → pseudocódigo → C++ comentado (tesis §6.1.2)."]
+    - ["Ejemplo resuelto", "Crear y llenar un arreglo de tamaño TAM: algoritmo → pseudocódigo → C comentado (tesis §6.1.2)."]
     - ["Movimiento humano", "«Burbuja humana»: estudiantes con tarjetas se ordenan intercambiando lugares."]
   procedimental:
     - ["Variabilidad", "Mismos patrones de recorrido en contextos distintos (temperaturas, ventas, votos)."]
@@ -41,8 +42,8 @@ efectos:
 diferenciada:
   Contenido:
     comp: "Información de soporte"
-    A: "Arreglos estáticos, recorridos, búsqueda, burbuja con traza visual."
-    B: "`std::vector`, `std::array`, `.at()`, `for` de rango, selección vs burbuja."
+    A: "Arreglos con tamaño `#define`, recorridos, búsqueda, burbuja con traza visual."
+    B: "`sizeof(a) / sizeof(a[0])`, VLA, `-fsanitize=address`, selección vs burbuja."
   Proceso:
     comp: "Tareas de aprendizaje"
     A: "T1 → T4; diagramas de casillas en papel; burbuja humana."
@@ -54,15 +55,15 @@ diferenciada:
   Entorno:
     comp: "Información procedimental"
     A: "Depurador mostrando el arreglo completo en cada iteración."
-    B: "Compilación con `-fsanitize=address` para detectar accesos fuera de rango."
+    B: "Compilación con `-g -fsanitize=address` para detectar accesos fuera de rango."
 plan:
   - ["Sesión 1", "Soporte", "Pregunta inicial; conceptos 1–5; ejemplo resuelto TAM; T1 y T2.", "120 min"]
-  - ["Sesión 2", "Soporte + tareas", "Conceptos 6–8; burbuja humana; T3, T4; Ruta B: T6, T7.", "120 min"]
+  - ["Sesión 2", "Soporte + tareas", "Conceptos 6–9; burbuja humana; T3, T4; Ruta B: T6, T7.", "120 min"]
   - ["Sesión 3", "Tareas + evaluación", "T5, T8 colaborativa, T9 (Ruta B), protocolo verbal, tests.", "120 min"]
 glosario:
   - ["arreglo / vector", "array", "Colección de elementos del mismo tipo guardados de forma contigua bajo un nombre."]
   - ["elemento", "element", "Cada valor guardado en el arreglo."]
-  - ["índice / subíndice", "index", "Posición de un elemento; en C++ empieza en 0."]
+  - ["índice / subíndice", "index", "Posición de un elemento; en C empieza en 0."]
   - ["tamaño", "size / length", "Número de elementos del arreglo."]
   - ["recorrido", "traversal", "Visitar cada elemento, normalmente con un `for`."]
   - ["búsqueda secuencial", "linear search", "Revisar los elementos uno por uno hasta encontrar el buscado."]
@@ -71,7 +72,7 @@ glosario:
   - ["intercambio", "swap", "Cambiar de lugar dos valores usando una variable auxiliar."]
   - ["fuera de rango", "out of bounds", "Acceder a un índice que no existe; produce comportamiento indefinido."]
   - ["comportamiento indefinido", "undefined behavior", "El estándar no dice qué pasa: puede funcionar, fallar o corromper datos."]
-  - ["for de rango", "range-based for", "`for (int x : arreglo)`: recorre todos los elementos sin índices."]
+  - ["arreglo de longitud variable", "variable-length array (VLA)", "Arreglo cuyo tamaño se decide en ejecución (`int a[n];`); no se puede inicializar con valores."]
   - ["semilla", "seed (`srand`)", "Valor inicial del generador de números pseudoaleatorios."]
 ---
 
@@ -88,7 +89,7 @@ Necesitas guardar las calificaciones de los 40 estudiantes de tu grupo y luego d
 :::
 
 :::relevancia
-Las listas están en todas partes: los puntajes más altos de un juego, las lecturas de un sensor cada segundo, los píxeles de una fila de la pantalla, las canciones de una lista de reproducción. Los arreglos permiten **guardar** muchos datos y **procesarlos con ciclos**, y son la puerta a los algoritmos de búsqueda y ordenamiento que usan todas las aplicaciones. {{arcs:Relevancia}}
+Las listas están en todas partes: los puntajes más altos de un juego, las lecturas de un sensor cada segundo, los píxeles de una fila de la pantalla, las canciones de una lista de reproducción. Los arreglos permiten **guardar** muchos datos y **procesarlos con ciclos**, y son la puerta a los algoritmos de búsqueda y ordenamiento que usan todas las aplicaciones. En C, además, son la estructura más cercana a la memoria real de la computadora. {{arcs:Relevancia}}
 :::
 
 ## 1.1 Conceptos, uno por uno
@@ -97,13 +98,12 @@ Las listas están en todas partes: los puntajes más altos de un juego, las lect
 <div class="cols eq">
 <div>
 
-```cpp check title="sin arreglo"
-#include <iostream>
-using namespace std;
-int main()
+```c check title="sin arreglo"
+#include <stdio.h>
+int main(void)
 {
     double c1, c2, c3, c4, c5;
-    cin >> c1 >> c2 >> c3 >> c4 >> c5;
+    scanf("%lf %lf %lf %lf %lf", &c1, &c2, &c3, &c4, &c5);
     double prom = (c1 + c2 + c3 + c4 + c5) / 5;
     // ¿Cuantas superan el promedio?
     int arriba = 0;
@@ -112,7 +112,7 @@ int main()
     if (c3 > prom) arriba++;
     if (c4 > prom) arriba++;
     if (c5 > prom) arriba++;
-    cout << arriba << "\n";
+    printf("%d\n", arriba);
     return 0;
 }
 ```
@@ -120,23 +120,22 @@ int main()
 </div>
 <div>
 
-```cpp check title="con arreglo"
-#include <iostream>
-using namespace std;
-int main()
+```c check title="con arreglo"
+#include <stdio.h>
+#define N 5
+int main(void)
 {
-    const int N = 5;
     double c[N], suma = 0;
     for (int i = 0; i < N; i++)
     {
-        cin >> c[i];
+        scanf("%lf", &c[i]);
         suma += c[i];
     }
     double prom = suma / N;
     int arriba = 0;
     for (int i = 0; i < N; i++)
         if (c[i] > prom) arriba++;
-    cout << arriba << "\n";
+    printf("%d\n", arriba);
     return 0;
 }
 ```
@@ -144,23 +143,22 @@ int main()
 </div>
 </div>
 
-Con 40 alumnos, la versión de la izquierda necesitaría 40 variables y 40 `if`; a la derecha solo cambias `N = 40`. Y observa: hacen falta **dos** recorridos (primero el promedio, luego comparar), así que los datos deben **guardarse**.
+Con 40 alumnos, la versión de la izquierda necesitaría 40 variables y 40 `if`; a la derecha solo cambias `#define N 40`. Y observa: hacen falta **dos** recorridos (primero el promedio, luego comparar), así que los datos deben **guardarse**.
 :::
 
 :::concepto | 2 | Declaración, índices y memoria | Elementos aislados, Atención dividida
 `tipo nombre[TAMAÑO];` reserva `TAMAÑO` casillas **contiguas** en memoria. Los índices van de **0** a **TAMAÑO − 1**.
 
-```cpp run
-#include <iostream>
-using namespace std;
-int main()
+```c run
+#include <stdio.h>
+int main(void)
 {
-    int edades[5] = {12, 15, 9, 20, 17};   //> 5 enteros: índices 0, 1, 2, 3 y 4
-    cout << "Primero: " << edades[0] << "\n";  //> El primer elemento es el [0]
-    cout << "Ultimo:  " << edades[4] << "\n";  //> El último es el [TAMAÑO − 1]
-    edades[2] = 10;                             //> Un elemento se usa como cualquier variable
-    cout << "Nuevo [2]: " << edades[2] << "\n";
-    cout << "Bytes: " << sizeof(edades) << "\n"; //> 5 × 4 bytes = 20
+    int edades[5] = {12, 15, 9, 20, 17};          //> 5 enteros: índices 0, 1, 2, 3 y 4
+    printf("Primero: %d\n", edades[0]);           //> El primer elemento es el [0]
+    printf("Ultimo:  %d\n", edades[4]);           //> El último es el [TAMAÑO − 1]
+    edades[2] = 10;                               //> Un elemento se usa como cualquier variable
+    printf("Nuevo [2]: %d\n", edades[2]);
+    printf("Bytes: %zu\n", sizeof(edades));       //> 5 × 4 bytes = 20
     return 0;
 }
 ```
@@ -181,44 +179,42 @@ figcaption: "Figura 1. Cinco enteros contiguos: cada casilla ocupa 4 bytes; el �
 |---|---|
 | `int a[5] = {4, 8, 15, 16, 23};` | 4 8 15 16 23 |
 | `int b[5] = {7, 3};` | 7 3 0 0 0 (el resto se llena con ceros) |
-| `int c[5] = {};` o `int c[5]{};` | 0 0 0 0 0 |
+| `int c[5] = {0};` | 0 0 0 0 0 |
 | `int d[] = {1, 2, 3};` | el tamaño (3) se deduce de la lista |
 | `int e[5];` | **basura**: sin inicializar |
 
-El tamaño debe ser una **constante** conocida al compilar: `const int N = 40; int notas[N];`. Si el tamaño lo decide el usuario, usa un máximo (`MAX`) o un `std::vector` (concepto 9).
+El tamaño debe ser una **constante del compilador**; en C se escribe con `#define`: `#define N 40` … `int notas[N];`. Ojo: en C, `const int N = 40;` **no** sirve para esto (lo verás en los errores frecuentes 2.3). Si el tamaño lo decide el usuario, usa una capacidad máxima (`MAX`) y valida (ejemplo 1.2).
 :::
 
 :::concepto | 4 | Recorrer: el `for` de 0 a N − 1 | Elementos aislados, Atención dividida
 El patrón que usarás en casi todos los programas con arreglos:
 
-```cpp run title="captura_muestra.cpp" stdin="23.5\n25\n27.1\n22\n19.8\n"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="captura_muestra.c" stdin="23.5\n25\n27.1\n22\n19.8\n"
+#include <stdio.h>
+#define N 5
+int main(void)
 {
-    const int N = 5;
     double temp[N];
-    for (int i = 0; i < N; i++)             //> `i < N` (no `<=`): el último índice es N − 1
+    for (int i = 0; i < N; i++)                          //> `i < N` (no `<=`): el último índice es N − 1
     {
-        cout << "Temperatura del dia " << i + 1 << ": ";  //> Para el usuario los días empiezan en 1
-        cin >> temp[i];                     //> Captura en la casilla i
+        printf("Temperatura del dia %d: ", i + 1);       //> Para el usuario los días empiezan en 1
+        scanf("%lf", &temp[i]);                          //> Cada casilla es una variable: lleva `&`
     }
-    cout << "Registradas:";
+    printf("Registradas:");
     for (int i = 0; i < N; i++)
-        cout << " " << temp[i];             //> Muestra cada casilla
-    cout << "\n";
+        printf(" %.1f", temp[i]);                        //> Muestra cada casilla
+    printf("\n");
     return 0;
 }
 ```
 :::
 
 :::concepto | 5 | Patrones: suma, promedio, máximo y mínimo | Elementos aislados, Atención dividida
-```cpp run title="estadisticas.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="estadisticas.c"
+#include <stdio.h>
+#define N 6
+int main(void)
 {
-    const int N = 6;
     int ventas[N] = {120, 340, 95, 410, 260, 180};
     int suma = 0;
     int posMax = 0, posMin = 0;            //> Guardamos la POSICIÓN del mayor y del menor
@@ -228,9 +224,9 @@ int main()
         if (ventas[i] > ventas[posMax]) posMax = i;   //> ¿Hay uno mayor que el mejor hasta ahora?
         if (ventas[i] < ventas[posMin]) posMin = i;
     }
-    cout << "Total: " << suma << "  Promedio: " << static_cast<double>(suma) / N << "\n";
-    cout << "Mejor mes: " << posMax + 1 << " (" << ventas[posMax] << ")\n";
-    cout << "Peor mes:  " << posMin + 1 << " (" << ventas[posMin] << ")\n";
+    printf("Total: %d  Promedio: %.2f\n", suma, (double)suma / N);
+    printf("Mejor mes: %d (%d)\n", posMax + 1, ventas[posMax]);
+    printf("Peor mes:  %d (%d)\n", posMin + 1, ventas[posMin]);
     return 0;
 }
 ```
@@ -240,16 +236,15 @@ int main()
 :::concepto | 6 | Búsqueda secuencial | Elementos aislados
 Revisar uno por uno hasta encontrar el valor buscado:
 
-```cpp run title="busqueda.cpp" runs="41|7"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="busqueda.c" runs="41|7"
+#include <stdio.h>
+#define N 8
+int main(void)
 {
-    const int N = 8;
     int folios[N] = {17, 3, 41, 8, 25, 41, 12, 30};
     int buscado, pos = -1;                  //> -1 significa «no encontrado»
-    cout << "Folio a buscar: ";
-    cin >> buscado;
+    printf("Folio a buscar: ");
+    scanf("%d", &buscado);
     for (int i = 0; i < N; i++)
     {
         if (folios[i] == buscado)
@@ -259,36 +254,35 @@ int main()
         }
     }
     if (pos != -1)
-        cout << "Encontrado en la posicion " << pos << "\n";
+        printf("Encontrado en la posicion %d\n", pos);
     else
-        cout << "No existe\n";
+        printf("No existe\n");
     return 0;
 }
 ```
 :::
 
 :::concepto | 7 | Llenado aleatorio (`rand` y `srand`) | Elementos aislados
-Para pruebas y juegos se llenan arreglos con números pseudoaleatorios (Betancourt y Polanco, §6.3.2):
+Para pruebas y juegos se llenan arreglos con números pseudoaleatorios:
 
-```cpp run title="aleatorios.cpp"
-#include <iostream>
-#include <cstdlib>          //> rand, srand
-#include <ctime>            //> time
-using namespace std;
-int main()
+```c run title="aleatorios.c"
+#include <stdio.h>
+#include <stdlib.h>         //> rand, srand
+#include <time.h>           //> time
+#define N 10
+int main(void)
 {
-    const int N = 10;
     int dados[N];
-    srand(42);              //> Semilla fija: misma secuencia siempre (útil para probar). Con srand(time(0)) cambia en cada ejecución
+    srand(42);              //> Semilla fija: misma secuencia siempre (útil para probar). Con srand(time(NULL)) cambia en cada ejecución
     for (int i = 0; i < N; i++)
         dados[i] = rand() % 6 + 1;   //> rand() % 6 da 0..5; +1 da 1..6
     for (int i = 0; i < N; i++)
-        cout << dados[i] << " ";
-    cout << "\n";
+        printf("%d ", dados[i]);
+    printf("\n");
     return 0;
 }
 ```
-*En tu computadora los números pueden ser distintos: cada compilador implementa `rand` a su manera.*
+*En tu computadora los números pueden ser distintos: cada biblioteca de C implementa `rand` a su manera.*
 :::
 
 :::concepto | 8 | Ordenamiento burbuja: explicación, traza y código integrados | Elementos aislados, Atención dividida
@@ -308,12 +302,11 @@ rows:
 figcaption: "Figura 2. Traza de la burbuja: amarillo = par comparado; verde = elementos ya en su posición final."
 ```
 
-```cpp run title="burbuja.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="burbuja.c"
+#include <stdio.h>
+#define N 5
+int main(void)
 {
-    const int N = 5;
     int v[N] = {5, 3, 8, 1, 4};
     for (int pasada = 1; pasada < N; pasada++)        //> N − 1 pasadas
     {
@@ -327,14 +320,14 @@ int main()
             }
         }
     }
-    for (int i = 0; i < N; i++) cout << v[i] << " ";
-    cout << "\n";
+    for (int i = 0; i < N; i++) printf("%d ", v[i]);
+    printf("\n");
     return 0;
 }
 ```
 
 :::nota | ¿Por qué hace falta `aux`?
-Si escribieras `v[j] = v[j + 1]; v[j + 1] = v[j];`, la primera asignación **destruye** el valor original de `v[j]` y ambos quedarían iguales. `aux` lo guarda temporalmente (en C++ también existe `swap(v[j], v[j + 1]);`).
+Si escribieras `v[j] = v[j + 1]; v[j + 1] = v[j];`, la primera asignación **destruye** el valor original de `v[j]` y ambos quedarían iguales. `aux` lo guarda temporalmente.
 :::
 :::
 
@@ -342,40 +335,43 @@ Si escribieras `v[j] = v[j + 1]; v[j + 1] = v[j];`, la primera asignación **des
 Seis estudiantes forman una fila con tarjetas numéricas al azar. Un «comparador» camina de izquierda a derecha: en cada par de vecinos, si el de la izquierda tiene número mayor, **ambos cambian de lugar**. Al llegar al final, el mayor queda en el extremo derecho y se sienta (ya está en su lugar). Se repiten las pasadas. El grupo cuenta cuántas comparaciones e intercambios hubo. Después prueben con la fila ya ordenada: ¿cuántos intercambios hay?
 :::
 
-:::concepto | 9 | Ruta B · `std::vector`, `std::array`, `for` de rango y `.at()` | Elementos aislados, Reversión de la experiencia
-El *C++ Crash Course* (cap. 2 y 13) recomienda contenedores de la biblioteca estándar:
+:::concepto | 9 | Ruta B · Contar elementos con `sizeof`, arreglos de longitud variable y la ausencia de revisión de índices | Elementos aislados, Reversión de la experiencia
+`sizeof` da el tamaño en **bytes**; dividido entre el tamaño de un elemento da el **número de elementos**. Y desde C99 existen los **arreglos de longitud variable** (VLA): su tamaño se decide en ejecución.
 
-```cpp run title="vector.cpp" stdin="4\n10 20 30 40\n"
-#include <iostream>
-#include <vector>
-#include <array>
-using namespace std;
-int main()
+```c run title="tam_arreglo.c" stdin="4\n10 20 30 40\n"
+#include <stdio.h>
+int main(void)
 {
-    int tam;
-    cin >> tam;
-    vector<int> datos(tam);                 //> Tamaño decidido en EJECUCIÓN
-    for (int i = 0; i < static_cast<int>(datos.size()); i++)
-        cin >> datos[i];
-    datos.push_back(99);                    //> Puede crecer: agrega al final
-    for (int x : datos)                     //> for de rango: «para cada x en datos»
-        cout << x << " ";
-    cout << "| tam = " << datos.size() << "\n";
-    array<int, 3> fijo{7, 8, 9};            //> Arreglo de tamaño fijo con .size()
-    cout << fijo.at(1) << "\n";             //> .at() verifica el índice
+    int primos[] = {2, 3, 5, 7, 11, 13};
+    size_t cuantos = sizeof(primos) / sizeof(primos[0]);   //> Bytes totales / bytes de uno = elementos
+    printf("primos tiene %zu elementos\n", cuantos);
+    int n;
+    scanf("%d", &n);
+    if (n < 1 || n > 1000)                                 //> Valida ANTES de crear el VLA
+        return 1;
+    int datos[n];                                          //> VLA: tamaño decidido en ejecución
+    int suma = 0;
+    for (int i = 0; i < n; i++)
+    {
+        scanf("%d", &datos[i]);
+        suma += datos[i];
+    }
+    printf("%d datos, suma %d\n", n, suma);
     return 0;
 }
 ```
 
-:::cuidado | Fuera de rango
-`int a[5]; a[5] = 1;` compila, pero escribe **fuera** del arreglo: es **comportamiento indefinido** (puede «funcionar», fallar o dañar otras variables). Con `vector` o `array`, `.at(5)` lanza una excepción en lugar de corromper la memoria.
+Un VLA **no se puede inicializar** con `= {…}`, vive en una zona de memoria pequeña (la pila) y, si `n` es enorme o negativo, el programa falla sin aviso. En el Tema 15 verás `malloc`, la forma robusta de pedir memoria del tamaño que decida el usuario.
+
+:::cuidado | C no revisa los índices
+`int a[5]; a[5] = 1;` compila, pero escribe **fuera** del arreglo: es **comportamiento indefinido** (puede «funcionar», fallar o dañar otras variables). C no revisa los índices por ti. Mientras pruebas, compila con `gcc -g -fsanitize=address prog.c`: si te sales del arreglo, el programa se detiene y te dice en qué línea (*stack-buffer-overflow*).
 :::
 :::
 
 ## 1.2 Ejemplo resuelto: crear y llenar un arreglo de tamaño TAM
 
 :::ejemplo | Arreglo de enteros con tamaño definido por el usuario (tesis §6.1.2) | Ejemplo resuelto, Atención dividida
-**Problema.** Crear un programa en C++ que cree y llene un arreglo de números enteros, identificado como `vec`, cuyo tamaño lo define el usuario mediante la variable `TAM`. Al final, mostrar su contenido.
+**Problema.** Crear un programa en C que cree y llene un arreglo de números enteros, identificado como `vec`, cuyo tamaño lo define el usuario mediante la variable `TAM`. Al final, mostrar su contenido.
 
 **A. Algoritmo**
 
@@ -402,30 +398,29 @@ Algoritmo LlenarArreglo
 FinAlgoritmo
 ```
 
-**C. Código en C++** (cada línea comentada)
+**C. Código en C** (cada línea comentada)
 
-```cpp run title="llenar_arreglo.cpp" stdin="150\n4\n7\n-2\n13\n5\n"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="llenar_arreglo.c" stdin="150\n4\n7\n-2\n13\n5\n"
+#include <stdio.h>
+#define MAX 100                               //> Tamaño máximo reservado (constante del compilador)
+int main(void)
 {
-    const int MAX = 100;                  //> Tamaño máximo reservado (constante)
-    int vec[MAX];                         //> Paso 3: arreglo con capacidad para MAX enteros
-    int TAM;                              //> Paso 2: aquí se guarda el tamaño pedido
+    int vec[MAX];                             //> Paso 3: arreglo con capacidad para MAX enteros
+    int TAM;                                  //> Paso 2: aquí se guarda el tamaño pedido
     do
     {
-        cout << "Tamanio del arreglo (1-" << MAX << "): ";   //> Paso 1: solicitar
-        cin >> TAM;
-    } while (TAM < 1 || TAM > MAX);       //> Validación: no exceder la capacidad
-    for (int i = 0; i < TAM; i++)         //> Paso 4: capturar uno a uno (índices 0..TAM−1)
+        printf("Tamanio del arreglo (1-%d): ", MAX);   //> Paso 1: solicitar
+        scanf("%d", &TAM);
+    } while (TAM < 1 || TAM > MAX);           //> Validación: no exceder la capacidad
+    for (int i = 0; i < TAM; i++)             //> Paso 4: capturar uno a uno (índices 0..TAM−1)
     {
-        cout << "Elemento " << i + 1 << ": ";
-        cin >> vec[i];
+        printf("Elemento %d: ", i + 1);
+        scanf("%d", &vec[i]);
     }
-    cout << "Contenido:";
-    for (int i = 0; i < TAM; i++)         //> Mostrar lo capturado
-        cout << " " << vec[i];
-    cout << "\n";
+    printf("Contenido:");
+    for (int i = 0; i < TAM; i++)             //> Mostrar lo capturado
+        printf(" %d", vec[i]);
+    printf("\n");
     return 0;
 }
 ```
@@ -448,7 +443,7 @@ rankdir=LR; nodesep=0.18; ranksep=0.3;
 @proc(p, "patrones: suma · promedio\nmáx/mín · contar")
 @proc(b, "búsqueda secuencial")
 @proc(o, "ordenamiento\nburbuja · selección")
-@sub(v, "std::vector · std::array\nfor de rango · .at()")
+@sub(v, "#define N · sizeof(a)/sizeof(a[0])\nVLA · -fsanitize=address")
 @hl(e, "¡fuera de rango =\ncomportamiento indefinido!")
 a -> i; a -> r; r -> p; r -> b; r -> o; a -> v [style=dashed]; i -> e [style=dashed];
 ```
@@ -459,53 +454,67 @@ a -> i; a -> r; r -> p; r -> b; r -> o; a -> v [style=dashed]; i -> e [style=das
 :::sintaxis | Tarjeta de sintaxis 2.1
 | Quiero… | Código |
 |---|---|
-| Declarar con tamaño constante | `const int N = 10; int a[N];` |
-| Declarar e inicializar | `int a[] = {3, 1, 4};` · `double b[N] = {};` |
-| Leer todos | `for (int i = 0; i < N; i++) cin >> a[i];` |
-| Mostrar todos | `for (int i = 0; i < N; i++) cout << a[i] << " ";` |
+| Declarar con tamaño constante | `#define N 10` … `int a[N];` |
+| Declarar e inicializar | `int a[] = {3, 1, 4};` · `double b[N] = {0};` |
+| Leer todos | `for (int i = 0; i < N; i++) scanf("%d", &a[i]);` |
+| Mostrar todos | `for (int i = 0; i < N; i++) printf("%d ", a[i]);` |
 | Sumar | `suma = 0; for (…) suma += a[i];` |
 | Posición del mayor | `pm = 0; for (int i = 1; i < N; i++) if (a[i] > a[pm]) pm = i;` |
 | Contar los que cumplen | `c = 0; for (…) if (cond(a[i])) c++;` |
 | Buscar | `pos = -1; for (…) if (a[i] == x) { pos = i; break; }` |
-| Intercambiar | `int aux = a[i]; a[i] = a[j]; a[j] = aux;` o `swap(a[i], a[j]);` |
+| Intercambiar | `int aux = a[i]; a[i] = a[j]; a[j] = aux;` |
 | Copiar un arreglo | `for (…) b[i] = a[i];` (no se puede `b = a;`) |
-| Aleatorio entre 1 y k | `rand() % k + 1` (con `srand(time(0));` una vez) |
-| Tamaño en ejecución | `vector<int> v(n);` · `v.size()` · `v.push_back(x);` |
+| Número de elementos | `sizeof(a) / sizeof(a[0])` (solo donde se declaró el arreglo) |
+| Aleatorio entre 1 y k | `rand() % k + 1` (con `srand(time(NULL));` una vez; `<stdlib.h>` y `<time.h>`) |
 :::
 
 :::checklist | Guía de preguntas de rutina 2.2
 <ul class="checks">
 <li>¿El ciclo va de <code>0</code> a <code>N − 1</code> (<code>i &lt; N</code>)?</li>
-<li>¿El tamaño del arreglo es una constante? ¿Validé que el tamaño pedido no exceda el máximo?</li>
+<li>¿El tamaño del arreglo es un <code>#define</code>? ¿Validé que el tamaño pedido no exceda el máximo?</li>
 <li>¿Inicialicé el arreglo o lo llené antes de leerlo?</li>
 <li>¿En <code>a[i + 1]</code> el índice puede llegar a <code>N</code>? (Entonces el ciclo debe terminar en <code>N − 1</code>.)</li>
 <li>Para el máximo/mínimo, ¿empecé con el primer elemento y no con 0?</li>
 <li>¿Uso una variable auxiliar al intercambiar?</li>
+<li>¿Puse <code>&amp;</code> en <code>scanf("%d", &amp;a[i])</code>?</li>
 <li>¿Muestro al usuario posiciones desde 1 aunque internamente empiecen en 0?</li>
 </ul>
 :::
 
 :::errores | Errores frecuentes 2.3 | Variabilidad, Autoexplicación
-**a) `<=` en lugar de `<`: lectura fuera del arreglo.** El sexto valor que se muestra es basura (o el programa falla):
+**a) `<=` en lugar de `<`: lectura fuera del arreglo.** Con `-Wall` solo, gcc no dice nada; si además optimizas con `-O2`, analiza el ciclo y avisa que la última vuelta es comportamiento indefinido:
 
-```cpp blank title="fuera_de_rango.cpp"
-int a[5] = {1, 2, 3, 4, 5};
-for (int i = 0; i <= 5; i++)   // i = 5 no existe
-    cout << a[i] << " ";
+```c warn flags="-O2"
+#include <stdio.h>
+int main(void)
+{
+    int a[5] = {1, 2, 3, 4, 5};
+    for (int i = 0; i <= 5; i++)
+        printf("%d ", a[i]);
+    printf("\n");
+    return 0;
+}
 ```
+*Corrección:* `i < 5`. El sexto valor que mostraría es basura (o el programa falla): `a[5]` no existe.
 
-**b) Tamaño no constante.** g++ lo acepta como extensión (VLA), pero **no es C++ estándar**: con `-pedantic` avisa y otros compiladores (Visual Studio) lo rechazan.
+**b) Tamaño con `const int`.** En C++ funciona; en C, `N` es una variable de solo lectura y el arreglo se vuelve de longitud variable, que no admite inicializador:
 
-```cpp blank title="vla.cpp"
-int n;
-cin >> n;
-int a[n];          // no estandar: usa const int MAX o vector<int> a(n);
+```c err
+#include <stdio.h>
+int main(void)
+{
+    const int N = 5;
+    int a[N] = {1, 2, 3, 4, 5};
+    printf("%d\n", a[0]);
+    return 0;
+}
 ```
+*Corrección:* `#define N 5`.
 
 **c) Asignar un arreglo completo.**
 
-```cpp err
-int main()
+```c err
+int main(void)
 {
     int a[3] = {1, 2, 3};
     int b[3];
@@ -513,7 +522,7 @@ int main()
     return 0;
 }
 ```
-*Corrección:* copiar elemento por elemento con un `for` (o usar `std::array`/`std::vector`, que sí se asignan).
+*Corrección:* copiar elemento por elemento con un `for`.
 
 **d) Máximo inicializado en 0** con datos negativos: `{-5, -2, -9}` daría 0 como máximo. Empieza con `a[0]`.
 
@@ -523,12 +532,11 @@ int main()
 :::isomorfo | Ejemplo isomórfico 2.4 · Invertir una lista | Variabilidad
 Mismo recorrido, otra tarea: intercambiar el primero con el último, el segundo con el penúltimo… hasta la mitad.
 
-```cpp run title="invertir.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="invertir.c"
+#include <stdio.h>
+#define N 7
+int main(void)
 {
-    const int N = 7;
     char letras[N] = {'R', 'E', 'C', 'O', 'N', 'O', 'C'};
     for (int i = 0; i < N / 2; i++)           //> Solo hasta la mitad: si llega al final, ¡vuelve a invertir!
     {
@@ -536,8 +544,8 @@ int main()
         letras[i] = letras[N - 1 - i];        //> El «espejo» de i es N − 1 − i
         letras[N - 1 - i] = aux;
     }
-    for (int i = 0; i < N; i++) cout << letras[i];
-    cout << "\n";
+    for (int i = 0; i < N; i++) putchar(letras[i]);
+    putchar('\n');
     return 0;
 }
 ```
@@ -550,29 +558,26 @@ int main()
 :::tarea A | T1. Temperaturas de la semana: ejemplo y gemelo | 25 min | Ejemplo resuelto, Variabilidad
 **Paso 1 · Estudia:**
 
-```cpp run title="semana.cpp" stdin="21 24.5 26 19 23 27.5 22\n"
-#include <iostream>
-#include <iomanip>
-using namespace std;
-int main()
+```c run title="semana.c" stdin="21 24.5 26 19 23 27.5 22\n"
+#include <stdio.h>
+#define DIAS 7
+int main(void)
 {
-    const int DIAS = 7;
-    const char* NOMBRES[DIAS] = {"Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"}; //> Arreglo de textos paralelo
+    const char *NOMBRES[DIAS] = {"Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"}; //> Arreglo de textos paralelo
     double t[DIAS], suma = 0;
     int pmax = 0;
     for (int i = 0; i < DIAS; i++)
     {
-        cin >> t[i];
+        scanf("%lf", &t[i]);
         suma += t[i];
         if (t[i] > t[pmax]) pmax = i;
     }
-    cout << fixed << setprecision(1);
-    cout << "Promedio: " << suma / DIAS << " C\n";
-    cout << "Dia mas caluroso: " << NOMBRES[pmax] << " (" << t[pmax] << " C)\n";
-    cout << "Dias sobre el promedio:";
+    printf("Promedio: %.1f C\n", suma / DIAS);
+    printf("Dia mas caluroso: %s (%.1f C)\n", NOMBRES[pmax], t[pmax]);
+    printf("Dias sobre el promedio:");
     for (int i = 0; i < DIAS; i++)                  //> Segundo recorrido: ya conocemos el promedio
-        if (t[i] > suma / DIAS) cout << " " << NOMBRES[i];
-    cout << "\n";
+        if (t[i] > suma / DIAS) printf(" %s", NOMBRES[i]);
+    printf("\n");
     return 0;
 }
 ```
@@ -580,27 +585,26 @@ int main()
 **Paso 2 · Gemelo.** Una tienda registra sus **ventas de 6 meses**. Lee las 6 cantidades y muestra el total, el promedio, el **peor** mes y los meses que estuvieron **por debajo** del promedio.
 
 :::solucion | T1
-```cpp run title="ventas.cpp" stdin="12000 9500 15800 8700 11000 13400\n"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="ventas.c" stdin="12000 9500 15800 8700 11000 13400\n"
+#include <stdio.h>
+#define M 6
+int main(void)
 {
-    const int M = 6;
-    const char* MES[M] = {"Ene", "Feb", "Mar", "Abr", "May", "Jun"};
+    const char *MES[M] = {"Ene", "Feb", "Mar", "Abr", "May", "Jun"};
     double v[M], total = 0;
     int pmin = 0;
     for (int i = 0; i < M; i++)
     {
-        cin >> v[i];
+        scanf("%lf", &v[i]);
         total += v[i];
         if (v[i] < v[pmin]) pmin = i;
     }
     double prom = total / M;
-    cout << "Total: " << total << "  Promedio: " << prom << "\n";
-    cout << "Peor mes: " << MES[pmin] << "\nBajo el promedio:";
+    printf("Total: %.2f  Promedio: %.2f\n", total, prom);
+    printf("Peor mes: %s\nBajo el promedio:", MES[pmin]);
     for (int i = 0; i < M; i++)
-        if (v[i] < prom) cout << " " << MES[i];
-    cout << "\n";
+        if (v[i] < prom) printf(" %s", MES[i]);
+    printf("\n");
     return 0;
 }
 ```
@@ -614,26 +618,25 @@ int main()
 
 {{lineas:3}}
 
-```cpp blank title="llenar_completar.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c blank title="llenar_completar.c"
+#include <stdio.h>
+#define MAX 100
+int main(void)
 {
-    const int MAX = 100;
     int vec[__1__];                           // 1: capacidad del arreglo
     int TAM;
     do {
-        cout << "Tamanio (1-100): ";
-        cin >> TAM;
+        printf("Tamanio (1-100): ");
+        scanf("%d", &TAM);
     } while (__2__);                          // 2: repetir mientras sea invalido
     for (int i = __3__; i __4__ TAM; i++)     // 3 y 4: recorrido de todas las casillas
     {
-        cout << "Elemento " << i + 1 << ": ";
-        cin >> __5__;                         // 5: casilla donde se guarda
+        printf("Elemento %d: ", i + 1);
+        scanf("%d", __5__);                   // 5: direccion de la casilla donde se guarda
     }
     for (int i = 0; i < TAM; i++)
-        cout << vec[i] << " ";
-    cout << "\n";
+        printf("%d ", vec[i]);
+    printf("\n");
     return 0;
 }
 ```
@@ -641,28 +644,27 @@ int main()
 :::solucion | T2
 Algoritmo: 1. Solicitar el tamaño del arreglo al usuario. 2. Guardar el valor en `TAM`. 3. Definir el vector del tamaño introducido (dentro de la capacidad `MAX`). 4. Capturar el contenido uno a uno hasta `TAM`.
 
-{{c:1}} `MAX` · {{c:2}} `TAM < 1 || TAM > MAX` · {{c:3}} `0` · {{c:4}} `<` · {{c:5}} `vec[i]`
+{{c:1}} `MAX` · {{c:2}} `TAM < 1 || TAM > MAX` · {{c:3}} `0` · {{c:4}} `<` · {{c:5}} `&vec[i]`
 
-```cpp run title="llenar_completar.cpp" stdin="0\n3\n8\n6\n4\n"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="llenar_completar.c" stdin="0\n3\n8\n6\n4\n"
+#include <stdio.h>
+#define MAX 100
+int main(void)
 {
-    const int MAX = 100;
     int vec[MAX];
     int TAM;
     do {
-        cout << "Tamanio (1-100): ";
-        cin >> TAM;
+        printf("Tamanio (1-100): ");
+        scanf("%d", &TAM);
     } while (TAM < 1 || TAM > MAX);
     for (int i = 0; i < TAM; i++)
     {
-        cout << "Elemento " << i + 1 << ": ";
-        cin >> vec[i];
+        printf("Elemento %d: ", i + 1);
+        scanf("%d", &vec[i]);
     }
     for (int i = 0; i < TAM; i++)
-        cout << vec[i] << " ";
-    cout << "\n";
+        printf("%d ", vec[i]);
+    printf("\n");
     return 0;
 }
 ```
@@ -672,26 +674,25 @@ int main()
 :::tarea AB | T3. ¿Dónde está y cuántas veces? (completa sin pistas) | 20 min | Problema por completar, Desvanecimiento de guía
 **Contexto.** En una rifa se registraron 10 boletos ganadores (pueden repetirse). Busca un número y muestra **todas** las posiciones donde aparece y cuántas veces.
 
-```cpp blank title="rifa.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c blank title="rifa.c"
+#include <stdio.h>
+#define N 10
+int main(void)
 {
-    const int N = 10;
     int boletos[N] = {45, 12, 7, 45, 90, 3, 45, 18, 7, 61};
     int x, veces = 0;
-    cin >> x;
-    cout << "Posiciones:";
+    scanf("%d", &x);
+    printf("Posiciones:");
     for (__1__; __2__; __3__)
     {
         if (__4__)
         {
-            cout << " " << __5__;
+            printf(" %d", __5__);
             __6__;
         }
     }
-    if (veces == 0) cout << " ninguna";
-    cout << "\nAparece " << veces << " veces\n";
+    if (veces == 0) printf(" ninguna");
+    printf("\nAparece %d veces\n", veces);
     return 0;
 }
 ```
@@ -699,26 +700,25 @@ int main()
 :::solucion | T3
 {{c:1}} `int i = 0` · {{c:2}} `i < N` · {{c:3}} `i++` · {{c:4}} `boletos[i] == x` · {{c:5}} `i + 1` (posición para el usuario) · {{c:6}} `veces++`. No hay `break`: se necesitan **todas** las apariciones.
 
-```cpp run title="rifa.cpp" runs="45|7|100"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="rifa.c" runs="45|7|100"
+#include <stdio.h>
+#define N 10
+int main(void)
 {
-    const int N = 10;
     int boletos[N] = {45, 12, 7, 45, 90, 3, 45, 18, 7, 61};
     int x, veces = 0;
-    cin >> x;
-    cout << "Posiciones:";
+    scanf("%d", &x);
+    printf("Posiciones:");
     for (int i = 0; i < N; i++)
     {
         if (boletos[i] == x)
         {
-            cout << " " << i + 1;
+            printf(" %d", i + 1);
             veces++;
         }
     }
-    if (veces == 0) cout << " ninguna";
-    cout << "\nAparece " << veces << " veces\n";
+    if (veces == 0) printf(" ninguna");
+    printf("\nAparece %d veces\n", veces);
     return 0;
 }
 ```
@@ -729,63 +729,58 @@ int main()
 **Contexto.** Lee el número de alumnos `n` (máximo 40, valídalo) y sus calificaciones (0 a 10, valídalas). Muestra: promedio, la calificación más alta y la más baja, cuántos aprobaron (≥ 6), cuántos están **por encima del promedio** y la lista de calificaciones ordenada de mayor a menor (adapta la burbuja).
 
 :::solucion | T4
-```cpp run title="grupo.cpp" stdin="6\n8.5 5 9.5 7 6 10\n"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="grupo.c" stdin="6\n8.5 5 9.5 7 6 10\n"
+#include <stdio.h>
+#define MAX 40
+int main(void)
 {
-    const int MAX = 40;
     double c[MAX], suma = 0;
     int n;
-    do { cout << "Alumnos (1-40): "; cin >> n; } while (n < 1 || n > MAX);
+    do { printf("Alumnos (1-40): "); scanf("%d", &n); } while (n < 1 || n > MAX);
     for (int i = 0; i < n; i++)
     {
-        do { cin >> c[i]; } while (c[i] < 0 || c[i] > 10);
+        do { scanf("%lf", &c[i]); } while (c[i] < 0 || c[i] > 10);
         suma += c[i];
     }
     double prom = suma / n;
-    int aprobados = 0, arriba = 0, pmax = 0, pmin = 0;
+    int aprobados = 0, arriba = 0;
     for (int i = 0; i < n; i++)
     {
         if (c[i] >= 6) aprobados++;
         if (c[i] > prom) arriba++;
-        if (c[i] > c[pmax]) pmax = i;
-        if (c[i] < c[pmin]) pmin = i;
     }
     for (int p = 1; p < n; p++)                 // burbuja descendente: cambia > por <
         for (int j = 0; j < n - p; j++)
             if (c[j] < c[j + 1]) { double a = c[j]; c[j] = c[j + 1]; c[j + 1] = a; }
-    cout << "Promedio " << prom << " | max " << c[0] << " | min " << c[n - 1]
-         << " | aprobados " << aprobados << " | sobre el promedio " << arriba << "\nOrdenadas:";
-    for (int i = 0; i < n; i++) cout << " " << c[i];
-    cout << "\n";
+    printf("Promedio %.2f | max %.1f | min %.1f | aprobados %d | sobre el promedio %d\nOrdenadas:",
+           prom, c[0], c[n - 1], aprobados, arriba);
+    for (int i = 0; i < n; i++) printf(" %.1f", c[i]);
+    printf("\n");
     return 0;
 }
 ```
-Después de ordenar de mayor a menor, el máximo queda en `c[0]` y el mínimo en `c[n − 1]` (las posiciones `pmax` y `pmin` se calcularon antes de ordenar).
+Después de ordenar de mayor a menor, el máximo queda en `c[0]` y el mínimo en `c[n − 1]`: ya no hace falta buscarlos con un recorrido aparte.
 :::
 :::
 
 :::tarea A | T5. Ordena como quieras (solución libre, tesis §6.1.1) | 25 min | Solución libre
-**Contexto.** «Dado un arreglo llamado `enteros`, cuyo contenido es 5, 6, 2, 3, 8, 1, 7, 4: utilizando **cualquier** algoritmo de ordenación, ordena el arreglo y muestra el resultado en pantalla». **Reto ampliado:** genera **todas las soluciones que te sea posible** (burbuja, selección, inserción, contando apariciones, usando `std::sort`…).
+**Contexto.** «Dado un arreglo llamado `enteros`, cuyo contenido es 5, 6, 2, 3, 8, 1, 7, 4: utilizando **cualquier** algoritmo de ordenación, ordena el arreglo y muestra el resultado en pantalla». **Reto ampliado:** genera **todas las soluciones que te sea posible** (burbuja, selección, inserción, contando apariciones…).
 
 :::solucion | T5
 Tres soluciones distintas (todas producen `1 2 3 4 5 6 7 8`):
 
-```cpp run title="ordenar_libre.cpp"
-#include <iostream>
-#include <algorithm>
-using namespace std;
-int main()
+```c run title="ordenar_libre.c"
+#include <stdio.h>
+#define N 8
+int main(void)
 {
-    const int N = 8;
     int a[N] = {5, 6, 2, 3, 8, 1, 7, 4};
-    int b[N], c[N];
-    for (int i = 0; i < N; i++) { b[i] = a[i]; c[i] = a[i]; }
+    int b[N];
+    for (int i = 0; i < N; i++) b[i] = a[i];
     // 1) Burbuja
     for (int p = 1; p < N; p++)
         for (int j = 0; j < N - p; j++)
-            if (a[j] > a[j + 1]) swap(a[j], a[j + 1]);
+            if (a[j] > a[j + 1]) { int aux = a[j]; a[j] = a[j + 1]; a[j + 1] = aux; }
     // 2) Insercion: cada elemento se inserta en su lugar entre los ya ordenados
     for (int i = 1; i < N; i++)
     {
@@ -793,30 +788,32 @@ int main()
         while (j >= 0 && b[j] > x) { b[j + 1] = b[j]; j--; }
         b[j + 1] = x;
     }
-    // 3) Biblioteca estandar
-    sort(c, c + N);
-    for (int i = 0; i < N; i++) cout << a[i] << " ";
-    cout << "| ";
-    for (int i = 0; i < N; i++) cout << b[i] << " ";
-    cout << "| ";
-    for (int i = 0; i < N; i++) cout << c[i] << " ";
-    cout << "\n";
+    // 3) Conteo: como los valores van de 1 a 8, se cuenta cuantas veces aparece cada uno
+    int cuenta[9] = {0};
+    for (int i = 0; i < N; i++) cuenta[b[i]]++;
+    for (int i = 0; i < N; i++) printf("%d ", a[i]);
+    printf("| ");
+    for (int i = 0; i < N; i++) printf("%d ", b[i]);
+    printf("| ");
+    for (int v = 1; v <= 8; v++)
+        for (int k = 0; k < cuenta[v]; k++) printf("%d ", v);
+    printf("\n");
     return 0;
 }
 ```
-La selección aparece en la T7.
+La selección aparece en la T7. La biblioteca estándar de C también ofrece `qsort` (en `<stdlib.h>`), que verás cuando conozcas las funciones.
 :::
 :::
 
 :::tarea B | T6. ¿Puedes ayudar a tus compañeros? (autoexplicación, tesis §6.1.6) | 20 min | Autoexplicación, Reversión de la experiencia
 **Contexto.** La maestra envió un programa de ejemplo sobre el método de la burbuja, pero algunos de tus compañeros no entendieron el tema y tampoco el ejemplo. **Revisa el código y, en el espacio de abajo, explica con tus palabras a tus compañeros cada bloque** (A, B, C y D). Incluye por qué el ciclo interno llega a `N - 1 - p` y para qué sirve la variable `hubo`.
 
-```cpp run title="burbuja_mejorada.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="burbuja_mejorada.c"
+#include <stdio.h>
+#include <stdbool.h>
+#define N 6
+int main(void)
 {
-    const int N = 6;
     int v[N] = {9, 4, 7, 1, 8, 2};
     // Bloque A
     for (int p = 0; p < N - 1; p++)
@@ -837,8 +834,8 @@ int main()
         // Bloque D
         if (!hubo) break;
     }
-    for (int x : v) cout << x << " ";
-    cout << "\n";
+    for (int i = 0; i < N; i++) printf("%d ", v[i]);
+    printf("\n");
     return 0;
 }
 ```
@@ -856,7 +853,7 @@ int main()
 A partir de esta descripción y del arreglo `{29, 10, 14, 37, 13}`:
 
 1. **Imagina** el proceso y **represéntalo a mano** (dibujos y texto) iteración por iteración hasta ordenar el arreglo.
-2. Genera el pseudocódigo en PSeInt y el código en C++ de tu representación.
+2. Genera el pseudocódigo en PSeInt y el código en C de tu representación.
 3. Cuenta las comparaciones y los intercambios y compáralos con la burbuja para el mismo arreglo.
 
 :::solucion | T7
@@ -870,12 +867,11 @@ rows:
   - {label: "Ordenado", vals: [10, 13, 14, 29, 37], ok: [0, 1, 2, 3, 4]}
 ```
 
-```cpp run title="seleccion.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="seleccion.c"
+#include <stdio.h>
+#define N 5
+int main(void)
 {
-    const int N = 5;
     int a[N] = {29, 10, 14, 37, 13};
     int comparaciones = 0, intercambios = 0;
     for (int i = 0; i < N - 1; i++)
@@ -892,8 +888,8 @@ int main()
             intercambios++;
         }
     }
-    for (int x : a) cout << x << " ";
-    cout << "\nComparaciones: " << comparaciones << "  Intercambios: " << intercambios << "\n";
+    for (int i = 0; i < N; i++) printf("%d ", a[i]);
+    printf("\nComparaciones: %d  Intercambios: %d\n", comparaciones, intercambios);
     return 0;
 }
 ```
@@ -904,43 +900,42 @@ La selección siempre hace `N(N−1)/2 = 10` comparaciones, pero **pocos interca
 :::tarea AB | T8. Votación escolar (reto colaborativo) | 40 min | Memoria colectiva de trabajo, Variabilidad
 :::colab | Organización
 Equipos de 4, niveles mezclados. Hay 5 planillas (1 a 5). Se capturan votos (números del 1 al 5) hasta que se escribe 0; los votos fuera de rango cuentan como **nulos**.
-- **Integrante 1:** arreglo contador `int votos[5] = {}` y la captura con centinela (`votos[v - 1]++`).
+- **Integrante 1:** arreglo contador `int votos[P] = {0};` y la captura con centinela (`votos[v - 1]++`).
 - **Integrante 2:** total de votos válidos y nulos.
 - **Integrante 3:** porcentaje de cada planilla con una barra de asteriscos (un `*` por cada 5 %).
 - **Integrante 4:** la planilla ganadora y la detección de **empates** en el primer lugar.
 :::
 
 :::solucion | T8
-```cpp run title="votacion.cpp" stdin="3 1 3 5 2 3 9 1 3 5 1 0\n"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="votacion.c" stdin="3 1 3 5 2 3 9 1 3 5 1 0\n"
+#include <stdio.h>
+#define P 5
+int main(void)
 {
-    const int P = 5;
-    int votos[P] = {};
+    int votos[P] = {0};
     int v, nulos = 0, validos = 0;
-    cin >> v;
+    scanf("%d", &v);
     while (v != 0)
     {
         if (v >= 1 && v <= P) { votos[v - 1]++; validos++; }
         else nulos++;
-        cin >> v;
+        scanf("%d", &v);
     }
     int ganador = 0;
     for (int i = 0; i < P; i++)
     {
         double pct = validos > 0 ? 100.0 * votos[i] / validos : 0;
-        cout << "Planilla " << i + 1 << ": " << votos[i] << " (" << pct << "%) ";
-        for (int k = 0; k < static_cast<int>(pct / 5); k++) cout << "*";
-        cout << "\n";
+        printf("Planilla %d: %d (%.1f%%) ", i + 1, votos[i], pct);
+        for (int k = 0; k < (int)(pct / 5); k++) putchar('*');
+        putchar('\n');
         if (votos[i] > votos[ganador]) ganador = i;
     }
     int empatados = 0;
     for (int i = 0; i < P; i++)
         if (votos[i] == votos[ganador]) empatados++;
-    cout << "Validos: " << validos << "  Nulos: " << nulos << "\n";
-    if (empatados > 1) cout << "Empate en el primer lugar\n";
-    else cout << "Gana la planilla " << ganador + 1 << "\n";
+    printf("Validos: %d  Nulos: %d\n", validos, nulos);
+    if (empatados > 1) printf("Empate en el primer lugar\n");
+    else printf("Gana la planilla %d\n", ganador + 1);
     return 0;
 }
 ```
@@ -980,12 +975,11 @@ Problemas: texto largo con información no esencial (nombre en inglés, «algori
 
 **Segmento 4 — Cerrar y probar varias rondas.** {{como}} Pongo `j[0] = ultimo` y ejecuto la rotación tres veces dentro de otro ciclo. {{porque}} Si después de 5 rondas vuelvo al orden original, sé que la rotación es correcta.
 
-```cpp run title="rotar.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="rotar.c"
+#include <stdio.h>
+#define N 5
+int main(void)
 {
-    const int N = 5;
     char j[N] = {'A', 'B', 'C', 'D', 'E'};
     for (int ronda = 1; ronda <= 3; ronda++)
     {
@@ -993,9 +987,9 @@ int main()
         for (int i = N - 1; i > 0; i--)
             j[i] = j[i - 1];
         j[0] = ultimo;
-        cout << "Ronda " << ronda << ": ";
-        for (char c : j) cout << c << " ";
-        cout << "\n";
+        printf("Ronda %d: ", ronda);
+        for (int i = 0; i < N; i++) printf("%c ", j[i]);
+        printf("\n");
     }
     return 0;
 }
@@ -1014,16 +1008,15 @@ int main()
 7. En la burbuja, ¿qué ocurre al terminar la primera pasada?
 8. ¿Para qué sirve la variable auxiliar en un intercambio?
 9. ¿Qué hace `rand() % 10 + 1`?
-10. Menciona una ventaja de `std::vector` sobre un arreglo de C.
+10. ¿Por qué en C se escribe `#define N 10` y no `const int N = 10;` para declarar `int a[N] = {0};`?
 :::
 
 :::compr | 5.2 Comprehension test · conocimiento procedimental
 **P1. Predice la salida:**
 
-```cpp check title="p1.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c check title="p1.c"
+#include <stdio.h>
+int main(void)
 {
     int a[6] = {4, 9, 2, 9, 5, 1};
     int x = 0, y = 0;
@@ -1032,7 +1025,7 @@ int main()
         if (a[i] > a[x]) x = i;
         if (a[i] % 2 == 1) y += a[i];
     }
-    cout << x << " " << a[x] << " " << y << "\n";
+    printf("%d %d %d\n", x, a[x], y);
     return 0;
 }
 ```
@@ -1056,16 +1049,15 @@ int main()
 :::
 
 :::solucion | Evaluación 5.1 (recall)
-1 `a[0]` y `a[11]` · 2 `3 4 0 0 0` · 3 80 · 4 Porque los arreglos de C no se pueden asignar completos; hay que copiar elemento por elemento · 5 Falso: compila; es comportamiento indefinido en ejecución · 6 −1 · 7 El mayor queda en la última posición · 8 Guardar temporalmente uno de los valores para no perderlo · 9 Un número pseudoaleatorio entre 1 y 10 · 10 Su tamaño puede definirse en ejecución y crecer (`push_back`), conoce su tamaño (`.size()`) y se puede copiar con `=`.
+1 `a[0]` y `a[11]` · 2 `3 4 0 0 0` · 3 80 · 4 Porque los arreglos de C no se pueden asignar completos; hay que copiar elemento por elemento · 5 Falso: compila; es comportamiento indefinido en ejecución · 6 −1 · 7 El mayor queda en la última posición · 8 Guardar temporalmente uno de los valores para no perderlo · 9 Un número pseudoaleatorio entre 1 y 10 · 10 Porque en C una variable `const` no es una constante del compilador: `int a[N]` sería un arreglo de longitud variable, que no admite inicializador; `#define` sustituye `N` por `10` antes de compilar.
 :::
 
 :::solucion | Evaluación 5.2 (comprehension)
 **P1.** `x` queda en la primera posición del máximo (1, valor 9, porque `>` no reemplaza al empatado de la posición 3); `y` suma los impares 9 + 9 + 5 + 1 = 24.
 
-```cpp run title="p1.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="p1.c"
+#include <stdio.h>
+int main(void)
 {
     int a[6] = {4, 9, 2, 9, 5, 1};
     int x = 0, y = 0;
@@ -1074,7 +1066,7 @@ int main()
         if (a[i] > a[x]) x = i;
         if (a[i] % 2 == 1) y += a[i];
     }
-    cout << x << " " << a[x] << " " << y << "\n";
+    printf("%d %d %d\n", x, a[x], y);
     return 0;
 }
 ```
@@ -1085,23 +1077,22 @@ int main()
 
 **P4.**
 
-```cpp run title="p4.cpp" stdin="3 8 5 12 7 6 1 10 4 9\n"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="p4.c" stdin="3 8 5 12 7 6 1 10 4 9\n"
+#include <stdio.h>
+#define N 10
+int main(void)
 {
-    const int N = 10;
     int a[N], pares[N], np = 0;
     for (int i = 0; i < N; i++)
     {
-        cin >> a[i];
+        scanf("%d", &a[i]);
         if (a[i] % 2 == 0) pares[np++] = a[i];   // np cuenta cuantos pares hay
     }
-    cout << "Original:";
-    for (int i = 0; i < N; i++) cout << " " << a[i];
-    cout << "\nPares:";
-    for (int i = 0; i < np; i++) cout << " " << pares[i];
-    cout << "\n";
+    printf("Original:");
+    for (int i = 0; i < N; i++) printf(" %d", a[i]);
+    printf("\nPares:");
+    for (int i = 0; i < np; i++) printf(" %d", pares[i]);
+    printf("\n");
     return 0;
 }
 ```

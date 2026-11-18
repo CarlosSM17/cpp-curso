@@ -7,8 +7,9 @@ lema: "Un ciclo dentro de otro: como las manecillas de un reloj, el de adentro d
 duracion: "4 h · 2 sesiones de 2 h"
 previos: "Tema 06 (while, do-while, for, contador y acumulador). Este tema aplica el efecto de elementos aislados: primero ciclos simples, ahora ciclos anidados."
 fuentes:
-  - "Betancourt Uscátegui, J. F. y Polanco Guzmán, I. Y. (2021). *115 ejercicios resueltos de programación C++*. Cap. 5: Estructuras repetitivas, ejercicios con ciclos anidados (§5.4)."
-  - "Lospinoso, J. (2019). *C++ Crash Course*. Cap. 8: Iteration Statements y Jump Statements (break, continue, goto)."
+  - "Kernighan, B. W. y Ritchie, D. M. (1988). *The C Programming Language* (2.ª ed.). Prentice Hall. Cap. 3: §3.5 Loops—While and For, §3.7 Break and Continue, §3.8 Goto and Labels."
+  - "King, K. N. (2008). *C Programming: A Modern Approach* (2.ª ed.). W. W. Norton. Cap. 6: §6.3 The for Statement, §6.4 Exiting from a Loop."
+  - "Seacord, R. C. (2020). *Effective C*. No Starch Press. Cap. 5 «Control Flow»: Iteration Statements, Jump Statements."
   - "Sandoval Medina, C. (2026). Tesis doctoral, §6.1.9 (variabilidad: cuadrado de n×n con `*`) y §6.1.11 (elementos aislados: ciclos → ciclos anidados)."
 objetivos:
   A:
@@ -31,7 +32,7 @@ efectos:
     - ["Variabilidad", "Catálogo de patrones (rectángulo, triángulos, pirámide) con el mismo esquema."]
     - ["Interactividad de elementos", "Plantilla «una fila = un ciclo interno + salto de línea» que reduce los elementos a coordinar."]
   tareas:
-    - ["Ejemplo resuelto", "T1: rectángulo resuelto + gemelo (asientos del cine)."]
+    - ["Ejemplo resuelto", "T1: rectángulo resuelto + gemelo (asientos del estadio)."]
     - ["Problema por completar", "T2 (triángulo de números, con pistas) y T3 (tabla completa, sin pistas)."]
     - ["Desvanecimiento de guía", "T1 → T4."]
     - ["Solución libre", "T5: todas las figuras posibles con n = 4."]
@@ -57,7 +58,7 @@ diferenciada:
     B: "Terminal; medición de iteraciones con un contador."
 plan:
   - ["Apertura", "Soporte", "Reloj humano; pregunta: «¿cuántas veces se mueve el minutero en 3 horas?».", "15 min"]
-  - ["Desarrollo", "Soporte", "Conceptos 1–7 y ejemplo resuelto del cuadrado.", "50 min"]
+  - ["Desarrollo", "Soporte", "Conceptos 1–8 y ejemplo resuelto del cuadrado.", "50 min"]
   - ["Práctica guiada", "Tareas + procedimental", "Ruta A: T1 → T3. Ruta B: T5, T6, T7.", "55 min"]
   - ["Colaborativa", "Tareas", "T8 batalla naval.", "35 min"]
   - ["Autónoma", "Tareas", "T4 primos (todos).", "25 min"]
@@ -72,7 +73,7 @@ glosario:
   - ["bandera", "flag", "Variable `bool` que avisa a otros ciclos que deben terminar."]
   - ["patrón", "pattern", "Figura o tabla regular que se genera con ciclos."]
   - ["número primo", "prime number", "Entero mayor que 1 cuyos únicos divisores son 1 y él mismo."]
-  - ["ancho de campo", "field width (`setw`)", "Número de columnas que ocupa un dato al mostrarse."]
+  - ["ancho de campo", "field width", "Número de columnas que ocupa un dato al mostrarse: `%4d` en `printf`."]
 ---
 
 # 1. Información de soporte {.soporte}
@@ -96,14 +97,13 @@ Las pantallas son cuadrículas de píxeles (filas × columnas); un tablero de aj
 :::concepto | 1 | Punto de partida: un renglón (lo que ya sabes) | Elementos aislados
 Del Tema 06 ya dominas este ciclo simple, que dibuja **un renglón** de 5 asteriscos:
 
-```cpp run
-#include <iostream>
-using namespace std;
-int main()
+```c run
+#include <stdio.h>
+int main(void)
 {
     for (int j = 1; j <= 5; j++)
-        cout << "*";
-    cout << "\n";
+        printf("*");
+    printf("\n");
     return 0;
 }
 ```
@@ -115,16 +115,15 @@ Si quieres **3 renglones** (aquí de 4 asteriscos cada uno), repites… ¡el cic
 <div class="cols">
 <div>
 
-```cpp run title="rectangulo.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="rectangulo.c"
+#include <stdio.h>
+int main(void)
 {
     for (int i = 1; i <= 3; i++)        //> Externo: una vuelta por FILA
     {
         for (int j = 1; j <= 4; j++)    //> Interno: una vuelta por COLUMNA
-            cout << "*";
-        cout << "\n";                   //> Al terminar la fila: salto de línea
+            printf("*");
+        printf("\n");                   //> Al terminar la fila: salto de línea
     }
     return 0;
 }
@@ -148,19 +147,18 @@ caption: "Fila i = 2 (índice 1): j recorre 1..4"
 :::
 
 :::concepto | 3 | La traza de un ciclo anidado y el número de vueltas | Elementos aislados, Atención dividida
-```cpp run title="pares_ij.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="pares_ij.c"
+#include <stdio.h>
+int main(void)
 {
     int vueltas = 0;
     for (int i = 1; i <= 2; i++)
         for (int j = 1; j <= 3; j++)
         {
-            cout << "(" << i << "," << j << ") ";   //> Observa: j se reinicia en 1 para cada i
+            printf("(%d,%d) ", i, j);       //> Observa: j se reinicia en 1 para cada i
             vueltas++;
         }
-    cout << "\nCuerpo interno ejecutado " << vueltas << " veces\n";
+    printf("\nCuerpo interno ejecutado %d veces\n", vueltas);
     return 0;
 }
 ```
@@ -184,18 +182,17 @@ Dos estudiantes al frente. «Horas» sostiene un letrero con `i` y avanza de 1 a
 :::concepto | 4 | Cuando el interno depende del externo: triángulos | Elementos aislados, Atención dividida
 Si el límite del ciclo interno **usa `i`**, cada fila tiene una longitud distinta:
 
-```cpp run title="triangulo.cpp" stdin="5\n"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="triangulo.c" stdin="5\n"
+#include <stdio.h>
+int main(void)
 {
     int n;
-    cin >> n;
+    scanf("%d", &n);
     for (int i = 1; i <= n; i++)
     {
         for (int j = 1; j <= i; j++)    //> La fila i tiene i asteriscos
-            cout << "* ";
-        cout << "\n";
+            printf("* ");
+        printf("\n");
     }
     return 0;
 }
@@ -215,20 +212,18 @@ int main()
 **Método para cualquier figura:** dibújala en papel cuadriculado y llena una tabla con «fila → cuántos espacios → cuántos símbolos». La fórmula de cada columna de esa tabla es el límite de un ciclo interno.
 :::
 
-:::concepto | 5 | Tablas con formato: `setw` | Elementos aislados
-Para que las columnas se alineen, `setw(n)` (de `<iomanip>`) reserva `n` espacios para el siguiente dato:
+:::concepto | 5 | Tablas con formato: el ancho de campo | Elementos aislados
+Para que las columnas se alineen, el especificador `%4d` (Tema 03) reserva 4 espacios para cada número, alineado a la derecha:
 
-```cpp run title="tabla_5x5.cpp"
-#include <iostream>
-#include <iomanip>
-using namespace std;
-int main()
+```c run title="tabla_5x5.c"
+#include <stdio.h>
+int main(void)
 {
     for (int i = 1; i <= 5; i++)
     {
         for (int j = 1; j <= 5; j++)
-            cout << setw(4) << i * j;     //> Cada producto ocupa 4 columnas
-        cout << "\n";
+            printf("%4d", i * j);     //> Cada producto ocupa 4 columnas
+        printf("\n");
     }
     return 0;
 }
@@ -238,19 +233,18 @@ int main()
 :::concepto | 6 | `break`: salir del ciclo antes de tiempo | Elementos aislados, Atención dividida
 `break` termina **inmediatamente** el ciclo que lo contiene. Útil cuando ya encontraste lo que buscabas:
 
-```cpp run title="primer_multiplo.cpp" stdin="37 7\n"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="primer_multiplo.c" stdin="37 7\n"
+#include <stdio.h>
+int main(void)
 {
     int desde, m;
-    cout << "Desde y multiplo de: ";
-    cin >> desde >> m;
+    printf("Desde y multiplo de: ");
+    scanf("%d %d", &desde, &m);
     for (int x = desde; x <= desde + 100; x++)
     {
         if (x % m == 0)
         {
-            cout << "Primer multiplo de " << m << " desde " << desde << ": " << x << "\n";
+            printf("Primer multiplo de %d desde %d: %d\n", m, desde, x);
             break;                 //> Ya lo encontramos: no tiene caso seguir
         }
     }
@@ -262,18 +256,17 @@ int main()
 :::concepto | 7 | `continue`: saltar a la siguiente vuelta | Elementos aislados
 `continue` **salta el resto del cuerpo** y pasa a la siguiente iteración (en un `for`, primero ejecuta la actualización):
 
-```cpp run title="sin_multiplos_3.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="sin_multiplos_3.c"
+#include <stdio.h>
+int main(void)
 {
     for (int x = 1; x <= 12; x++)
     {
         if (x % 3 == 0)
             continue;              //> Los múltiplos de 3 no se muestran
-        cout << x << " ";
+        printf("%d ", x);
     }
-    cout << "\n";
+    printf("\n");
     return 0;
 }
 ```
@@ -282,17 +275,17 @@ int main()
 :::concepto | 8 | Ruta B · `break` solo sale de UN ciclo: banderas | Elementos aislados, Reversión de la experiencia
 En ciclos anidados, `break` termina **solo el ciclo más interno**. Para salir de ambos se usa una **bandera**:
 
-```cpp run title="busca_par.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="busca_par.c"
+#include <stdio.h>
+#include <stdbool.h>
+int main(void)
 {
     bool encontrado = false;                           //> Bandera
     for (int i = 1; i <= 9 && !encontrado; i++)        //> El externo también la consulta
         for (int j = 1; j <= 9; j++)
             if (i * j == 24 && i + j == 10)
             {
-                cout << "i = " << i << ", j = " << j << "\n";
+                printf("i = %d, j = %d\n", i, j);
                 encontrado = true;
                 break;                                 //> Sale del interno; la bandera detiene al externo
             }
@@ -300,7 +293,7 @@ int main()
 }
 ```
 
-El *C++ Crash Course* (cap. 8) muestra también `goto`, pero advierte que vuelve el flujo difícil de seguir; en programación estructurada se evita. Otra salida limpia es poner los ciclos en una función y usar `return` (Tema 10).
+C también tiene `goto`. Kernighan y Ritchie (§3.8) muestran que puede salir de ciclos anidados de un salto, pero advierten que casi nunca es necesario y que vuelve el código difícil de entender; en programación estructurada se evita. Otra salida limpia es poner los ciclos en una función y usar `return` (Tema 10).
 :::
 
 ## 1.2 Ejemplo resuelto: el cuadrado de n × n
@@ -351,21 +344,20 @@ cj -> nl [label=" No"]; nl -> ii; ii -> ci [constraint=false]; ci -> f [label=" 
 </div>
 </div>
 
-**C. Código en C++**
+**C. Código en C**
 
-```cpp run title="cuadrado.cpp" runs="3|5"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="cuadrado.c" runs="3|5"
+#include <stdio.h>
+int main(void)
 {
     int n;
-    cout << "Tamanio: ";
-    cin >> n;
+    printf("Tamanio: ");
+    scanf("%d", &n);
     for (int i = 1; i <= n; i++)          //> n filas
     {
         for (int j = 1; j <= n; j++)      //> n columnas en cada fila
-            cout << "* ";
-        cout << "\n";                     //> fin de la fila
+            printf("* ");
+        printf("\n");                     //> fin de la fila
     }
     return 0;
 }
@@ -392,7 +384,7 @@ a -> e -> n; n -> c; n -> t; a -> b; a -> k; b -> f [style=dashed];
 # 2. Información procedimental {.procedimental}
 
 :::sintaxis | Tarjeta de sintaxis 2.1 · Catálogo de patrones (n = 4) | Variabilidad, Interactividad de elementos
-**Plantilla:** `for (filas) { for (espacios) cout << " "; for (símbolos) cout << "*"; cout << "\n"; }`
+**Plantilla:** `for (filas) { for (espacios) putchar(' '); for (símbolos) putchar('*'); putchar('\n'); }` — `putchar(c)` muestra **un solo carácter** (equivale a `printf("%c", c)`).
 
 | Figura | Espacios en la fila `i` | Símbolos en la fila `i` |
 |---|---|---|
@@ -402,23 +394,22 @@ a -> e -> n; n -> c; n -> t; a -> b; a -> k; b -> f [style=dashed];
 | Triángulo alineado a la derecha | `n - i` | `i` |
 | Pirámide centrada | `n - i` | `2 * i - 1` |
 
-```cpp run title="patrones.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="patrones.c"
+#include <stdio.h>
+int main(void)
 {
     int n = 4;
     for (int i = 1; i <= n; i++)                         // alineado a la derecha
     {
-        for (int e = 1; e <= n - i; e++) cout << " ";
-        for (int s = 1; s <= i; s++) cout << "*";
-        cout << "\n";
+        for (int e = 1; e <= n - i; e++) putchar(' ');
+        for (int s = 1; s <= i; s++) putchar('*');
+        putchar('\n');
     }
     for (int i = 1; i <= n; i++)                         // piramide centrada
     {
-        for (int e = 1; e <= n - i; e++) cout << " ";
-        for (int s = 1; s <= 2 * i - 1; s++) cout << "*";
-        cout << "\n";
+        for (int e = 1; e <= n - i; e++) putchar(' ');
+        for (int s = 1; s <= 2 * i - 1; s++) putchar('*');
+        putchar('\n');
     }
     return 0;
 }
@@ -445,17 +436,16 @@ int main()
 :::errores | Errores frecuentes 2.3 | Variabilidad, Autoexplicación
 **a) La misma variable en ambos ciclos.** ¿Por qué solo aparece una fila?
 
-```cpp run
-#include <iostream>
-using namespace std;
-int main()
+```c run
+#include <stdio.h>
+int main(void)
 {
     int i;
     for (i = 1; i <= 3; i++)
     {
         for (i = 1; i <= 4; i++)    //> El interno deja i en 5...
-            cout << "*";
-        cout << "\n";               //> ...y el externo termina porque 5 > 3
+            printf("*");
+        printf("\n");               //> ...y el externo termina porque 5 > 3
     }
     return 0;
 }
@@ -464,14 +454,13 @@ int main()
 
 **b) Salto de línea dentro del ciclo interno.** Cada asterisco queda en su propio renglón:
 
-```cpp run
-#include <iostream>
-using namespace std;
-int main()
+```c run
+#include <stdio.h>
+int main(void)
 {
     for (int i = 1; i <= 2; i++)
         for (int j = 1; j <= 3; j++)
-            cout << "*" << "\n";        //> El \n debería ir fuera del for de j
+            printf("*\n");              //> El \n debería ir fuera del for de j
     return 0;
 }
 ```
@@ -484,16 +473,15 @@ int main()
 :::isomorfo | Ejemplo isomórfico 2.4 · Mapa de asientos | Variabilidad
 El mismo esquema filas × columnas, ahora con letras para las filas (`char` también se puede incrementar):
 
-```cpp run title="asientos.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="asientos.c"
+#include <stdio.h>
+int main(void)
 {
     for (char fila = 'A'; fila <= 'C'; fila++)     //> 'A', 'B', 'C' (códigos 65, 66, 67)
     {
         for (int asiento = 1; asiento <= 6; asiento++)
-            cout << fila << asiento << " ";
-        cout << "\n";
+            printf("%c%d ", fila, asiento);
+        printf("\n");
     }
     return 0;
 }
@@ -507,20 +495,19 @@ int main()
 :::tarea A | T1. El rectángulo de símbolos: ejemplo y gemelo | 20 min | Ejemplo resuelto, Variabilidad
 **Paso 1 · Estudia** cómo se generaliza el cuadrado del ejemplo a un rectángulo de `f` filas y `c` columnas con un símbolo elegido por el usuario:
 
-```cpp run title="rect_simbolo.cpp" stdin="3 7 #\n"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="rect_simbolo.c" stdin="3 7 #\n"
+#include <stdio.h>
+int main(void)
 {
     int f, c;
     char s;
-    cout << "Filas, columnas y simbolo: ";
-    cin >> f >> c >> s;
+    printf("Filas, columnas y simbolo: ");
+    scanf("%d %d %c", &f, &c, &s);
     for (int i = 1; i <= f; i++)        //> El externo usa f
     {
         for (int j = 1; j <= c; j++)    //> El interno usa c: ya no es un cuadrado
-            cout << s;
-        cout << "\n";
+            putchar(s);
+        putchar('\n');
     }
     return 0;
 }
@@ -529,20 +516,19 @@ int main()
 **Paso 2 · Gemelo.** Un estadio tiene filas identificadas con letras (de la `A` a la letra que indique el usuario) y `n` asientos por fila. Muestra el mapa: `A1 A2 … An` en la primera fila, `B1 B2 …` en la segunda, etc. (ver ejemplo 2.4).
 
 :::solucion | T1
-```cpp run title="estadio.cpp" stdin="D 5\n"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="estadio.c" stdin="D 5\n"
+#include <stdio.h>
+int main(void)
 {
     char ultima;
     int n;
-    cout << "Ultima fila y asientos por fila: ";
-    cin >> ultima >> n;
+    printf("Ultima fila y asientos por fila: ");
+    scanf(" %c %d", &ultima, &n);
     for (char fila = 'A'; fila <= ultima; fila++)
     {
         for (int a = 1; a <= n; a++)
-            cout << fila << a << " ";
-        cout << "\n";
+            printf("%c%d ", fila, a);
+        printf("\n");
     }
     return 0;
 }
@@ -561,17 +547,16 @@ int main()
 1 2 3 4 5
 ```
 
-```cpp blank title="triangulo_numeros.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c blank title="triangulo_numeros.c"
+#include <stdio.h>
+int main(void)
 {
     int n;
-    cin >> n;
+    scanf("%d", &n);
     for (int i = 1; i <= __1__; i++)        // 1: cuantas filas hay
     {
         for (int j = 1; j <= __2__; j++)    // 2: la fila i tiene i numeros
-            cout << __3__ << " ";           // 3: que numero se muestra (cambia en cada columna)
+            printf("%d ", __3__);           // 3: que numero se muestra (cambia en cada columna)
         __4__                               // 4: termina la fila
     }
     return 0;
@@ -579,20 +564,19 @@ int main()
 ```
 
 :::solucion | T2
-{{c:1}} `n` · {{c:2}} `i` · {{c:3}} `j` · {{c:4}} `cout << "\n";`
+{{c:1}} `n` · {{c:2}} `i` · {{c:3}} `j` · {{c:4}} `printf("\n");`
 
-```cpp run title="triangulo_numeros.cpp" stdin="5\n"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="triangulo_numeros.c" stdin="5\n"
+#include <stdio.h>
+int main(void)
 {
     int n;
-    cin >> n;
+    scanf("%d", &n);
     for (int i = 1; i <= n; i++)
     {
         for (int j = 1; j <= i; j++)
-            cout << j << " ";
-        cout << "\n";
+            printf("%d ", j);
+        printf("\n");
     }
     return 0;
 }
@@ -602,48 +586,44 @@ Variante: si en el hueco {{c:3}} pones `i`, obtienes `1`, `2 2`, `3 3 3`… ¡Pr
 :::
 
 :::tarea AB | T3. Tabla de multiplicar completa (completa sin pistas) | 20 min | Problema por completar, Desvanecimiento de guía
-**Contexto.** Imprimir las tablas del 1 al 10 como una cuadrícula, con encabezado de columnas y alineadas con `setw(4)`.
+**Contexto.** Imprimir las tablas del 1 al 10 como una cuadrícula, con encabezado de columnas y alineadas con un ancho de 4.
 
-```cpp blank title="tabla_completa.cpp"
-#include <iostream>
-#include __1__
-using namespace std;
-int main()
+```c blank title="tabla_completa.c"
+#include <stdio.h>
+int main(void)
 {
-    cout << "    ";
+    printf("    ");
     for (int c = 1; c <= 10; c++)
-        cout << __2__ << c;
-    cout << "\n";
-    for (__3__; __4__; __5__)
+        printf(__1__, c);
+    printf("\n");
+    for (__2__; __3__; __4__)
     {
-        cout << setw(4) << f;
+        printf("%4d", f);
         for (int c = 1; c <= 10; c++)
-            cout << setw(4) << __6__;
-        __7__
+            printf("%4d", __5__);
+        __6__
     }
     return 0;
 }
 ```
 
 :::solucion | T3
-{{c:1}} `<iomanip>` · {{c:2}} `setw(4)` · {{c:3}} `int f = 1` · {{c:4}} `f <= 10` · {{c:5}} `f++` · {{c:6}} `f * c` · {{c:7}} `cout << "\n";`
+{{c:1}} `"%4d"` · {{c:2}} `int f = 1` · {{c:3}} `f <= 10` · {{c:4}} `f++` · {{c:5}} `f * c` · {{c:6}} `printf("\n");`
 
-```cpp run title="tabla_completa.cpp"
-#include <iostream>
-#include <iomanip>
-using namespace std;
-int main()
+```c run title="tabla_completa.c"
+#include <stdio.h>
+int main(void)
 {
-    cout << "    ";
+    printf("    ");
     for (int c = 1; c <= 10; c++)
-        cout << setw(4) << c;
-    cout << "\n";
+        printf("%4d", c);
+    printf("\n");
     for (int f = 1; f <= 10; f++)
     {
-        cout << setw(4) << f;
+        printf("%4d", f);
         for (int c = 1; c <= 10; c++)
-            cout << setw(4) << f * c;
-        cout << "\n";
+            printf("%4d", f * c);
+        printf("\n");
     }
     return 0;
 }
@@ -657,14 +637,14 @@ int main()
 **Ruta B:** basta probar divisores hasta `√x` (`d * d <= x`). Cuenta las iteraciones del ciclo interno con y sin esta mejora para `N = 1000`.
 
 :::solucion | T4
-```cpp run title="primos.cpp" stdin="50\n"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="primos.c" stdin="50\n"
+#include <stdio.h>
+#include <stdbool.h>
+int main(void)
 {
     int N, cuantos = 0;
-    cout << "N: ";
-    cin >> N;
+    printf("N: ");
+    scanf("%d", &N);
     for (int x = 2; x <= N; x++)
     {
         bool primo = true;
@@ -678,11 +658,11 @@ int main()
         }
         if (primo)
         {
-            cout << x << " ";
+            printf("%d ", x);
             cuantos++;
         }
     }
-    cout << "\n" << cuantos << " primos\n";
+    printf("\n%d primos\n", cuantos);
     return 0;
 }
 ```
@@ -695,38 +675,37 @@ int main()
 :::solucion | T5
 Algunas figuras posibles:
 
-```cpp run title="galeria.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="galeria.c"
+#include <stdio.h>
+int main(void)
 {
     int n = 4;
-    cout << "Invertido:\n";
+    printf("Invertido:\n");
     for (int i = 1; i <= n; i++)
     {
-        for (int j = 1; j <= n - i + 1; j++) cout << "*";
-        cout << "\n";
+        for (int j = 1; j <= n - i + 1; j++) putchar('*');
+        putchar('\n');
     }
-    cout << "Cuadrado hueco:\n";
-    for (int i = 1; i <= n; i++)
-    {
-        for (int j = 1; j <= n; j++)
-            cout << ((i == 1 || i == n || j == 1 || j == n) ? '*' : ' ');
-        cout << "\n";
-    }
-    cout << "Diagonal:\n";
+    printf("Cuadrado hueco:\n");
     for (int i = 1; i <= n; i++)
     {
         for (int j = 1; j <= n; j++)
-            cout << (i == j ? '*' : '.');
-        cout << "\n";
+            putchar((i == 1 || i == n || j == 1 || j == n) ? '*' : ' ');
+        putchar('\n');
     }
-    cout << "Letra X:\n";
+    printf("Diagonal:\n");
+    for (int i = 1; i <= n; i++)
+    {
+        for (int j = 1; j <= n; j++)
+            putchar(i == j ? '*' : '.');
+        putchar('\n');
+    }
+    printf("Letra X:\n");
     for (int i = 1; i <= n + 1; i++)
     {
         for (int j = 1; j <= n + 1; j++)
-            cout << ((i == j || i + j == n + 2) ? '*' : ' ');
-        cout << "\n";
+            putchar((i == j || i + j == n + 2) ? '*' : ' ');
+        putchar('\n');
     }
     return 0;
 }
@@ -737,17 +716,16 @@ int main()
 :::tarea B | T6. Depura la tabla de sumas (autoexplicación) | 20 min | Autoexplicación, Reversión de la experiencia
 **Contexto.** El programa debía mostrar, para cada fila `i` de 1 a 3, la suma `i + 1 + i + 2 + … + i + 4`… pero la salida está mal. Explica **por qué** la segunda y la tercera suma son incorrectas y corrígelo.
 
-```cpp run title="sumas_bug.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="sumas_bug.c"
+#include <stdio.h>
+int main(void)
 {
     int suma = 0;
     for (int i = 1; i <= 3; i++)
     {
         for (int j = 1; j <= 4; j++)
             suma += i + j;
-        cout << "Fila " << i << ": " << suma << "\n";
+        printf("Fila %d: %d\n", i, suma);
     }
     return 0;
 }
@@ -758,17 +736,16 @@ int main()
 :::solucion | T6
 `suma` se inicializa **una sola vez**, antes del ciclo externo, así que las filas 2 y 3 siguen acumulando lo de las anteriores (14, 14 + 18 = 32, 32 + 22 = 54). Debe reiniciarse **dentro** del externo:
 
-```cpp run title="sumas.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="sumas.c"
+#include <stdio.h>
+int main(void)
 {
     for (int i = 1; i <= 3; i++)
     {
         int suma = 0;                 // se reinicia para cada fila
         for (int j = 1; j <= 4; j++)
             suma += i + j;
-        cout << "Fila " << i << ": " << suma << "\n";
+        printf("Fila %d: %d\n", i, suma);
     }
     return 0;
 }
@@ -779,10 +756,9 @@ int main()
 :::tarea B | T7. ¿Qué imprime? `break` y `continue` anidados (imaginación) | 20 min | Imaginación
 **Sin ejecutar**, imagina el recorrido y escribe la salida exacta. Después cuenta cuántas veces se evaluó la condición `j <= 4`.
 
-```cpp check title="saltos.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c check title="saltos.c"
+#include <stdio.h>
+int main(void)
 {
     for (int i = 1; i <= 3; i++)
     {
@@ -792,11 +768,11 @@ int main()
                 continue;
             if (i * j > 6)
                 break;
-            cout << i << j << " ";
+            printf("%d%d ", i, j);
         }
-        cout << "| ";
+        printf("| ");
     }
-    cout << "\n";
+    printf("\n");
     return 0;
 }
 ```
@@ -806,10 +782,9 @@ int main()
 :::solucion | T7
 `i = 1`: `j = 1` se salta (j == i); 12, 13, 14. `i = 2`: 21; `j = 2` se salta; 23; `j = 4` → 8 > 6, `break`. `i = 3`: 31, 32; `j = 3` se salta; `j = 4` → 12 > 6, `break`.
 
-```cpp run title="saltos.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="saltos.c"
+#include <stdio.h>
+int main(void)
 {
     for (int i = 1; i <= 3; i++)
     {
@@ -819,11 +794,11 @@ int main()
                 continue;
             if (i * j > 6)
                 break;
-            cout << i << j << " ";
+            printf("%d%d ", i, j);
         }
-        cout << "| ";
+        printf("| ");
     }
-    cout << "\n";
+    printf("\n");
     return 0;
 }
 ```
@@ -842,34 +817,37 @@ Equipos de 4 con niveles mezclados. Tablero de 6 × 6. Un barco ocupa la fila 3,
 :::
 
 :::solucion | T8
-```cpp run title="naval.cpp" runs="3 3|5 1|9 9\n1 6"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="naval.c" runs="3 3|5 1|9 9\n1 6"
+#include <stdio.h>
+#include <stdbool.h>
+#define N 6
+#define FILA_BARCO 3
+#define COL_INI 2
+#define COL_FIN 4
+int main(void)
 {
-    const int N = 6, FILA_BARCO = 3, COL_INI = 2, COL_FIN = 4;
     int f, c;
     do {
-        cout << "Disparo (fila columna, 1-6): ";
-        cin >> f >> c;
+        printf("Disparo (fila columna, 1-6): ");
+        scanf("%d %d", &f, &c);
     } while (f < 1 || f > N || c < 1 || c > N);
     bool impacto = (f == FILA_BARCO && c >= COL_INI && c <= COL_FIN);
-    cout << "  ";
-    for (int j = 1; j <= N; j++) cout << j << " ";
-    cout << "\n";
+    printf("  ");
+    for (int j = 1; j <= N; j++) printf("%d ", j);
+    printf("\n");
     for (int i = 1; i <= N; i++)
     {
-        cout << i << " ";
+        printf("%d ", i);
         for (int j = 1; j <= N; j++)
         {
             if (i == f && j == c)
-                cout << (impacto ? 'X' : 'o') << " ";
+                printf("%c ", impacto ? 'X' : 'o');
             else
-                cout << ". ";
+                printf(". ");
         }
-        cout << "\n";
+        printf("\n");
     }
-    cout << (impacto ? "Impacto!\n" : "Agua\n");
+    printf(impacto ? "Impacto!\n" : "Agua\n");
     return 0;
 }
 ```
@@ -891,21 +869,20 @@ int main()
 
 **Segmento 4 — Probar casos pequeños y grandes.** {{como}} Pruebo `n = 1` (un solo asterisco) y `n = 4`. {{porque}} El caso mínimo revela errores por uno en los límites.
 
-```cpp run title="piramide.cpp" runs="1|4"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="piramide.c" runs="1|4"
+#include <stdio.h>
+int main(void)
 {
     int n;
-    cout << "Altura: ";
-    cin >> n;
+    printf("Altura: ");
+    scanf("%d", &n);
     for (int i = 1; i <= n; i++)
     {
         for (int e = 1; e <= n - i; e++)
-            cout << " ";
+            putchar(' ');
         for (int s = 1; s <= 2 * i - 1; s++)
-            cout << "*";
-        cout << "\n";
+            putchar('*');
+        putchar('\n');
     }
     return 0;
 }
@@ -923,23 +900,22 @@ int main()
 6. Verdadero o falso: se puede usar la misma variable `i` en el ciclo externo y en el interno.
 7. ¿Qué es una bandera y para qué sirve en ciclos anidados?
 8. Para un triángulo rectángulo, ¿cuál es el límite del ciclo interno en la fila `i`?
-9. ¿Qué biblioteca y qué función alinean columnas en una tabla?
+9. ¿Qué especificador de `printf` muestra un entero alineado en una columna de 5 espacios?
 10. ¿Por qué la programación estructurada evita `goto`?
 :::
 
 :::compr | 5.2 Comprehension test · conocimiento procedimental
 **P1. Predice la salida:**
 
-```cpp check title="p1.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c check title="p1.c"
+#include <stdio.h>
+int main(void)
 {
     for (int i = 3; i >= 1; i--)
     {
         for (int j = 1; j <= i; j++)
-            cout << i;
-        cout << "\n";
+            printf("%d", i);
+        printf("\n");
     }
     return 0;
 }
@@ -954,7 +930,7 @@ int main()
    *
 ```
 
-**P3. Corrige:** debía mostrar 3 filas de 5 guiones, pero muestra 15 renglones con un guion cada uno: `for (int i=0;i<3;i++) for (int j=0;j<5;j++) cout << "-" << endl;`
+**P3. Corrige:** debía mostrar 3 filas de 5 guiones, pero muestra 15 renglones con un guion cada uno: `for (int i=0;i<3;i++) for (int j=0;j<5;j++) printf("-\n");`
 
 **P4. Escribe un programa** que muestre todos los números perfectos menores que 10 000 (un número es perfecto si es igual a la suma de sus divisores propios; por ejemplo, 6 = 1 + 2 + 3).
 :::
@@ -971,22 +947,21 @@ int main()
 :::
 
 :::solucion | Evaluación 5.1 (recall)
-1 El interno · 2 40 · 3 Después del ciclo interno, dentro del externo · 4 Termina solo el ciclo más interno que lo contiene · 5 Salta el resto del cuerpo y pasa a la siguiente iteración · 6 Falso: el interno modificaría la variable del externo · 7 Una variable `bool` que se activa al cumplirse algo; el ciclo externo la consulta para terminar también · 8 `j <= i` · 9 `<iomanip>`, `setw` · 10 Porque permite saltar a cualquier punto y vuelve el flujo difícil de seguir y de depurar.
+1 El interno · 2 40 · 3 Después del ciclo interno, dentro del externo · 4 Termina solo el ciclo más interno que lo contiene · 5 Salta el resto del cuerpo y pasa a la siguiente iteración · 6 Falso: el interno modificaría la variable del externo · 7 Una variable `bool` que se activa al cumplirse algo; el ciclo externo la consulta para terminar también · 8 `j <= i` · 9 `%5d` · 10 Porque permite saltar a cualquier punto y vuelve el flujo difícil de seguir y de depurar.
 :::
 
 :::solucion | Evaluación 5.2 (comprehension)
 **P1.**
 
-```cpp run title="p1.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="p1.c"
+#include <stdio.h>
+int main(void)
 {
     for (int i = 3; i >= 1; i--)
     {
         for (int j = 1; j <= i; j++)
-            cout << i;
-        cout << "\n";
+            printf("%d", i);
+        printf("\n");
     }
     return 0;
 }
@@ -994,30 +969,28 @@ int main()
 
 **P2.** Fila `i` → `i − 1` espacios y `n − i + 1` asteriscos:
 
-```cpp run title="p2.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="p2.c"
+#include <stdio.h>
+int main(void)
 {
     int n = 4;
     for (int i = 1; i <= n; i++)
     {
-        for (int e = 1; e <= i - 1; e++) cout << " ";
-        for (int s = 1; s <= n - i + 1; s++) cout << "*";
-        cout << "\n";
+        for (int e = 1; e <= i - 1; e++) putchar(' ');
+        for (int s = 1; s <= n - i + 1; s++) putchar('*');
+        putchar('\n');
     }
     return 0;
 }
 ```
 
-**P3.** El `endl` está dentro del ciclo interno. Corrección: `for (int i=0;i<3;i++) { for (int j=0;j<5;j++) cout << "-"; cout << endl; }`
+**P3.** El `\n` está dentro del ciclo interno. Corrección: `for (int i=0;i<3;i++) { for (int j=0;j<5;j++) printf("-"); printf("\n"); }`
 
 **P4.**
 
-```cpp run title="perfectos.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="perfectos.c"
+#include <stdio.h>
+int main(void)
 {
     for (int n = 2; n < 10000; n++)
     {
@@ -1029,9 +1002,9 @@ int main()
                 if (d != n / d) suma += n / d;   // su pareja de divisor
             }
         if (suma == n)
-            cout << n << " ";
+            printf("%d ", n);
     }
-    cout << "\n";
+    printf("\n");
     return 0;
 }
 ```

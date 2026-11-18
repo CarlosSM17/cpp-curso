@@ -3,7 +3,7 @@ num: "00"
 tipo: guia
 kicker: "Guía del instructor"
 archivo: "Tema00_Guia_del_instructor_CLT4BP"
-titulo: "Guía del instructor: aplicar el mapa de ruta CLT4BP al curso de programación básica en C++"
+titulo: "Guía del instructor: aplicar el mapa de ruta CLT4BP al curso de programación básica en C"
 corto: "Fases 1 a 3 del modelo"
 lema: "Analizar a quién se enseña, diseñar para su memoria de trabajo, aplicar, medir… y volver a empezar si hace falta."
 pasos_portada:
@@ -14,8 +14,10 @@ pasos_portada:
   - ["protocolo", "Iterar si no se<br>cumplen objetivos"]
 fuentes:
   - "Sandoval Medina, C. (2026). *Modelo de diseño instruccional «mapa de ruta CLT4BP» basado en la teoría de la carga cognitiva como apoyo en la enseñanza–aprendizaje de la programación*. Tesis doctoral, Universidad Autónoma de Aguascalientes. Caps. 4–7 y anexos A.1–A.7."
-  - "Betancourt Uscátegui, J. F. y Polanco Guzmán, I. Y. (2021). *115 ejercicios resueltos de programación C++*. Ediciones de la U / Ra-Ma."
-  - "Lospinoso, J. (2019). *C++ Crash Course: A Fast-Paced Introduction*. No Starch Press."
+  - "King, K. N. (2008). *C Programming: A Modern Approach* (2.ª ed.). W. W. Norton."
+  - "Kernighan, B. W. y Ritchie, D. M. (1988). *The C Programming Language* (2.ª ed.). Prentice Hall."
+  - "Seacord, R. C. (2020). *Effective C: An Introduction to Professional C Programming*. No Starch Press."
+  - "Betancourt Uscátegui, J. F. y Polanco Guzmán, I. Y. (2021). *115 ejercicios resueltos de programación C++*. Ediciones de la U / Ra-Ma. (Ejercicios del Tema 03, adaptados a C.)"
 glosario:
   - ["teoría de la carga cognitiva (TCC)", "cognitive load theory (CLT)", "Teoría que diseña la instrucción considerando los límites de la memoria de trabajo."]
   - ["memoria de trabajo", "working memory", "Memoria de capacidad y duración limitadas donde se procesa la información nueva."]
@@ -35,7 +37,7 @@ glosario:
 
 # 1. Cómo usar este material {.guia}
 
-Esta colección es el producto de las **Fases 1 y 2** del modelo instruccional **mapa de ruta CLT4BP** (*Cognitive Load Theory for Basic Programming*) aplicado a un curso completo de programación básica en C++, y una propuesta lista para la **Fase 3**. Consta de esta guía y de **17 cuadernillos**, uno por tema, que pueden usarse completos (un semestre) o por separado (un tema o una unidad), como prevé el modelo.
+Esta colección es el producto de las **Fases 1 y 2** del modelo instruccional **mapa de ruta CLT4BP** (*Cognitive Load Theory for Basic Programming*) aplicado a un curso completo de programación básica en C, y una propuesta lista para la **Fase 3**. Consta de esta guía y de **17 cuadernillos**, uno por tema, que pueden usarse completos (un semestre) o por separado (un tema o una unidad), como prevé el modelo.
 
 :::resumen | El mapa de ruta CLT4BP
 ```dot w="100%"
@@ -88,7 +90,7 @@ Todos los temas tienen la misma estructura, para que estudiantes e instructor se
 | **3. Tareas de aprendizaje** | Componente 4C/ID | 8 o 9 tareas con desvanecimiento de guía, marcadas por ruta. | Estudiantes |
 | **4. Protocolo verbal** | Información procedimental | Guion segmentado de un experto (CÓMO y POR QUÉ) para grabar o leer en voz alta. | Instructor → estudiantes |
 | **5. Evaluación** | Fase 3 | Recall test, comprehension test y autorregistro con escala de esfuerzo mental. | Instructor / estudiantes |
-| **Glosario y Anexo** | — | Términos español–inglés (para leer el *C++ Crash Course*) y soluciones de tareas y evaluación. | Todos |
+| **Glosario y Anexo** | — | Términos español–inglés (para leer a Kernighan y Ritchie, King, Seacord y la documentación) y soluciones de tareas y evaluación. | Todos |
 
 ## 1.2 Convenciones visuales
 
@@ -106,20 +108,19 @@ Todos los temas tienen la misma estructura, para que estudiantes e instructor se
 - **ARCS.** La etiqueta {{arcs:Relevancia}} señala dónde se trabaja explícitamente una categoría motivacional de Keller.
 - **Protocolos.** Las etiquetas {{como}} y {{porque}} separan el procedimiento de su justificación.
 
-Así se ven los recuadros de código. Todo programa con salida fue **compilado y ejecutado** con g++ al generar el material, de modo que las salidas y los mensajes de error que aparecen son reales:
+Así se ven los recuadros de código. Todo programa con salida fue **compilado y ejecutado** con gcc al generar el material (y los que usan memoria dinámica se revisaron además con AddressSanitizer), de modo que las salidas y los mensajes de error que aparecen son reales:
 
 <div class="cols">
 <div>
 
-```cpp run stdin="7" title="ejemplo.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run stdin="7" title="ejemplo.c"
+#include <stdio.h>
+int main(void)
 {
     int n;
-    cout << "Numero: ";       //> Anotación al margen
-    cin >> n;
-    cout << "Cuadrado: " << n * n << "\n";
+    printf("Numero: ");       //> Anotación al margen
+    scanf("%d", &n);
+    printf("Cuadrado: %d\n", n * n);
     return 0;
 }
 ```
@@ -128,7 +129,7 @@ int main()
 </div>
 <div>
 
-```cpp blank title="por_completar.cpp"
+```c blank title="por_completar.c"
 int doble(int x)
 {
     return __1__;   // 1: completa
@@ -136,8 +137,8 @@ int doble(int x)
 ```
 *Problema por completar: los huecos numerados se resuelven en el Anexo.*
 
-```cpp err
-int main()
+```c err
+int main(void)
 {
     int total = 5;
     return totl;
@@ -151,13 +152,16 @@ int main()
 ## 1.3 Fuentes y alcance
 
 :::nota | Sobre los libros base
-- **Betancourt y Polanco (2021)** organiza el temario (capítulos 1 a 13: estructura del lenguaje, secuenciales, selectivas, repetitivas, arreglos, matrices, funciones, recursividad, cadenas, estructuras, archivos y POO). El archivo disponible para este trabajo contenía el **índice y los capítulos 1 y 2**; de los capítulos 3 a 13 se tomó la **estructura temática del índice** (las secciones se citan en cada cuadernillo) y los ejemplos y ejercicios de esos temas son **originales**, alineados con ella.
-- **Lospinoso (2019)** aporta el enfoque moderno de C++ (inicialización con llaves, `enum class`, referencias, `nullptr`, ciclo de vida de los objetos, *streams*). Se tomaron solo sus capítulos de **programación básica**; quedan fuera los temas avanzados (herencia, plantillas, excepciones, biblioteca estándar en profundidad, concurrencia).
+- **King (2008)** es el libro de texto de referencia: su secuencia (fundamentos, entrada/salida con formato, expresiones, selección, ciclos, arreglos, funciones, punteros, cadenas, estructuras, memoria dinámica, programas de varios archivos y E/S con archivos) sostiene el temario, y su enfoque de C99 (`bool`, comentarios `//`, declaraciones dentro del `for`, inicializadores designados) es el que usan los ejemplos.
+- **Kernighan y Ritchie (1988)** es la referencia clásica del lenguaje, escrita por Dennis Ritchie (creador de C) y Brian Kernighan; cada cuadernillo cita las secciones correspondientes, que siguen siendo una lectura breve y precisa.
+- **Seacord (2020)** aporta la mirada de C moderno (C17) y de la programación segura: verificar lo que devuelven `malloc`, `fopen` y `scanf`, preferir `fgets` y `snprintf`, compilar con `-Wall -Wextra` y usar AddressSanitizer.
+- **Betancourt y Polanco (2021)**, escrito para C++, aporta los ejercicios del Tema 03 que se indican en ese cuadernillo, adaptados a C. Los demás ejemplos y ejercicios son **originales** o provienen de la tesis.
+- Quedan fuera los temas avanzados (uniones, campos de bits, punteros a funciones, preprocesador en profundidad, concurrencia y la biblioteca estándar más allá de `<stdio.h>`, `<string.h>`, `<ctype.h>`, `<math.h>` y `<stdlib.h>`).
 - **La tesis** aporta el modelo y numerosos ejemplos que se reutilizan: la analogía de las casas y direcciones (punteros), la estructura `Empleado`/`Fecha` (estructuras anidadas), la secuencia de desvanecimiento de guía para ciclos, la solución libre de ordenamiento, el cuadrado mágico colaborativo y el manejo de archivos del segundo piloto.
 :::
 
 :::tip | Entorno técnico recomendado
-Cualquier compilador moderno de C++ (g++, clang o MSVC) con un IDE que tenga **depurador** (Code::Blocks, Visual Studio Code, Dev-C++, CLion u otro), porque varias tareas piden observar variables paso a paso. Los programas se verificaron con `g++ -std=c++20 -Wall -Wextra`.
+Un compilador de C moderno —gcc (en Windows, MinGW-w64, incluido en el instalador «mingw-setup» de Code::Blocks), clang o MSVC— con un IDE que tenga **depurador** (Code::Blocks, Visual Studio Code, Dev-C++, CLion u otro), porque varias tareas piden observar variables paso a paso; el Tema 17 requiere además que el IDE maneje **proyectos de varios archivos**. Los programas se verificaron con GCC 14 (`gcc -std=c17 -Wall -Wextra`); el botón «Probar en Compiler Explorer» de la versión web usa la misma serie del compilador.
 :::
 
 # 2. Mapa de temas y prerrequisitos {.guia}
@@ -173,9 +177,9 @@ subgraph cluster_b2 { label="Bloque II · Repetición y arreglos"; fontname="Int
 subgraph cluster_b3 { label="Bloque III · Modularidad y datos"; fontname="Inter Display"; fontsize=11; color="#c4b5fd"; style="rounded"; fontcolor="#6d28d9";
   node [fillcolor="#f5f3ff", color="#7c3aed"];
   t10 [label="10 Funciones"]; t11 [label="11 Recursividad"]; t12 [label="12 Cadenas"]; t13 [label="13 Estructuras\ny enumeraciones"]; }
-subgraph cluster_b4 { label="Bloque IV · Memoria, archivos y objetos"; fontname="Inter Display"; fontsize=11; color="#fdba74"; style="rounded"; fontcolor="#c2410c";
+subgraph cluster_b4 { label="Bloque IV · Memoria, archivos y módulos"; fontname="Inter Display"; fontsize=11; color="#fdba74"; style="rounded"; fontcolor="#c2410c";
   node [fillcolor="#fff7ed", color="#c2410c"];
-  t14 [label="14 Punteros\ny referencias"]; t15 [label="15 Memoria\ndinámica"]; t16 [label="16 Archivos\nde texto"]; t17 [label="17 Clases\ny objetos"]; }
+  t14 [label="14 Punteros"]; t15 [label="15 Memoria\ndinámica"]; t16 [label="16 Archivos\nde texto"]; t17 [label="17 Programación\nmodular"]; }
 { rank=same; t01; t02; t03; t04; t05; }
 { rank=same; t06; t07; t08; t09; }
 { rank=same; t10; t11; t12; t13; }
@@ -187,7 +191,7 @@ t04 -> t09 -> t13 -> t17 [style=invis, weight=20];
 t01 -> t02 -> t03 -> t04 -> t05;
 t06 -> t07 -> t08 -> t09;
 t10 -> t11 [constraint=false]; t10 -> t12 [constraint=false]; t12 -> t13;
-t14 -> t15; t13 -> t14 [constraint=false]; t13 -> t16 [constraint=false]; t14 -> t17 [constraint=false];
+t14 -> t15; t13 -> t14 [constraint=false]; t13 -> t16 [constraint=false]; t15 -> t17 [constraint=false];
 t04 -> t06 [constraint=false]; t08 -> t10 [constraint=false];
 ```
 *Cada flecha indica un prerrequisito directo; la ficha de cada tema detalla todos sus conocimientos previos. Los temas 11 (recursividad) y 16 (archivos) pueden moverse dentro de su bloque sin romper la secuencia.*
@@ -196,25 +200,25 @@ t04 -> t06 [constraint=false]; t08 -> t10 [constraint=false];
 
 | Tema | Objetivo de aprendizaje general | Temas a completar | Duración | Fuentes adicionales de consulta |
 |---|---|---|---|---|
-| **01** | Escribir, compilar y ejecutar un programa en C++ y explicar su estructura. | `main`, `#include`, `cout`, comentarios, compilación y tipos de error. | 4 h | Betancourt y Polanco, cap. 1 · Lospinoso, cap. 1 |
-| **02** | Declarar variables y constantes de tipos fundamentales y realizar entrada/salida. | Tipos, identificadores, `const`, `cin`, `getline`, formato de salida. | 4 h | B&P, cap. 1 · L, caps. 1–2 |
-| **03** | Construir expresiones y resolver problemas con estructura secuencial. | Operadores, precedencia, conversiones, `<cmath>`, secuencia E–P–S. | 4 h | B&P, caps. 1–2 · L, cap. 7 |
-| **04** | Resolver problemas de decisión con `if`, `if-else` y decisiones anidadas. | Condiciones simples y compuestas, escaleras `else if`, validación. | 4 h | B&P, cap. 3 · L, caps. 1, 7, 8 |
-| **05** | Resolver selección múltiple con `switch` y construir menús. | `case`, `break`, `default`, caída de casos, `enum class`. | 3 h | B&P, cap. 4 · L, caps. 2, 8 |
-| **06** | Resolver problemas repetitivos con `while`, `do-while` y `for`. | Contadores, acumuladores, centinelas, validación con ciclos. | 6 h | B&P, cap. 5 · L, caps. 2, 8 |
-| **07** | Resolver problemas con ciclos anidados y control de flujo. | Patrones, tablas, `break`, `continue`, banderas. | 4 h | B&P, cap. 5 · L, cap. 8 |
-| **08** | Almacenar y procesar colecciones con arreglos unidimensionales. | Declaración, recorrido, búsqueda, máximos, ordenamiento. | 6 h | B&P, cap. 6 · L, caps. 2, 13 |
-| **09** | Procesar datos tabulares con matrices. | Recorridos por filas y columnas, diagonales, operaciones. | 5 h | B&P, cap. 7 · L, cap. 2 |
-| **10** | Descomponer problemas en funciones reutilizables. | Parámetros por valor y referencia, retorno, ámbito, sobrecarga. | 6 h | B&P, cap. 8 · L, caps. 1, 3, 4, 9 |
-| **11** | Resolver problemas con funciones recursivas. | Caso base, caso recursivo, pila de llamadas, recursión vs. iteración. | 4 h | B&P, cap. 9 · L, cap. 4 |
-| **12** | Manipular texto con arreglos de `char` y `std::string`. | Lectura, recorrido, búsqueda, comparación, conversión. | 5 h | B&P, cap. 10 · L, caps. 2, 15 |
-| **13** | Modelar registros con estructuras y enumeraciones. | `struct`, anidamiento, arreglos de estructuras, `enum class`. | 5 h | B&P, cap. 11 · L, caps. 2, 8 |
-| **14** | Usar punteros y referencias para acceder a datos de forma indirecta. | `&`, `*`, `->`, aritmética de punteros, paso por puntero. | 6 h | B&P, caps. 1, 8 · L, cap. 3 |
-| **15** | Gestionar memoria dinámica de forma segura. | `new`/`delete`, arreglos dinámicos, fugas, punteros colgantes. | 5 h | L, caps. 3–4 · tesis, §5.4 |
-| **16** | Hacer persistentes los datos con archivos de texto. | `ifstream`, `ofstream`, modos, lectura por línea, actualización. | 5 h | B&P, cap. 12 · L, cap. 16 |
-| **17** | Modelar entidades con clases y objetos. | Atributos, métodos, encapsulamiento, constructores, destructor. | 6 h | B&P, cap. 13 · L, caps. 2–4 |
+| **01** | Escribir, compilar y ejecutar un programa en C y explicar su estructura. | `main`, `#include`, `printf`, comentarios, cadena de compilación y tipos de error. | 4 h | KR, cap. 1 · K, cap. 2 · S, cap. 1 |
+| **02** | Declarar variables y constantes de tipos fundamentales y realizar entrada/salida con formato. | Tipos, identificadores, `const` y `#define`, `scanf`, especificadores de formato de `printf`. | 4 h | KR, caps. 1, 2, 7 · K, caps. 2, 3, 7 · S, caps. 2–3 |
+| **03** | Construir expresiones y resolver problemas con estructura secuencial. | Operadores, precedencia, conversiones, `<math.h>`, secuencia E–P–S. | 4 h | KR, cap. 2 · K, caps. 3, 4, 7 · S, cap. 4 · B&P, cap. 2 |
+| **04** | Resolver problemas de decisión con `if`, `if-else` y decisiones anidadas. | Condiciones simples y compuestas, escaleras `else if`, operador condicional, validación. | 4 h | KR, caps. 2–3 · K, cap. 5 · S, caps. 4–5 |
+| **05** | Resolver selección múltiple con `switch` y construir menús. | `case`, `break`, `default`, caída de casos, `enum`. | 3 h | KR, caps. 2–3 · K, caps. 5, 16 · S, caps. 2, 5 |
+| **06** | Resolver problemas repetitivos con `while`, `do-while` y `for`. | Contadores, acumuladores, centinelas, validación con ciclos. | 6 h | KR, caps. 1, 3 · K, cap. 6 · S, cap. 5 · tesis, §6.1 |
+| **07** | Resolver problemas con ciclos anidados y control de flujo. | Patrones, tablas, `break`, `continue`, banderas. | 4 h | KR, cap. 3 · K, cap. 6 · S, cap. 5 |
+| **08** | Almacenar y procesar colecciones con arreglos unidimensionales. | Declaración, recorrido, búsqueda, máximos, ordenamiento, límites del arreglo. | 6 h | KR, caps. 1, 4 · K, cap. 8 · S, caps. 2, 11 |
+| **09** | Procesar datos tabulares con matrices. | Recorridos por filas y columnas, diagonales, operaciones. | 5 h | KR, cap. 5 · K, cap. 8 · tesis, §6.1.14 |
+| **10** | Descomponer problemas en funciones reutilizables. | Prototipos, paso por valor y por dirección, retorno, ámbito, `static`. | 6 h | KR, caps. 1, 4, 5 · K, caps. 9–11 · S, cap. 2 |
+| **11** | Resolver problemas con funciones recursivas. | Caso base, caso recursivo, pila de llamadas, recursión vs. iteración. | 4 h | KR, cap. 4 · K, cap. 9 |
+| **12** | Manipular texto con arreglos de `char` y `<string.h>`. | Terminador `'\0'`, lectura con `fgets`, recorrido, `strlen`, `strcpy`, `strcmp`, `<ctype.h>`. | 5 h | KR, caps. 1, 5 · K, caps. 13, 23 · S, cap. 7 |
+| **13** | Modelar registros con estructuras y enumeraciones. | `struct`, `typedef`, anidamiento, arreglos de estructuras, `->`, `enum`. | 5 h | KR, cap. 6 · K, cap. 16 · S, cap. 2 · tesis, §5.4 |
+| **14** | Usar punteros para acceder a datos de forma indirecta. | `&`, `*`, `->`, `NULL`, aritmética de punteros, paso por dirección. | 6 h | KR, cap. 5 · K, caps. 11, 12, 17 · S, cap. 2 · tesis, §5.4 |
+| **15** | Gestionar memoria dinámica de forma segura. | `malloc`, `calloc`, `realloc`, `free`, fugas, punteros colgantes, AddressSanitizer. | 5 h | KR, caps. 6–8 · K, cap. 17 · S, caps. 6, 11 · tesis, §5.4 |
+| **16** | Hacer persistentes los datos con archivos. | `FILE *`, `fopen`/`fclose`, modos, `fprintf`, `fscanf`, `fgets`, CSV, archivos binarios. | 5 h | KR, cap. 7 · K, cap. 22 · S, cap. 8 · tesis, §7.5 |
+| **17** | Organizar un programa en módulos reutilizables. | Cabeceras `.h`, compilación separada, guardas de inclusión, `static`, tipos opacos, `make`. | 6 h | KR, cap. 4 · K, caps. 15, 19 · S, caps. 9–10 |
 
-*B&P = Betancourt y Polanco (2021); L = Lospinoso (2019). Total: 82 h de instrucción.*
+*KR = Kernighan y Ritchie (1988); K = King (2008); S = Seacord (2020); B&P = Betancourt y Polanco (2021). Total: 82 h de instrucción.*
 
 # 3. Fase 1 · Análisis {.guia}
 
@@ -251,9 +255,9 @@ La tesis plantea solo dos caminos (sí/no). Como criterio inicial, ajustable por
 ## 3.3 Prueba diagnóstica de entrada (Bloques I y II)
 
 :::recall | Parte 1 · Recall (4 puntos cada reactivo · 40 puntos)
-1. ¿Cuál es la función por la que empieza a ejecutarse todo programa en C++?
+1. ¿Cuál es la función por la que empieza a ejecutarse todo programa en C?
 2. ¿Qué tipo de dato usarías para guardar el precio 3.75? ¿Y para guardar una letra?
-3. ¿Qué hace la instrucción `cin >> edad;`?
+3. ¿Qué hace la instrucción `scanf("%d", &edad);`?
 4. ¿Cuánto vale la expresión `17 % 5`? ¿Y `7 / 2` si ambos son enteros?
 5. ¿Qué diferencia hay entre `=` y `==`?
 6. ¿Cuántas veces se repite el cuerpo de `for (int i = 0; i < 4; i++)`?
@@ -266,10 +270,9 @@ La tesis plantea solo dos caminos (sí/no). Como criterio inicial, ajustable por
 :::compr | Parte 2 · Comprehension (15 puntos cada problema · 60 puntos)
 **P1. Predice la salida.**
 
-```cpp check title="diag_p1.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c check title="diag_p1.c"
+#include <stdio.h>
+int main(void)
 {
     int suma = 0;
     for (int i = 1; i <= 6; i++)
@@ -277,29 +280,28 @@ int main()
         if (i % 2 == 0)
             suma += i;
         else
-            cout << i << " ";
+            printf("%d ", i);
     }
-    cout << "| " << suma << "\n";
+    printf("| %d\n", suma);
     return 0;
 }
 ```
 
 **P2. Encuentra y corrige los errores** (hay tres):
 
-```cpp blank title="diag_p2.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c blank title="diag_p2.c"
+#include <stdio.h>
+int main(void)
 {
     int calif
-    cout << "Calificacion: ";
-    cin >> calif;
+    printf("Calificacion: ");
+    scanf("%d", &calif);
     if (calif = 10)
-        cout << "Excelente\n";
+        printf("Excelente\n");
     else if (calif >= 6)
-        cout << "Aprobado\n"
+        printf("Aprobado\n")
     else
-        cout << "Reprobado\n";
+        printf("Reprobado\n");
     return 0;
 }
 ```
@@ -308,10 +310,9 @@ int main()
 
 **P4. Rastrea** el arreglo: ¿qué contiene `v` al terminar?
 
-```cpp check title="diag_p4.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c check title="diag_p4.c"
+#include <stdio.h>
+int main(void)
 {
     int v[5] = {4, 1, 3, 5, 2};
     for (int i = 0; i < 4; i++)
@@ -321,24 +322,24 @@ int main()
             v[i] = v[i + 1];
             v[i + 1] = t;
         }
-    for (int x : v) cout << x << " ";
-    cout << "\n";
+    for (int i = 0; i < 5; i++)
+        printf("%d ", v[i]);
+    printf("\n");
     return 0;
 }
 ```
 :::
 
 :::solucion | Prueba diagnóstica · Parte 1
-1 `main` · 2 `double` (o `float`); `char` · 3 Lee un valor del teclado y lo guarda en la variable `edad` · 4 `2`; `3` (división entera) · 5 `=` asigna un valor; `==` compara si dos valores son iguales · 6 4 veces (i = 0, 1, 2, 3) · 7 `while` evalúa la condición antes de entrar (puede no ejecutarse nunca); `do-while` la evalúa al final (se ejecuta al menos una vez) · 8 `0`; `4` · 9 Que no devuelve ningún valor · 10 Verdadero.
+1 `main` · 2 `double` (o `float`); `char` · 3 Lee un entero del teclado y lo guarda en la variable `edad` (`&edad` es la dirección donde `scanf` debe guardarlo) · 4 `2`; `3` (división entera) · 5 `=` asigna un valor; `==` compara si dos valores son iguales · 6 4 veces (i = 0, 1, 2, 3) · 7 `while` evalúa la condición antes de entrar (puede no ejecutarse nunca); `do-while` la evalúa al final (se ejecuta al menos una vez) · 8 `0`; `4` · 9 Que no devuelve ningún valor · 10 Verdadero.
 :::
 
 :::solucion | Prueba diagnóstica · Parte 2
 **P1.** Imprime los impares y acumula los pares (2 + 4 + 6 = 12):
 
-```cpp run title="diag_p1.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="diag_p1.c"
+#include <stdio.h>
+int main(void)
 {
     int suma = 0;
     for (int i = 1; i <= 6; i++)
@@ -346,31 +347,30 @@ int main()
         if (i % 2 == 0)
             suma += i;
         else
-            cout << i << " ";
+            printf("%d ", i);
     }
-    cout << "| " << suma << "\n";
+    printf("| %d\n", suma);
     return 0;
 }
 ```
 
-**P2.** (1) Falta `;` en `int calif;`. (2) `if (calif = 10)` asigna en vez de comparar: `if (calif == 10)`. (3) Falta `;` después de `"Aprobado\n"`.
+**P2.** (1) Falta `;` en `int calif;`. (2) `if (calif = 10)` asigna en vez de comparar: `if (calif == 10)` (gcc con `-Wall` lo advierte: *suggest parentheses around assignment used as truth value*). (3) Falta `;` después de `printf("Aprobado\n")`.
 
 **P3.** Una solución:
 
-```cpp run stdin="8\n15\n3\n12\n7" title="diag_p3.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run stdin="8\n15\n3\n12\n7" title="diag_p3.c"
+#include <stdio.h>
+int main(void)
 {
     int n, mayor = 0, suma = 0;
     for (int i = 1; i <= 5; i++)
     {
-        cout << "Numero " << i << ": ";
-        cin >> n;
+        printf("Numero %d: ", i);
+        scanf("%d", &n);
         if (i == 1 || n > mayor) mayor = n;
         suma += n;
     }
-    cout << "Mayor: " << mayor << "\nPromedio: " << suma / 5.0 << "\n";
+    printf("Mayor: %d\nPromedio: %.1f\n", mayor, suma / 5.0);
     return 0;
 }
 ```
@@ -378,10 +378,9 @@ int main()
 
 **P4.** Es una pasada del método de la burbuja: el mayor (5) «sube» al final.
 
-```cpp run title="diag_p4.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="diag_p4.c"
+#include <stdio.h>
+int main(void)
 {
     int v[5] = {4, 1, 3, 5, 2};
     for (int i = 0; i < 4; i++)
@@ -391,8 +390,9 @@ int main()
             v[i] = v[i + 1];
             v[i + 1] = t;
         }
-    for (int x : v) cout << x << " ";
-    cout << "\n";
+    for (int i = 0; i < 5; i++)
+        printf("%d ", v[i]);
+    printf("\n");
     return 0;
 }
 ```
@@ -422,7 +422,7 @@ La ficha de cada tema (sección 0.3) detalla **cómo** se aplica cada efecto. Es
 | **14** | <span class="ef ef-n">Modalidad</span> <span class="ef ef-x">Autogestión</span> <span class="ef ef-x">Movimiento humano</span> | Analogía de casas y direcciones; diagramas de memoria con guion narrado; «Notas y casas»; cada estudiante dibuja su propio diagrama de memoria. |
 | **15** | <span class="ef ef-n">Modalidad</span> | Guion narrado sobre los diagramas de pila y montón. |
 | **16** | — | Contenido de cada archivo mostrado junto al programa que lo lee o escribe (atención dividida). |
-| **17** | <span class="ef ef-x">Movimiento humano</span> | «Objetos humanos» con atributos privados. |
+| **17** | <span class="ef ef-x">Movimiento humano</span> | «Módulos humanos»: una cabecera pública y una implementación oculta; los archivos de cada módulo junto a la terminal que los compila. |
 
 *Efectos que se aplican en el diseño y no como actividad: <span class="ef ef-n">Información transitoria</span> (los protocolos verbales se entregan también por escrito y en segmentos breves) y <span class="ef ef-r">Reversión de la experiencia</span> (la Ruta B omite ejemplos resueltos y problemas por completar).*
 
@@ -466,10 +466,10 @@ Cada ficha incluye su **matriz Tomlinson × 4C/ID** ya completada. El criterio g
 
 | Elemento | Ruta A · sin conocimientos previos | Ruta B · con conocimientos previos |
 |---|---|---|
-| **Contenido** | Conceptos esenciales, uno por uno. | Conceptos esenciales más extensiones marcadas «Ruta B» (buenas prácticas, casos límite, C++ moderno). |
+| **Contenido** | Conceptos esenciales, uno por uno. | Conceptos esenciales más extensiones marcadas «Ruta B» (buenas prácticas, casos límite, seguridad y C moderno). |
 | **Proceso** | Ejemplos resueltos → problemas por completar → problema convencional, con el instructor cerca. | Autoexplicación, imaginación y solución libre de forma autónoma; papel de «arquitecto» en el reto colaborativo. |
 | **Producto** | Un programa funcional y bien probado del contexto de la tarea T4. | Un programa más abierto o integrador (T5 o T8). |
-| **Entorno** | Tarjetas de sintaxis impresas, depurador paso a paso, trabajo en parejas. | Proyecto en el IDE, consulta del *C++ Crash Course* en inglés, trabajo individual y luego en equipo. |
+| **Entorno** | Tarjetas de sintaxis impresas, depurador paso a paso, trabajo en parejas. | Proyecto en el IDE y terminal (gcc, AddressSanitizer), consulta de Kernighan y Ritchie o de King en inglés, trabajo individual y luego en equipo. |
 
 ## 4.4 Protocolos verbales: cómo grabarlos
 
@@ -504,7 +504,7 @@ Cada ficha incluye su **matriz Tomlinson × 4C/ID** ya completada. El criterio g
 | **2–4** | 02 Tipos y E/S · 03 Operadores · 04 if · 05 switch | Recall y comprehension de cada tema · encuesta de carga cognitiva (fin del Bloque I) |
 | **4–8** | 06 Ciclos · 07 Ciclos anidados · 08 Arreglos · 09 Matrices | Diagnóstico del Bloque II · tests por tema · carga cognitiva (fin del Bloque II) |
 | **8–11** | 10 Funciones · 11 Recursividad · 12 Cadenas · 13 Estructuras | Diagnóstico del Bloque III · tests por tema · carga cognitiva (fin del Bloque III) |
-| **11–15** | 14 Punteros · 15 Memoria dinámica · 16 Archivos · 17 Clases | Diagnóstico del Bloque IV · tests por tema · carga cognitiva (fin del Bloque IV) |
+| **11–15** | 14 Punteros · 15 Memoria dinámica · 16 Archivos · 17 Programación modular | Diagnóstico del Bloque IV · tests por tema · carga cognitiva (fin del Bloque IV) |
 | **16** | Cierre y revisión de resultados | CIS, IMMS, MSLQ final · decisión de iterar (sección 5.4) |
 
 *Con otra carga horaria, conserva el orden de los bloques y la proporción de tiempo entre soporte (≈ 30 %) y tareas (≈ 60 %).*

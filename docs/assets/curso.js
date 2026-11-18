@@ -1,5 +1,5 @@
-/* Programación básica en C++ · curso interactivo (mapa de ruta CLT4BP)
-   Sin dependencias. El progreso se guarda en localStorage (clave clt4bp-cpp-v1). */
+/* Programación básica en C · curso interactivo (mapa de ruta CLT4BP)
+   Sin dependencias. El progreso se guarda en localStorage (clave clt4bp-c-v1). */
 (function () {
   'use strict';
   var C = window.COURSE || { temas: [], bloques: [], pasos: [] };
@@ -12,7 +12,7 @@
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ------------------------------------------------------------ estado */
-  var KEY = 'clt4bp-cpp-v1';
+  var KEY = 'clt4bp-c-v1';
   var estado = null;
   function cargar() {
     if (estado) return estado;
@@ -98,9 +98,9 @@
     }
     return src;
   }
-  function urlCE(src, stdin) {
-    var opts = '-std=c++20 -Wall';
-    var st = { sessions: [{ id: 1, language: 'c++', source: src, compilers: [], executors: [{ arguments: '', compiler: { id: 'g132', libs: [], options: opts }, stdin: stdin || '' }] }] };
+  function urlCE(src, stdin, flags) {
+    var opts = '-std=c17 -Wall -Wextra' + (flags ? ' ' + flags : '') + ' -lm';
+    var st = { sessions: [{ id: 1, language: 'c', source: src, compilers: [], executors: [{ arguments: '', compiler: { id: 'cg142', libs: [], options: opts }, stdin: stdin || '' }] }] };
     return 'https://godbolt.org/clientstate/' + encodeURIComponent(b64enc(JSON.stringify(st)));
   }
   function animarSalida(term) {
@@ -118,20 +118,21 @@
   function herramientasCodigo() {
     $$('.codewrap[data-src]').forEach(function (wrap) {
       var modo = wrap.dataset.mode;
+      var compila = modo === 'err' || modo === 'warn';
       var enSol = !!wrap.closest('details.sol');
       var salidas = $$(':scope > .term, :scope > .filebox', wrap);
       var bar = el('div', { class: 'code-tools' });
       var fig = $(':scope > figure', wrap);
       if (fig && fig.nextSibling) wrap.insertBefore(bar, fig.nextSibling); else wrap.appendChild(bar);
-      if (salidas.length && !enSol && (modo === 'run' || modo === 'runs' || modo === 'err')) {
+      if (salidas.length && !enSol && (modo === 'run' || modo === 'runs' || compila)) {
         salidas.forEach(function (s) { s.classList.add('oculta'); });
-        var lbl = modo === 'err' ? 'Compilar' : (modo === 'runs' ? 'Ejecutar con varios datos' : 'Ejecutar');
-        var run = el('button', { class: 'ct-btn ct-run' + (modo === 'err' ? ' err' : ''), type: 'button', text: lbl });
-        var nota = el('span', { class: 'ct-nota', text: modo === 'err' ? '¿Qué error esperas?' : 'Predice la salida antes de ejecutar.' });
+        var lbl = compila ? 'Compilar' : (modo === 'runs' ? 'Ejecutar con varios datos' : 'Ejecutar');
+        var run = el('button', { class: 'ct-btn ct-run' + (compila ? ' err' : ''), type: 'button', text: lbl });
+        var nota = el('span', { class: 'ct-nota', text: modo === 'err' ? '¿Qué error esperas?' : (modo === 'warn' ? '¿Qué advertencia esperas?' : 'Predice la salida antes de ejecutar.') });
         run.addEventListener('click', function () {
           salidas.forEach(function (s) { if (s.classList.contains('term')) animarSalida(s); else s.classList.remove('oculta'); });
-          run.textContent = modo === 'err' ? 'Compilar de nuevo' : 'Ejecutar de nuevo';
-          nota.textContent = modo === 'err' ? 'Mensaje real de g++.' : 'Salida real del programa (compilado con g++).';
+          run.textContent = compila ? 'Compilar de nuevo' : 'Ejecutar de nuevo';
+          nota.textContent = compila ? 'Mensaje real de gcc.' : 'Salida real del programa (compilado con gcc).';
         });
         bar.appendChild(run); bar.appendChild(nota);
       }
@@ -141,13 +142,16 @@
           function () { cp.textContent = 'No se pudo copiar'; });
       });
       bar.appendChild(cp);
-      if (modo !== 'display' || wrap.dataset.blank) {
-        var ce = el('a', { class: 'ct-btn', href: '#', target: '_blank', rel: 'noopener', text: modo === 'err' ? 'Corregirlo en Compiler Explorer' : 'Probar en Compiler Explorer' });
+      var variosArchivos = wrap.dataset.modulos || wrap.dataset.modulo;
+      if (!variosArchivos && (modo !== 'display' || wrap.dataset.blank)) {
+        var ce = el('a', { class: 'ct-btn', href: '#', target: '_blank', rel: 'noopener', text: compila ? 'Corregirlo en Compiler Explorer' : 'Probar en Compiler Explorer' });
         ce.title = 'Abre el código en godbolt.org para editarlo y ejecutarlo' + (wrap.dataset.stdin ? ' (con los datos de entrada del ejemplo)' : '');
-        var fijar = function () { ce.href = urlCE(codigoActual(wrap), wrap.dataset.stdin ? b64dec(wrap.dataset.stdin) : ''); };
+        var fijar = function () { ce.href = urlCE(codigoActual(wrap), wrap.dataset.stdin ? b64dec(wrap.dataset.stdin) : '', wrap.dataset.flags); };
         ce.addEventListener('mousedown', fijar); ce.addEventListener('focus', fijar); ce.addEventListener('click', fijar); ce.addEventListener('touchstart', fijar, { passive: true });
         bar.appendChild(ce);
       }
+      if (wrap.dataset.modulos) bar.appendChild(el('span', { class: 'ct-nota', text: 'Programa de varios archivos (' + wrap.dataset.modulos + '): para probarlo, créalos en un proyecto de tu IDE o compílalos juntos en la terminal.' }));
+      else if (wrap.dataset.modulo) bar.appendChild(el('span', { class: 'ct-nota', text: 'Es uno de los archivos del programa: se compila junto con los demás.' }));
       if (wrap.dataset.files) bar.appendChild(el('span', { class: 'ct-nota', text: 'Lee archivos (' + wrap.dataset.files + '): para probarlo, créalos junto al programa en tu computadora.' }));
     });
   }
@@ -711,8 +715,8 @@
       });
     });
     var msg = $('.datos-msg');
-    var bj = $('#exp-json'); if (bj) bj.addEventListener('click', function () { var o = JSON.parse(JSON.stringify(s)); o.exportado = new Date().toISOString(); o.curso = 'Programación básica en C++ (CLT4BP)'; descargar('progreso-cpp-clt4bp-' + hoy() + '.json', JSON.stringify(o, null, 2), 'application/json'); });
-    var bc = $('#exp-csv'); if (bc) bc.addEventListener('click', function () { descargar('resumen-cpp-clt4bp-' + hoy() + '.csv', csv(), 'text/csv;charset=utf-8'); });
+    var bj = $('#exp-json'); if (bj) bj.addEventListener('click', function () { var o = JSON.parse(JSON.stringify(s)); o.exportado = new Date().toISOString(); o.curso = 'Programación básica en C (CLT4BP)'; descargar('progreso-c-clt4bp-' + hoy() + '.json', JSON.stringify(o, null, 2), 'application/json'); });
+    var bc = $('#exp-csv'); if (bc) bc.addEventListener('click', function () { descargar('resumen-c-clt4bp-' + hoy() + '.csv', csv(), 'text/csv;charset=utf-8'); });
     var bi = $('#imp-json'); if (bi) bi.addEventListener('change', function () {
       var f = bi.files[0]; if (!f) return; var rd = new FileReader();
       rd.onload = function () {

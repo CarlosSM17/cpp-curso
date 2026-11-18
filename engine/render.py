@@ -16,7 +16,7 @@ from pathlib import Path
 
 import markdown
 import yaml
-from pygments.lexers import CppLexer
+from pygments.lexers import CLexer
 from pygments.token import STANDARD_TYPES
 
 sys.path.insert(0, str(Path(__file__).parent))
@@ -28,6 +28,10 @@ CACHE = BUILD / "cache"
 OUT = ROOT / "out"
 CACHE.mkdir(parents=True, exist_ok=True)
 OUT.mkdir(exist_ok=True)
+
+CC = os.environ.get("CC", "gcc")                 # en el contenedor de engine/Dockerfile: gcc-14
+CFLAGS = ["-std=c17", "-Wall", "-Wextra"]
+ECHO = ROOT / "engine" / "echo_stdin.c"         # eco de la entrada (solo para generar las salidas)
 
 CIRC = "①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳"
 
@@ -98,10 +102,10 @@ def tok_class(tt):
     return STANDARD_TYPES[tt]
 
 
-def highlight_lines(code, lang="cpp"):
-    if lang != "cpp":
+def highlight_lines(code, lang="c"):
+    if lang != "c":
         return [html.escape(l) for l in code.split("\n")]
-    lexer = CppLexer(stripnl=False, ensurenl=False)
+    lexer = CLexer(stripnl=False, ensurenl=False)
     lines = [[]]
     for tt, val in lexer.get_tokens(code):
         cls = tok_class(tt)
@@ -182,15 +186,15 @@ def code_table(code, lang, attrs):
     clean = []
     for l in raw_lines:
         m = re.match(r"^(.*?)\s*//>\s?(.*)$", l)
-        if m and lang in ("cpp", "pseudo"):
+        if m and lang in ("c", "pseudo"):
             clean.append(m.group(1).rstrip())
             anns.append(m.group(2))
         else:
             clean.append(l)
             anns.append(None)
     has_ann = any(a is not None for a in anns)
-    if lang == "cpp":
-        hls = highlight_lines("\n".join(clean), "cpp")
+    if lang == "c":
+        hls = highlight_lines("\n".join(clean), "c")
     elif lang == "pseudo":
         hls = highlight_pseudo("\n".join(clean))
     else:
@@ -207,7 +211,7 @@ def code_table(code, lang, attrs):
             an = f'<td class="an">{md_inline(a) if a else ""}</td>'
         rows.append(f"<tr{cls}>{ln}<td class=\"cl\">{h or '&#8203;'}</td>{an}</tr>")
     title = attrs.get("title")
-    kind = {"cpp": "C++", "pseudo": "Pseudocódigo (PSeInt)", "txt": "Texto"}.get(lang, lang)
+    kind = {"c": "C", "pseudo": "Pseudocódigo (PSeInt)", "txt": "Texto"}.get(lang, lang)
     cap = ""
     has_holes = bool(re.search(r"__(\d+|\?)__", code))
     if title or lang == "pseudo" or "blank" in attrs:
@@ -223,35 +227,56 @@ def code_table(code, lang, attrs):
     return f'<figure class="{cls}">{cap}<table class="src">{"".join(rows)}</table></figure>', "\n".join(clean)
 
 
-def compile_run(code, mode, stdin="", files=None, allow_rc=False, showfile=None, timeout=8):
+def compile_run(code, mode, stdin="", files=None, allow_rc=False, showfile=None, timeout=8, flags=(), link=()):
+    """mode: run (compila y ejecuta), check (solo compila), err (debe fallar), warn (debe compilar con advertencia).
+    link: otros .c del tema (registrados con ```c file=...```) que se compilan y enlazan junto con main.c."""
     files = files or {}
-    key = hashlib.sha256(json.dumps(["v3echo", code, mode, stdin, sorted(files.items()), showfile]).encode()).hexdigest()[:24]
+    flags = list(flags)
+    link = list(link)
+    for n in link:
+        if n not in files:
+            raise RuntimeError(f"link={n}: ese archivo no se ha definido antes con ```c file={n}```")
+    k = ["c1", CC, code, mode, stdin, sorted(files.items()), showfile, flags]
+    if link:
+        k.append(link)
+    key = hashlib.sha256(json.dumps(k).encode()).hexdigest()[:24]
     cf = CACHE / f"{key}.json"
     if cf.exists():
         return json.loads(cf.read_text())
-    d = Path(tempfile.mkdtemp(prefix="cpp_", dir=BUILD))
-    (d / "main.cpp").write_text(code)
+    d = Path(tempfile.mkdtemp(prefix="c_", dir=BUILD))
     for n, c in files.items():
         (d / n).write_text(c)
-    cmd = ["g++", "-std=c++20", "-Wall", "-Wextra", "-o", "prog", "main.cpp"]
+    (d / "main.c").write_text(code)
+    cmd = [CC, *CFLAGS, *flags, "-o", "prog", "main.c", *link]
     if mode == "run":
-        cmd[1:1] = ["-include", str(ROOT / "engine" / "echo_cin.h")]
+        cmd.append(str(ECHO))
+    cmd.append("-lm")
     p = subprocess.run(cmd, cwd=d, capture_output=True, text=True)
     res = {"compile_rc": p.returncode, "stderr": p.stderr, "stdout": "", "rc": None, "file": None}
     if mode == "err":
         if p.returncode == 0:
             raise RuntimeError("Se esperaba error de compilación y compiló:\n" + code)
+    elif mode == "warn":
+        if p.returncode != 0:
+            raise RuntimeError("Se esperaba solo una advertencia y no compiló:\n" + p.stderr + "\n----\n" + code)
+        if ": warning:" not in p.stderr:
+            raise RuntimeError("Se esperaba una advertencia de gcc y compiló sin avisos:\n" + code)
     else:
         if p.returncode != 0:
             raise RuntimeError("Error de compilación:\n" + p.stderr + "\n----\n" + code)
         if p.stderr.strip():
-            log("  [aviso g++]", p.stderr.strip().split("\n")[0][:200])
+            for l in p.stderr.split("\n"):
+                if ": warning:" in l:
+                    log("  [aviso gcc]", l.strip()[:200])
         if mode == "run":
             try:
                 r = subprocess.run(["./prog"], cwd=d, input=stdin, capture_output=True, text=True, timeout=timeout)
             except subprocess.TimeoutExpired:
                 raise RuntimeError("Timeout ejecutando:\n" + code)
-            res["stdout"] = r.stdout + (r.stderr if r.stderr else "")
+            err = r.stderr or ""
+            if any(f.startswith("-fsanitize") for f in flags):
+                err = simplify_asan(err)
+            res["stdout"] = r.stdout + err
             res["rc"] = r.returncode
             if r.returncode != 0 and not allow_rc:
                 raise RuntimeError(f"Código de salida {r.returncode}:\n{r.stdout}\n{r.stderr}\n----\n{code}")
@@ -263,22 +288,86 @@ def compile_run(code, mode, stdin="", files=None, allow_rc=False, showfile=None,
     return res
 
 
-def simplify_err(err):
+def compile_module(name, files):
+    """Verifica un archivo de un programa de varios archivos: un .c se compila con -c (sin enlazar)
+    y un .h se revisa solo (-fsyntax-only), para comprobar que no depende de lo que se incluya antes."""
+    key = hashlib.sha256(json.dumps(["m1", CC, name, sorted(files.items())]).encode()).hexdigest()[:24]
+    cf = CACHE / f"{key}.json"
+    if cf.exists():
+        return
+    d = Path(tempfile.mkdtemp(prefix="m_", dir=BUILD))
+    for n, c in files.items():
+        (d / n).write_text(c)
+    p = subprocess.run([CC, *CFLAGS, "-fsyntax-only" if name.endswith(".h") else "-c", name],
+                       cwd=d, capture_output=True, text=True)
+    shutil.rmtree(d, ignore_errors=True)
+    if p.returncode != 0:
+        raise RuntimeError(f"El archivo {name} no compila:\n{p.stderr}")
+    for l in p.stderr.split("\n"):
+        if ": warning:" in l:
+            log("  [aviso gcc]", l.strip()[:200])
+    cf.write_text("{}")
+
+
+def run_console(script, files, allow_rc=False, timeout=15):
+    """Ejecuta de verdad las órdenes «$ ...» de un bloque ```console run``` en una carpeta con los
+    archivos del tema; devuelve la transcripción (cada orden marcada como lo que se teclea).
+    `gcc` es el compilador del motor (CC); sin rc, cualquier orden que falle detiene la generación."""
+    key = hashlib.sha256(json.dumps(["sh1", CC, script, sorted(files.items())]).encode()).hexdigest()[:24]
+    cf = CACHE / f"{key}.json"
+    if cf.exists():
+        return json.loads(cf.read_text())
+    d = Path(tempfile.mkdtemp(prefix="sh_"))     # disco del contenedor: fechas exactas para make
+    for n, c in files.items():
+        (d / n).write_text(c)
+    binp = d / ".bin"
+    binp.mkdir()
+    (binp / "gcc").symlink_to(shutil.which(CC) or CC)
+    env = dict(os.environ, PATH=f"{binp}:{os.environ.get('PATH', '')}")
+    out, fallas = [], 0
+    for line in script.split("\n"):
+        if not line.startswith("$ "):
+            raise RuntimeError("En ```console run``` cada línea debe ser una orden «$ ...»:\n" + line)
+        orden = line[2:]
+        try:
+            p = subprocess.run(["sh", "-c", orden], cwd=d, env=env, text=True, timeout=timeout,
+                               stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        except subprocess.TimeoutExpired:
+            raise RuntimeError("Timeout en la orden: " + orden)
+        o = re.sub(r"\x1b\[[0-9;]*m", "", p.stdout).replace(str(d) + "/", "")
+        out.append("$ \x01" + orden + "\n\x02" + o)
+        if p.returncode != 0:
+            fallas += 1
+            if not allow_rc:
+                raise RuntimeError(f"Falló la orden «{orden}» (código {p.returncode}):\n{o}")
+    if allow_rc and not fallas:
+        raise RuntimeError("Se marcó rc pero ninguna orden falló:\n" + script)
+    shutil.rmtree(d, ignore_errors=True)
+    res = {"out": "".join(out)}
+    cf.write_text(json.dumps(res))
+    return res
+
+
+def simplify_err(err, desde=": error:"):
     err = re.sub(r"\x1b\[[0-9;]*m", "", err)
     if "/usr/bin/ld" in err:
         err = re.sub(r"(?:/[\w.+-]+)+/([\w.+-]+\.o)", r"\1", err)
-        err = re.sub(r"\S*main\.cpp", "main.cpp", err)
+        err = re.sub(r"\S*main\.c\b", "main.c", err)
         lines = [l for l in err.split("\n") if l.strip()]
         return "\n".join(lines[:4])
-    err = re.sub(r"\S*main\.cpp", "main.cpp", err)
+    err = re.sub(r"\S*main\.c\b", "main.c", err)
     lines = err.split("\n")
     keep = []
     started = False
-    for l in lines:
-        if ": error:" in l:
+    for i, l in enumerate(lines):
+        if (desde in l or (desde == ": error:" and ": fatal error:" in l)) and not started:
             started = True
+            j = i                       # conserva la cadena «In file included from … / from …»
+            while j > 0 and re.match(r"(In file included from|\s+from) ", lines[j - 1]):
+                j -= 1
+            keep.extend(lines[j:i])
         if started:
-            if "note:" in l and len(keep) > 2 and "forget" not in l:
+            if "note:" in l and len(keep) > 2 and not re.search(r"forget|include", l):
                 break
             keep.append(l)
         if len(keep) >= 5:
@@ -286,6 +375,23 @@ def simplify_err(err):
     out = "\n".join(keep).rstrip()
     out = re.sub(r"\x1b\[[0-9;]*m", "", out)
     return out
+
+
+def simplify_asan(err):
+    """Deja lo esencial de un informe de AddressSanitizer/LeakSanitizer: el error, cada fuga
+    con la línea de main.c donde se reservó y el resumen (sin direcciones ni rutas)."""
+    keep = []
+    for l in err.split("\n"):
+        s = l.strip()
+        if "ERROR:" in s:
+            keep.append(re.sub(r"^==\d+==", "", s))
+        elif re.match(r"(Direct|Indirect) leak|SUMMARY:", s):
+            keep.append(s)
+        else:
+            m = re.match(r"#\d+ 0x[0-9a-f]+ in (\w+) \S*main\.c:(\d+)", s)
+            if m:
+                keep.append(f"    en {m.group(1)} (main.c:{m.group(2)})")
+    return "\n".join(keep) + ("\n" if keep else "")
 
 
 def file_box(name, content):
@@ -309,6 +415,8 @@ def term_box(out, stdin=None, title="Salida en consola"):
     out = out.rstrip("\n").rstrip("\x02").rstrip("\n")
     if out.endswith("\x01"):
         out = out[:-1]
+    if out.count("\x01") > out.count("\x02"):      # la última orden tecleada no produjo salida
+        out += "\x02"
     return (f'<div class="term"><div class="term-t"><span>▶ {title}</span>{sin}</div>'
             f'<pre>{echo_html(out) if out else "&nbsp;"}</pre></div>')
 
@@ -320,7 +428,7 @@ class Ctx:
         self.files = {}
         self.solutions = []
         self.n = 0
-        self.stats = {"run": 0, "check": 0, "err": 0, "display": 0}
+        self.stats = {"run": 0, "check": 0, "err": 0, "warn": 0, "display": 0}
 
     def put(self, h):
         self.n += 1
@@ -348,6 +456,15 @@ def parse_attrs(s):
 
 
 def process_fences(body, ctx):
+    # Archivos de módulos que se definen más adelante (p. ej., en la columna de al lado):
+    # un bloque con link= puede usar el siguiente que aparezca si aún no se ha visto ninguno.
+    futuros = []
+    for fm in FENCE.finditer(body):
+        fa = parse_attrs(fm.group(2))
+        if fm.group(1) == "c" and fa.get("file"):
+            limpio = [re.sub(r"\s*//>.*$", "", l) for l in fm.group(3).split("\n")]
+            futuros.append((fm.start(), fa["file"], "\n".join(limpio) + "\n"))
+
     def rep(m):
         lang, info, code = m.group(1) or "txt", m.group(2), m.group(3)
         attrs = parse_attrs(info)
@@ -369,9 +486,27 @@ def process_fences(body, ctx):
             ctx.files[attrs["file"]] = code + "\n"
             return "\n" + ctx.put(file_box(attrs["file"], code)) + "\n"
         if lang == "console":
+            if "run" in attrs:
+                ctx.stats["run"] += 1
+                res = run_console(code, dict(ctx.files), "rc" in attrs)
+                return "\n" + ctx.put(term_box(res["out"], "órdenes", title=attrs.get("title", "Terminal"))) + "\n"
             return "\n" + ctx.put(term_box(code, title=attrs.get("title", "Terminal"))) + "\n"
-        if lang == "cpp":
-            tbl, clean = code_table(code, "cpp", attrs)
+        if lang == "c":
+            fname = attrs.get("file")              # archivo de un programa de varios archivos (.h / .c)
+            if fname and "title" not in attrs:
+                attrs["title"] = fname
+            tbl, clean = code_table(code, "c", attrs)
+            if fname:
+                ctx.files[fname] = clean + "\n"
+            link = attrs.get("link", "").split()
+            archivos = dict(ctx.files)
+            for n in link:
+                if n not in archivos:
+                    sig = next((c for pos, nm, c in futuros if nm == n and pos > m.start()), None)
+                    if sig is not None:
+                        archivos[n] = sig
+            INCL = re.compile(r'^\s*#include\s+"([^"]+)"', re.M)   # módulos propios (no los comentarios)
+            usa_mod = bool(link) or bool(INCL.search(clean))
             extra = ""
             stdin = attrs.get("stdin", "").replace("\\n", "\n")
             if stdin and not stdin.endswith("\n"):
@@ -383,7 +518,7 @@ def process_fences(body, ctx):
                 for k, sin in enumerate(ins, 1):
                     if not sin.endswith("\n"):
                         sin += "\n"
-                    res = compile_run(clean, "run", sin, dict(ctx.files), "rc" in attrs)
+                    res = compile_run(clean, "run", sin, archivos, "rc" in attrs, link=link)
                     o = res["stdout"].rstrip("\n")
                     parts.append(f'<div class="run-sep">Ejecución {k}</div>'
                                  f'<pre>{echo_html(o)}</pre>')
@@ -391,35 +526,57 @@ def process_fences(body, ctx):
                          f'{len(ins)} ejecuciones</span><span class="term-in"><b>resaltado</b> = lo que se teclea</span></div>' + "".join(parts) + "</div>")
             elif "run" in attrs:
                 ctx.stats["run"] += 1
-                res = compile_run(clean, "run", stdin, dict(ctx.files), "rc" in attrs, attrs.get("showfile"))
+                res = compile_run(clean, "run", stdin, archivos, "rc" in attrs, attrs.get("showfile"),
+                                  flags=attrs.get("flags", "").split(), link=link)
                 if attrs.get("out") != "0":
                     extra = term_box(res["stdout"], stdin)
                 if res.get("file") is not None:
                     extra += file_box(attrs["showfile"], res["file"])
             elif "check" in attrs:
                 ctx.stats["check"] += 1
-                compile_run(clean, "check", files=dict(ctx.files))
+                compile_run(clean, "check", files=archivos, link=link)
             elif "err" in attrs:
                 ctx.stats["err"] += 1
-                res = compile_run(clean, "err")
-                extra = term_box(simplify_err(res["stderr"]), title="Mensaje del compilador (g++)").replace(
+                res = compile_run(clean, "err", files=archivos if usa_mod else None, link=link)
+                extra = term_box(simplify_err(res["stderr"]), title="Mensaje del compilador (gcc)").replace(
                     'class="term"', 'class="term err"')
+            elif "warn" in attrs:
+                ctx.stats["warn"] += 1
+                res = compile_run(clean, "warn", files=archivos if usa_mod else None,
+                                  flags=attrs.get("flags", "").split(), link=link)
+                extra = term_box(simplify_err(res["stderr"], ": warning:"), title="Advertencia del compilador (gcc)").replace(
+                    'class="term"', 'class="term err"')
+            elif fname and fname.endswith((".c", ".h")):
+                ctx.stats["check"] += 1
+                compile_module(fname, archivos)
             else:
                 ctx.stats["display"] += 1
             if WEB:
                 import base64
-                mode = next((k for k in ("runs", "run", "err", "check") if k in attrs), "display")
+                mode = next((k for k in ("runs", "run", "err", "warn", "check") if k in attrs), "display")
                 b64 = lambda t: base64.b64encode(t.encode()).decode()
                 first_in = stdin
                 if "runs" in attrs:
                     first_in = attrs["runs"].split("|")[0].replace("\\n", "\n")
                 dat = f' data-mode="{mode}" data-src="{b64(clean)}"'
+                if attrs.get("flags"):
+                    dat += f' data-flags="{html.escape(attrs["flags"])}"'
                 if first_in.strip():
                     dat += f' data-stdin="{b64(first_in if first_in.endswith(chr(10)) else first_in + chr(10))}"'
                 if "blank" in attrs and re.search(r"__(\d+|\?)__", code):
                     dat += ' data-blank="1"'
-                if ctx.files and mode in ("run", "runs", "check") and re.search(r"ifstream|fstream|fopen", clean):
-                    dat += f' data-files="{html.escape(", ".join(ctx.files))}"'
+                datos = [f for f in ctx.files if not f.endswith((".c", ".h"))]
+                if datos and mode in ("run", "runs", "check") and re.search(r"\bfopen\b", clean):
+                    dat += f' data-files="{html.escape(", ".join(datos))}"'
+                if usa_mod and mode != "display":
+                    incl = set(INCL.findall(clean))
+                    for n in link:
+                        incl |= set(INCL.findall(archivos[n]))
+                    t = attrs.get("title", "")
+                    mods = [fname or (t if t.endswith(".c") else "main.c")] + link + sorted(incl - set(link))
+                    dat += f' data-modulos="{html.escape(", ".join(mods))}"'
+                elif (fname and mode == "display") or "modulo" in attrs:
+                    dat += ' data-modulo="1"'
                 if attrs.get("title"):
                     dat += f' data-title="{html.escape(attrs["title"])}"'
                 return "\n" + ctx.put(f'<div class="codewrap"{dat}>{tbl}{extra}</div>') + "\n"
@@ -558,7 +715,7 @@ H1_SUB = {
     "tareas": "Componente 4C/ID · <b>Tareas de aprendizaje</b> — de menor a mayor complejidad; la ayuda se desvanece tarea con tarea.",
     "protocolo": "Componente 4C/ID · <b>Información procedimental: protocolo verbal</b> — el CÓMO y el POR QUÉ de un experto, en voz alta.",
     "evaluacion": "Fase 3 · <b>Aplicación y evaluación</b> — recall test (conocimiento declarativo) y comprehension test (conocimiento procedimental).",
-    "glosario": "Términos clave en español e inglés, para consultar el <i>C++ Crash Course</i> y la documentación.",
+    "glosario": "Términos clave en español e inglés, para consultar a Kernighan y Ritchie, a King, a Seacord y la documentación.",
     "anexo": "Soluciones de las tareas y de la evaluación. Intenta cada ejercicio antes de consultarlas.",
 }
 
@@ -695,7 +852,7 @@ def cover_html(meta, css):
                  '<div><span class="ruta rb">Ruta B</span> con conocimientos previos: autoexplicación, imaginación, solución libre y retos colaborativos.</div></div>')
     return f"""<!doctype html><html lang="es"><head><meta charset="utf-8"><style>{css}</style></head>
 <body class="cover"><div class="cov">
-<div class="cov-top"><div class="cov-brand">Programación básica en C++</div><div class="cov-model">Material instruccional · Mapa de ruta CLT4BP</div></div>
+<div class="cov-top"><div class="cov-brand">Programación básica en C</div><div class="cov-model">Material instruccional · Mapa de ruta CLT4BP</div></div>
 <div class="cov-num">{html.escape(str(num))}</div>
 <div class="cov-kicker">{html.escape(kicker)}</div>
 <div class="cov-title">{md_inline(meta['titulo'])}</div>
@@ -717,7 +874,7 @@ def to_pdf(stems_meta):
             short = meta.get("corto", meta["titulo"])
             header = (f'<div style="font-family:Inter,sans-serif;font-size:7.5pt;color:#64748b;width:100%;'
                       f'padding:0 16mm;display:flex;justify-content:space-between;">'
-                      f'<span>Programación básica en C++ · Mapa de ruta CLT4BP</span>'
+                      f'<span>Programación básica en C · Mapa de ruta CLT4BP</span>'
                       f'<span>{html.escape(meta.get("kicker", "Tema " + str(meta["num"])))} · {html.escape(short)}</span></div>')
             footer = ('<div style="font-family:Inter,sans-serif;font-size:7.5pt;color:#64748b;width:100%;text-align:center;">'
                       '<span class="pageNumber"></span> / <span class="totalPages"></span></div>')
@@ -739,7 +896,7 @@ def to_pdf(stems_meta):
             kick = meta.get("kicker", "Tema " + str(meta["num"]))
             w.add_metadata({"/Title": meta["titulo"] if meta["titulo"].startswith(kick) else f'{kick}. {meta["titulo"]}',
                             "/Author": "Material instruccional CLT4BP",
-                            "/Subject": "Programación básica en C++ — Mapa de ruta CLT4BP"})
+                            "/Subject": "Programación básica en C — Mapa de ruta CLT4BP"})
             fname = meta.get("archivo", stem) + ".pdf"
             with open(OUT / fname, "wb") as fh:
                 w.write(fh)

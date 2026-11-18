@@ -7,8 +7,8 @@ lema: "Filas y columnas: cuando los datos forman una tabla, cada casilla tiene d
 duracion: "5 h · 3 sesiones"
 previos: "Tema 07 (ciclos anidados) y Tema 08 (arreglos unidimensionales)."
 fuentes:
-  - "Betancourt Uscátegui, J. F. y Polanco Guzmán, I. Y. (2021). *115 ejercicios resueltos de programación C++*. Cap. 7: Arreglos multidimensionales (§7.1 Concepto, §7.2 Declaración, §7.3 Inicialización en la declaración, aleatoria y por captura, §7.4 Procesamiento, §7.5 Ejercicios)."
-  - "Lospinoso, J. (2019). *C++ Crash Course*. Cap. 2: Arrays (inicialización con llaves y acceso a elementos), base para los arreglos de arreglos."
+  - "Kernighan, B. W. y Ritchie, D. M. (1988). *The C Programming Language* (2.ª ed.). Prentice Hall. Cap. 5: §5.7 Multi-dimensional Arrays."
+  - "King, K. N. (2008). *C Programming: A Modern Approach* (2.ª ed.). W. W. Norton. Cap. 8: §8.2 Multidimensional Arrays."
   - "Sandoval Medina, C. (2026). Tesis doctoral, §6.1.14: problema colaborativo del cuadrado mágico de orden impar."
 objetivos:
   A:
@@ -54,10 +54,10 @@ diferenciada:
   Entorno:
     comp: "Información procedimental"
     A: "Hojas cuadriculadas; depurador con vista de la matriz."
-    B: "Terminal; pruebas con matrices no cuadradas."
+    B: "Terminal; pruebas con matrices no cuadradas y `-fsanitize=address`."
 plan:
   - ["Sesión 1", "Soporte", "Matriz humana; conceptos 1–5; ejemplo resuelto; T1.", "100 min"]
-  - ["Sesión 2", "Soporte + tareas", "Conceptos 6–8; T2, T3, T4; Ruta B: T5, T6, T7.", "100 min"]
+  - ["Sesión 2", "Soporte + tareas", "Conceptos 6–7; T2, T3, T4; Ruta B: T5, T6, T7.", "100 min"]
   - ["Sesión 3", "Tareas + evaluación", "T8 cuadrado mágico; protocolo verbal; tests y autorregistro.", "100 min"]
 glosario:
   - ["matriz / tabla", "matrix / 2D array", "Arreglo de dos dimensiones: filas y columnas."]
@@ -85,7 +85,7 @@ Un profesor tiene 30 alumnos y 5 materias. Quiere el promedio de **cada alumno**
 :::
 
 :::relevancia
-Las imágenes digitales son matrices de píxeles; los tableros de ajedrez, gato y buscaminas son matrices; los mapas de los videojuegos por mosaicos son matrices; en inteligencia artificial y gráficos 3D todo se calcula con operaciones de matrices. Este tema es la base para todo eso. {{arcs:Relevancia}}
+Las imágenes digitales son matrices de píxeles; los tableros de ajedrez, gato y buscaminas son matrices; los mapas de los videojuegos por mosaicos son matrices; en inteligencia artificial y gráficos 3D todo se calcula con operaciones de matrices (y muchas de esas bibliotecas están escritas en C). Este tema es la base para todo eso. {{arcs:Relevancia}}
 :::
 
 ## 1.1 Conceptos, uno por uno
@@ -118,20 +118,19 @@ La fila 0 de la matriz es la lista de Ana; las otras filas son los demás alumno
 :::
 
 :::concepto | 2 | Declaración e índices `[fila][columna]` | Elementos aislados, Atención dividida
-`tipo nombre[FILAS][COLUMNAS];` — el primer índice es la fila, el segundo la columna; ambos empiezan en 0.
+`tipo nombre[FILAS][COLUMNAS];` — el primer índice es la fila, el segundo la columna; ambos empiezan en 0. Como en el Tema 08, las dimensiones se escriben con `#define`.
 
-```cpp run title="indices.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="indices.c"
+#include <stdio.h>
+int main(void)
 {
     int m[3][4] = { {1, 2, 3, 4},       //> Fila 0
                     {5, 6, 7, 8},       //> Fila 1
                     {9, 10, 11, 12} };  //> Fila 2
-    cout << "m[1][2] = " << m[1][2] << "\n";   //> Fila 1, columna 2 → 7
-    m[2][0] = 99;                             //> Se usa como cualquier variable
-    cout << "m[2][0] = " << m[2][0] << "\n";
-    cout << "Bytes: " << sizeof(m) << " (3 x 4 x 4)\n";
+    printf("m[1][2] = %d\n", m[1][2]);  //> Fila 1, columna 2 → 7
+    m[2][0] = 99;                       //> Se usa como cualquier variable
+    printf("m[2][0] = %d\n", m[2][0]);
+    printf("Bytes: %zu (3 x 4 x 4)\n", sizeof(m));
     return 0;
 }
 ```
@@ -145,7 +144,7 @@ caption: "amarillo: m[1][2]  ·  verde: m[2][0] modificado"
 ```
 
 :::nota | Ruta B · Así vive en memoria (orden por filas)
-La memoria es una sola «tira». C++ guarda la matriz **fila tras fila**: primero `m[0][0..3]`, luego `m[1][0..3]`… El elemento `m[i][j]` está en la posición `i × COLUMNAS + j` de esa tira.
+La memoria es una sola «tira». C guarda la matriz **fila tras fila**: primero `m[0][0..3]`, luego `m[1][0..3]`… El elemento `m[i][j]` está en la posición `i × COLUMNAS + j` de esa tira.
 
 ```diagram arr
 name: "memoria"
@@ -162,31 +161,30 @@ caption: "m[1][2] está en la posición 1 × 4 + 2 = 6"
 |---|---|
 | `int a[2][3] = {{1, 2, 3}, {4, 5, 6}};` | dos filas completas |
 | `int b[2][3] = {{1}, {4, 5}};` | `1 0 0` / `4 5 0` (lo que falta, en cero) |
-| `int c[3][3] = {};` | todo en cero |
+| `int c[3][3] = {0};` | todo en cero |
 | `int d[][2] = {{1, 2}, {3, 4}, {5, 6}};` | 3 filas (se deduce); las **columnas** siempre se indican |
-| Captura | `for (i…) for (j…) cin >> a[i][j];` |
+| Captura | `for (i…) for (j…) scanf("%d", &a[i][j]);` |
 | Aleatoria | `for (i…) for (j…) a[i][j] = rand() % 10;` |
 :::
 
 :::concepto | 4 | Recorrer por filas: ciclos anidados | Elementos aislados, Atención dividida
 El ciclo **externo** recorre filas (`i`), el **interno** columnas (`j`): exactamente lo que practicaste en el Tema 07.
 
-```cpp run title="captura_matriz.cpp" stdin="1 2 3\n4 5 6\n"
-#include <iostream>
-#include <iomanip>
-using namespace std;
-int main()
+```c run title="captura_matriz.c" stdin="1 2 3\n4 5 6\n"
+#include <stdio.h>
+#define F 2                                 //> Constantes para filas…
+#define C 3                                 //> …y columnas
+int main(void)
 {
-    const int F = 2, C = 3;                 //> Constantes para filas y columnas
     int m[F][C];
     for (int i = 0; i < F; i++)             //> Para cada fila…
         for (int j = 0; j < C; j++)         //> …cada columna
-            cin >> m[i][j];
+            scanf("%d", &m[i][j]);
     for (int i = 0; i < F; i++)
     {
         for (int j = 0; j < C; j++)
-            cout << setw(4) << m[i][j];     //> setw alinea las columnas
-        cout << "\n";                       //> Fin de la fila
+            printf("%4d", m[i][j]);         //> El ancho 4 alinea las columnas
+        printf("\n");                       //> Fin de la fila
     }
     return 0;
 }
@@ -200,26 +198,26 @@ Los estudiantes se sientan en una cuadrícula de 4 filas × 5 columnas; cada uno
 :::concepto | 5 | Sumas por fila y por columna | Elementos aislados, Atención dividida
 La clave es **dónde se reinicia** el acumulador: la suma de cada fila empieza en 0 **dentro** del ciclo de filas.
 
-```cpp run title="sumas.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="sumas.c"
+#include <stdio.h>
+#define F 3
+#define C 4
+int main(void)
 {
-    const int F = 3, C = 4;
     int m[F][C] = {{2, 4, 1, 3}, {5, 0, 2, 2}, {1, 1, 6, 4}};
     for (int i = 0; i < F; i++)
     {
         int sumaFila = 0;                   //> Se reinicia para CADA fila
         for (int j = 0; j < C; j++)
             sumaFila += m[i][j];
-        cout << "Fila " << i << ": " << sumaFila << "\n";
+        printf("Fila %d: %d\n", i, sumaFila);
     }
     for (int j = 0; j < C; j++)             //> Para columnas: el EXTERNO recorre columnas
     {
         int sumaCol = 0;
         for (int i = 0; i < F; i++)
             sumaCol += m[i][j];
-        cout << "Columna " << j << ": " << sumaCol << "\n";
+        printf("Columna %d: %d\n", j, sumaCol);
     }
     return 0;
 }
@@ -230,12 +228,11 @@ int main()
 <div class="cols">
 <div>
 
-```cpp run title="diagonales.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="diagonales.c"
+#include <stdio.h>
+#define N 4
+int main(void)
 {
-    const int N = 4;
     int m[N][N] = {{3, 1, 4, 1}, {5, 9, 2, 6},
                    {5, 3, 5, 8}, {9, 7, 9, 3}};
     int dp = 0, ds = 0;
@@ -244,7 +241,7 @@ int main()
         dp += m[i][i];             //> Principal: fila = columna
         ds += m[i][N - 1 - i];     //> Secundaria: i + j = N − 1
     }
-    cout << "Principal: " << dp << "  Secundaria: " << ds << "\n";
+    printf("Principal: %d  Secundaria: %d\n", dp, ds);
     return 0;
 }
 ```
@@ -266,14 +263,13 @@ Basta **un** ciclo: en la diagonal, la columna se calcula a partir de la fila.
 :::
 
 :::concepto | 7 | Ruta B · Transpuesta, suma y producto | Elementos aislados, Reversión de la experiencia
-```cpp run title="operaciones.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="operaciones.c"
+#include <stdio.h>
+int main(void)
 {
     int A[2][3] = {{1, 2, 3}, {4, 5, 6}};
     int B[3][2] = {{7, 8}, {9, 10}, {11, 12}};
-    int T[3][2], P[2][2] = {};
+    int T[3][2], P[2][2] = {0};
     for (int i = 0; i < 2; i++)
         for (int j = 0; j < 3; j++)
             T[j][i] = A[i][j];                        //> Transpuesta: filas ↔ columnas
@@ -281,10 +277,10 @@ int main()
         for (int j = 0; j < 2; j++)
             for (int k = 0; k < 3; k++)
                 P[i][j] += A[i][k] * B[k][j];         //> Tres ciclos: k recorre la «dimensión común»
-    cout << "T:\n";
-    for (int i = 0; i < 3; i++) { for (int j = 0; j < 2; j++) cout << T[i][j] << " "; cout << "\n"; }
-    cout << "A x B:\n";
-    for (int i = 0; i < 2; i++) { for (int j = 0; j < 2; j++) cout << P[i][j] << " "; cout << "\n"; }
+    printf("T:\n");
+    for (int i = 0; i < 3; i++) { for (int j = 0; j < 2; j++) printf("%d ", T[i][j]); printf("\n"); }
+    printf("A x B:\n");
+    for (int i = 0; i < 2; i++) { for (int j = 0; j < 2; j++) printf("%d ", P[i][j]); printf("\n"); }
     return 0;
 }
 ```
@@ -325,41 +321,39 @@ Algoritmo Calificaciones
 FinAlgoritmo
 ```
 
-**C. Código en C++**
+**C. Código en C**
 
-```cpp run title="calificaciones.cpp" stdin="8.5 9 7\n6 7.5 8\n10 9.5 9\n5 6 7.5\n"
-#include <iostream>
-#include <iomanip>
-using namespace std;
-int main()
+```c run title="calificaciones.c" stdin="8.5 9 7\n6 7.5 8\n10 9.5 9\n5 6 7.5\n"
+#include <stdio.h>
+#define AL 4
+#define MAT 3
+int main(void)
 {
-    const int AL = 4, MAT = 3;
     double cal[AL][MAT];
     for (int i = 0; i < AL; i++)                     //> Paso 1: captura fila por fila
         for (int j = 0; j < MAT; j++)
-            cin >> cal[i][j];
-    cout << fixed << setprecision(1);
-    cout << "         Mat  Fis  Prog  Prom\n";
+            scanf("%lf", &cal[i][j]);
+    printf("         Mat  Fis  Prog  Prom\n");
     for (int i = 0; i < AL; i++)                     //> Paso 2: cada fila y su promedio
     {
         double suma = 0;                             //> Acumulador de la fila (se reinicia)
-        cout << "Alumno " << i + 1;
+        printf("Alumno %d", i + 1);
         for (int j = 0; j < MAT; j++)
         {
-            cout << setw(5) << cal[i][j];
+            printf("%5.1f", cal[i][j]);
             suma += cal[i][j];
         }
-        cout << setw(6) << suma / MAT << "\n";
+        printf("%6.1f\n", suma / MAT);
     }
-    cout << "Prom.   ";
+    printf("Prom.   ");
     for (int j = 0; j < MAT; j++)                    //> Paso 3: externo por COLUMNAS
     {
         double suma = 0;
         for (int i = 0; i < AL; i++)
             suma += cal[i][j];
-        cout << setw(5) << suma / AL;
+        printf("%5.1f", suma / AL);
     }
-    cout << "\n";
+    printf("\n");
     return 0;
 }
 ```
@@ -386,9 +380,9 @@ m -> ix; m -> rf -> sm; m -> rc -> sm; m -> dg; m -> op [style=dashed];
 :::sintaxis | Tarjeta de sintaxis 2.1 | Interactividad de elementos
 | Quiero… | Código |
 |---|---|
-| Declarar | `const int F = 3, C = 4; int m[F][C];` |
-| Capturar | `for (int i = 0; i < F; i++) for (int j = 0; j < C; j++) cin >> m[i][j];` |
-| Mostrar como tabla | `for (i…) { for (j…) cout << setw(4) << m[i][j]; cout << "\n"; }` |
+| Declarar | `#define F 3` · `#define C 4` … `int m[F][C];` |
+| Capturar | `for (int i = 0; i < F; i++) for (int j = 0; j < C; j++) scanf("%d", &m[i][j]);` |
+| Mostrar como tabla | `for (i…) { for (j…) printf("%4d", m[i][j]); printf("\n"); }` |
 | Sumar todo | `s = 0; for (i…) for (j…) s += m[i][j];` |
 | Suma de la fila `i` | `s = 0; for (int j = 0; j < C; j++) s += m[i][j];` |
 | Suma de la columna `j` | `s = 0; for (int i = 0; i < F; i++) s += m[i][j];` |
@@ -415,15 +409,15 @@ m -> ix; m -> rf -> sm; m -> rc -> sm; m -> dg; m -> op [style=dashed];
 
 **b) Acumulador fuera de lugar.** `int s = 0;` antes de **ambos** ciclos da la suma acumulada de todas las filas, no la de cada una.
 
-**c) Usar una coma en lugar de dos corchetes.** `m[1, 2]` no es la fila 1, columna 2 (en C++ la coma evalúa y descarta el 1): escribe `m[1][2]`.
+**c) Usar una coma en lugar de dos corchetes.** `m[1, 2]` no es la fila 1, columna 2: el operador coma evalúa y descarta el 1, y queda `m[2]`, que es una **fila completa** (un arreglo), no un entero. Escribe `m[1][2]`.
 
-```cpp err
-#include <iostream>
-int main()
+```c err
+#include <stdio.h>
+int main(void)
 {
-    int m[2][3] = {{1, 2, 3}, {4, 5, 6}};
+    int m[3][3] = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
     int x = m[1, 2];
-    std::cout << x;
+    printf("%d\n", x);
     return 0;
 }
 ```
@@ -436,12 +430,12 @@ int main()
 :::isomorfo | Ejemplo isomórfico 2.4 · Mapa de un videojuego por mosaicos | Variabilidad
 Mismo recorrido por filas; los números representan tipos de terreno:
 
-```cpp run title="mapa.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="mapa.c"
+#include <stdio.h>
+#define F 4
+#define C 8
+int main(void)
 {
-    const int F = 4, C = 8;
     int mapa[F][C] = {{0, 0, 1, 1, 0, 0, 0, 2},
                       {0, 1, 1, 0, 0, 3, 0, 0},
                       {0, 0, 0, 0, 3, 3, 0, 0},
@@ -452,13 +446,13 @@ int main()
         {
             switch (mapa[i][j])                  //> Cada número se dibuja con un símbolo
             {
-                case 0: cout << '.'; break;      //> pasto
-                case 1: cout << '^'; break;      //> montaña
-                case 2: cout << '$'; break;      //> tesoro
-                case 3: cout << '~'; break;      //> agua
+                case 0: putchar('.'); break;     //> pasto
+                case 1: putchar('^'); break;     //> montaña
+                case 2: putchar('$'); break;     //> tesoro
+                case 3: putchar('~'); break;     //> agua
             }
         }
-        cout << "\n";
+        putchar('\n');
     }
     return 0;
 }
@@ -472,13 +466,12 @@ int main()
 :::tarea A | T1. Ventas por sucursal y mes: ejemplo y gemelo | 25 min | Ejemplo resuelto, Variabilidad
 **Paso 1 · Estudia:**
 
-```cpp run title="ventas_sucursal.cpp"
-#include <iostream>
-#include <iomanip>
-using namespace std;
-int main()
+```c run title="ventas_sucursal.c"
+#include <stdio.h>
+#define S 3
+#define M 4
+int main(void)
 {
-    const int S = 3, M = 4;
     int v[S][M] = {{120, 150, 90, 200},           //> Sucursal 1: ene..abr
                    {80, 95, 110, 130},            //> Sucursal 2
                    {210, 180, 160, 190}};         //> Sucursal 3
@@ -487,17 +480,17 @@ int main()
     {
         int total = 0;                            //> Total de la sucursal i
         for (int j = 0; j < M; j++) total += v[i][j];
-        cout << "Sucursal " << i + 1 << ": " << total << "\n";
+        printf("Sucursal %d: %d\n", i + 1, total);
         if (total > mejorTotal) { mejorTotal = total; mejorS = i; }
     }
-    cout << "Mejor sucursal: " << mejorS + 1 << "\nTotal por mes:";
+    printf("Mejor sucursal: %d\nTotal por mes:", mejorS + 1);
     for (int j = 0; j < M; j++)                   //> Externo por columnas (meses)
     {
         int t = 0;
         for (int i = 0; i < S; i++) t += v[i][j];
-        cout << setw(5) << t;
+        printf("%5d", t);
     }
-    cout << "\n";
+    printf("\n");
     return 0;
 }
 ```
@@ -505,19 +498,19 @@ int main()
 **Paso 2 · Gemelo.** Un torneo tiene 4 equipos y 5 jornadas; cada casilla son los puntos del equipo en esa jornada. Muestra los puntos totales de cada equipo, el líder y la jornada con más puntos repartidos.
 
 :::solucion | T1
-```cpp run title="torneo.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="torneo.c"
+#include <stdio.h>
+#define E 4
+#define J 5
+int main(void)
 {
-    const int E = 4, J = 5;
     int p[E][J] = {{3, 1, 3, 0, 3}, {1, 1, 0, 3, 3}, {0, 3, 1, 3, 1}, {3, 0, 1, 1, 0}};
     int lider = 0, maxPts = -1;
     for (int i = 0; i < E; i++)
     {
         int t = 0;
         for (int j = 0; j < J; j++) t += p[i][j];
-        cout << "Equipo " << i + 1 << ": " << t << " pts\n";
+        printf("Equipo %d: %d pts\n", i + 1, t);
         if (t > maxPts) { maxPts = t; lider = i; }
     }
     int mejorJ = 0, maxJ = -1;
@@ -527,8 +520,7 @@ int main()
         for (int i = 0; i < E; i++) t += p[i][j];
         if (t > maxJ) { maxJ = t; mejorJ = j; }
     }
-    cout << "Lider: equipo " << lider + 1 << "\nJornada con mas puntos: " << mejorJ + 1
-         << " (" << maxJ << ")\n";
+    printf("Lider: equipo %d\nJornada con mas puntos: %d (%d)\n", lider + 1, mejorJ + 1, maxJ);
     return 0;
 }
 ```
@@ -538,16 +530,16 @@ int main()
 :::tarea A | T2. ¿Es una matriz identidad? (completa con pistas) | 20 min | Problema por completar
 **Contexto.** En gráficos 3D, la matriz identidad significa «no transformar nada». Lee una matriz 3 × 3 y decide si es identidad (1 en la diagonal principal, 0 en el resto). Muestra también la suma de su diagonal (su **traza**).
 
-```cpp blank title="identidad.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c blank title="identidad.c"
+#include <stdio.h>
+#include <stdbool.h>
+#define N 3
+int main(void)
 {
-    const int N = 3;
     int m[N][N];
     for (int i = 0; i < N; i++)
         for (int j = 0; j < N; j++)
-            cin >> __1__;                      // 1: casilla a leer
+            scanf("%d", __1__);                // 1: direccion de la casilla a leer
     bool esIdentidad = true;
     int traza = 0;
     for (int i = 0; i < N; i++)
@@ -560,25 +552,25 @@ int main()
                 esIdentidad = __4__;           // 4: ya no es identidad
         }
     }
-    cout << "Traza: " << traza << "\n";
-    cout << (esIdentidad ? "Es identidad\n" : "No es identidad\n");
+    printf("Traza: %d\n", traza);
+    printf(esIdentidad ? "Es identidad\n" : "No es identidad\n");
     return 0;
 }
 ```
 
 :::solucion | T2
-{{c:1}} `m[i][j]` · {{c:2}} `m[i][i]` · {{c:3}} `i == j` · {{c:4}} `false`
+{{c:1}} `&m[i][j]` · {{c:2}} `m[i][i]` · {{c:3}} `i == j` · {{c:4}} `false`
 
-```cpp run title="identidad.cpp" runs="1 0 0 0 1 0 0 0 1|1 0 0 0 2 0 0 0 1"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="identidad.c" runs="1 0 0 0 1 0 0 0 1|1 0 0 0 2 0 0 0 1"
+#include <stdio.h>
+#include <stdbool.h>
+#define N 3
+int main(void)
 {
-    const int N = 3;
     int m[N][N];
     for (int i = 0; i < N; i++)
         for (int j = 0; j < N; j++)
-            cin >> m[i][j];
+            scanf("%d", &m[i][j]);
     bool esIdentidad = true;
     int traza = 0;
     for (int i = 0; i < N; i++)
@@ -591,8 +583,8 @@ int main()
                 esIdentidad = false;
         }
     }
-    cout << "Traza: " << traza << "\n";
-    cout << (esIdentidad ? "Es identidad\n" : "No es identidad\n");
+    printf("Traza: %d\n", traza);
+    printf(esIdentidad ? "Es identidad\n" : "No es identidad\n");
     return 0;
 }
 ```
@@ -602,12 +594,12 @@ int main()
 :::tarea AB | T3. La transpuesta (completa sin pistas) | 20 min | Problema por completar, Desvanecimiento de guía
 **Contexto.** Una tabla de 2 filas (sucursales) × 4 columnas (meses) debe mostrarse «girada»: 4 filas (meses) × 2 columnas (sucursales).
 
-```cpp blank title="transpuesta.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c blank title="transpuesta.c"
+#include <stdio.h>
+#define F 2
+#define C 4
+int main(void)
 {
-    const int F = 2, C = 4;
     int a[F][C] = {{1, 2, 3, 4}, {5, 6, 7, 8}};
     int t[__1__][__2__];
     for (int i = 0; i < F; i++)
@@ -616,7 +608,7 @@ int main()
     for (int i = 0; i < __4__; i++)
     {
         for (int j = 0; j < __5__; j++)
-            cout << t[i][j] << " ";
+            printf("%d ", t[i][j]);
         __6__
     }
     return 0;
@@ -624,14 +616,14 @@ int main()
 ```
 
 :::solucion | T3
-{{c:1}} `C` · {{c:2}} `F` · {{c:3}} `t[j][i]` · {{c:4}} `C` · {{c:5}} `F` · {{c:6}} `cout << "\n";`
+{{c:1}} `C` · {{c:2}} `F` · {{c:3}} `t[j][i]` · {{c:4}} `C` · {{c:5}} `F` · {{c:6}} `printf("\n");`
 
-```cpp run title="transpuesta.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="transpuesta.c"
+#include <stdio.h>
+#define F 2
+#define C 4
+int main(void)
 {
-    const int F = 2, C = 4;
     int a[F][C] = {{1, 2, 3, 4}, {5, 6, 7, 8}};
     int t[C][F];
     for (int i = 0; i < F; i++)
@@ -640,8 +632,8 @@ int main()
     for (int i = 0; i < C; i++)
     {
         for (int j = 0; j < F; j++)
-            cout << t[i][j] << " ";
-        cout << "\n";
+            printf("%d ", t[i][j]);
+        printf("\n");
     }
     return 0;
 }
@@ -653,41 +645,41 @@ int main()
 **Contexto.** Una sala tiene 5 filas × 8 asientos. La matriz guarda `0` (libre) o `1` (ocupado); algunos ya están ocupados al inicio. El usuario reserva asientos indicando fila y asiento (desde 1) hasta escribir `0 0`. El programa rechaza asientos inexistentes u ocupados. Al final muestra el mapa (`L` libre, `X` ocupado) y cuántos asientos libres quedan en cada fila.
 
 :::solucion | T4
-```cpp run title="sala.cpp" stdin="3 4\n3 4\n9 1\n1 8\n0 0\n"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="sala.c" stdin="3 4\n3 4\n9 1\n1 8\n0 0\n"
+#include <stdio.h>
+#define F 5
+#define C 8
+int main(void)
 {
-    const int F = 5, C = 8;
-    int sala[F][C] = {};
+    int sala[F][C] = {0};
     sala[0][0] = sala[0][1] = sala[2][5] = 1;       // ocupados de inicio
     int f, c;
-    cout << "Fila y asiento (0 0 termina): ";
-    cin >> f >> c;
+    printf("Fila y asiento (0 0 termina): ");
+    scanf("%d %d", &f, &c);
     while (!(f == 0 && c == 0))
     {
         if (f < 1 || f > F || c < 1 || c > C)
-            cout << "No existe ese asiento\n";
+            printf("No existe ese asiento\n");
         else if (sala[f - 1][c - 1] == 1)
-            cout << "Ocupado\n";
+            printf("Ocupado\n");
         else
         {
             sala[f - 1][c - 1] = 1;
-            cout << "Reservado\n";
+            printf("Reservado\n");
         }
-        cout << "Fila y asiento (0 0 termina): ";
-        cin >> f >> c;
+        printf("Fila y asiento (0 0 termina): ");
+        scanf("%d %d", &f, &c);
     }
     for (int i = 0; i < F; i++)
     {
         int libres = 0;
-        cout << "Fila " << i + 1 << ": ";
+        printf("Fila %d: ", i + 1);
         for (int j = 0; j < C; j++)
         {
-            cout << (sala[i][j] ? 'X' : 'L') << ' ';
+            printf("%c ", sala[i][j] ? 'X' : 'L');
             if (sala[i][j] == 0) libres++;
         }
-        cout << " libres: " << libres << "\n";
+        printf(" libres: %d\n", libres);
     }
     return 0;
 }
@@ -708,12 +700,12 @@ int main()
 :::solucion | T5
 Una exploración posible:
 
-```cpp run title="explora_matriz.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="explora_matriz.c"
+#include <stdio.h>
+#include <stdbool.h>
+#define N 4
+int main(void)
 {
-    const int N = 4;
     int m[N][N] = {{4, 9, 2, 7}, {3, 5, 7, 1}, {8, 1, 6, 5}, {2, 6, 4, 8}};
     int total = 0, pares = 0, fi = 0, co = 0, dp = 0, ds = 0;
     bool simetrica = true;
@@ -729,14 +721,14 @@ int main()
             if (m[i][j] != m[j][i]) simetrica = false;
         }
     }
-    double prom = total / double(N * N);
+    double prom = total / (double)(N * N);
     int sobre = 0;
     for (int i = 0; i < N; i++)
         for (int j = 0; j < N; j++)
             if (m[i][j] > prom) sobre++;
-    cout << "Total " << total << ", promedio " << prom << ", sobre el promedio " << sobre << "\n";
-    cout << "Pares " << pares << ", mayor " << m[fi][co] << " en [" << fi << "][" << co << "]\n";
-    cout << "Diagonales " << dp << " y " << ds << ", simetrica: " << (simetrica ? "si" : "no") << "\n";
+    printf("Total %d, promedio %.4f, sobre el promedio %d\n", total, prom, sobre);
+    printf("Pares %d, mayor %d en [%d][%d]\n", pares, m[fi][co], fi, co);
+    printf("Diagonales %d y %d, simetrica: %s\n", dp, ds, simetrica ? "si" : "no");
     return 0;
 }
 ```
@@ -746,15 +738,16 @@ int main()
 :::tarea B | T6. La tabla que suma mal (autoexplicación) | 20 min | Autoexplicación, Reversión de la experiencia
 **Contexto.** El programa debía mostrar la suma de cada **columna** de una matriz 2 × 3, pero muestra valores extraños (y en otra computadora incluso falló). Explica **cada** error y corrígelo.
 
-```cpp blank title="columnas_bug.cpp"
-const int F = 2, C = 3;
+```c blank title="columnas_bug.c"
+#define F 2
+#define C 3
 int m[F][C] = {{1, 2, 3}, {4, 5, 6}};
 int suma = 0;
 for (int i = 0; i < C; i++)
 {
     for (int j = 0; j < F; j++)
         suma += m[i][j];
-    cout << "Columna " << i << ": " << suma << "\n";
+    printf("Columna %d: %d\n", i, suma);
 }
 ```
 
@@ -764,19 +757,19 @@ for (int i = 0; i < C; i++)
 1. `suma` se inicializa una sola vez: debe reiniciarse dentro del ciclo externo.
 2. El externo recorre columnas con `i`, pero el acceso `m[i][j]` usa `i` como **fila**: con `i = 2` accede a `m[2][…]`, que no existe (fuera de rango). Debe ser `m[j][i]` (fila `j`, columna `i`).
 
-```cpp run title="columnas.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="columnas.c"
+#include <stdio.h>
+#define F 2
+#define C 3
+int main(void)
 {
-    const int F = 2, C = 3;
     int m[F][C] = {{1, 2, 3}, {4, 5, 6}};
     for (int col = 0; col < C; col++)
     {
         int suma = 0;
         for (int fil = 0; fil < F; fil++)
             suma += m[fil][col];
-        cout << "Columna " << col << ": " << suma << "\n";
+        printf("Columna %d: %d\n", col, suma);
     }
     return 0;
 }
@@ -797,12 +790,12 @@ Usar nombres como `fil` y `col` en lugar de `i` y `j` evita este tipo de confusi
 :::solucion | T7
 La imagen girada tiene 4 × 3. El píxel `[i][j]` va a `[j][F − 1 − i]`: `[0][0]` → `[0][2]` y `[2][3]` → `[3][0]`.
 
-```cpp run title="rotar90.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="rotar90.c"
+#include <stdio.h>
+#define F 3
+#define C 4
+int main(void)
 {
-    const int F = 3, C = 4;
     char img[F][C] = {{'#', '.', '.', '.'}, {'#', '#', '.', '.'}, {'#', '#', '#', '.'}};
     char rot[C][F];
     for (int i = 0; i < F; i++)
@@ -810,8 +803,8 @@ int main()
             rot[j][F - 1 - i] = img[i][j];
     for (int i = 0; i < C; i++)
     {
-        for (int j = 0; j < F; j++) cout << rot[i][j] << ' ';
-        cout << "\n";
+        for (int j = 0; j < F; j++) printf("%c ", rot[i][j]);
+        printf("\n");
     }
     return 0;
 }
@@ -832,26 +825,25 @@ int main()
 El problema combina variables, condicionales, ciclos y matrices: formen equipos donde **no todos dominen los mismos temas**, para que se complementen.
 - **Integrante 1:** validación de `n` (impar, 3 a 11) con `do-while`.
 - **Integrante 2:** el **método siamés**: el 1 va en la fila 0, columna central; cada número siguiente va una fila **arriba** y una columna a la **derecha** (dando la vuelta por los bordes); si esa casilla está ocupada, se coloca **debajo** del anterior.
-- **Integrante 3:** mostrar el cuadrado con `setw`.
+- **Integrante 3:** mostrar el cuadrado con ancho de campo (`%4d`).
 - **Integrante 4:** verificar que todas las filas, columnas y diagonales sumen `n(n² + 1) / 2`.
 
 Al terminar, cada equipo **explica su solución a los demás equipos**, como propone la tesis.
 :::
 
 :::solucion | T8
-```cpp run title="cuadrado_magico.cpp" runs="4\n3|5"
-#include <iostream>
-#include <iomanip>
-using namespace std;
-int main()
+```c run title="cuadrado_magico.c" runs="4\n3|5"
+#include <stdio.h>
+#include <stdbool.h>
+#define MAX 11
+int main(void)
 {
-    const int MAX = 11;
     int n;
     do {
-        cout << "Orden impar (3-11): ";
-        cin >> n;
+        printf("Orden impar (3-11): ");
+        scanf("%d", &n);
     } while (n < 3 || n > MAX || n % 2 == 0);
-    int m[MAX][MAX] = {};
+    int m[MAX][MAX] = {0};
     int i = 0, j = n / 2;
     for (int k = 1; k <= n * n; k++)
     {
@@ -866,8 +858,8 @@ int main()
     }
     for (int r = 0; r < n; r++)
     {
-        for (int c = 0; c < n; c++) cout << setw(4) << m[r][c];
-        cout << "\n";
+        for (int c = 0; c < n; c++) printf("%4d", m[r][c]);
+        printf("\n");
     }
     int objetivo = n * (n * n + 1) / 2;
     bool ok = true;
@@ -881,7 +873,7 @@ int main()
         d2 += m[r][n - 1 - r];
     }
     if (d1 != objetivo || d2 != objetivo) ok = false;
-    cout << "Constante magica " << objetivo << ": " << (ok ? "verificado" : "ERROR") << "\n";
+    printf("Constante magica %d: %s\n", objetivo, ok ? "verificado" : "ERROR");
     return 0;
 }
 ```
@@ -901,17 +893,16 @@ int main()
 
 **Segmento 3 — Guardar el ganador, no solo un sí/no.** {{como}} Uso `char ganador = '.'` y, cuando encuentro una línea completa, guardo el símbolo. {{porque}} Así la misma lógica sirve para X y para O sin duplicar código.
 
-**Segmento 4 — Probar con tableros diseñados a propósito.** {{como}} Pruebo un tablero donde O gana por columna, otro donde X gana por diagonal secundaria y uno sin ganador. {{porque}} Cada prueba ejercita un recorrido distinto (columnas, diagonal secundaria, ninguno); si solo probara filas, los errores de índices en columnas pasarían desapercibidos.
+**Segmento 4 — Probar con tableros diseñados a propósito.** {{como}} Pruebo un tablero donde O gana por columna, otro donde X gana por diagonal secundaria y uno sin ganador. Leo cada casilla con `scanf(" %c", …)`, que salta espacios y saltos de línea. {{porque}} Cada prueba ejercita un recorrido distinto (columnas, diagonal secundaria, ninguno); si solo probara filas, los errores de índices en columnas pasarían desapercibidos.
 
-```cpp run title="gato.cpp" runs="X O X\nX O .\n. O X|O . X\n. X O\nX . .|X O X\nX O O\nO X X"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="gato.c" runs="X O X\nX O .\n. O X|O . X\n. X O\nX . .|X O X\nX O O\nO X X"
+#include <stdio.h>
+int main(void)
 {
     char t[3][3];
     for (int i = 0; i < 3; i++)
         for (int j = 0; j < 3; j++)
-            cin >> t[i][j];
+            scanf(" %c", &t[i][j]);
     char ganador = '.';
     for (int i = 0; i < 3; i++)
     {
@@ -921,8 +912,8 @@ int main()
     if (t[1][1] != '.' && ((t[0][0] == t[1][1] && t[1][1] == t[2][2]) ||
                            (t[0][2] == t[1][1] && t[1][1] == t[2][0])))
         ganador = t[1][1];
-    if (ganador == '.') cout << "Nadie gano\n";
-    else cout << "Gano " << ganador << "\n";
+    if (ganador == '.') printf("Nadie gano\n");
+    else printf("Gano %c\n", ganador);
     return 0;
 }
 ```
@@ -940,23 +931,22 @@ int main()
 7. ¿Qué es la transpuesta de una matriz?
 8. ¿Qué es el orden por filas (*row-major*)?
 9. ¿Cuántos ciclos anidados necesita el producto de dos matrices?
-10. ¿Qué devuelve la expresión `m[1, 2]` en C++ y por qué es un error?
+10. ¿Qué es `m[1, 2]` en C y por qué no sirve para leer la fila 1, columna 2?
 :::
 
 :::compr | 5.2 Comprehension test · conocimiento procedimental
 **P1. Predice la salida:**
 
-```cpp check title="p1.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c check title="p1.c"
+#include <stdio.h>
+int main(void)
 {
     int m[3][3] = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
     int s = 0;
     for (int i = 0; i < 3; i++)
         for (int j = i; j < 3; j++)
             s += m[i][j];
-    cout << s << " " << m[2][0] + m[0][2] << "\n";
+    printf("%d %d\n", s, m[2][0] + m[0][2]);
     return 0;
 }
 ```
@@ -980,49 +970,48 @@ int main()
 :::
 
 :::solucion | Evaluación 5.1 (recall)
-1 4 filas, 6 columnas, 24 elementos · 2 `m[3][5]` · 3 `i == j`; `i + j == N − 1` · 4 Falso: solo puede omitirse el número de filas · 5 El de columnas · 6 Dentro del ciclo de filas, antes del ciclo de columnas · 7 La matriz que resulta de intercambiar filas por columnas · 8 Los elementos se guardan en memoria fila tras fila, en una sola secuencia contigua · 9 Tres · 10 El operador coma descarta el 1 y queda `m[2]` (la fila 2 completa, no un entero); es un error porque no accede a fila 1, columna 2.
+1 4 filas, 6 columnas, 24 elementos · 2 `m[3][5]` · 3 `i == j`; `i + j == N − 1` · 4 Falso: solo puede omitirse el número de filas · 5 El de columnas · 6 Dentro del ciclo de filas, antes del ciclo de columnas · 7 La matriz que resulta de intercambiar filas por columnas · 8 Los elementos se guardan en memoria fila tras fila, en una sola secuencia contigua · 9 Tres · 10 El operador coma descarta el 1 y queda `m[2]`: la fila 2 completa (un arreglo), no un entero; para la fila 1, columna 2 se escribe `m[1][2]`.
 :::
 
 :::solucion | Evaluación 5.2 (comprehension)
 **P1.** Se suman los elementos del triángulo superior (1 + 2 + 3 + 5 + 6 + 9 = 26) y `7 + 3 = 10`:
 
-```cpp run title="p1.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="p1.c"
+#include <stdio.h>
+int main(void)
 {
     int m[3][3] = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
     int s = 0;
     for (int i = 0; i < 3; i++)
         for (int j = i; j < 3; j++)
             s += m[i][j];
-    cout << s << " " << m[2][0] + m[0][2] << "\n";
+    printf("%d %d\n", s, m[2][0] + m[0][2]);
     return 0;
 }
 ```
 
-**P2.** `for (int i = 0; i < F; i++) { for (int j = 0; j < C; j++) { if (i == 0 || i == F - 1 || j == 0 || j == C - 1) cout << setw(4) << m[i][j]; else cout << "    "; } cout << "\n"; }`
+**P2.** `for (int i = 0; i < F; i++) { for (int j = 0; j < C; j++) { if (i == 0 || i == F - 1 || j == 0 || j == C - 1) printf("%4d", m[i][j]); else printf("    "); } printf("\n"); }`
 
 **P3.** Los índices van de 0 a 2: `for (int i = 0; i < 3; i++) for (int j = 0; j < 3; j++) t[i][j] = (i + 1) * (j + 1);` (si se quiere la tabla del 1 al 3).
 
 **P4.**
 
-```cpp run title="sensores.cpp" stdin="21 23 25 24\n19 22 26 20\n24 24 23 22\n18 21 22 27\n"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="sensores.c" stdin="21 23 25 24\n19 22 26 20\n24 24 23 22\n18 21 22 27\n"
+#include <stdio.h>
+#define S 4
+#define H 4
+int main(void)
 {
-    const int S = 4, H = 4;
     double t[S][H];
     for (int i = 0; i < S; i++)
         for (int j = 0; j < H; j++)
-            cin >> t[i][j];
+            scanf("%lf", &t[i][j]);
     for (int i = 0; i < S; i++)
     {
         int hmax = 0;
         for (int j = 1; j < H; j++)
             if (t[i][j] > t[i][hmax]) hmax = j;
-        cout << "Sensor " << i + 1 << ": max " << t[i][hmax] << " a la hora " << hmax + 1 << "\n";
+        printf("Sensor %d: max %.1f a la hora %d\n", i + 1, t[i][hmax], hmax + 1);
     }
     int mejorH = 0;
     double mejorProm = -1e9;
@@ -1032,7 +1021,7 @@ int main()
         for (int i = 0; i < S; i++) s += t[i][j];
         if (s / S > mejorProm) { mejorProm = s / S; mejorH = j; }
     }
-    cout << "Hora con mayor promedio: " << mejorH + 1 << " (" << mejorProm << ")\n";
+    printf("Hora con mayor promedio: %d (%.2f)\n", mejorH + 1, mejorProm);
     return 0;
 }
 ```

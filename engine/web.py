@@ -1,9 +1,10 @@
 """Generador del curso web interactivo (sitio estático para GitHub Pages).
 
 Uso:  python3 engine/web.py            → genera docs/ (publicar con GitHub Pages: rama main, carpeta /docs)
+      python3 engine/web.py 01 05      → regenera solo esas páginas de tema (más el inicio, el progreso y el glosario)
 
 Reutiliza el motor de los PDF (render.py) en modo WEB: los programas se compilan y
-ejecutan con g++ (con caché), los diagramas salen como SVG en línea y las soluciones
+ejecutan con gcc (con caché), los diagramas salen como SVG en línea y las soluciones
 quedan junto a cada tarea, plegadas.
 """
 import base64
@@ -29,7 +30,7 @@ BLOQUES = [
     ("I", "Fundamentos", ["01", "02", "03", "04", "05"]),
     ("II", "Repetición y arreglos", ["06", "07", "08", "09"]),
     ("III", "Modularidad y datos", ["10", "11", "12", "13"]),
-    ("IV", "Memoria, archivos y objetos", ["14", "15", "16", "17"]),
+    ("IV", "Memoria, archivos y módulos", ["14", "15", "16", "17"]),
 ]
 BLOQUE_DE = {n: b for b, _, ns in BLOQUES for n in ns}
 
@@ -137,8 +138,7 @@ def pdf_de(meta):
 ICONO = """<svg class="logo" viewBox="0 0 40 40" aria-hidden="true"><path d="M2 15.5 H38" stroke="var(--ra)" stroke-width="4.5" stroke-linecap="round"/><path d="M2 24.5 H38" stroke="var(--rb)" stroke-width="4.5" stroke-linecap="round"/><rect x="13" y="7" width="14" height="26" rx="7" fill="var(--surface)" stroke="var(--ink)" stroke-width="3"/></svg>"""
 
 NAV = [("index.html", "Mapa del curso", "mapa"), ("diagnostico.html", "Diagnóstico", "diagnostico"),
-       ("progreso.html", "Mi progreso", "progreso"), ("glosario.html", "Glosario", "glosario"),
-       ("guia.html", "Guía docente", "guia")]
+       ("progreso.html", "Mi progreso", "progreso"), ("glosario.html", "Glosario", "glosario")]
 
 
 def pagina(titulo, cuerpo, actual, data, desc=""):
@@ -150,7 +150,7 @@ def pagina(titulo, cuerpo, actual, data, desc=""):
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{esc(titulo)}</title>
-<meta name="description" content="{esc(desc or 'Curso interactivo de programación básica en C++ diseñado con el mapa de ruta CLT4BP.')}">
+<meta name="description" content="{esc(desc or 'Curso interactivo de programación básica en C diseñado con el mapa de ruta CLT4BP.')}">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/fuentes.css">
 <link rel="stylesheet" href="assets/curso.css">
@@ -159,7 +159,7 @@ def pagina(titulo, cuerpo, actual, data, desc=""):
 <body>
 <a class="saltar" href="#contenido">Saltar al contenido</a>
 <header class="sitio">
-  <a class="marca" href="index.html">{ICONO}<span><b>Programación básica en C++</b><small>Curso interactivo con el mapa de ruta CLT4BP</small></span></a>
+  <a class="marca" href="index.html">{ICONO}<span><b>Programación básica en C</b><small>Curso interactivo con el mapa de ruta CLT4BP</small></span></a>
   <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-principal">Menú</button>
   <nav id="nav-principal" class="nav" aria-label="Secciones del curso">{nav}
     <button class="tema-btn" type="button" title="Cambiar entre modo claro y oscuro"><span class="tema-ico" aria-hidden="true"></span><span class="tema-txt">Tema</span></button>
@@ -170,7 +170,7 @@ def pagina(titulo, cuerpo, actual, data, desc=""):
 </main>
 <footer class="pie">
   <p>Material diseñado con el modelo instruccional <b>mapa de ruta CLT4BP</b> (Sandoval Medina, 2026): teoría de la carga cognitiva, 4C/ID, ARCS, instrucción diferenciada y protocolos verbales.</p>
-  <p>Fuentes: Betancourt Uscátegui y Polanco Guzmán (2021), <i>115 ejercicios resueltos de programación C++</i>; Lospinoso (2019), <i>C++ Crash Course</i>. Los programas se compilaron con g++ (C++20) y sus salidas son reales.</p>
+  <p>Fuentes: Kernighan y Ritchie (1988), <i>The C Programming Language</i>; Seacord (2020), <i>Effective C</i>; King (2008), <i>C Programming: A Modern Approach</i>. Los programas se compilaron con gcc (C17) y sus salidas son reales.</p>
   <p>Tu progreso se guarda solo en este navegador. Puedes exportarlo desde <a href="progreso.html">Mi progreso</a>.</p>
 </footer>
 <script src="assets/datos.js"></script>
@@ -232,7 +232,7 @@ def construir_tema(path, temas, i):
 
     fuentes = "".join(f"<li>{md_inline(f)}</li>" for f in meta.get("fuentes", []))
     paneles.append(f"""<section class="panel p-glosario" id="glosario" data-paso="glosario" aria-labelledby="h-glosario">
-<header class="panel-h"><h2 id="h-glosario">Glosario y fuentes</h2><p>Términos clave en español e inglés, útiles para leer el <i>C++ Crash Course</i> y la documentación.</p></header>
+<header class="panel-h"><h2 id="h-glosario">Glosario y fuentes</h2><p>Términos clave en español e inglés, útiles para leer <i>The C Programming Language</i> (K&amp;R), <i>C Programming: A Modern Approach</i>, <i>Effective C</i> y la documentación.</p></header>
 <div class="contenido">{glosario_tabla(meta.get('glosario', []))}<h3>Fuentes del tema</h3><ul class="fuentes">{fuentes}</ul></div>
 </section>""")
     ficha = R.ficha_html(meta)
@@ -272,7 +272,7 @@ def construir_tema(path, temas, i):
 {navt}
 </div>"""
     data = {"tipo": "tema", "num": num, "bloque": bloque}
-    return pagina(f"Tema {num}. {meta['corto']} · Programación básica en C++", cuerpo, "", data,
+    return pagina(f"Tema {num}. {meta['corto']} · Programación básica en C", cuerpo, "", data,
                   f"Tema {num}: {meta['titulo']}"), meta, tareas, ctx
 
 
@@ -292,8 +292,8 @@ def construir_inicio(temas):
     pasos = "".join(f'<li class="paso-{k}"><b>{t}</b><span>{d}</span></li>' for k, t, _, d in PASOS)
     noscript = "".join(f'<li><a href="tema-{t["num"]}.html">{t["num"]}. {esc(t["corto"])}</a></li>' for t in temas)
     cuerpo = f"""<section class="inicio-hero">
-  <div class="letrero"><p>17 paradas, 2 rutas</p><h1>Programación básica en C++</h1></div>
-  <p class="lede">Un recorrido de la primera línea de código a las clases y objetos. Cada tema es una parada con cinco pasos; el diagnóstico de cada bloque te sugiere la ruta que más te conviene según lo que ya sabes.</p>
+  <div class="letrero"><p>17 paradas, 2 rutas</p><h1>Programación básica en C</h1></div>
+  <p class="lede">Un recorrido de la primera línea de código a los programas de varios archivos. Cada tema es una parada con cinco pasos; el diagnóstico de cada bloque te sugiere la ruta que más te conviene según lo que ya sabes.</p>
   <div class="acciones" id="acciones-inicio"><a class="btn btn-primario" href="diagnostico.html">Hacer el diagnóstico</a><a class="btn" href="tema-01.html">Empezar por el Tema 01</a></div>
 </section>
 <section class="mapa-sec" aria-labelledby="h-mapa">
@@ -315,12 +315,8 @@ def construir_inicio(temas):
   <h2 id="h-temas">Los 17 temas</h2>
   {''.join(filas)}
 </section>
-<section class="docentes" aria-labelledby="h-doc">
-  <h2 id="h-doc">Para docentes</h2>
-  <p>Cada tema incluye su <b>ficha de diseño instruccional</b> (pestaña «Ficha docente»): objetivos por ruta, efectos de la carga cognitiva por componente, matriz de instrucción diferenciada y plan de implementación. La <a href="guia.html">guía docente</a> explica cómo aplicar las tres fases del modelo al curso, con los formatos de registro de la tesis.</p>
-  <p>Los alumnos pueden exportar su progreso desde <a href="progreso.html">Mi progreso</a> (JSON o CSV) para entregarlo; incluye desempeño, esfuerzo mental y la encuesta de carga cognitiva de cada bloque.</p>
-</section>"""
-    return pagina("Programación básica en C++ · Curso interactivo CLT4BP", cuerpo, "mapa", {"tipo": "inicio"})
+"""
+    return pagina("Programación básica en C · Curso interactivo CLT4BP", cuerpo, "mapa", {"tipo": "inicio"})
 
 
 # ------------------------------------------------------------------ diagnóstico
@@ -331,7 +327,7 @@ def construir_diagnostico():
         for k, it in enumerate(web_diag.BLOQUES[b], 1):
             code = ""
             if it.get("code"):
-                tbl, _ = R.code_table(it["code"], "cpp", {"nolines": False})
+                tbl, _ = R.code_table(it["code"], "c", {"nolines": False})
                 code = f'<div class="codewrap">{tbl}</div>'
             opts = "".join(f'<li><label><input type="radio" name="d{b}-{k}" value="{j}"><span>{md_inline(o)}</span></label></li>' for j, o in enumerate(it["opts"]))
             tipo = "Lectura de código" if it.get("code") else "Concepto"
@@ -351,7 +347,7 @@ def construir_diagnostico():
 </section>
 <nav class="diag-tabs" aria-label="Bloques del diagnóstico">{tabs}</nav>
 {''.join(bloques)}"""
-    return pagina("Diagnóstico · Programación básica en C++", cuerpo, "diagnostico", {"tipo": "diagnostico"})
+    return pagina("Diagnóstico · Programación básica en C", cuerpo, "diagnostico", {"tipo": "diagnostico"})
 
 
 # ------------------------------------------------------------------ progreso
@@ -388,7 +384,7 @@ def construir_progreso():
 <div class="acciones"><button class="btn btn-primario" type="button" id="exp-json">Descargar mi progreso (JSON)</button><button class="btn" type="button" id="exp-csv">Descargar resumen (CSV)</button>
 <label class="btn"><input type="file" id="imp-json" accept="application/json,.json" hidden>Importar progreso (JSON)</label><button class="btn btn-peligro" type="button" id="borrar">Borrar todo mi progreso</button></div>
 <p class="datos-msg" role="status" aria-live="polite"></p></section>"""
-    return pagina("Mi progreso · Programación básica en C++", cuerpo, "progreso", {"tipo": "progreso"})
+    return pagina("Mi progreso · Programación básica en C", cuerpo, "progreso", {"tipo": "progreso"})
 
 
 # ------------------------------------------------------------------ glosario
@@ -411,7 +407,7 @@ def construir_glosario(temas_meta):
 <div class="glos-filtros"><label><span>Buscar</span><input type="search" id="g-q" placeholder="puntero, loop, arreglo…" autocomplete="off"></label>
 <label><span>Tema</span><select id="g-tema"><option value="">Todos los temas</option>{opts}</select></label><p id="g-n" role="status" aria-live="polite"></p></div>
 <div class="tabla-scroll"><table class="tb glos glos-todo"><thead><tr><th>Español</th><th>English</th><th>Significado</th><th>Temas</th></tr></thead><tbody>{''.join(filas)}</tbody></table></div>"""
-    return pagina("Glosario · Programación básica en C++", cuerpo, "glosario", {"tipo": "glosario"})
+    return pagina("Glosario · Programación básica en C", cuerpo, "glosario", {"tipo": "glosario"})
 
 
 # ------------------------------------------------------------------ guía docente
@@ -440,12 +436,14 @@ def construir_guia(temas):
     cuerpo = f"""<section class="pagina-h"><h1>Guía docente</h1><p class="lede">{md_inline(meta['titulo'])}</p></section>
 <div class="guia"><nav class="guia-toc" aria-label="Contenido de la guía"><p class="rail-t">Contenido</p><ol>{toc_h}</ol></nav>
 <article class="guia-art contenido">{web}{''.join(partes)}</article></div>"""
-    return pagina("Guía docente · Programación básica en C++", cuerpo, "guia", {"tipo": "guia"})
+    return pagina("Guía docente · Programación básica en C", cuerpo, "guia", {"tipo": "guia"})
 
 
 # ------------------------------------------------------------------ main
-def main():
-    if SITE.exists():  # se conserva docs/pdf por si out/ no está disponible
+def main(solo=None):
+    """solo: números de tema ("01", …) para regenerar únicamente esas páginas. Las demás páginas
+    de tema, la guía y el diagnóstico (que compilan programas de todo el curso) no se tocan."""
+    if SITE.exists() and not solo:  # se conserva docs/pdf por si out/ no está disponible
         for c in SITE.iterdir():
             if c.name != "pdf":
                 shutil.rmtree(c) if c.is_dir() else c.unlink()
@@ -458,21 +456,21 @@ def main():
         temas.append({"num": meta["num"], "titulo": meta["titulo"], "corto": meta["corto"], "duracion": meta.get("duracion", ""),
                       "bloque": BLOQUE_DE[meta["num"]], "pdf": pdf_de(meta), "lema": meta.get("lema", ""),
                       "tareas": tareas_de(p.read_text())})
-    metas = []
-    stats = {}
+    metas = [leer_tema(p)[0] for p in paths]
     for i, p in enumerate(paths):
+        if solo and temas[i]["num"] not in solo:
+            continue
         doc, meta, tareas, ctx = construir_tema(p, temas, i)
         (SITE / f"tema-{meta['num']}.html").write_text(doc)
-        metas.append(meta)
-        stats[meta["num"]] = ctx.stats
         R.log(f"[web] tema-{meta['num']}.html  {ctx.stats}")
-    n = web_diag.verificar(R.compile_run)
-    R.log(f"[web] diagnóstico: {n} reactivos con código verificados")
+    if not solo:
+        n = web_diag.verificar(R.compile_run)
+        R.log(f"[web] diagnóstico: {n} reactivos con código verificados")
+        (SITE / "diagnostico.html").write_text(construir_diagnostico())
+        (SITE / "guia.html").write_text(construir_guia(temas))
     (SITE / "index.html").write_text(construir_inicio(temas))
-    (SITE / "diagnostico.html").write_text(construir_diagnostico())
     (SITE / "progreso.html").write_text(construir_progreso())
     (SITE / "glosario.html").write_text(construir_glosario(metas))
-    (SITE / "guia.html").write_text(construir_guia(temas))
     datos = {"bloques": [{"id": b, "nombre": n, "temas": ns} for b, n, ns in BLOQUES],
              "pasos": [{"id": k, "titulo": t, "corto": c} for k, t, c, _ in PASOS],
              "temas": temas}
@@ -492,4 +490,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    main([a.zfill(2) for a in sys.argv[1:]] or None)

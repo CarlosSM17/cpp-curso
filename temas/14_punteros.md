@@ -1,28 +1,29 @@
 ---
 num: "14"
-archivo: "Tema14_Punteros_y_referencias"
-titulo: "Punteros y referencias"
-corto: "Punteros y referencias"
+archivo: "Tema14_Punteros"
+titulo: "Punteros"
+corto: "Punteros"
 lema: "Un puntero no es la casa: es la nota donde escribiste su dirección."
 duracion: "6 h · 3 sesiones de 2 h"
-previos: "Tema 08 (arreglos), Tema 10 (funciones y paso por referencia), Tema 13 (estructuras)."
+previos: "Tema 08 (arreglos), Tema 10 (funciones y paso por dirección), Tema 12 (cadenas) y Tema 13 (estructuras y `->`)."
 fuentes:
-  - "Lospinoso, J. (2019). *C++ Crash Course*. Cap. 3 «Reference Types»: Pointers (Addressing Variables, Dereferencing Pointers, The Member-of-Pointer Operator, Pointers and Arrays, Pointers Are Dangerous, void Pointers, nullptr), References, Usage of Pointers and References (Forward-Linked Lists, Employing References, const Correctness), auto Type Deduction."
-  - "Betancourt Uscátegui, J. F. y Polanco Guzmán, I. Y. (2021). *115 ejercicios resueltos de programación C++*. Cap. 1, §1.2.9 Variables (dirección de memoria con `&`, ejemplo 4 con `char*`); Cap. 8 (paso por referencia)."
+  - "Kernighan, B. W. y Ritchie, D. M. (1988). *The C Programming Language* (2.ª ed.). Prentice Hall. Cap. 5 «Pointers and Arrays»: §5.1 Pointers and Addresses, §5.2 Pointers and Function Arguments, §5.3 Pointers and Arrays, §5.4 Address Arithmetic, §5.5 Character Pointers and Functions. Cap. 6: §6.4 Pointers to Structures, §6.5 Self-referential Structures."
+  - "King, K. N. (2008). *C Programming: A Modern Approach* (2.ª ed.). W. W. Norton. Cap. 11 «Pointers». Cap. 12 «Pointers and Arrays». Cap. 17: §17.5 Linked Lists."
+  - "Seacord, R. C. (2020). *Effective C*. No Starch Press. Cap. 2 «Objects, Functions, and Types» (tipos puntero)."
   - "Sandoval Medina, C. (2026). Tesis doctoral, §5.4: estudio piloto del modelo CLT4BP sobre punteros (Tablas 5.14 y 5.15; Figura 5.2: analogía de las casas y secuencia declaración → dirección → desreferencia → modificación)."
 objetivos:
   A:
-    - "Comprender el concepto fundamental de puntero en C++."
+    - "Comprender el concepto fundamental de puntero en C."
     - "Identificar la sintaxis correcta para declarar y utilizar punteros."
     - "Explicar la diferencia entre un puntero y una variable regular."
     - "Aplicar los operadores de dirección (`&`) y desreferencia (`*`) correctamente."
     - "Implementar operaciones básicas (asignación, aritmética) y relacionar los punteros con arreglos y funciones."
   B:
-    - "Comprender el funcionamiento avanzado de los punteros (aritmética, `->`, `nullptr`, `const`)."
-    - "Utilizar correctamente la sintaxis de declaración y asignación en casos combinados."
+    - "Comprender el funcionamiento avanzado de los punteros (aritmética, `->`, `NULL`, `const`)."
+    - "Utilizar correctamente la sintaxis de declaración y asignación en casos combinados (incluidos `char *` y `char []`)."
     - "Implementar aritmética de punteros compleja (dos punteros, recorridos)."
     - "Aplicar punteros en la creación y manipulación de estructuras enlazadas."
-    - "Implementar funciones que modifiquen variables externas con punteros y con referencias."
+    - "Implementar funciones que modifiquen variables externas y que devuelvan punteros."
 eval_recall: "Opción múltiple sobre conceptos, identificación de sintaxis, asociación de definiciones y cuestionario de operaciones (como en el piloto de la tesis, Tabla 5.14)."
 eval_compr: "Resolver problemas simples de implementación, corregir errores, analizar la salida de código y desarrollar un programa pequeño de manipulación de datos."
 efectos:
@@ -30,7 +31,7 @@ efectos:
     - ["Modalidad", "El guion del protocolo verbal acompaña a los diagramas de memoria (texto e imágenes con narración, como en el piloto)."]
     - ["Atención dividida", "Integración de texto explicativo con diagramas de memoria en cada paso."]
     - ["Ejemplo resuelto", "Ejemplos paso a paso sobre declaración y uso de punteros (Figura 5.2 de la tesis)."]
-    - ["Elementos aislados", "Primero dirección, luego declaración, después desreferencia y, al final, aritmética, funciones y estructuras."]
+    - ["Elementos aislados", "Primero dirección, luego declaración, después desreferencia y, al final, aritmética, funciones, estructuras y cadenas."]
   tareas:
     - ["Problema por completar", "Código parcialmente desarrollado para completar (T2, T3)."]
     - ["Elementos aislados", "Introducción progresiva: primero declaración (T1), luego manipulación (T2–T4)."]
@@ -47,8 +48,8 @@ efectos:
 diferenciada:
   Contenido:
     comp: "Información de soporte"
-    A: "Analogía de las casas; `&`, `*`, `nullptr`; punteros y arreglos; paso de punteros a funciones."
-    B: "Aritmética con dos punteros, `->`, `const` con punteros, `void*`, listas enlazadas."
+    A: "Analogía de las casas; `&`, `*`, `NULL`; punteros y arreglos; paso de punteros a funciones."
+    B: "Aritmética con dos punteros, `->`, `const` con punteros, `char *` frente a `char []`, `void *`, listas enlazadas."
   Proceso:
     comp: "Tareas de aprendizaje"
     A: "T1 → T4 dibujando el diagrama de memoria de cada línea; pares mixtos."
@@ -60,7 +61,7 @@ diferenciada:
   Entorno:
     comp: "Información procedimental"
     A: "Hoja de diagramas de memoria impresa; depurador mostrando direcciones."
-    B: "Compilación con `-fsanitize=address` para detectar accesos inválidos."
+    B: "Compilación con `-g -fsanitize=address` para detectar accesos inválidos."
 plan:
   - ["Sesión 1 · apertura", "Soporte", "Analogía de las casas (atención) y aplicaciones reales (relevancia).", "15 min"]
   - ["Sesión 1 · desarrollo", "Soporte", "Conceptos 1–5 con diagramas de memoria; ejemplo resuelto (Figura 5.2) con narración.", "60 min"]
@@ -69,17 +70,17 @@ plan:
   - ["Sesión 3", "Tareas + evaluación", "T5, T8 colaborativa; protocolo verbal; recall y comprehension test; cuestionarios de carga cognitiva y de percepción.", "120 min"]
 glosario:
   - ["puntero / apuntador", "pointer", "Variable que guarda una dirección de memoria."]
-  - ["dirección de memoria", "memory address", "Número que identifica una posición de memoria."]
+  - ["dirección de memoria", "memory address", "Número que identifica una posición de memoria; `printf` la muestra con `%p`."]
   - ["operador dirección", "address-of operator (`&`)", "Obtiene la dirección de una variable: `&x`."]
   - ["desreferenciar", "dereference (`*`)", "Acceder a lo que hay en la dirección guardada: `*p`."]
-  - ["puntero nulo", "null pointer (`nullptr`)", "Puntero que no apunta a nada."]
+  - ["puntero nulo", "null pointer (`NULL`)", "Puntero que no apunta a nada."]
   - ["aritmética de punteros", "pointer arithmetic", "Sumar/restar enteros a un puntero para moverse entre elementos."]
-  - ["operador flecha", "member-of-pointer operator (`->`)", "`p->campo` equivale a `(*p).campo`."]
-  - ["referencia", "reference", "Alias de una variable existente (`int& r = x;`)."]
+  - ["operador flecha", "arrow operator (`->`)", "`p->campo` equivale a `(*p).campo`."]
+  - ["puntero a carácter", "pointer to char (`char *`)", "Puntero al primer carácter de un texto; un literal se apunta con `const char *`."]
   - ["puntero colgante", "dangling pointer", "Puntero a memoria que ya no es válida."]
   - ["lista enlazada", "linked list", "Nodos que se conectan entre sí mediante punteros."]
   - ["corrección de const", "const correctness", "Usar `const` para impedir modificaciones no deseadas."]
-  - ["puntero genérico", "void pointer (`void*`)", "Puntero sin tipo; no se puede desreferenciar directamente."]
+  - ["puntero genérico", "void pointer (`void *`)", "Puntero sin tipo; no se puede desreferenciar directamente (Tema 15)."]
 ---
 
 # 1. Información de soporte {.soporte}
@@ -106,23 +107,22 @@ Si le das a un amigo **la dirección** de tu casa (y no la casa), **¿qué puede
 :::
 
 :::relevancia
-Los punteros son la forma en que C++ trabaja «cerca de la máquina»: los motores de videojuegos los usan para manejar miles de objetos sin copiarlos, los sistemas operativos y los controladores de Arduino los usan para leer sensores en direcciones fijas, y estructuras como listas, árboles y grafos se construyen enlazando nodos con punteros. Entenderlos también explica **qué ocurre** cuando pasas un arreglo o una referencia a una función. {{arcs:Relevancia}}
+Los punteros son la forma en que C trabaja «cerca de la máquina», y la razón por la que C se usa para escribir sistemas operativos: el núcleo de Linux y los controladores de dispositivos los usan para leer sensores y registros en direcciones fijas, los motores de videojuegos los usan para manejar miles de objetos sin copiarlos, y estructuras como listas, árboles y grafos se construyen enlazando nodos con punteros. Ya los has usado sin nombrarlos: el `&` de `scanf`, los arreglos que se pasan a funciones y el `->` de las estructuras. {{arcs:Relevancia}}
 :::
 
 ## 1.1 Conceptos, uno por uno
 
 :::concepto | 1 | Toda variable tiene una dirección: el operador `&` | Elementos aislados, Atención dividida
-Ya lo viste en el Tema 02: una variable tiene nombre, tipo, contenido y **dirección**. El operador `&` («dirección de») la obtiene:
+Ya lo viste en el Tema 02: una variable tiene nombre, tipo, contenido y **dirección**. El operador `&` («dirección de») la obtiene y `printf` la muestra con `%p`:
 
-```cpp run title="direcciones.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="direcciones.c"
+#include <stdio.h>
+int main(void)
 {
     int numero = 42;
     double precio = 9.5;
-    cout << "numero vale " << numero << " y vive en " << &numero << "\n";   //> `&numero`: la dirección (hexadecimal)
-    cout << "precio vale " << precio << " y vive en " << &precio << "\n";
+    printf("numero vale %d y vive en %p\n", numero, (void *)&numero);   //> `&numero`: la dirección (en hexadecimal)
+    printf("precio vale %.1f y vive en %p\n", precio, (void *)&precio); //> `(void *)`: el tipo que `%p` espera
     return 0;
 }
 ```
@@ -130,19 +130,18 @@ int main()
 :::
 
 :::concepto | 2 | Declarar un puntero | Elementos aislados, Atención dividida
-Un **puntero** es una variable cuyo contenido es una **dirección**. Se declara con `*` después del tipo al que apuntará:
+Un **puntero** es una variable cuyo contenido es una **dirección**. Se declara con `*` entre el tipo al que apuntará y el nombre:
 
-```cpp run title="declarar.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="declarar.c"
+#include <stdio.h>
+int main(void)
 {
     int numero = 42;
-    int* puntero = &numero;        //> `int*`: «puntero a int». Guarda la dirección de numero
-    int* vacio = nullptr;          //> nullptr: el puntero no apunta a nada (todavía)
-    cout << "puntero guarda " << puntero << "\n";
-    cout << "&numero es     " << &numero << "\n";    //> Son la misma dirección
-    cout << "vacio es nulo: " << (vacio == nullptr) << "\n";
+    int *puntero = &numero;        //> `int *`: «puntero a int». Guarda la dirección de numero
+    int *vacio = NULL;             //> NULL: el puntero no apunta a nada (todavía)
+    printf("puntero guarda %p\n", (void *)puntero);
+    printf("&numero es     %p\n", (void *)&numero);    //> Son la misma dirección
+    printf("vacio es nulo: %d\n", vacio == NULL);
     return 0;
 }
 ```
@@ -150,37 +149,36 @@ int main()
 ```diagram mem
 vars:
   - {name: numero, type: int, val: 42, addr: "0x100"}
-  - {name: puntero, type: "int*", val: "0x100", addr: "0x108", to: numero, kind: ptr}
-  - {name: vacio, type: "int*", val: "nullptr", addr: "0x110", kind: ptr}
+  - {name: puntero, type: "int *", val: "0x100", addr: "0x108", to: numero, kind: ptr}
+  - {name: vacio, type: "int *", val: "NULL", addr: "0x110", kind: ptr}
 figcaption: "Figura 1. El contenido de puntero es la dirección de numero (direcciones simplificadas)."
 ```
-El tipo importa: un `int*` solo puede guardar direcciones de `int`; un `double*`, de `double`.
+El tipo importa: un `int *` solo debe guardar direcciones de `int`; un `double *`, de `double`. Ojo con declarar varios: en `int *p, q;` solo `p` es puntero (`q` es un `int`); por eso se escribe el `*` pegado al nombre.
 :::
 
 :::concepto | 3 | Desreferenciar: ir a la casa con `*` | Elementos aislados, Atención dividida
 Con `*puntero` («lo apuntado por puntero») se **lee** o **modifica** el contenido de la variable a la que apunta:
 
-```cpp run title="desreferenciar.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="desreferenciar.c"
+#include <stdio.h>
+int main(void)
 {
     int numero = 42;
-    int* puntero = &numero;
+    int *puntero = &numero;
     int valor = *puntero;           //> LEER: valor recibe lo que hay en la dirección → 42
     *puntero = 100;                 //> ESCRIBIR: cambia lo que hay en la dirección → numero ahora vale 100
-    cout << "valor = " << valor << ", numero = " << numero << "\n";
+    printf("valor = %d, numero = %d\n", valor, numero);
     return 0;
 }
 ```
 
 :::cuidado | El asterisco tiene dos significados
-En una **declaración** (`int* p`), `*` dice «p es un puntero». En una **expresión** (`*p = 5`), `*` dice «ve a la dirección guardada en p». Leer en voz alta ayuda: `int* p` = «p es puntero a int»; `*p` = «lo apuntado por p».
+En una **declaración** (`int *p`), `*` dice «p es un puntero». En una **expresión** (`*p = 5`), `*` dice «ve a la dirección guardada en p». Leer en voz alta ayuda: `int *p` = «p es puntero a int»; `*p` = «lo apuntado por p».
 :::
 :::
 
 :::concepto | 4 | Puntero vs. variable regular | Elementos aislados
-| | Variable regular `int x = 5;` | Puntero `int* p = &x;` |
+| | Variable regular `int x = 5;` | Puntero `int *p = &x;` |
 |---|---|---|
 | Guarda | un valor (5) | una dirección (la de `x`) |
 | `x` / `p` | 5 | la dirección de `x` |
@@ -197,20 +195,19 @@ Cinco estudiantes son «casas»: cada uno tiene en la espalda un número de dire
 :::concepto | 5 | Punteros y arreglos | Elementos aislados, Atención dividida
 El nombre de un arreglo se convierte en la **dirección de su primer elemento**. Sumar `1` a un puntero lo mueve **un elemento** (no un byte):
 
-```cpp run title="punteros_arreglos.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="punteros_arreglos.c"
+#include <stdio.h>
+int main(void)
 {
     int a[5] = {10, 20, 30, 40, 50};
-    int* p = a;                              //> Igual que p = &a[0]
-    cout << *p << " " << *(p + 2) << " " << p[3] << "\n";   //> *(p + i) es lo mismo que p[i] y a[i]
+    int *p = a;                              //> Igual que p = &a[0]
+    printf("%d %d %d\n", *p, *(p + 2), p[3]);   //> *(p + i) es lo mismo que p[i] y a[i]
     p++;                                     //> Avanza al siguiente int (4 bytes más adelante)
-    cout << "Ahora p apunta a " << *p << "\n";
+    printf("Ahora p apunta a %d\n", *p);
     int suma = 0;
-    for (int* q = a; q < a + 5; q++)         //> Recorrer con puntero: de a hasta a + 5 (sin incluirlo)
+    for (int *q = a; q < a + 5; q++)         //> Recorrer con puntero: de a hasta a + 5 (sin incluirlo)
         suma += *q;
-    cout << "Suma: " << suma << "\n";
+    printf("Suma: %d\n", suma);
     return 0;
 }
 ```
@@ -225,29 +222,28 @@ addr: "0x200"
 step: 4
 figcaption: "Figura 2. p + 1 avanza sizeof(int) = 4 bytes: del elemento [1] al [2]."
 ```
-Por eso, al pasar un arreglo a una función, se pasa la **dirección** del primer elemento: la función trabaja sobre el original.
+Por eso, al pasar un arreglo a una función, se pasa la **dirección** del primer elemento: la función trabaja sobre el original. En un parámetro, `int a[]` e `int *a` significan lo mismo.
 :::
 
 :::concepto | 6 | Punteros y funciones: modificar variables externas | Elementos aislados, Atención dividida
-Si una función recibe la **dirección** de una variable, puede modificarla. Compara con la referencia del Tema 10:
+Es lo que hiciste en el Tema 10, ahora con todo su significado: la función recibe **direcciones** y modifica a través de ellas. Compara con la versión que recibe copias:
 
 <div class="cols eq">
 <div>
 
-```cpp run title="con_puntero.cpp"
-#include <iostream>
-using namespace std;
-void intercambiar(int* a, int* b)
+```c run title="con_puntero.c"
+#include <stdio.h>
+void intercambiar(int *a, int *b)
 {
     int aux = *a;
     *a = *b;
     *b = aux;
 }
-int main()
+int main(void)
 {
     int x = 3, y = 8;
     intercambiar(&x, &y);   // se envian direcciones
-    cout << x << " " << y << "\n";
+    printf("%d %d\n", x, y);
     return 0;
 }
 ```
@@ -255,20 +251,19 @@ int main()
 </div>
 <div>
 
-```cpp run title="con_referencia.cpp"
-#include <iostream>
-using namespace std;
-void intercambiar(int& a, int& b)
+```c run title="con_copias.c"
+#include <stdio.h>
+void intercambiar(int a, int b)
 {
     int aux = a;
     a = b;
     b = aux;
 }
-int main()
+int main(void)
 {
     int x = 3, y = 8;
-    intercambiar(x, y);     // se envian las variables
-    cout << x << " " << y << "\n";
+    intercambiar(x, y);     // se envian copias
+    printf("%d %d\n", x, y);
     return 0;
 }
 ```
@@ -276,80 +271,77 @@ int main()
 </div>
 </div>
 
-Mismo efecto, distinta sintaxis: con punteros se escribe `&` al llamar y `*` dentro; con referencias, nada. El *C++ Crash Course* recomienda **referencias** cuando el parámetro nunca debe ser nulo y **punteros** cuando «no apuntar a nada» (`nullptr`) es una posibilidad válida.
+La versión de la derecha intercambia **sus copias** y `x`, `y` no cambian. Esta es también la razón del `&` en `scanf("%d", &x)`: `scanf` es una función que necesita escribir en tu variable.
 :::
 
 :::concepto | 7 | Punteros a estructuras: el operador flecha `->` | Elementos aislados
-```cpp run title="flecha.cpp"
-#include <iostream>
-#include <string>
-using namespace std;
-struct Producto { string nombre; double precio; int existencias; };
-void rebajar(Producto* p, double pct)        //> Recibe la dirección del producto
+```c run title="flecha.c"
+#include <stdio.h>
+typedef struct { char nombre[30]; double precio; int existencias; } Producto;
+void rebajar(Producto *p, double pct)        //> Recibe la dirección del producto
 {
     p->precio = p->precio * (1 - pct / 100); //> p->precio es (*p).precio
 }
-int main()
+int main(void)
 {
     Producto mochila = {"Mochila", 600, 5};
-    Producto* ptr = &mochila;
+    Producto *ptr = &mochila;
     rebajar(ptr, 25);
-    cout << ptr->nombre << " ahora cuesta $" << (*ptr).precio << "\n";   //> Ambas formas son equivalentes
+    printf("%s ahora cuesta $%.2f\n", ptr->nombre, (*ptr).precio);   //> Ambas formas son equivalentes
     return 0;
 }
 ```
+Los paréntesis de `(*ptr).precio` son necesarios: el punto tiene más precedencia que el `*`. Por eso existe `->`.
 :::
 
-:::concepto | 8 | Referencias: alias que no se reasignan | Elementos aislados
-Una **referencia** es otro nombre para una variable existente. A diferencia de un puntero, **debe** inicializarse, **no** puede ser nula y **no** se puede cambiar para que «apunte» a otra:
+:::concepto | 8 | Punteros y cadenas: `char s[]` frente a `const char *s` | Elementos aislados
+Un texto puede guardarse en un **arreglo propio** o señalarse con un **puntero** a un literal. Se parecen, pero no son lo mismo:
 
-```cpp run title="referencias.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="cadenas_puntero.c"
+#include <stdio.h>
+int main(void)
 {
-    int original = 10;
-    int& alias = original;     //> alias ES original (mismo lugar en memoria)
-    alias = 25;                //> Cambia original
-    int otro = 99;
-    alias = otro;              //> NO reasigna: copia 99 en original
-    cout << original << " " << &original << " " << &alias << "\n";   //> Misma dirección
+    char arreglo[] = "Hola";              //> Arreglo propio: una COPIA modificable de 5 bytes
+    const char *literal = "Hola";         //> Puntero a un literal: el texto no se debe modificar
+    arreglo[0] = 'B';                     //> Válido
+    printf("%s %s\n", arreglo, literal);
+    printf("%zu %zu\n", sizeof(arreglo), sizeof(literal));   //> 5 (el arreglo) vs 8 (un puntero)
+    literal = "Adios";                    //> Un puntero puede apuntar a otro texto…
+    printf("%s\n", literal);              //> …un arreglo no se puede reasignar
     return 0;
 }
 ```
 
-| | Puntero `int* p` | Referencia `int& r` |
+| | `char s[] = "Hola";` | `const char *s = "Hola";` |
 |---|---|---|
-| ¿Puede ser nulo? | sí (`nullptr`) | no |
-| ¿Se puede cambiar a otra variable? | sí | no |
-| ¿Debe inicializarse? | no (pero conviene) | sí |
-| Acceso al valor | `*p` | `r` |
+| ¿Qué es? | un arreglo de 5 `char` | un puntero al primer carácter de un literal |
+| ¿Se puede modificar el texto? | sí: `s[0] = 'B';` | no (sin `const`, compila pero es comportamiento indefinido) |
+| ¿Se puede reasignar? | no: `s = "Adios";` es error | sí: `s = "Adios";` |
+| `sizeof(s)` | 5 | 8 (tamaño de un puntero) |
 :::
 
 :::concepto | 9 | Ruta B · Los punteros son peligrosos (y cómo protegerse) | Elementos aislados, Reversión de la experiencia
-El *C++ Crash Course* dedica una sección a sus peligros:
-
-- **Puntero sin inicializar:** `int* p; *p = 5;` escribe en una dirección al azar → comportamiento indefinido. Inicializa siempre (con una dirección o `nullptr`).
-- **Desreferenciar `nullptr`:** el programa se detiene. Verifica: `if (p != nullptr) …` (o simplemente `if (p)`).
+- **Puntero sin inicializar:** `int *p; *p = 5;` escribe en una dirección al azar → comportamiento indefinido. Inicializa siempre (con una dirección o `NULL`).
+- **Desreferenciar `NULL`:** el programa se detiene (*segmentation fault*). Verifica: `if (p != NULL) …` (o simplemente `if (p)`).
 - **Salirse del arreglo** con aritmética: `*(a + 10)` en un arreglo de 5.
 - **Puntero colgante:** devolver la dirección de una variable local que ya no existe.
-- **`const`:** `const int* p` → no puedes modificar `*p`; `int* const p` → no puedes cambiar `p`.
+- **`const`:** `const int *p` → no puedes modificar `*p`; `int *const p` → no puedes cambiar `p`.
+- **`void *`:** un puntero «sin tipo» que puede guardar cualquier dirección (lo devuelve `malloc`, Tema 15); para usar el dato hay que convertirlo a un puntero con tipo.
 
-```cpp run title="const_punteros.cpp"
-#include <iostream>
-using namespace std;
-int buscar(const int* datos, int n, int x)    //> const int*: la función promete NO modificar los datos
+```c run title="const_punteros.c"
+#include <stdio.h>
+int buscar(const int *datos, int n, int x)     //> const int *: la función promete NO modificar los datos
 {
-    for (const int* q = datos; q < datos + n; q++)
-        if (*q == x) return static_cast<int>(q - datos);   //> Restar punteros da la distancia en elementos
+    for (const int *q = datos; q < datos + n; q++)
+        if (*q == x) return (int)(q - datos);  //> Restar punteros da la distancia en elementos
     return -1;
 }
-int main()
+int main(void)
 {
     int v[] = {4, 8, 15, 16, 23, 42};
-    int* p = nullptr;
-    if (p) cout << *p;                         //> Se protege: no se desreferencia un nulo
-    cout << "15 esta en la posicion " << buscar(v, 6, 15) << "\n";
+    int *p = NULL;
+    if (p) printf("%d", *p);                   //> Se protege: no se desreferencia un nulo
+    printf("15 esta en la posicion %d\n", buscar(v, 6, 15));
     return 0;
 }
 ```
@@ -365,29 +357,29 @@ int main()
 
 **Paso 1 · Declaración de variables**
 
-```cpp nolines
+```c nolines
 int numero = 42;
-int* puntero;     // declarado, sin inicializar
+int *puntero;     // declarado, sin inicializar
 ```
 
 ```diagram mem
 vars:
   - {name: numero, type: int, val: 42, addr: "0x100"}
-  - {name: puntero, type: "int*", val: "?", addr: "0x108", kind: ptr}
+  - {name: puntero, type: "int *", val: "?", addr: "0x108", kind: ptr}
 ```
 
 *`numero` es una variable de tipo entero con el valor 42; `puntero` está declarado pero aún no apunta a nada válido.*
 
 **Paso 2 · El puntero guarda la dirección de numero**
 
-```cpp nolines
+```c nolines
 puntero = &numero;
 ```
 
 ```diagram mem
 vars:
   - {name: numero, type: int, val: 42, addr: "0x100"}
-  - {name: puntero, type: "int*", val: "0x100", addr: "0x108", to: numero, kind: ptr, hl: true}
+  - {name: puntero, type: "int *", val: "0x100", addr: "0x108", to: numero, kind: ptr, hl: true}
 ```
 
 </div>
@@ -395,14 +387,14 @@ vars:
 
 **Paso 3 · Desreferencia del puntero**
 
-```cpp nolines
+```c nolines
 int valor = *puntero;
 ```
 
 ```diagram mem
 vars:
   - {name: numero, type: int, val: 42, addr: "0x100"}
-  - {name: puntero, type: "int*", val: "0x100", to: numero, kind: ptr, addr: "0x108"}
+  - {name: puntero, type: "int *", val: "0x100", to: numero, kind: ptr, addr: "0x108"}
   - {name: valor, type: int, val: 42, addr: "0x10c", hl: true}
 ```
 
@@ -410,14 +402,14 @@ vars:
 
 **Paso 4 · Modificación a través del puntero**
 
-```cpp nolines
+```c nolines
 *puntero = 100;
 ```
 
 ```diagram mem
 vars:
   - {name: numero, type: int, val: 100, addr: "0x100", hl: true}
-  - {name: puntero, type: "int*", val: "0x100", to: numero, kind: ptr, addr: "0x108"}
+  - {name: puntero, type: "int *", val: "0x100", to: numero, kind: ptr, addr: "0x108"}
   - {name: valor, type: int, val: 42, addr: "0x10c"}
 ```
 
@@ -428,19 +420,17 @@ vars:
 
 **Programa completo y verificación:**
 
-```cpp run title="cuatro_pasos.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="cuatro_pasos.c"
+#include <stdio.h>
+int main(void)
 {
     int numero = 42;                       //> Paso 1
-    int* puntero;
+    int *puntero;
     puntero = &numero;                     //> Paso 2: el puntero guarda la dirección de numero
     int valor = *puntero;                  //> Paso 3: desreferencia (lee 42)
     *puntero = 100;                        //> Paso 4: modifica numero a través del puntero
-    cout << "numero = " << numero << ", valor = " << valor
-         << ", *puntero = " << *puntero << "\n";
-    cout << boolalpha << "puntero == &numero: " << (puntero == &numero) << "\n";
+    printf("numero = %d, valor = %d, *puntero = %d\n", numero, valor, *puntero);
+    printf("puntero == &numero: %s\n", puntero == &numero ? "si" : "no");
     return 0;
 }
 ```
@@ -449,14 +439,14 @@ int main()
 :::resumen | Mapa del tema
 ```dot
 rankdir=LR; nodesep=0.16; ranksep=0.3;
-@term(p, "Puntero\nint* p")
+@term(p, "Puntero\nint *p")
 @proc(d, "&x: dirección de x")
 @proc(s, "*p: lo apuntado\n(leer / escribir)")
-@proc(n, "nullptr: no apunta\na nada")
+@proc(n, "NULL: no apunta\na nada")
 @proc(a, "arreglos: p + i\n*(p + i) == p[i]")
 @proc(f, "funciones: f(&x)\nmodifica el original")
 @proc(e, "estructuras: p->campo")
-@sub(r, "referencia int& r:\nalias, no nula")
+@sub(r, "cadenas: char s[]\nfrente a const char *s")
 @hl(z, "peligros: sin inicializar,\nnulo, fuera de rango, colgante")
 p -> d; p -> s; p -> n; p -> a; p -> f; p -> e; p -> r [style=dashed]; p -> z [style=dashed];
 ```
@@ -467,28 +457,29 @@ p -> d; p -> s; p -> n; p -> a; p -> f; p -> e; p -> r [style=dashed]; p -> z [s
 :::sintaxis | Tarjeta de sintaxis 2.1
 | Quiero… | Código | Se lee |
 |---|---|---|
-| Declarar un puntero a `int` | `int* p = nullptr;` | «p es puntero a int, nulo» |
+| Declarar un puntero a `int` | `int *p = NULL;` | «p es puntero a int, nulo» |
 | Guardar la dirección de `x` | `p = &x;` | «p recibe la dirección de x» |
 | Leer el valor apuntado | `int v = *p;` | «v recibe lo apuntado por p» |
 | Modificar el valor apuntado | `*p = 7;` | «lo apuntado por p recibe 7» |
-| Apuntar al primer elemento | `int* q = arreglo;` | |
+| Mostrar una dirección | `printf("%p", (void *)p);` | |
+| Apuntar al primer elemento | `int *q = arreglo;` | |
 | Elemento `i` vía puntero | `*(q + i)` o `q[i]` | |
 | Avanzar al siguiente elemento | `q++;` | |
 | Distancia entre punteros | `q2 - q1` | en elementos |
 | Miembro de estructura apuntada | `ps->campo` | `(*ps).campo` |
-| Función que modifica `x` | `void f(int* p)` → `f(&x);` | |
-| Verificar que no sea nulo | `if (p != nullptr)` / `if (p)` | |
-| Referencia (alias) | `int& r = x;` | |
+| Función que modifica `x` | `void f(int *p)` → `f(&x);` | |
+| Verificar que no sea nulo | `if (p != NULL)` / `if (p)` | |
+| Apuntar a un texto fijo | `const char *s = "Hola";` | |
 
 **Dibuja siempre** las cajas: una para la variable y otra para el puntero, con una flecha desde el puntero hasta la variable.
 :::
 
 :::checklist | Guía de preguntas de rutina 2.2
 <ul class="checks">
-<li>¿Inicialicé el puntero (con <code>&amp;variable</code>, un arreglo o <code>nullptr</code>)?</li>
+<li>¿Inicialicé el puntero (con <code>&amp;variable</code>, un arreglo o <code>NULL</code>)?</li>
 <li>¿Uso <code>&amp;</code> para obtener una dirección y <code>*</code> para llegar al valor?</li>
 <li>¿El tipo del puntero coincide con el tipo de la variable?</li>
-<li>Antes de <code>*p</code>, ¿estoy seguro de que <code>p</code> no es <code>nullptr</code>?</li>
+<li>Antes de <code>*p</code>, ¿estoy seguro de que <code>p</code> no es <code>NULL</code>?</li>
 <li>Con aritmética, ¿me mantengo dentro del arreglo?</li>
 <li>¿Dibujé el diagrama de memoria después de cada asignación a un puntero?</li>
 </ul>
@@ -497,64 +488,77 @@ p -> d; p -> s; p -> n; p -> a; p -> f; p -> e; p -> r [style=dashed]; p -> z [s
 :::errores | Errores frecuentes 2.3 | Variabilidad, Autoexplicación
 **a) Asignar un valor en lugar de una dirección.**
 
-```cpp err
-int main()
+```c err
+int main(void)
 {
     int x = 5;
-    int* p = x;
+    int *p = x;
     return *p;
 }
 ```
-*Corrección:* `int* p = &x;`
+*Corrección:* `int *p = &x;` (gcc anterior a la 14 solo advertía, y el programa fallaba al ejecutarse.)
 
 **b) Tipos que no coinciden.**
 
-```cpp err
-int main()
+```c err
+int main(void)
 {
     double d = 2.5;
-    int* p = &d;
-    return 0;
+    int *p = &d;
+    return *p;
 }
 ```
+*Corrección:* `double *p = &d;`.
 
 **c) Olvidar el `*` al usar el valor.** `p = p + 1;` mueve el puntero; `*p = *p + 1;` incrementa el valor apuntado.
 
 **d) Precedencia de `*p++`.** `*p++` incrementa el **puntero** (y lee el valor anterior); para incrementar el valor: `(*p)++`.
 
-```cpp run
-#include <iostream>
-using namespace std;
-int main()
+```c run
+#include <stdio.h>
+int main(void)
 {
     int a[3] = {10, 20, 30};
-    int* p = a;
+    int *p = a;
     (*p)++;              //> Incrementa a[0]: 11
-    *p++;                //> Avanza p a a[1] (el valor leído se descarta)
-    cout << a[0] << " " << *p << "\n";
+    p++;                 //> Avanza p a a[1] (lo mismo que hace *p++, sin leer el valor)
+    printf("%d %d\n", a[0], *p);
     return 0;
 }
 ```
 
-**e) Puntero colgante.** Una función no debe devolver la dirección de su variable local (g++ avisa: *address of local variable returned*).
+**e) Puntero colgante.** Una función no debe devolver la dirección de su variable local: al terminar la función, esa variable deja de existir.
+
+```c warn
+int *crear(void)
+{
+    int local = 7;
+    return &local;
+}
+int main(void)
+{
+    int *p = crear();
+    return p != 0;
+}
+```
+*Corrección:* devolver el valor (`int crear(void)`) o usar memoria dinámica (Tema 15).
 :::
 
 :::isomorfo | Ejemplo isomórfico 2.4 · Recorrer un texto con un puntero | Variabilidad
-El mismo recorrido con puntero, ahora sobre una cadena de C (Tema 12):
+El mismo recorrido con puntero, ahora sobre una cadena (Tema 12):
 
-```cpp run title="recorre_texto.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="recorre_texto.c"
+#include <stdio.h>
+int main(void)
 {
-    const char* texto = "Punteros";      //> Apunta al primer carácter de la cadena
+    const char *texto = "Punteros";      //> Apunta al primer carácter de la cadena
     int n = 0;
-    for (const char* c = texto; *c != '\0'; c++)   //> Avanza hasta el tope
+    for (const char *c = texto; *c != '\0'; c++)   //> Avanza hasta el tope
     {
-        cout << *c << '.';
+        printf("%c.", *c);
         n++;
     }
-    cout << "\n" << n << " caracteres\n";
+    printf("\n%d caracteres\n", n);
     return 0;
 }
 ```
@@ -571,11 +575,10 @@ Si un ejemplo de internet sobre punteros te confunde, **rediséñalo**: copia el
 :::tarea A | T1. Funciones que devuelven varios resultados: ejemplo y gemelo | 25 min | Ejemplo resuelto, Variabilidad
 **Paso 1 · Estudia** cómo una función entrega dos resultados a través de punteros:
 
-```cpp run title="min_max.cpp"
-#include <iostream>
-using namespace std;
+```c run title="min_max.c"
+#include <stdio.h>
 
-void minMax(const int* a, int n, int* menor, int* mayor)   //> menor y mayor: direcciones donde escribir
+void minMax(const int *a, int n, int *menor, int *mayor)   //> menor y mayor: direcciones donde escribir
 {
     *menor = a[0];                                          //> Se escribe EN la variable de main
     *mayor = a[0];
@@ -586,32 +589,31 @@ void minMax(const int* a, int n, int* menor, int* mayor)   //> menor y mayor: di
     }
 }
 
-int main()
+int main(void)
 {
     int datos[] = {17, 4, 29, 11, 8};
     int mn, mx;
     minMax(datos, 5, &mn, &mx);                            //> Se envían las DIRECCIONES de mn y mx
-    cout << "Menor: " << mn << "  Mayor: " << mx << "\n";
+    printf("Menor: %d  Mayor: %d\n", mn, mx);
     return 0;
 }
 ```
 
-**Paso 2 · Gemelo.** Escribe `void dividir(int a, int b, int* cociente, int* residuo)` que entregue el cociente y el residuo de `a / b`, y úsala desde `main` con 47 y 5.
+**Paso 2 · Gemelo.** Escribe `void dividir(int a, int b, int *cociente, int *residuo)` que entregue el cociente y el residuo de `a / b`, y úsala desde `main` con 47 y 5.
 
 :::solucion | T1
-```cpp run title="dividir.cpp"
-#include <iostream>
-using namespace std;
-void dividir(int a, int b, int* cociente, int* residuo)
+```c run title="dividir.c"
+#include <stdio.h>
+void dividir(int a, int b, int *cociente, int *residuo)
 {
     *cociente = a / b;
     *residuo = a % b;
 }
-int main()
+int main(void)
 {
     int c, r;
     dividir(47, 5, &c, &r);
-    cout << "47 = 5 x " << c << " + " << r << "\n";
+    printf("47 = 5 x %d + %d\n", c, r);
     return 0;
 }
 ```
@@ -621,14 +623,13 @@ int main()
 :::tarea A | T2. Recorrer un arreglo con un puntero (completa con pistas) | 25 min | Problema por completar
 **Contexto.** Calcular la suma y el máximo de las lecturas de un sensor recorriendo el arreglo **solo con un puntero** (sin índices).
 
-```cpp blank title="sensor_puntero.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c blank title="sensor_puntero.c"
+#include <stdio.h>
+#define N 6
+int main(void)
 {
-    const int N = 6;
     double lecturas[N] = {21.5, 23.0, 22.8, 25.1, 24.4, 20.9};
-    double* p = __1__;                       // 1: direccion del primer elemento
+    double *p = __1__;                       // 1: direccion del primer elemento
     double suma = 0, maximo = __2__;         // 2: el primer valor, a traves de p
     while (p < __3__)                        // 3: direccion "una despues" del ultimo
     {
@@ -636,7 +637,7 @@ int main()
         if (*p > maximo) maximo = *p;
         __5__;                               // 5: avanzar al siguiente elemento
     }
-    cout << "Suma: " << suma << "  Maximo: " << maximo << "\n";
+    printf("Suma: %.1f  Maximo: %.1f\n", suma, maximo);
     return 0;
 }
 ```
@@ -644,14 +645,13 @@ int main()
 :::solucion | T2
 {{c:1}} `lecturas` (o `&lecturas[0]`) · {{c:2}} `*p` · {{c:3}} `lecturas + N` · {{c:4}} `*p` · {{c:5}} `p++`
 
-```cpp run title="sensor_puntero.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="sensor_puntero.c"
+#include <stdio.h>
+#define N 6
+int main(void)
 {
-    const int N = 6;
     double lecturas[N] = {21.5, 23.0, 22.8, 25.1, 24.4, 20.9};
-    double* p = lecturas;
+    double *p = lecturas;
     double suma = 0, maximo = *p;
     while (p < lecturas + N)
     {
@@ -659,7 +659,7 @@ int main()
         if (*p > maximo) maximo = *p;
         p++;
     }
-    cout << "Suma: " << suma << "  Maximo: " << maximo << "\n";
+    printf("Suma: %.1f  Maximo: %.1f\n", suma, maximo);
     return 0;
 }
 ```
@@ -669,11 +669,10 @@ int main()
 :::tarea AB | T3. Inventario con punteros a estructuras (completa sin pistas) | 25 min | Problema por completar, Desvanecimiento de guía
 **Contexto.** Una función recibe un **puntero** a un producto y registra una venta si hay existencias suficientes; otra devuelve un puntero al producto más caro de un arreglo.
 
-```cpp blank title="inventario_ptr.cpp"
-#include <iostream>
-#include <string>
-using namespace std;
-struct Producto { string nombre; double precio; int existencias; };
+```c blank title="inventario_ptr.c"
+#include <stdio.h>
+#include <stdbool.h>
+typedef struct { char nombre[30]; double precio; int existencias; } Producto;
 
 bool vender(__1__ p, int cant)
 {
@@ -682,69 +681,71 @@ bool vender(__1__ p, int cant)
     return true;
 }
 
-Producto* masCaro(Producto* a, int n)
+Producto *masCaro(Producto *a, int n)
 {
-    Producto* mejor = __4__;
+    Producto *mejor = __4__;
     for (int i = 1; i < n; i++)
         if (a[i].precio > __5__) mejor = __6__;
     return mejor;
 }
 
-int main()
+int main(void)
 {
     Producto inv[3] = {{"Lapiz", 8, 50}, {"Mochila", 520, 3}, {"Cuaderno", 45, 20}};
-    cout << vender(&inv[1], 2) << " " << vender(&inv[1], 2) << "\n";
-    Producto* c = masCaro(inv, 3);
-    cout << c->nombre << " quedan " << c->existencias << "\n";
+    bool v1 = vender(&inv[1], 2);
+    bool v2 = vender(&inv[1], 2);
+    printf("%d %d\n", v1, v2);
+    Producto *c = masCaro(inv, 3);
+    printf("%s quedan %d\n", c->nombre, c->existencias);
     return 0;
 }
 ```
 
 :::solucion | T3
-{{c:1}} `Producto*` · {{c:2}} `p->existencias` · {{c:3}} `p->existencias` · {{c:4}} `a` (o `&a[0]`) · {{c:5}} `mejor->precio` · {{c:6}} `&a[i]`
+{{c:1}} `Producto *` · {{c:2}} `p->existencias` · {{c:3}} `p->existencias` · {{c:4}} `a` (o `&a[0]`) · {{c:5}} `mejor->precio` · {{c:6}} `&a[i]`
 
-```cpp run title="inventario_ptr.cpp"
-#include <iostream>
-#include <string>
-using namespace std;
-struct Producto { string nombre; double precio; int existencias; };
+```c run title="inventario_ptr.c"
+#include <stdio.h>
+#include <stdbool.h>
+typedef struct { char nombre[30]; double precio; int existencias; } Producto;
 
-bool vender(Producto* p, int cant)
+bool vender(Producto *p, int cant)
 {
     if (p->existencias < cant) return false;
     p->existencias -= cant;
     return true;
 }
 
-Producto* masCaro(Producto* a, int n)
+Producto *masCaro(Producto *a, int n)
 {
-    Producto* mejor = a;
+    Producto *mejor = a;
     for (int i = 1; i < n; i++)
         if (a[i].precio > mejor->precio) mejor = &a[i];
     return mejor;
 }
 
-int main()
+int main(void)
 {
     Producto inv[3] = {{"Lapiz", 8, 50}, {"Mochila", 520, 3}, {"Cuaderno", 45, 20}};
-    cout << vender(&inv[1], 2) << " " << vender(&inv[1], 2) << "\n";
-    Producto* c = masCaro(inv, 3);
-    cout << c->nombre << " quedan " << c->existencias << "\n";
+    bool v1 = vender(&inv[1], 2);
+    bool v2 = vender(&inv[1], 2);
+    printf("%d %d\n", v1, v2);
+    Producto *c = masCaro(inv, 3);
+    printf("%s quedan %d\n", c->nombre, c->existencias);
     return 0;
 }
 ```
-La primera venta se realiza (quedan 1) y la segunda se rechaza: por eso se imprime `1 0`.
+La primera venta se realiza (quedan 1) y la segunda se rechaza: por eso se imprime `1 0`. Las dos ventas van en variables separadas porque en C el orden en que se evalúan los argumentos de `printf` no está definido.
 :::
 :::
 
 :::tarea AB | T4. Invertir con dos punteros (problema convencional) | 30 min | Variabilidad
-**Contexto.** Escribe `void invertir(int* ini, int* fin)` que invierta los elementos entre `ini` y `fin` (inclusive) usando **dos punteros** que avanzan uno hacia el otro e intercambian valores. Luego escribe `int* buscar(int* ini, int* fin, int x)` que devuelva un puntero al primer elemento igual a `x` o `nullptr` si no está; úsalo para poner en cero el elemento encontrado.
+**Contexto.** Escribe `void invertir(int *ini, int *fin)` que invierta los elementos entre `ini` y `fin` (inclusive) usando **dos punteros** que avanzan uno hacia el otro e intercambian valores. Luego escribe `int *buscar(int *ini, int *fin, int x)` que devuelva un puntero al primer elemento igual a `x` o `NULL` si no está; úsalo para poner en cero el elemento encontrado.
 
 :::solucion | T4
-```cpp run title="dos_punteros.cpp"
-#include <iostream>
-using namespace std;
-void invertir(int* ini, int* fin)
+```c run title="dos_punteros.c"
+#include <stdio.h>
+void invertir(int *ini, int *fin)
 {
     while (ini < fin)
     {
@@ -755,21 +756,21 @@ void invertir(int* ini, int* fin)
         fin--;
     }
 }
-int* buscar(int* ini, int* fin, int x)
+int *buscar(int *ini, int *fin, int x)
 {
-    for (int* p = ini; p <= fin; p++)
+    for (int *p = ini; p <= fin; p++)
         if (*p == x) return p;
-    return nullptr;
+    return NULL;
 }
-int main()
+int main(void)
 {
     int a[7] = {1, 2, 3, 4, 5, 6, 7};
     invertir(a, a + 6);
-    int* p = buscar(a, a + 6, 4);
+    int *p = buscar(a, a + 6, 4);
     if (p) *p = 0;
-    if (buscar(a, a + 6, 99) == nullptr) cout << "99 no esta\n";
-    for (int x : a) cout << x << " ";
-    cout << "\n";
+    if (buscar(a, a + 6, 99) == NULL) printf("99 no esta\n");
+    for (int i = 0; i < 7; i++) printf("%d ", a[i]);
+    printf("\n");
     return 0;
 }
 ```
@@ -777,78 +778,78 @@ int main()
 :::
 
 :::tarea A | T5. Todas las formas de llegar al tercer elemento (solución libre) | 20 min | Solución libre
-**Contexto.** Con `int a[5] = {2, 4, 6, 8, 10};` e `int* p = a;`, escribe **todas las expresiones distintas que puedas** que lean el tercer elemento (6), y también todas las formas que conozcas de **recorrer** el arreglo completo. Verifica cada una en un programa.
+**Contexto.** Con `int a[5] = {2, 4, 6, 8, 10};` e `int *p = a;`, escribe **todas las expresiones distintas que puedas** que lean el tercer elemento (6), y también todas las formas que conozcas de **recorrer** el arreglo completo. Verifica cada una en un programa.
 
 :::solucion | T5
-```cpp run title="formas.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="formas.c"
+#include <stdio.h>
+int main(void)
 {
     int a[5] = {2, 4, 6, 8, 10};
-    int* p = a;
-    int* q = &a[2];
-    cout << a[2] << " " << *(a + 2) << " " << p[2] << " " << *(p + 2) << " "
-         << *q << " " << 2[a] << " " << *(&a[0] + 2) << "\n";   // 2[a] es valido (y confuso)
-    for (int i = 0; i < 5; i++) cout << a[i];              // indice
-    cout << " ";
-    for (int* r = a; r != a + 5; r++) cout << *r;          // puntero
-    cout << " ";
-    for (int x : a) cout << x;                            // for de rango
-    cout << "\n";
+    int *p = a;
+    int *q = &a[2];
+    printf("%d %d %d %d %d %d %d\n", a[2], *(a + 2), p[2], *(p + 2),
+           *q, 2[a], *(&a[0] + 2));                         // 2[a] es valido (y confuso)
+    for (int i = 0; i < 5; i++) printf("%d", a[i]);         // indice
+    printf(" ");
+    for (int *r = a; r != a + 5; r++) printf("%d", *r);     // puntero
+    printf(" ");
+    int *s = a;
+    while (s < a + 5) printf("%d", *s++);                   // *s++: lee y luego avanza
+    printf("\n");
     return 0;
 }
 ```
+`2[a]` funciona porque `a[i]` significa `*(a + i)`, y la suma es conmutativa.
 :::
 :::
 
 :::tarea B | T6. Explica a tu compañero (autoexplicación) | 25 min | Autoexplicación, Reversión de la experiencia
 **Contexto.** Un compañero escribió este código y obtiene resultados extraños (a veces el programa se cierra). **Explica con tus palabras qué hace cada bloque, cuál es el error y por qué es peligroso**; propone la corrección.
 
-```cpp blank title="punteros_bug.cpp"
+```c blank title="punteros_bug.c"
 // Bloque A
-int* p;
+int *p;
 *p = 10;
 // Bloque B
 int x = 5;
-int* q = &x;
+int *q = &x;
 q = q + 1;
-cout << *q;
+printf("%d", *q);
 // Bloque C
-int* crear()
+int *crear(void)
 {
     int local = 7;
     return &local;
 }
 // Bloque D
-int* r = nullptr;
-cout << *r;
+int *r = NULL;
+printf("%d", *r);
 ```
 
 {{lineas:5}}
 
 :::solucion | T6
-**A:** `p` no está inicializado: contiene una dirección al azar y `*p = 10` escribe en memoria ajena (comportamiento indefinido). Corrección: `int y; int* p = &y;`. **B:** `q + 1` apunta **después** de `x`, que no es un arreglo: leer `*q` es inválido. Para cambiar el valor era `*q = *q + 1`. **C:** devuelve la dirección de una variable local que deja de existir al terminar la función: puntero **colgante**. Corrección: devolver el valor (`int crear()`) o usar memoria dinámica (Tema 15). **D:** desreferenciar `nullptr` detiene el programa; hay que verificar `if (r)` antes.
+**A:** `p` no está inicializado: contiene una dirección al azar y `*p = 10` escribe en memoria ajena (comportamiento indefinido). Corrección: `int y; int *p = &y;`. **B:** `q + 1` apunta **después** de `x`, que no es un arreglo: leer `*q` es inválido. Para cambiar el valor era `*q = *q + 1`. **C:** devuelve la dirección de una variable local que deja de existir al terminar la función: puntero **colgante**. Corrección: devolver el valor (`int crear(void)`) o usar memoria dinámica (Tema 15). **D:** desreferenciar `NULL` detiene el programa; hay que verificar `if (r)` antes.
 :::
 :::
 
 :::tarea B | T7. Imagina las flechas (imaginación) | 25 min | Imaginación
 **Sin ejecutar**, imagina y dibuja el diagrama de memoria (cajas y flechas) **después de cada línea**; luego escribe la salida y compruébala.
 
-```cpp check title="imagina_punteros.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c check title="imagina_punteros.c"
+#include <stdio.h>
+int main(void)
 {
     int a = 1, b = 2;
-    int* p = &a;
-    int* q = &b;
+    int *p = &a;
+    int *q = &b;
     *p = *q + 3;
     p = q;
     *p = *p * 10;
     q = &a;
     *q += *p;
-    cout << a << " " << b << " " << *p << " " << *q << "\n";
+    printf("%d %d %d %d\n", a, b, *p, *q);
     return 0;
 }
 ```
@@ -858,20 +859,19 @@ int main()
 :::solucion | T7
 `*p = *q + 3` → `a = 5`. `p = q` → ahora **ambos** apuntan a `b`. `*p = *p * 10` → `b = 20`. `q = &a` → `q` apunta a `a`. `*q += *p` → `a = 5 + 20 = 25`. Final: `p → b`, `q → a`.
 
-```cpp run title="imagina_punteros.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="imagina_punteros.c"
+#include <stdio.h>
+int main(void)
 {
     int a = 1, b = 2;
-    int* p = &a;
-    int* q = &b;
+    int *p = &a;
+    int *q = &b;
     *p = *q + 3;
     p = q;
     *p = *p * 10;
     q = &a;
     *q += *p;
-    cout << a << " " << b << " " << *p << " " << *q << "\n";
+    printf("%d %d %d %d\n", a, b, *p, *q);
     return 0;
 }
 ```
@@ -879,62 +879,61 @@ int main()
 :::
 
 :::tarea AB | T8. Una lista enlazada de vagones (reto colaborativo) | 45 min | Memoria colectiva de trabajo, Variabilidad
-**Contexto.** El *C++ Crash Course* (cap. 3) presenta la **lista enlazada** como la estructura canónica basada en punteros: cada **nodo** guarda un dato y un puntero al siguiente. Modelen un tren: cada vagón tiene una carga y apunta al vagón siguiente; el último apunta a `nullptr`.
+**Contexto.** Una estructura puede contener un **puntero a otra estructura de su mismo tipo** (Kernighan y Ritchie, §6.5, las llaman estructuras autorreferenciadas). Con eso se construye la **lista enlazada**: cada **nodo** guarda un dato y un puntero al siguiente. Modelen un tren: cada vagón tiene una carga y apunta al vagón siguiente; el último apunta a `NULL`.
 
 :::colab | Organización
 Equipos de 4, niveles mezclados.
-- **Integrante 1:** `struct Vagon { string carga; int toneladas; Vagon* siguiente; };` y crear 4 vagones como variables locales.
-- **Integrante 2:** enlazarlos (`v1.siguiente = &v2; …`) y escribir `void recorrer(Vagon* inicio)` que muestre el tren hasta llegar a `nullptr`.
-- **Integrante 3:** `int totalToneladas(Vagon* inicio)` y `Vagon* buscar(Vagon* inicio, string carga)`.
+- **Integrante 1:** `typedef struct Vagon { char carga[20]; int toneladas; struct Vagon *siguiente; } Vagon;` (dentro de la definición todavía no existe el alias `Vagon`, por eso el miembro usa `struct Vagon *`) y crear 4 vagones como variables locales.
+- **Integrante 2:** enlazarlos (`v1.siguiente = &v2; …`) y escribir `void recorrer(const Vagon *inicio)` que muestre el tren hasta llegar a `NULL`.
+- **Integrante 3:** `int totalToneladas(const Vagon *inicio)` y `Vagon *buscar(Vagon *inicio, const char carga[])`.
 - **Integrante 4:** insertar un vagón **en medio** del tren solo cambiando punteros (sin mover los demás) y verificar con `recorrer`.
 
 Dibujen el tren en el pizarrón (cajas y flechas) antes de programar cada paso.
 :::
 
 :::solucion | T8
-```cpp run title="tren.cpp"
-#include <iostream>
-#include <string>
-using namespace std;
-struct Vagon { string carga; int toneladas; Vagon* siguiente; };
+```c run title="tren.c"
+#include <stdio.h>
+#include <string.h>
+typedef struct Vagon { char carga[20]; int toneladas; struct Vagon *siguiente; } Vagon;
 
-void recorrer(Vagon* v)
+void recorrer(const Vagon *v)
 {
-    while (v != nullptr)
+    while (v != NULL)
     {
-        cout << "[" << v->carga << " " << v->toneladas << "t] -> ";
+        printf("[%s %dt] -> ", v->carga, v->toneladas);
         v = v->siguiente;
     }
-    cout << "fin\n";
+    printf("fin\n");
 }
-int totalToneladas(Vagon* v)
+int totalToneladas(const Vagon *v)
 {
     int t = 0;
     for (; v; v = v->siguiente) t += v->toneladas;
     return t;
 }
-Vagon* buscar(Vagon* v, const string& carga)
+Vagon *buscar(Vagon *v, const char carga[])
 {
     for (; v; v = v->siguiente)
-        if (v->carga == carga) return v;
-    return nullptr;
+        if (strcmp(v->carga, carga) == 0) return v;
+    return NULL;
 }
-int main()
+int main(void)
 {
-    Vagon v4 = {"Granos", 30, nullptr};
+    Vagon v4 = {"Granos", 30, NULL};
     Vagon v3 = {"Acero", 50, &v4};
     Vagon v2 = {"Autos", 20, &v3};
     Vagon v1 = {"Carbon", 40, &v2};
     recorrer(&v1);
-    Vagon nuevo = {"Madera", 25, nullptr};
-    Vagon* acero = buscar(&v1, "Acero");
+    Vagon nuevo = {"Madera", 25, NULL};
+    Vagon *acero = buscar(&v1, "Acero");
     if (acero)
     {
         nuevo.siguiente = acero->siguiente;   // el nuevo apunta a lo que seguia de Acero
         acero->siguiente = &nuevo;            // Acero ahora apunta al nuevo
     }
     recorrer(&v1);
-    cout << "Total: " << totalToneladas(&v1) << " toneladas\n";
+    printf("Total: %d toneladas\n", totalToneladas(&v1));
     return 0;
 }
 ```
@@ -948,36 +947,35 @@ int main()
 
 **Problema:** «Una función debe encontrar el mayor puntaje de un arreglo y permitir que `main` lo **reinicie a cero** (el jugador canjeó sus puntos)».
 
-**Segmento 1 — ¿Qué debe devolver?** {{como}} Si la función devolviera el **valor** máximo (`int`), `main` tendría una copia y no podría cambiar el arreglo. Por eso decido devolver **dónde** está: un `int*`. {{porque}} Con la dirección, `main` puede llegar a la casilla original y modificarla.
+**Segmento 1 — ¿Qué debe devolver?** {{como}} Si la función devolviera el **valor** máximo (`int`), `main` tendría una copia y no podría cambiar el arreglo. Por eso decido devolver **dónde** está: un `int *`. {{porque}} Con la dirección, `main` puede llegar a la casilla original y modificarla.
 
-**Segmento 2 — Recorrer guardando la mejor dirección.** {{como}} Empiezo con `int* mejor = a;` (la dirección del primero) y en el ciclo, si `a[i] > *mejor`, actualizo `mejor = &a[i]`. {{porque}} Comparo **valores** (`*mejor`), pero guardo **direcciones** (`&a[i]`); mezclar ambas cosas es el error más común.
+**Segmento 2 — Recorrer guardando la mejor dirección.** {{como}} Empiezo con `int *mejor = a;` (la dirección del primero) y en el ciclo, si `a[i] > *mejor`, actualizo `mejor = &a[i]`. {{porque}} Comparo **valores** (`*mejor`), pero guardo **direcciones** (`&a[i]`); mezclar ambas cosas es el error más común.
 
-**Segmento 3 — Usar el resultado con cuidado.** {{como}} En `main` escribo `int* p = maximo(puntos, 5); *p = 0;`. Dibujo la flecha de `p` a la casilla del máximo. {{porque}} El diagrama me confirma que `*p = 0` cambia esa casilla y no otra.
+**Segmento 3 — Usar el resultado con cuidado.** {{como}} En `main` escribo `int *p = maximo(puntos, 5); *p = 0;`. Dibujo la flecha de `p` a la casilla del máximo. {{porque}} El diagrama me confirma que `*p = 0` cambia esa casilla y no otra.
 
-**Segmento 4 — El caso borde.** {{como}} Agrego la validación `if (n <= 0) return nullptr;` y en `main` verifico `if (p)` antes de usarlo. {{porque}} Un arreglo vacío no tiene máximo; devolver `nullptr` y comprobarlo evita desreferenciar una dirección inválida.
+**Segmento 4 — El caso borde.** {{como}} Agrego la validación `if (n <= 0) return NULL;` y en `main` verifico `if (p)` antes de usarlo. {{porque}} Un arreglo vacío no tiene máximo; devolver `NULL` y comprobarlo evita desreferenciar una dirección inválida.
 
-```cpp run title="maximo_ptr.cpp"
-#include <iostream>
-using namespace std;
-int* maximo(int* a, int n)
+```c run title="maximo_ptr.c"
+#include <stdio.h>
+int *maximo(int *a, int n)
 {
-    if (n <= 0) return nullptr;
-    int* mejor = a;
+    if (n <= 0) return NULL;
+    int *mejor = a;
     for (int i = 1; i < n; i++)
         if (a[i] > *mejor) mejor = &a[i];
     return mejor;
 }
-int main()
+int main(void)
 {
     int puntos[5] = {120, 340, 95, 410, 260};
-    int* p = maximo(puntos, 5);
+    int *p = maximo(puntos, 5);
     if (p)
     {
-        cout << "Maximo " << *p << " en la posicion " << p - puntos << "\n";
+        printf("Maximo %d en la posicion %d\n", *p, (int)(p - puntos));
         *p = 0;
     }
-    for (int x : puntos) cout << x << " ";
-    cout << "\n";
+    for (int i = 0; i < 5; i++) printf("%d ", puntos[i]);
+    printf("\n");
     return 0;
 }
 ```
@@ -987,46 +985,45 @@ int main()
 
 :::recall | 5.1 Recall test · conocimiento declarativo (opción múltiple, sintaxis, asociación y operaciones)
 1. Un puntero es una variable que guarda… a) un valor entero · b) una dirección de memoria · c) un arreglo · d) un tipo de dato
-2. ¿Cuál declaración es correcta para un puntero a `double`? a) `double p*;` · b) `*double p;` · c) `double* p;` · d) `ptr double p;`
-3. Relaciona: (1) `&x` (2) `*p` (3) `nullptr` (4) `p->m` — a) puntero que no apunta a nada · b) dirección de x · c) miembro m de la estructura apuntada · d) valor apuntado por p
-4. Con `int x = 8; int* p = &x;` ¿qué valen `*p` y `p == &x`?
-5. Verdadero o falso: un puntero y una referencia pueden ser nulos.
+2. ¿Cuál declaración es correcta para un puntero a `double`? a) `double p*;` · b) `*double p;` · c) `double *p;` · d) `ptr double p;`
+3. Relaciona: (1) `&x` (2) `*p` (3) `NULL` (4) `p->m` — a) puntero que no apunta a nada · b) dirección de x · c) miembro m de la estructura apuntada · d) valor apuntado por p
+4. Con `int x = 8; int *p = &x;` ¿qué valen `*p` y `p == &x`?
+5. Verdadero o falso: desreferenciar un puntero `NULL` es seguro, porque «no apunta a nada».
 6. Si `int a[4]` empieza en `0x100` e `int` ocupa 4 bytes, ¿qué dirección es `a + 3`?
 7. ¿A qué equivale `*(a + i)`?
 8. ¿Qué diferencia hay entre `(*p)++` y `*p++`?
 9. ¿Qué es un puntero colgante?
-10. ¿Qué significa `const int* p`?
+10. ¿Qué significa `const int *p`? ¿Qué diferencia hay entre `char s[] = "Hola";` y `const char *s = "Hola";`?
 :::
 
 :::compr | 5.2 Comprehension test · conocimiento procedimental
 **P1. Analiza la salida:**
 
-```cpp check title="p1.cpp"
-#include <iostream>
-using namespace std;
-void f(int* a, int b) { *a = *a + b; b = 0; }
-int main()
+```c check title="p1.c"
+#include <stdio.h>
+void f(int *a, int b) { *a = *a + b; b = 0; }
+int main(void)
 {
     int x = 4, y = 6;
-    int* p = &y;
+    int *p = &y;
     f(&x, *p);
     *p = x * 2;
-    cout << x << " " << y << "\n";
+    printf("%d %d\n", x, y);
     return 0;
 }
 ```
 
-**P2. Corrige** los errores: `int* p; int v[3] = {1, 2, 3}; p = v[0]; for (int i = 0; i <= 3; i++) cout << p + i;`
+**P2. Corrige** los errores: `int *p; int v[3] = {1, 2, 3}; p = v[0]; for (int i = 0; i <= 3; i++) printf("%d ", p + i);`
 
-**P3. Implementa** `void cuadrados(int* a, int n)` que reemplace cada elemento por su cuadrado, usando solo aritmética de punteros.
+**P3. Implementa** `void cuadrados(int *a, int n)` que reemplace cada elemento por su cuadrado, usando solo aritmética de punteros.
 
-**P4. Desarrolla un programa** pequeño de manipulación de datos: un arreglo de 6 temperaturas; una función `double* masFria(double* t, int n)` que devuelva un puntero a la menor; `main` la muestra, la corrige sumándole 1.5 (por un error de calibración) y muestra el arreglo final.
+**P4. Desarrolla un programa** pequeño de manipulación de datos: un arreglo de 6 temperaturas; una función `double *masFria(double *t, int n)` que devuelva un puntero a la menor; `main` la muestra, la corrige sumándole 1.5 (por un error de calibración) y muestra el arreglo final.
 :::
 
 :::registro | 5.3 Autorregistro
 <ul class="checks">
 <li>Explico qué es un puntero con la analogía de las casas y las notas.</li>
-<li>Uso <code>&amp;</code>, <code>*</code>, <code>nullptr</code> y <code>-&gt;</code> correctamente.</li>
+<li>Uso <code>&amp;</code>, <code>*</code>, <code>NULL</code> y <code>-&gt;</code> correctamente.</li>
 <li>Recorro arreglos con punteros y modifico variables externas desde funciones.</li>
 <li>Dibujo el diagrama de memoria de un fragmento con punteros.</li>
 </ul>
@@ -1036,51 +1033,49 @@ int main()
 :::
 
 :::solucion | Evaluación 5.1 (recall)
-1 b · 2 c · 3 (1)-b, (2)-d, (3)-a, (4)-c · 4 `*p` = 8 y `p == &x` es verdadero · 5 Falso: solo un puntero puede ser nulo · 6 `0x10c` (0x100 + 3 × 4) · 7 `a[i]` · 8 `(*p)++` incrementa el valor apuntado; `*p++` avanza el puntero al siguiente elemento · 9 Un puntero que apunta a memoria que ya no es válida (por ejemplo, a una variable local que terminó) · 10 Que a través de `p` no se puede modificar el valor apuntado (aunque `p` sí puede apuntar a otra variable).
+1 b · 2 c · 3 (1)-b, (2)-d, (3)-a, (4)-c · 4 `*p` = 8 y `p == &x` es verdadero · 5 Falso: desreferenciar `NULL` detiene el programa; hay que verificarlo antes · 6 `0x10c` (0x100 + 3 × 4) · 7 `a[i]` · 8 `(*p)++` incrementa el valor apuntado; `*p++` avanza el puntero al siguiente elemento · 9 Un puntero que apunta a memoria que ya no es válida (por ejemplo, a una variable local que terminó) · 10 Que a través de `p` no se puede modificar el valor apuntado (aunque `p` sí puede apuntar a otra variable); `char s[]` es un arreglo propio y modificable que no se puede reasignar, mientras que `const char *s` es un puntero a un texto fijo que sí puede apuntar a otro texto.
 :::
 
 :::solucion | Evaluación 5.2 (comprehension)
 **P1.** `f(&x, *p)` recibe la dirección de `x` y una **copia** de `y` (6): `x = 4 + 6 = 10`; `b = 0` no afecta a `y`. Luego `*p = x * 2` → `y = 20`.
 
-```cpp run title="p1.cpp"
-#include <iostream>
-using namespace std;
-void f(int* a, int b) { *a = *a + b; b = 0; }
-int main()
+```c run title="p1.c"
+#include <stdio.h>
+void f(int *a, int b) { *a = *a + b; b = 0; }
+int main(void)
 {
     int x = 4, y = 6;
-    int* p = &y;
+    int *p = &y;
     f(&x, *p);
     *p = x * 2;
-    cout << x << " " << y << "\n";
+    printf("%d %d\n", x, y);
     return 0;
 }
 ```
 
-**P2.** `p = v;` (o `&v[0]`), no `v[0]`; el ciclo debe ser `i < 3`; para mostrar el valor: `*(p + i)` (no `p + i`, que es una dirección).
+**P2.** `p = v;` (o `&v[0]`), no `v[0]`; el ciclo debe ser `i < 3`; para mostrar el valor: `*(p + i)` (no `p + i`, que es una dirección y no corresponde a `%d`).
 
-**P3.** `void cuadrados(int* a, int n) { for (int* p = a; p < a + n; p++) *p = *p * *p; }`
+**P3.** `void cuadrados(int *a, int n) { for (int *p = a; p < a + n; p++) *p = *p * *p; }`
 
 **P4.**
 
-```cpp run title="p4.cpp"
-#include <iostream>
-using namespace std;
-double* masFria(double* t, int n)
+```c run title="p4.c"
+#include <stdio.h>
+double *masFria(double *t, int n)
 {
-    double* m = t;
-    for (double* p = t + 1; p < t + n; p++)
+    double *m = t;
+    for (double *p = t + 1; p < t + n; p++)
         if (*p < *m) m = p;
     return m;
 }
-int main()
+int main(void)
 {
     double temp[6] = {18.5, 16.2, 19.0, 14.8, 17.3, 15.9};
-    double* f = masFria(temp, 6);
-    cout << "Mas fria: " << *f << " (posicion " << f - temp << ")\n";
+    double *f = masFria(temp, 6);
+    printf("Mas fria: %.1f (posicion %d)\n", *f, (int)(f - temp));
     *f += 1.5;
-    for (double x : temp) cout << x << " ";
-    cout << "\n";
+    for (int i = 0; i < 6; i++) printf("%.1f ", temp[i]);
+    printf("\n");
     return 0;
 }
 ```

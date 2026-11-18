@@ -5,31 +5,32 @@ titulo: "Almacenamiento en memoria secundaria: archivos de texto"
 corto: "Archivos"
 lema: "Lo que está en variables se borra al cerrar el programa; lo que está en un archivo te espera mañana."
 duracion: "5 h · 3 sesiones"
-previos: "Tema 06 (ciclos y centinelas), Tema 12 (cadenas y getline), Tema 13 (estructuras)."
+previos: "Tema 06 (ciclos y centinelas), Tema 12 (cadenas, `fgets`), Tema 13 (estructuras) y Tema 14 (punteros)."
 fuentes:
-  - "Betancourt Uscátegui, J. F. y Polanco Guzmán, I. Y. (2021). *115 ejercicios resueltos de programación C++*. Cap. 12: Almacenamiento en memoria secundaria: ficheros o archivos (§12.1 Archivos de texto y binarios, §12.2 Flujos de entrada y salida asociados a archivos, §12.3 Entrada de datos desde archivos de texto, §12.4 Ejercicios: visualización, consulta, eliminación y adición de registros)."
-  - "Lospinoso, J. (2019). *C++ Crash Course*. Cap. 16 «Streams»: Stream Classes, Stream State, Buffering and Flushing, Manipulators, String Streams, File Streams (opening files, modes)."
+  - "Kernighan, B. W. y Ritchie, D. M. (1988). *The C Programming Language* (2.ª ed.). Prentice Hall. Cap. 7: §7.5 File Access, §7.6 Error Handling—Stderr and Exit, §7.7 Line Input and Output. Apéndice B, §B1 «Input and Output: <stdio.h>»."
+  - "King, K. N. (2008). *C Programming: A Modern Approach* (2.ª ed.). W. W. Norton. Cap. 22 «Input/Output»: §22.1 Streams, §22.2 File Operations, §22.3 Formatted I/O, §22.5 Line I/O, §22.6 Block I/O, §22.8 String I/O."
+  - "Seacord, R. C. (2020). *Effective C*. No Starch Press. Cap. 8 «Input/Output»."
   - "Sandoval Medina, C. (2026). Tesis doctoral, §7.5: segundo estudio piloto (aplicación web CLT4BP) sobre manejo de archivos de texto en C; Figuras 7.13 y 7.14 (tareas de configuración y registro de estudiantes en archivos)."
 objetivos:
   A:
     - "Explicar qué es un archivo, la diferencia entre memoria principal y secundaria y entre archivos de texto y binarios."
-    - "Escribir datos en archivos de texto con `ofstream`, creando, sobrescribiendo o agregando (`ios::app`)."
-    - "Leer archivos de texto con `ifstream` por datos (`>>`) y por líneas (`getline`) hasta el fin del archivo."
-    - "Verificar que el archivo se abrió y cerrarlo correctamente."
+    - "Escribir datos en archivos de texto con `fopen` y `fprintf`, creando, sobrescribiendo o agregando (modos `\"w\"` y `\"a\"`)."
+    - "Leer archivos de texto con `fscanf` (por datos) y `fgets` (por líneas) hasta el fin del archivo."
+    - "Verificar que el archivo se abrió (`NULL`) y cerrarlo con `fclose`."
   B:
-    - "Procesar registros con campos separados por comas usando `getline` con delimitador y `stringstream`."
-    - "Implementar consulta, alta, baja y modificación de registros (archivo temporal + reescritura)."
-    - "Interpretar el estado del flujo (`good`, `fail`, `eof`) para leer de forma robusta."
-    - "Comparar los flujos de C++ con la API de C (`FILE*`, `fopen`, `fprintf`, `fclose`) del segundo piloto de la tesis."
+    - "Procesar registros con campos separados por comas usando `fgets` y `sscanf`."
+    - "Implementar consulta, alta, baja y modificación de registros (archivo temporal + `remove`/`rename`)."
+    - "Interpretar el valor de retorno de `fscanf` y `fgets` (y `feof`) para leer de forma robusta."
+    - "Guardar y recuperar estructuras en archivos binarios con `fwrite` y `fread`."
 efectos:
   soporte:
-    - ["Elementos aislados", "Archivo → flujos → escribir → modos → verificar → leer datos → leer líneas → registros con campos → API de C."]
+    - ["Elementos aislados", "Archivo → FILE * → escribir → modos → verificar → leer datos → leer líneas → registros con campos → binarios."]
     - ["Atención dividida", "El contenido real del archivo se muestra junto al código que lo produce o lo lee."]
     - ["Ejemplo resuelto", "Registro de calificaciones: escribir el archivo y leerlo de nuevo para calcular el promedio."]
     - ["Variabilidad", "Archivos de bitácora, inventario, ventas, configuración y registro escolar."]
   procedimental:
     - ["Variabilidad", "Plantillas de lectura/escritura para distintos formatos."]
-    - ["Autoexplicación", "Errores clásicos (`eof`, apertura no verificada) planteados como «¿por qué se repite el último dato?»."]
+    - ["Autoexplicación", "Errores clásicos (`feof`, apertura no verificada) planteados como «¿por qué se repite el último dato?»."]
   tareas:
     - ["Ejemplo resuelto", "T1: bitácora de temperaturas + gemelo (diario de gastos)."]
     - ["Problema por completar", "T2 (estadísticas de un archivo, con pistas) y T3 (contar líneas y palabras, sin pistas)."]
@@ -41,8 +42,8 @@ efectos:
 diferenciada:
   Contenido:
     comp: "Información de soporte"
-    A: "`ofstream`, `ifstream`, `ios::app`, lectura por datos y por líneas, verificación de apertura."
-    B: "Registros CSV, `stringstream`, bajas con archivo temporal, estado del flujo, API de C."
+    A: "`fopen`/`fclose`, modos `\"w\"`, `\"a\"` y `\"r\"`, `fprintf`, lectura con `fscanf` y `fgets`, verificación de `NULL`."
+    B: "Registros CSV con `sscanf`, bajas con archivo temporal, valor de retorno de las funciones de lectura, archivos binarios."
   Proceso:
     comp: "Tareas de aprendizaje"
     A: "T1 → T4 abriendo los archivos generados en un editor para comprobarlos."
@@ -64,16 +65,15 @@ glosario:
   - ["memoria secundaria", "secondary storage", "Disco, memoria USB…: conserva los datos al apagar."]
   - ["archivo de texto", "text file", "Archivo cuyos bytes representan caracteres legibles."]
   - ["archivo binario", "binary file", "Archivo que guarda los bytes tal como están en memoria."]
-  - ["flujo", "stream", "Canal de datos entre el programa y un dispositivo o archivo."]
-  - ["flujo de entrada de archivo", "input file stream (`ifstream`)", "Lee datos desde un archivo."]
-  - ["flujo de salida de archivo", "output file stream (`ofstream`)", "Escribe datos en un archivo."]
-  - ["modo de apertura", "open mode", "`ios::out` (sobrescribir), `ios::app` (agregar), `ios::in` (leer)."]
-  - ["fin de archivo", "end of file (EOF)", "Situación en la que ya no quedan datos por leer."]
-  - ["estado del flujo", "stream state", "Indicadores `good`, `fail`, `eof`, `bad`."]
-  - ["búfer", "buffer", "Memoria intermedia donde se acumulan datos antes de escribirse."]
+  - ["flujo", "stream (`FILE *`)", "Canal de datos entre el programa y un archivo o dispositivo; `stdin`, `stdout` y lo que abre `fopen` son flujos."]
+  - ["abrir / cerrar", "open / close (`fopen`, `fclose`)", "Conectar el programa con un archivo y desconectarlo (guardando lo pendiente)."]
+  - ["modo de apertura", "open mode", "`\"w\"` (escribir desde cero), `\"a\"` (agregar), `\"r\"` (leer); con `b` para binario."]
+  - ["fin de archivo", "end of file (`EOF`)", "Situación en la que ya no quedan datos por leer."]
+  - ["valor de retorno de lectura", "return value", "`fscanf` devuelve cuántos datos leyó (o `EOF`); `fgets` devuelve `NULL` al terminar."]
+  - ["búfer", "buffer", "Memoria intermedia donde se acumulan datos antes de escribirse al disco."]
   - ["registro", "record", "Conjunto de campos de una misma entidad (una línea de un CSV)."]
   - ["valores separados por comas", "CSV (comma-separated values)", "Formato de texto con un registro por línea y campos separados por comas."]
-  - ["flujo de cadena", "string stream (`stringstream`)", "Flujo que lee o escribe sobre un `string`."]
+  - ["lectura desde cadena", "string input (`sscanf`)", "Aplica un formato de `scanf` a una cadena ya leída."]
 ---
 
 # 1. Información de soporte {.soporte}
@@ -89,7 +89,7 @@ Un videojuego guarda tu partida y al día siguiente continúas en el mismo nivel
 :::
 
 :::relevancia
-Las partidas guardadas, los archivos de configuración (como el `config.txt` del segundo piloto de la tesis), las bitácoras de un servidor, las hojas de cálculo exportadas en CSV y los registros de un sensor Arduino en una memoria SD son archivos de texto. Saber leerlos y escribirlos permite que tus programas **recuerden** datos y **compartan** información con otros programas. {{arcs:Relevancia}}
+Las partidas guardadas, los archivos de configuración (como el `config.txt` del segundo piloto de la tesis, que se trabajó precisamente en C), las bitácoras de un servidor, las hojas de cálculo exportadas en CSV y los registros que un microcontrolador escribe en una memoria SD son archivos de texto. Saber leerlos y escribirlos permite que tus programas **recuerden** datos y **compartan** información con otros programas. {{arcs:Relevancia}}
 :::
 
 ## 1.1 Conceptos, uno por uno
@@ -99,45 +99,46 @@ Las partidas guardadas, los archivos de configuración (como el `config.txt` del
 |---|---|---|
 | Contenido | caracteres legibles (`1`, `2`, `.`, `5`) | bytes tal como están en memoria |
 | Se puede abrir con un editor | sí | no (se ven símbolos raros) |
-| Ejemplo | `.txt`, `.csv`, `.cpp`, `.html` | `.exe`, `.jpg`, `.mp3` |
+| Ejemplo | `.txt`, `.csv`, `.c`, `.html` | `.exe`, `.jpg`, `.mp3` |
 | El número 12.5 ocupa | 4 caracteres | 8 bytes (un `double`) |
 
-En este tema trabajaremos con archivos de **texto**, como Betancourt y Polanco (§12.1–12.3).
+En este tema trabajaremos sobre todo con archivos de **texto**; los binarios aparecen en la Ruta B (concepto 9).
 :::
 
-:::concepto | 2 | Flujos: `cin`/`cout` ya eran flujos | Elementos aislados, Atención dividida
-Un **flujo** (*stream*) es un canal de datos. `cout` es un flujo hacia la pantalla y `cin`, desde el teclado. La biblioteca `<fstream>` ofrece flujos hacia y desde **archivos** que se usan **con los mismos operadores** `<<` y `>>` (*C++ Crash Course*, cap. 16):
+:::concepto | 2 | Flujos: `stdin` y `stdout` ya eran flujos | Elementos aislados, Atención dividida
+Un **flujo** es un canal de datos. En C se maneja con un puntero `FILE *`. Sin saberlo, ya usabas dos: `printf` escribe en `stdout` (la pantalla) y `scanf` lee de `stdin` (el teclado). Para un archivo, `fopen` abre un flujo nuevo y se usan las **mismas** funciones con una `f` al inicio:
 
 ```dot w="85%"
 rankdir=LR; nodesep=0.25; ranksep=0.45;
-@io(t, "teclado")
+@io(t, "teclado (stdin)")
 @term(p, "Programa")
-@io(s, "pantalla")
+@io(s, "pantalla (stdout)")
 @file(fi, "datos.txt")
 @file(fo, "reporte.txt")
-t -> p [label=" cin >>"]; p -> s [label=" cout <<"];
-fi -> p [label=" ifstream >>"]; p -> fo [label=" ofstream <<"];
+t -> p [label=" scanf"]; p -> s [label=" printf"];
+fi -> p [label=" fscanf · fgets"]; p -> fo [label=" fprintf · fputs"];
 ```
 
-| Clase | Para | Biblioteca |
-|---|---|---|
-| `ofstream` | escribir en un archivo | `<fstream>` |
-| `ifstream` | leer de un archivo | `<fstream>` |
-| `fstream` | leer y escribir | `<fstream>` |
+| Modo de `fopen` | Para | Si el archivo no existe | Si ya existe |
+|---|---|---|---|
+| `"r"` | leer | `fopen` devuelve `NULL` | lee desde el inicio |
+| `"w"` | escribir | lo crea | **lo borra** y empieza de cero |
+| `"a"` | agregar al final | lo crea | conserva y escribe al final |
+
+Todo está en `<stdio.h>`.
 :::
 
-:::concepto | 3 | Escribir en un archivo con `ofstream` | Elementos aislados, Atención dividida
-```cpp run title="escribir.cpp" showfile=saludo.txt
-#include <iostream>
-#include <fstream>                       //> Biblioteca de flujos de archivo
-using namespace std;
-int main()
+:::concepto | 3 | Escribir en un archivo con `fopen` y `fprintf` | Elementos aislados, Atención dividida
+```c run title="escribir.c" showfile=saludo.txt
+#include <stdio.h>
+int main(void)
 {
-    ofstream archivo("saludo.txt");      //> Abre (o crea) saludo.txt para escribir
-    archivo << "Hola desde C++\n";       //> Igual que cout, pero va al archivo
-    archivo << "Linea " << 2 << "\n";
-    archivo.close();                     //> Cierra: asegura que todo se guarde en disco
-    cout << "Archivo escrito\n";
+    FILE *archivo = fopen("saludo.txt", "w");    //> Abre (o crea) saludo.txt para escribir
+    if (archivo == NULL) return 1;               //> Si no se pudo abrir, fopen devuelve NULL
+    fprintf(archivo, "Hola desde C\n");          //> Como printf, pero el primer argumento es el archivo
+    fprintf(archivo, "Linea %d\n", 2);
+    fclose(archivo);                             //> Cierra: asegura que todo se guarde en disco
+    printf("Archivo escrito\n");
     return 0;
 }
 ```
@@ -145,50 +146,51 @@ El recuadro de abajo muestra el **contenido real** del archivo después de ejecu
 :::
 
 :::concepto | 4 | Modos de apertura: sobrescribir o agregar | Elementos aislados, Atención dividida
-Por defecto, `ofstream` **borra** el contenido anterior. Para **agregar** al final se usa `ios::app` (*append*):
+`"w"` **borra** el contenido anterior. Para **agregar** al final se usa `"a"` (*append*):
 
-```cpp run title="modos.cpp" showfile=bitacora.txt
-#include <fstream>
-using namespace std;
-int main()
+```c run title="modos.c" showfile=bitacora.txt
+#include <stdio.h>
+int main(void)
 {
-    ofstream a("bitacora.txt");                  //> Modo normal: crea o BORRA y empieza de cero
-    a << "inicio\n";
-    a.close();
-    ofstream b("bitacora.txt", ios::app);        //> Modo append: conserva lo que había y agrega al final
-    b << "evento 1\n";
-    b.close();
-    ofstream c("bitacora.txt", ios::app);
-    c << "evento 2\n";
-    c.close();
+    FILE *f = fopen("bitacora.txt", "w");        //> Modo "w": crea o BORRA y empieza de cero
+    if (f == NULL) return 1;
+    fprintf(f, "inicio\n");
+    fclose(f);
+    f = fopen("bitacora.txt", "a");              //> Modo "a": conserva lo que había y agrega al final
+    if (f == NULL) return 1;
+    fprintf(f, "evento 1\n");
+    fclose(f);
+    f = fopen("bitacora.txt", "a");
+    if (f == NULL) return 1;
+    fprintf(f, "evento 2\n");
+    fclose(f);
     return 0;
 }
 ```
 :::
 
 :::concepto | 5 | ¿Se abrió? Verificar siempre | Elementos aislados
-Abrir puede fallar (el archivo no existe, no hay permisos, la ruta está mal). El flujo se evalúa como `false` si falló:
+Abrir puede fallar (el archivo no existe, no hay permisos, la ruta está mal). En ese caso `fopen` devuelve `NULL`, y usar ese puntero detendría el programa. `perror` muestra el motivo que dio el sistema operativo:
 
-```cpp run rc title="verificar.cpp"
-#include <iostream>
-#include <fstream>
-using namespace std;
-int main()
+```c run rc title="verificar.c"
+#include <stdio.h>
+int main(void)
 {
-    ifstream in("no_existe.txt");
-    if (!in)                                  //> También: if (!in.is_open())
+    FILE *in = fopen("no_existe.txt", "r");
+    if (in == NULL)
     {
-        cout << "No se pudo abrir el archivo\n";
+        perror("no_existe.txt");              //> Escribe el nombre y la causa del error (en stderr)
         return 1;                             //> Terminar (o pedir otro nombre)
     }
-    cout << "Abierto\n";
+    printf("Abierto\n");
+    fclose(in);
     return 0;
 }
 ```
 :::
 
 :::concepto | 6 | Leer datos hasta el fin del archivo | Elementos aislados, Atención dividida
-`in >> x` devuelve el flujo; si la lectura falla (porque se acabó el archivo o el dato no es válido), el flujo se vuelve `false`. Por eso el patrón es **leer en la condición del ciclo**:
+`fscanf` funciona como `scanf` y **devuelve cuántos datos leyó**: 1 si leyó un número, 0 si encontró algo que no era número, `EOF` si ya no hay nada. Por eso el patrón es **leer en la condición del ciclo**:
 
 ```txt file=numeros.txt
 12 7 25
@@ -196,29 +198,27 @@ int main()
 31 4
 ```
 
-```cpp run title="leer_datos.cpp"
-#include <iostream>
-#include <fstream>
-using namespace std;
-int main()
+```c run title="leer_datos.c"
+#include <stdio.h>
+int main(void)
 {
-    ifstream in("numeros.txt");
-    if (!in) { cout << "No se pudo abrir\n"; return 1; }
+    FILE *in = fopen("numeros.txt", "r");
+    if (in == NULL) { printf("No se pudo abrir\n"); return 1; }
     int x, suma = 0, n = 0;
-    while (in >> x)                     //> Lee mientras haya un número; espacios y saltos se ignoran
+    while (fscanf(in, "%d", &x) == 1)       //> Lee mientras haya un número; espacios y saltos se ignoran
     {
         suma += x;
         n++;
     }
-    in.close();
-    cout << n << " numeros, suma " << suma << ", promedio " << static_cast<double>(suma) / n << "\n";
+    fclose(in);
+    printf("%d numeros, suma %d, promedio %.2f\n", n, suma, (double)suma / n);
     return 0;
 }
 ```
 :::
 
-:::concepto | 7 | Leer línea por línea | Elementos aislados, Atención dividida
-Cuando cada línea es una unidad (un nombre con espacios, un mensaje), se usa `getline`:
+:::concepto | 7 | Leer línea por línea con `fgets` | Elementos aislados, Atención dividida
+Cuando cada línea es una unidad (un nombre con espacios, un mensaje), se usa `fgets` (Tema 12), que devuelve `NULL` cuando ya no hay más líneas:
 
 ```txt file=lista.txt
 Ana Sofia Lopez
@@ -226,26 +226,28 @@ Luis Perez
 Eva Maria Rios
 ```
 
-```cpp run title="leer_lineas.cpp"
-#include <iostream>
-#include <fstream>
-#include <string>
-using namespace std;
-int main()
+```c run title="leer_lineas.c"
+#include <stdio.h>
+#include <string.h>
+int main(void)
 {
-    ifstream in("lista.txt");
-    if (!in) return 1;
-    string linea;
+    FILE *in = fopen("lista.txt", "r");
+    if (in == NULL) return 1;
+    char linea[100];
     int num = 1;
-    while (getline(in, linea))              //> Lee una línea completa en cada vuelta
-        cout << num++ << ". " << linea << " (" << linea.size() << " caracteres)\n";
+    while (fgets(linea, sizeof linea, in) != NULL)    //> Lee una línea completa en cada vuelta
+    {
+        linea[strcspn(linea, "\n")] = '\0';           //> Quita el salto de línea
+        printf("%d. %s (%zu caracteres)\n", num++, linea, strlen(linea));
+    }
+    fclose(in);
     return 0;
 }
 ```
 :::
 
 :::concepto | 8 | Ruta B · Registros con campos (CSV) | Elementos aislados, Reversión de la experiencia
-En un archivo CSV cada línea es un **registro** y los **campos** se separan con comas. Se lee la línea completa y luego se separa con un `stringstream` (*C++ Crash Course*, cap. 16) y `getline` con delimitador:
+En un archivo CSV cada línea es un **registro** y los **campos** se separan con comas. Se lee la línea completa con `fgets` y luego se separa con `sscanf`, que aplica un formato de `scanf` **a una cadena**. El conjunto `%49[^,]` lee «todo lo que no sea coma» (así el nombre puede tener espacios):
 
 ```txt file=alumnos.csv
 101,Ana Lopez,9.2
@@ -253,62 +255,51 @@ En un archivo CSV cada línea es un **registro** y los **campos** se separan con
 103,Eva Rios,8.5
 ```
 
-```cpp run title="csv.cpp"
-#include <iostream>
-#include <fstream>
-#include <sstream>                              //> stringstream
-#include <string>
-using namespace std;
-struct Alumno { int id; string nombre; double promedio; };
-int main()
+```c run title="csv.c"
+#include <stdio.h>
+typedef struct { int id; char nombre[50]; double promedio; } Alumno;
+int main(void)
 {
-    ifstream in("alumnos.csv");
-    if (!in) return 1;
-    string linea;
-    while (getline(in, linea))
+    FILE *in = fopen("alumnos.csv", "r");
+    if (in == NULL) return 1;
+    char linea[120];
+    while (fgets(linea, sizeof linea, in) != NULL)
     {
-        stringstream ss(linea);                 //> Un flujo que lee DE la cadena
-        string campo;
         Alumno a;
-        getline(ss, campo, ',');  a.id = stoi(campo);         //> Hasta la primera coma
-        getline(ss, a.nombre, ',');                            //> Hasta la segunda coma
-        getline(ss, campo, ',');  a.promedio = stod(campo);   //> El resto
-        cout << a.nombre << " [" << a.id << "]: " << a.promedio << "\n";
+        if (sscanf(linea, "%d,%49[^,],%lf", &a.id, a.nombre, &a.promedio) == 3)   //> Tres campos leídos
+            printf("%s [%d]: %.1f\n", a.nombre, a.id, a.promedio);
     }
+    fclose(in);
     return 0;
 }
 ```
+Comparar el resultado de `sscanf` con 3 descarta líneas mal formadas (o vacías) en lugar de procesar basura.
 :::
 
-:::concepto | 9 | Ruta B · La misma idea con la API de C (segundo piloto de la tesis) | Elementos aislados, Reversión de la experiencia
-El segundo estudio piloto de la tesis trabajó archivos en **C**. La lógica es idéntica; cambian los nombres:
+:::concepto | 9 | Ruta B · Archivos binarios con `fwrite` y `fread` | Elementos aislados, Reversión de la experiencia
+En modo binario (`"wb"`, `"rb"`) se copian los **bytes** de la memoria tal cual: un arreglo de estructuras completo se guarda con una sola llamada.
 
-| Tarea | C++ (`<fstream>`) | C (`<cstdio>`) |
-|---|---|---|
-| Abrir para escribir | `ofstream f("a.txt");` | `FILE* f = fopen("a.txt", "w");` |
-| Abrir para agregar | `ofstream f("a.txt", ios::app);` | `fopen("a.txt", "a")` |
-| Abrir para leer | `ifstream f("a.txt");` | `fopen("a.txt", "r")` |
-| Verificar | `if (!f)` | `if (f == NULL)` |
-| Escribir | `f << x << "\n";` | `fprintf(f, "%d\n", x);` |
-| Leer | `f >> x` | `fscanf(f, "%d", &x)` |
-| Cerrar | `f.close();` (o al salir del ámbito) | `fclose(f);` (obligatorio) |
-
-```cpp run title="api_c.cpp" showfile=config.txt
-#include <cstdio>
-int main()
+```c run title="binario.c"
+#include <stdio.h>
+typedef struct { int id; double promedio; } Registro;
+int main(void)
 {
-    FILE* f = fopen("config.txt", "w");
+    Registro r[3] = {{101, 9.2}, {102, 7.8}, {103, 8.5}};
+    FILE *f = fopen("alumnos.dat", "wb");          //> "wb": escribir en binario
     if (f == NULL) return 1;
-    fprintf(f, "nombre=Ana\nedad=%d\nlenguaje=%s\n", 17, "C++");
+    size_t escritos = fwrite(r, sizeof r[0], 3, f);  //> Desde dónde, tamaño de uno, cuántos, a qué archivo
     fclose(f);
-    f = fopen("config.txt", "r");
-    char linea[100];
-    while (fgets(linea, sizeof(linea), f) != NULL)
-        printf("> %s", linea);
+    Registro leidos[3];
+    f = fopen("alumnos.dat", "rb");
+    if (f == NULL) return 1;
+    size_t n = fread(leidos, sizeof leidos[0], 3, f);  //> Devuelve cuántos registros leyó
     fclose(f);
+    printf("%zu escritos, %zu leidos; el segundo: %d %.1f\n", escritos, n, leidos[1].id, leidos[1].promedio);
+    printf("El archivo mide %zu bytes\n", 3 * sizeof(Registro));
     return 0;
 }
 ```
+Es rápido y exacto, pero el archivo no se puede leer con un editor y depende de la computadora (tamaño de los tipos, orden de los bytes). Para compartir datos entre programas, el texto (y el CSV) suele ser mejor opción.
 :::
 
 ## 1.2 Ejemplo resuelto: registro de calificaciones en archivo
@@ -339,62 +330,60 @@ Algoritmo CalificacionesArchivo
 FinAlgoritmo
 ```
 
-**C. Código en C++**
+**C. Código en C**
 
-```cpp run title="calificaciones_archivo.cpp" stdin="3\nAna 9.5\nLuis 7\nEva 8.5\n" showfile=calificaciones.txt
-#include <iostream>
-#include <fstream>
-#include <string>
-using namespace std;
-int main()
+```c run title="calificaciones_archivo.c" stdin="3\nAna 9.5\nLuis 7\nEva 8.5\n" showfile=calificaciones.txt
+#include <stdio.h>
+#include <string.h>
+int main(void)
 {
-    ofstream out("calificaciones.txt");              //> 1) Abrir para escribir
-    if (!out) { cout << "Error al crear\n"; return 1; }
+    FILE *out = fopen("calificaciones.txt", "w");    //> 1) Abrir para escribir
+    if (out == NULL) { printf("Error al crear\n"); return 1; }
     int n;
-    cout << "Cuantos alumnos? ";
-    cin >> n;
+    printf("Cuantos alumnos? ");
+    scanf("%d", &n);
     for (int i = 0; i < n; i++)                      //> 2) Teclado → archivo
     {
-        string nombre;
+        char nombre[30];
         double cal;
-        cin >> nombre >> cal;
-        out << nombre << " " << cal << "\n";         //> Un registro por línea
+        scanf("%29s %lf", nombre, &cal);
+        fprintf(out, "%s %.1f\n", nombre, cal);      //> Un registro por línea
     }
-    out.close();                                     //> 3) Cerrar (se guarda en disco)
+    fclose(out);                                     //> 3) Cerrar (se guarda en disco)
 
-    ifstream in("calificaciones.txt");               //> 4) Abrir para leer
-    if (!in) { cout << "Error al abrir\n"; return 1; }
-    string nombre, mejor;
+    FILE *in = fopen("calificaciones.txt", "r");     //> 4) Abrir para leer
+    if (in == NULL) { printf("Error al abrir\n"); return 1; }
+    char nombre[30], mejor[30] = "";
     double cal, suma = 0, max = -1;
     int cuantos = 0;
-    while (in >> nombre >> cal)                      //> 5) Archivo → programa, hasta el fin
+    while (fscanf(in, "%29s %lf", nombre, &cal) == 2)   //> 5) Archivo → programa: ¿se leyeron los 2 campos?
     {
-        cout << nombre << "\t" << cal << "\n";
+        printf("%s\t%.1f\n", nombre, cal);
         suma += cal;
         cuantos++;
-        if (cal > max) { max = cal; mejor = nombre; }
+        if (cal > max) { max = cal; strcpy(mejor, nombre); }
     }
-    in.close();                                      //> 6) Cerrar y reportar
+    fclose(in);                                      //> 6) Cerrar y reportar
     if (cuantos > 0)
-        cout << "Promedio: " << suma / cuantos << "  Mejor: " << mejor << "\n";
+        printf("Promedio: %.2f  Mejor: %s\n", suma / cuantos, mejor);
     return 0;
 }
 ```
 
-**D. Verificación.** El recuadro final muestra el archivo creado: tres líneas con el formato `nombre calificación`. El promedio (9.5 + 7 + 8.5) / 3 = 8.33 ✔. Si se ejecuta otra vez, el archivo se **sobrescribe** (modo normal).
+**D. Verificación.** El recuadro final muestra el archivo creado: tres líneas con el formato `nombre calificación`. El promedio (9.5 + 7 + 8.5) / 3 = 8.33 ✔. Si se ejecuta otra vez, el archivo se **sobrescribe** (modo `"w"`).
 :::
 
 :::resumen | Mapa del tema
 ```dot
 rankdir=LR; nodesep=0.16; ranksep=0.3;
-@term(a, "Archivo de texto")
-@proc(o, "ofstream f(\"x.txt\")\nf << dato")
-@proc(m, "modos: normal (sobrescribe)\nios::app (agrega)")
-@proc(i, "ifstream f(\"x.txt\")")
-@proc(d, "while (f >> x)\npor datos")
-@proc(l, "while (getline(f, s))\npor líneas")
-@hl(v, "if (!f) … verificar\nf.close()")
-@sub(c, "CSV: stringstream +\ngetline(ss, campo, ',')")
+@term(a, "Archivo de texto\nFILE *f")
+@proc(o, "fopen(\"x.txt\", \"w\")\nfprintf(f, …)")
+@proc(m, "modos: \"w\" (sobrescribe)\n\"a\" (agrega) · \"r\" (lee)")
+@proc(i, "fopen(\"x.txt\", \"r\")")
+@proc(d, "while (fscanf(f, …) == n)\npor datos")
+@proc(l, "while (fgets(s, tam, f))\npor líneas")
+@hl(v, "if (f == NULL) … verificar\nfclose(f)")
+@sub(c, "CSV: fgets + sscanf\nbinario: fwrite / fread")
 a -> o -> m; a -> i; i -> d; i -> l; a -> v [style=dashed]; l -> c [style=dashed];
 ```
 :::
@@ -402,57 +391,57 @@ a -> o -> m; a -> i; i -> d; i -> l; a -> v [style=dashed]; l -> c [style=dashed
 # 2. Información procedimental {.procedimental}
 
 :::sintaxis | Tarjeta de sintaxis 2.1
-```cpp run title="plantillas_archivo.cpp" showfile=salida.txt
-#include <iostream>
-#include <fstream>
-#include <string>
-using namespace std;
-int main()
+```c run title="plantillas_archivo.c" showfile=salida.txt
+#include <stdio.h>
+int main(void)
 {
     // ESCRIBIR (crea o sobrescribe)
-    ofstream out("salida.txt");
-    if (!out) return 1;
-    out << "manzana 3\npera 5\n";
-    out.close();
+    FILE *out = fopen("salida.txt", "w");
+    if (out == NULL) return 1;
+    fprintf(out, "manzana 3\npera 5\n");
+    fclose(out);
     // AGREGAR al final
-    ofstream app("salida.txt", ios::app);
-    app << "uva 12\n";
-    app.close();
+    FILE *app = fopen("salida.txt", "a");
+    if (app == NULL) return 1;
+    fprintf(app, "uva 12\n");
+    fclose(app);
     // LEER por datos
-    ifstream in("salida.txt");
-    string fruta;
+    FILE *in = fopen("salida.txt", "r");
+    if (in == NULL) return 1;
+    char fruta[20];
     int cant, total = 0;
-    while (in >> fruta >> cant) total += cant;
-    in.close();
-    cout << "Total: " << total << "\n";
+    while (fscanf(in, "%19s %d", fruta, &cant) == 2) total += cant;
+    fclose(in);
+    printf("Total: %d\n", total);
     return 0;
 }
 ```
 
 | Quiero… | Patrón |
 |---|---|
-| Leer todos los números | `while (in >> x) { … }` |
-| Leer registros de varios campos | `while (in >> a >> b >> c) { … }` |
-| Leer líneas completas | `while (getline(in, linea)) { … }` |
-| Separar una línea CSV | `stringstream ss(linea); getline(ss, campo, ',');` |
+| Leer todos los números | `while (fscanf(in, "%d", &x) == 1) { … }` |
+| Leer registros de varios campos | `while (fscanf(in, "%29s %d", n, &c) == 2) { … }` |
+| Leer líneas completas | `while (fgets(linea, sizeof linea, in) != NULL) { … }` |
+| Separar una línea CSV | `sscanf(linea, "%d,%49[^,],%lf", &id, nombre, &prom)` |
+| Escribir una línea de texto | `fputs("texto\n", out);` |
 | Borrar un registro | leer el original → escribir los que se quedan en `temp.txt` → `remove("orig.txt"); rename("temp.txt", "orig.txt");` |
 | Ruta en Windows | `"C:\\datos\\x.txt"` (barras dobles) o `"C:/datos/x.txt"` |
 :::
 
 :::checklist | Guía de preguntas de rutina 2.2
 <ul class="checks">
-<li>¿Incluí <code>&lt;fstream&gt;</code> (y <code>&lt;sstream&gt;</code> si separo campos)?</li>
-<li>¿Verifiqué con <code>if (!f)</code> que el archivo se abrió?</li>
-<li>¿Quiero sobrescribir o agregar? (<code>ios::app</code>)</li>
-<li>¿Leo en la condición del ciclo (<code>while (in &gt;&gt; x)</code>) y no con <code>while (!in.eof())</code>?</li>
+<li>¿Verifiqué con <code>if (f == NULL)</code> que el archivo se abrió?</li>
+<li>¿Quiero sobrescribir (<code>"w"</code>) o agregar (<code>"a"</code>)?</li>
+<li>¿Leo en la condición del ciclo y comparo con el número de datos esperados (<code>== 1</code>, <code>== 2</code>), en lugar de usar <code>while (!feof(in))</code>?</li>
 <li>¿El formato con que escribo es el mismo con que después leo (separadores, orden de campos)?</li>
-<li>¿Cerré el archivo de escritura antes de abrirlo para leer?</li>
+<li>¿Cerré el archivo con <code>fclose</code> antes de abrirlo de nuevo para leer?</li>
+<li>¿Cada <code>fopen</code> exitoso tiene su <code>fclose</code>?</li>
 <li>¿Revisé el archivo generado con un editor de texto?</li>
 </ul>
 :::
 
 :::errores | Errores frecuentes 2.3 | Variabilidad, Autoexplicación
-**a) `while (!in.eof())`: el último dato se procesa dos veces.** `eof` solo se activa **después** de un intento fallido de lectura:
+**a) `while (!feof(in))`: el último dato se procesa dos veces.** `feof` solo se vuelve verdadero **después** de un intento fallido de lectura:
 
 ```txt file=tres.txt
 10
@@ -460,54 +449,56 @@ int main()
 30
 ```
 
-```cpp run title="eof_bug.cpp"
-#include <iostream>
-#include <fstream>
-using namespace std;
-int main()
+```c run title="feof_bug.c"
+#include <stdio.h>
+int main(void)
 {
-    ifstream in("tres.txt");
+    FILE *in = fopen("tres.txt", "r");
+    if (in == NULL) return 1;
     int x, suma = 0;
-    while (!in.eof())          //> Tras leer 30 aún no es eof (falta leer el salto final)
+    while (!feof(in))          //> Tras leer 30 aún no es fin (falta leer el salto final)
     {
-        in >> x;               //> Esta lectura falla, pero x conserva 30…
+        fscanf(in, "%d", &x);  //> Esta lectura falla, pero x conserva 30…
         suma += x;             //> …y se suma otra vez
     }
-    cout << "Suma: " << suma << " (deberia ser 60)\n";
+    fclose(in);
+    printf("Suma: %d (deberia ser 60)\n", suma);
     return 0;
 }
 ```
-*Corrección:* `while (in >> x) suma += x;`
+*Corrección:* `while (fscanf(in, "%d", &x) == 1) suma += x;`
 
-**b) No verificar la apertura.** Si el archivo no existe, `in >> x` falla en silencio y el programa reporta 0 datos (o divide entre cero).
+**b) No verificar la apertura.** Si el archivo no existe, `fopen` devuelve `NULL` y el primer `fscanf(NULL, …)` detiene el programa con *segmentation fault*.
 
-**c) Sobrescribir sin querer.** Abrir con `ofstream f("datos.txt");` para «agregar» borra todo: usa `ios::app`.
+**c) Sobrescribir sin querer.** Abrir con `fopen("datos.txt", "w")` para «agregar» borra todo: usa `"a"`.
 
-**d) Mezclar `>>` y `getline`.** Después de `in >> n`, el `getline` siguiente lee el resto de la línea (vacío): usa `in.ignore()` como con `cin`.
+**d) Mezclar `fscanf` y `fgets`.** Después de `fscanf(in, "%d", &n)`, el `fgets` siguiente lee el resto de la línea (vacío): consume el salto pendiente o lee todo por líneas con `fgets` + `sscanf`.
 
-**e) Ruta equivocada.** El archivo se busca en la carpeta de **ejecución**, que en algunos IDE no es la del `.cpp`. Imprime un mensaje claro cuando falla la apertura.
+**e) Ruta equivocada.** El archivo se busca en la carpeta de **ejecución**, que en algunos IDE no es la del `.c`. Usa `perror` para ver un mensaje claro cuando falla la apertura.
+
+**f) Olvidar `fclose`.** Lo escrito puede quedarse en el búfer y no llegar al disco si el programa termina mal; además, cada sistema permite un número limitado de archivos abiertos a la vez.
 :::
 
 :::isomorfo | Ejemplo isomórfico 2.4 · Copiar un archivo en mayúsculas | Variabilidad
-El mismo patrón (abrir dos flujos → leer → transformar → escribir), con otro propósito:
+El mismo patrón (abrir dos archivos → leer → transformar → escribir), con otro propósito:
 
-```cpp run title="mayusculas.cpp" showfile=LISTA.txt
-#include <fstream>
-#include <string>
-#include <cctype>
-using namespace std;
-int main()
+```c run title="mayusculas.c" showfile=LISTA.txt
+#include <stdio.h>
+#include <ctype.h>
+int main(void)
 {
-    ifstream in("lista.txt");
-    ofstream out("LISTA.txt");
-    if (!in || !out) return 1;
-    string linea;
-    while (getline(in, linea))
+    FILE *in = fopen("lista.txt", "r");
+    FILE *out = fopen("LISTA.txt", "w");
+    if (in == NULL || out == NULL) return 1;
+    char linea[100];
+    while (fgets(linea, sizeof linea, in) != NULL)
     {
-        for (char& c : linea) c = toupper(c);
-        out << linea << "\n";
+        for (int i = 0; linea[i] != '\0'; i++) linea[i] = toupper(linea[i]);
+        fputs(linea, out);         //> fputs escribe la cadena tal cual (con su '\n')
     }
-    return 0;          //> Los flujos se cierran solos al salir de main (RAII)
+    fclose(in);
+    fclose(out);
+    return 0;
 }
 ```
 :::
@@ -524,29 +515,29 @@ lunes 21.5
 martes 23.0
 ```
 
-```cpp run title="bitacora.cpp" stdin="miercoles 24.5\njueves 22.0\nfin 0\n" showfile=temperaturas.txt
-#include <iostream>
-#include <fstream>
-#include <string>
-using namespace std;
-int main()
+```c run title="bitacora.c" stdin="miercoles 24.5\njueves 22.0\nfin 0\n" showfile=temperaturas.txt
+#include <stdio.h>
+#include <string.h>
+int main(void)
 {
-    ofstream out("temperaturas.txt", ios::app);      //> app: conserva las lecturas anteriores
-    if (!out) return 1;
-    string dia;
+    FILE *out = fopen("temperaturas.txt", "a");      //> "a": conserva las lecturas anteriores
+    if (out == NULL) return 1;
+    char dia[20];
     double t;
-    cout << "Dia y temperatura (fin 0 para terminar): ";
-    while (cin >> dia >> t && dia != "fin")
+    printf("Dia y temperatura (fin 0 para terminar): ");
+    while (scanf("%19s %lf", dia, &t) == 2 && strcmp(dia, "fin") != 0)
     {
-        out << dia << " " << t << "\n";
-        cout << "Dia y temperatura (fin 0 para terminar): ";
+        fprintf(out, "%s %.1f\n", dia, t);
+        printf("Dia y temperatura (fin 0 para terminar): ");
     }
-    out.close();                                      //> Cerrar antes de releer
-    ifstream in("temperaturas.txt");
+    fclose(out);                                      //> Cerrar antes de releer
+    FILE *in = fopen("temperaturas.txt", "r");
+    if (in == NULL) return 1;
     double suma = 0;
     int n = 0;
-    while (in >> dia >> t) { suma += t; n++; }
-    cout << n << " lecturas en total, promedio " << suma / n << "\n";
+    while (fscanf(in, "%19s %lf", dia, &t) == 2) { suma += t; n++; }
+    fclose(in);
+    printf("%d lecturas en total, promedio %.2f\n", n, suma / n);
     return 0;
 }
 ```
@@ -558,27 +549,28 @@ int main()
 cafe 35
 ```
 
-```cpp run title="gastos.cpp" stdin="comida 120\npasaje 18\nfin 0\n" showfile=gastos.txt
-#include <iostream>
-#include <fstream>
-#include <string>
-using namespace std;
-int main()
+```c run title="gastos.c" stdin="comida 120\npasaje 18\nfin 0\n" showfile=gastos.txt
+#include <stdio.h>
+#include <string.h>
+int main(void)
 {
-    ofstream out("gastos.txt", ios::app);
-    string c;
+    FILE *out = fopen("gastos.txt", "a");
+    if (out == NULL) return 1;
+    char c[30], cmax[30] = "";
     double m;
-    while (cin >> c >> m && c != "fin") out << c << " " << m << "\n";
-    out.close();
-    ifstream in("gastos.txt");
+    while (scanf("%29s %lf", c, &m) == 2 && strcmp(c, "fin") != 0)
+        fprintf(out, "%s %.2f\n", c, m);
+    fclose(out);
+    FILE *in = fopen("gastos.txt", "r");
+    if (in == NULL) return 1;
     double total = 0, max = 0;
-    string cmax;
-    while (in >> c >> m)
+    while (fscanf(in, "%29s %lf", c, &m) == 2)
     {
         total += m;
-        if (m > max) { max = m; cmax = c; }
+        if (m > max) { max = m; strcpy(cmax, c); }
     }
-    cout << "Total: $" << total << "  Mayor: " << cmax << " ($" << max << ")\n";
+    fclose(in);
+    printf("Total: $%.2f  Mayor: %s ($%.2f)\n", total, cmax, max);
     return 0;
 }
 ```
@@ -592,55 +584,51 @@ int main()
 512 290 830
 ```
 
-```cpp blank title="puntajes.cpp"
-#include <iostream>
-#include __1__                          // 1: biblioteca de flujos de archivo
-using namespace std;
-int main()
+```c blank title="puntajes.c"
+#include <stdio.h>
+int main(void)
 {
-    __2__ in("puntajes.txt");           // 2: flujo para LEER
-    if (__3__)                          // 3: ¿fallo la apertura?
+    FILE *in = __1__;                   // 1: abrir puntajes.txt para LEER
+    if (__2__)                          // 2: ¿fallo la apertura?
     {
-        cout << "No se encontro el archivo\n";
+        printf("No se encontro el archivo\n");
         return 1;
     }
     int p, n = 0, suma = 0, mayor = 0;
-    while (__4__)                       // 4: leer un puntaje en la condicion
+    while (__3__)                       // 3: leer un puntaje en la condicion
     {
         suma += p;
         n++;
         if (p > mayor) mayor = p;
     }
-    __5__;                              // 5: cerrar
-    cout << n << " puntajes, promedio " << suma / n << ", mayor " << mayor << "\n";
+    __4__;                              // 4: cerrar
+    printf("%d puntajes, promedio %d, mayor %d\n", n, suma / n, mayor);
     return 0;
 }
 ```
 
 :::solucion | T2
-{{c:1}} `<fstream>` · {{c:2}} `ifstream` · {{c:3}} `!in` · {{c:4}} `in >> p` · {{c:5}} `in.close()`
+{{c:1}} `fopen("puntajes.txt", "r")` · {{c:2}} `in == NULL` · {{c:3}} `fscanf(in, "%d", &p) == 1` · {{c:4}} `fclose(in)`
 
-```cpp run title="puntajes.cpp"
-#include <iostream>
-#include <fstream>
-using namespace std;
-int main()
+```c run title="puntajes.c"
+#include <stdio.h>
+int main(void)
 {
-    ifstream in("puntajes.txt");
-    if (!in)
+    FILE *in = fopen("puntajes.txt", "r");
+    if (in == NULL)
     {
-        cout << "No se encontro el archivo\n";
+        printf("No se encontro el archivo\n");
         return 1;
     }
     int p, n = 0, suma = 0, mayor = 0;
-    while (in >> p)
+    while (fscanf(in, "%d", &p) == 1)
     {
         suma += p;
         n++;
         if (p > mayor) mayor = p;
     }
-    in.close();
-    cout << n << " puntajes, promedio " << suma / n << ", mayor " << mayor << "\n";
+    fclose(in);
+    printf("%d puntajes, promedio %d, mayor %d\n", n, suma / n, mayor);
     return 0;
 }
 ```
@@ -657,62 +645,61 @@ con paciencia y con calma,
 hasta que el codigo compila.
 ```
 
-```cpp blank title="contar.cpp"
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <string>
-using namespace std;
-int main()
+```c blank title="contar.c"
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+int main(void)
 {
-    ifstream in("poema.txt");
+    FILE *in = fopen("poema.txt", "r");
     if (__1__) return 1;
-    string linea, larga;
+    char linea[200], larga[200] = "";
     int lineas = 0, palabras = 0, caracteres = 0;
     while (__2__)
     {
+        linea[strcspn(linea, "\n")] = '\0';
         lineas++;
         caracteres += __3__;
-        if (linea.size() > larga.size()) __4__;
-        stringstream ss(linea);
-        string p;
-        while (__5__) palabras++;
+        if (strlen(linea) > strlen(larga)) __4__;
+        for (int i = 0; linea[i] != '\0'; i++)
+            if (__5__) palabras++;
     }
-    cout << lineas << " lineas, " << palabras << " palabras, " << caracteres << " caracteres\n";
-    cout << "Mas larga: " << larga << "\n";
+    fclose(in);
+    printf("%d lineas, %d palabras, %d caracteres\n", lineas, palabras, caracteres);
+    printf("Mas larga: %s\n", larga);
     return 0;
 }
 ```
 
 :::solucion | T3
-{{c:1}} `!in` · {{c:2}} `getline(in, linea)` · {{c:3}} `linea.size()` · {{c:4}} `larga = linea` · {{c:5}} `ss >> p`
+{{c:1}} `in == NULL` · {{c:2}} `fgets(linea, sizeof linea, in) != NULL` · {{c:3}} `strlen(linea)` · {{c:4}} `strcpy(larga, linea)` · {{c:5}} `!isspace(linea[i]) && (i == 0 || isspace(linea[i - 1]))`
 
-```cpp run title="contar.cpp"
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <string>
-using namespace std;
-int main()
+```c run title="contar.c"
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+int main(void)
 {
-    ifstream in("poema.txt");
-    if (!in) return 1;
-    string linea, larga;
+    FILE *in = fopen("poema.txt", "r");
+    if (in == NULL) return 1;
+    char linea[200], larga[200] = "";
     int lineas = 0, palabras = 0, caracteres = 0;
-    while (getline(in, linea))
+    while (fgets(linea, sizeof linea, in) != NULL)
     {
+        linea[strcspn(linea, "\n")] = '\0';
         lineas++;
-        caracteres += linea.size();
-        if (linea.size() > larga.size()) larga = linea;
-        stringstream ss(linea);
-        string p;
-        while (ss >> p) palabras++;
+        caracteres += strlen(linea);
+        if (strlen(linea) > strlen(larga)) strcpy(larga, linea);
+        for (int i = 0; linea[i] != '\0'; i++)
+            if (!isspace(linea[i]) && (i == 0 || isspace(linea[i - 1]))) palabras++;
     }
-    cout << lineas << " lineas, " << palabras << " palabras, " << caracteres << " caracteres\n";
-    cout << "Mas larga: " << larga << "\n";
+    fclose(in);
+    printf("%d lineas, %d palabras, %d caracteres\n", lineas, palabras, caracteres);
+    printf("Mas larga: %s\n", larga);
     return 0;
 }
 ```
+El conteo de palabras reutiliza la idea del Tema 12: contar **inicios** de palabra.
 :::
 :::
 
@@ -728,38 +715,30 @@ int main()
 ```
 
 :::solucion | T4
-```cpp run title="inventario_csv.cpp" showfile=surtir.txt
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <string>
-using namespace std;
-int main()
+```c run title="inventario_csv.c" showfile=surtir.txt
+#include <stdio.h>
+int main(void)
 {
-    ifstream in("productos.csv");
-    ofstream out("surtir.txt");
-    if (!in || !out) { cout << "Error de archivos\n"; return 1; }
-    string linea;
-    double total = 0;
-    int surtir = 0;
-    while (getline(in, linea))
+    FILE *in = fopen("productos.csv", "r");
+    FILE *out = fopen("surtir.txt", "w");
+    if (in == NULL || out == NULL) { printf("Error de archivos\n"); return 1; }
+    char linea[120], nom[50];
+    int cod, exist, surtir = 0;
+    double precio, total = 0;
+    while (fgets(linea, sizeof linea, in) != NULL)
     {
-        stringstream ss(linea);
-        string cod, nom, campo;
-        getline(ss, cod, ',');
-        getline(ss, nom, ',');
-        getline(ss, campo, ',');
-        double precio = stod(campo);
-        getline(ss, campo, ',');
-        int exist = stoi(campo);
+        if (sscanf(linea, "%d,%49[^,],%lf,%d", &cod, nom, &precio, &exist) != 4)
+            continue;                                   // linea mal formada: se ignora
         total += precio * exist;
         if (exist < 10)
         {
-            out << cod << " " << nom << ": faltan " << 25 - exist << "\n";
+            fprintf(out, "%d %s: faltan %d\n", cod, nom, 25 - exist);
             surtir++;
         }
     }
-    cout << "Valor del inventario: $" << total << "\n" << surtir << " productos por surtir (ver surtir.txt)\n";
+    fclose(in);
+    fclose(out);
+    printf("Valor del inventario: $%.2f\n%d productos por surtir (ver surtir.txt)\n", total, surtir);
     return 0;
 }
 ```
@@ -782,32 +761,33 @@ eva 3 1100
 :::solucion | T5
 Una exploración posible:
 
-```cpp run title="explora_ventas.cpp"
-#include <iostream>
-#include <fstream>
-#include <string>
-using namespace std;
-int main()
+```c run title="explora_ventas.c"
+#include <stdio.h>
+#include <string.h>
+int main(void)
 {
-    ifstream in("ventas.txt");
-    if (!in) return 1;
-    string v, vMax;
-    int mes, n = 0, porMes[13] = {}, cAna = 0, cLuis = 0, cEva = 0;
+    FILE *in = fopen("ventas.txt", "r");
+    if (in == NULL) return 1;
+    char v[20], vMax[20] = "";
+    int mes, n = 0, porMes[13] = {0}, cAna = 0, cLuis = 0, cEva = 0;
     double monto, total = 0, mx = -1, mn = 1e18;
-    double totalMes[13] = {};
-    while (in >> v >> mes >> monto)
+    double totalMes[13] = {0};
+    while (fscanf(in, "%19s %d %lf", v, &mes, &monto) == 3)
     {
         n++; total += monto; totalMes[mes] += monto; porMes[mes]++;
-        if (monto > mx) { mx = monto; vMax = v; }
+        if (monto > mx) { mx = monto; strcpy(vMax, v); }
         if (monto < mn) mn = monto;
-        if (v == "ana") cAna++; else if (v == "luis") cLuis++; else if (v == "eva") cEva++;
+        if (strcmp(v, "ana") == 0) cAna++;
+        else if (strcmp(v, "luis") == 0) cLuis++;
+        else if (strcmp(v, "eva") == 0) cEva++;
     }
+    fclose(in);
     int mejorMes = 1;
     for (int m = 2; m <= 12; m++) if (totalMes[m] > totalMes[mejorMes]) mejorMes = m;
-    cout << n << " ventas, total " << total << ", promedio " << total / n << "\n";
-    cout << "Mayor " << mx << " (" << vMax << "), menor " << mn << "\n";
-    cout << "Ventas por vendedor: ana " << cAna << ", luis " << cLuis << ", eva " << cEva << "\n";
-    cout << "Mejor mes: " << mejorMes << " ($" << totalMes[mejorMes] << ", " << porMes[mejorMes] << " ventas)\n";
+    printf("%d ventas, total %.2f, promedio %.2f\n", n, total, total / n);
+    printf("Mayor %.2f (%s), menor %.2f\n", mx, vMax, mn);
+    printf("Ventas por vendedor: ana %d, luis %d, eva %d\n", cAna, cLuis, cEva);
+    printf("Mejor mes: %d ($%.2f, %d ventas)\n", mejorMes, totalMes[mejorMes], porMes[mejorMes]);
     return 0;
 }
 ```
@@ -817,49 +797,49 @@ int main()
 :::tarea B | T6. Cuatro errores con archivos (autoexplicación) | 20 min | Autoexplicación, Reversión de la experiencia
 **Explica** qué ocurre en cada fragmento y por qué; propón la corrección.
 
-```cpp blank title="archivos_bug.cpp"
+```c blank title="archivos_bug.c"
 // A: el usuario quiere AGREGAR un registro a clientes.txt
-ofstream f("clientes.txt");
-f << "Nuevo cliente\n";
+FILE *f = fopen("clientes.txt", "w");
+fprintf(f, "Nuevo cliente\n");
 
 // B: sumar los numeros de datos.txt
-ifstream in("datos.txt");
+FILE *in = fopen("datos.txt", "r");
 int x, s = 0;
-while (!in.eof()) { in >> x; s += x; }
+while (!feof(in)) { fscanf(in, "%d", &x); s += x; }
 
 // C: escribir y luego leer el mismo archivo
-ofstream o("temp.txt");
-o << 42;
-ifstream i("temp.txt");
-int y; i >> y;           // y no vale 42
+FILE *o = fopen("temp.txt", "w");
+fprintf(o, "%d", 42);
+FILE *i = fopen("temp.txt", "r");
+int y; fscanf(i, "%d", &y);           // y no vale 42
 
 // D: leer la cantidad y luego un nombre con espacios
-ifstream g("alumno.txt");   // contiene: "3\nAna Lopez\n"
-int n; string nombre;
-g >> n;
-getline(g, nombre);         // nombre queda vacio
+FILE *g = fopen("alumno.txt", "r");   // contiene: "3\nAna Lopez\n"
+int n; char nombre[40];
+fscanf(g, "%d", &n);
+fgets(nombre, sizeof nombre, g);      // nombre queda vacio ("\n")
 ```
 
 {{lineas:5}}
 
 :::solucion | T6
-**A:** `ofstream` sin `ios::app` **borra** el archivo: se pierden todos los clientes. → `ofstream f("clientes.txt", ios::app);`. **B:** con `!in.eof()` el último número se suma dos veces (y si el archivo no existe, ciclo con basura); además no se verificó la apertura. → `if (!in) …; while (in >> x) s += x;`. **C:** el 42 puede seguir en el **búfer** de `o` (no se ha escrito al disco) cuando `i` lee. → `o.close();` antes de abrir para leer. **D:** `g >> n` deja el `'\n'`; `getline` lee esa línea vacía. → `g.ignore();` antes de `getline`.
+**A:** el modo `"w"` **borra** el archivo: se pierden todos los clientes. → `fopen("clientes.txt", "a")` (y verificar `NULL` y cerrar). **B:** con `!feof(in)` el último número se suma dos veces; además no se verificó la apertura (si el archivo no existe, `fscanf(NULL, …)` detiene el programa). → `if (in == NULL) …; while (fscanf(in, "%d", &x) == 1) s += x;`. **C:** el 42 puede seguir en el **búfer** de `o` (aún no se escribió al disco) cuando `i` lee. → `fclose(o);` antes de abrir para leer. **D:** `fscanf` deja el `'\n'` de la primera línea; `fgets` lee esa línea vacía. → consumir el salto (`fgetc(g)`) o leer ambas líneas con `fgets` y convertir la primera con `sscanf`.
 :::
 :::
 
 :::tarea B | T7. ¿Qué contiene el archivo? (imaginación) | 20 min | Imaginación
-**Sin ejecutar**, imagina el contenido de `log.txt` después de cada bloque y escribe el contenido final.
+**Sin ejecutar**, imagina el contenido de `log.txt` después de cada línea y escribe el contenido final. (Por brevedad, este ejemplo no verifica `NULL`.)
 
-```cpp check title="imagina_log.cpp"
-#include <fstream>
-using namespace std;
-int main()
+```c check title="imagina_log.c"
+#include <stdio.h>
+int main(void)
 {
-    { ofstream f("log.txt");              f << "A\n"; }
-    { ofstream f("log.txt", ios::app);    f << "B\nC\n"; }
-    { ofstream f("log.txt");              f << "D\n"; }
-    { ofstream f("log.txt", ios::app);    f << "E\n"; }
-    { ofstream f("log.txt", ios::app);    f << "F"; }
+    FILE *f;
+    f = fopen("log.txt", "w"); fprintf(f, "A\n");    fclose(f);
+    f = fopen("log.txt", "a"); fprintf(f, "B\nC\n"); fclose(f);
+    f = fopen("log.txt", "w"); fprintf(f, "D\n");    fclose(f);
+    f = fopen("log.txt", "a"); fprintf(f, "E\n");    fclose(f);
+    f = fopen("log.txt", "a"); fprintf(f, "F");      fclose(f);
     return 0;
 }
 ```
@@ -867,18 +847,18 @@ int main()
 {{lineas:3}}
 
 :::solucion | T7
-Bloque 1 → `A`. Bloque 2 (agrega) → `A B C`. Bloque 3 (modo normal: **borra**) → `D`. Bloques 4 y 5 (agregan) → `D E F`. El archivo final tiene tres líneas: `D`, `E` y `F` (la última sin salto de línea). Cada bloque `{ }` cierra el archivo automáticamente al terminar, porque el flujo se destruye (RAII).
+Línea 1 → `A`. Línea 2 (agrega) → `A B C`. Línea 3 (modo `"w"`: **borra**) → `D`. Líneas 4 y 5 (agregan) → `D E F`. El archivo final tiene tres líneas: `D`, `E` y `F` (la última sin salto de línea).
 
-```cpp run title="imagina_log.cpp" out=0 showfile=log.txt
-#include <fstream>
-using namespace std;
-int main()
+```c run title="imagina_log.c" out=0 showfile=log.txt
+#include <stdio.h>
+int main(void)
 {
-    { ofstream f("log.txt");              f << "A\n"; }
-    { ofstream f("log.txt", ios::app);    f << "B\nC\n"; }
-    { ofstream f("log.txt");              f << "D\n"; }
-    { ofstream f("log.txt", ios::app);    f << "E\n"; }
-    { ofstream f("log.txt", ios::app);    f << "F"; }
+    FILE *f;
+    f = fopen("log.txt", "w"); fprintf(f, "A\n");    fclose(f);
+    f = fopen("log.txt", "a"); fprintf(f, "B\nC\n"); fclose(f);
+    f = fopen("log.txt", "w"); fprintf(f, "D\n");    fclose(f);
+    f = fopen("log.txt", "a"); fprintf(f, "E\n");    fclose(f);
+    f = fopen("log.txt", "a"); fprintf(f, "F");      fclose(f);
     return 0;
 }
 ```
@@ -890,9 +870,9 @@ int main()
 
 :::colab | Organización
 Equipos de 4, niveles mezclados. Primero acuerden el **formato** del archivo (una línea por estudiante: `matricula nombre calificacion`).
-- **Integrante 1:** `void alta(…)` con `ios::app` (rechaza matrículas repetidas consultando el archivo).
-- **Integrante 2:** `bool consulta(int mat)` y `void listado()`.
-- **Integrante 3:** `bool baja(int mat)`: copia a `temp.txt` todos menos el buscado y reemplaza el original (`remove` / `rename` de `<cstdio>`).
+- **Integrante 1:** `void alta(…)` con modo `"a"` (rechaza matrículas repetidas consultando el archivo).
+- **Integrante 2:** `bool consulta(int mat, bool mostrar)` y `void listado(void)`.
+- **Integrante 3:** `bool baja(int mat)`: copia a `temp.txt` todos menos el buscado y reemplaza el original (`remove` / `rename`, también de `<stdio.h>`).
 - **Integrante 4:** menú y pruebas: alta de 3, baja de 1, listado; volver a ejecutar y comprobar que los datos siguen ahí.
 :::
 
@@ -902,63 +882,73 @@ Equipos de 4, niveles mezclados. Primero acuerden el **formato** del archivo (un
 2002 Luis 7.4
 ```
 
-```cpp run title="registro_estudiantes.cpp" stdin="1 2003 Eva 8.8\n1 2001 Repetido 5\n2 2002\n4 2002\n3\n0\n" showfile=estudiantes.txt
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <cstdio>
-using namespace std;
-const string ARCH = "estudiantes.txt";
+```c run title="registro_estudiantes.c" stdin="1 2003 Eva 8.8\n1 2001 Repetido 5\n2 2002\n4 2002\n3\n0\n" showfile=estudiantes.txt
+#include <stdio.h>
+#include <stdbool.h>
+#define ARCH "estudiantes.txt"
 
 bool consulta(int mat, bool mostrar)
 {
-    ifstream in(ARCH);
-    int m; string n; double c;
-    while (in >> m >> n >> c)
-        if (m == mat) { if (mostrar) cout << "  " << m << " " << n << " " << c << "\n"; return true; }
-    return false;
+    FILE *in = fopen(ARCH, "r");
+    if (in == NULL) return false;
+    int m; char n[30]; double c;
+    bool hallado = false;
+    while (!hallado && fscanf(in, "%d %29s %lf", &m, n, &c) == 3)
+        if (m == mat)
+        {
+            hallado = true;
+            if (mostrar) printf("  %d %s %.1f\n", m, n, c);
+        }
+    fclose(in);
+    return hallado;
 }
-void alta(int mat, const string& nom, double cal)
+void alta(int mat, const char nom[], double cal)
 {
-    if (consulta(mat, false)) { cout << "  Matricula repetida\n"; return; }
-    ofstream out(ARCH, ios::app);
-    out << mat << " " << nom << " " << cal << "\n";
-    cout << "  Alta de " << nom << "\n";
+    if (consulta(mat, false)) { printf("  Matricula repetida\n"); return; }
+    FILE *out = fopen(ARCH, "a");
+    if (out == NULL) return;
+    fprintf(out, "%d %s %.1f\n", mat, nom, cal);
+    fclose(out);
+    printf("  Alta de %s\n", nom);
 }
-void listado()
+void listado(void)
 {
-    ifstream in(ARCH);
-    int m; string n; double c;
-    while (in >> m >> n >> c) cout << "  " << m << " " << n << " " << c << "\n";
+    FILE *in = fopen(ARCH, "r");
+    if (in == NULL) return;
+    int m; char n[30]; double c;
+    while (fscanf(in, "%d %29s %lf", &m, n, &c) == 3) printf("  %d %s %.1f\n", m, n, c);
+    fclose(in);
 }
 bool baja(int mat)
 {
-    ifstream in(ARCH);
-    ofstream tmp("temp.txt");
-    int m; string n; double c;
+    FILE *in = fopen(ARCH, "r");
+    FILE *tmp = fopen("temp.txt", "w");
+    if (in == NULL || tmp == NULL) return false;
+    int m; char n[30]; double c;
     bool hallado = false;
-    while (in >> m >> n >> c)
+    while (fscanf(in, "%d %29s %lf", &m, n, &c) == 3)
     {
         if (m == mat) hallado = true;
-        else tmp << m << " " << n << " " << c << "\n";
+        else fprintf(tmp, "%d %s %.1f\n", m, n, c);
     }
-    in.close(); tmp.close();
-    remove(ARCH.c_str());
-    rename("temp.txt", ARCH.c_str());
+    fclose(in);
+    fclose(tmp);
+    remove(ARCH);
+    rename("temp.txt", ARCH);
     return hallado;
 }
-int main()
+int main(void)
 {
     int op;
-    while (cin >> op && op != 0)
+    while (scanf("%d", &op) == 1 && op != 0)
     {
-        int mat; string nom; double cal;
+        int mat; char nom[30]; double cal;
         switch (op)
         {
-            case 1: cin >> mat >> nom >> cal; alta(mat, nom, cal); break;
-            case 2: cin >> mat; if (!consulta(mat, true)) cout << "  No existe\n"; break;
+            case 1: scanf("%d %29s %lf", &mat, nom, &cal); alta(mat, nom, cal); break;
+            case 2: scanf("%d", &mat); if (!consulta(mat, true)) printf("  No existe\n"); break;
             case 3: listado(); break;
-            case 4: cin >> mat; cout << (baja(mat) ? "  Baja realizada\n" : "  No existe\n"); break;
+            case 4: scanf("%d", &mat); printf(baja(mat) ? "  Baja realizada\n" : "  No existe\n"); break;
         }
     }
     return 0;
@@ -974,11 +964,11 @@ int main()
 
 **Problema:** «En `precios.txt` (producto y precio por línea) aumentar un 10 % el precio de un producto dado».
 
-**Segmento 1 — Por qué no «editar en su lugar».** {{como}} Descarto escribir directamente en medio del archivo de texto. {{porque}} En un archivo de texto, «45.5» y «50.05» ocupan distinto número de caracteres: si sobrescribo en el lugar, piso el inicio de la línea siguiente.
+**Segmento 1 — Por qué no «editar en su lugar».** {{como}} Descarto escribir directamente en medio del archivo de texto. {{porque}} En un archivo de texto, «45.50» y «50.05» pueden ocupar distinto número de caracteres que el precio original: si sobrescribo en el lugar, piso el inicio de la línea siguiente.
 
-**Segmento 2 — Leer uno, escribir otro.** {{como}} Abro `precios.txt` para leer y `temp.txt` para escribir; copio cada registro tal cual, excepto el buscado, que escribo con su nuevo precio. {{porque}} Así el archivo nuevo se construye completo y correcto, línea por línea.
+**Segmento 2 — Leer uno, escribir otro.** {{como}} Abro `precios.txt` con `"r"` y `temp.txt` con `"w"`; copio cada registro tal cual, excepto el buscado, que escribo con su nuevo precio. {{porque}} Así el archivo nuevo se construye completo y correcto, línea por línea.
 
-**Segmento 3 — Reemplazar con seguridad.** {{como}} Cierro **ambos** flujos y solo entonces hago `remove("precios.txt")` y `rename("temp.txt", "precios.txt")`. {{porque}} Si borrara el original antes de terminar de escribir el temporal y algo fallara, perdería los datos.
+**Segmento 3 — Reemplazar con seguridad.** {{como}} Cierro **ambos** archivos con `fclose` y solo entonces hago `remove("precios.txt")` y `rename("temp.txt", "precios.txt")`. {{porque}} Si borrara el original antes de terminar de escribir el temporal y algo fallara, perdería los datos.
 
 **Segmento 4 — Avisar y verificar.** {{como}} Llevo una bandera `encontrado` para avisar si el producto no existía y, al final, muestro el archivo resultante. {{porque}} Un programa que modifica datos debe confirmar lo que hizo; y ver el archivo final es la prueba definitiva.
 
@@ -990,33 +980,31 @@ cuaderno 45.5
 mochila 520
 ```
 
-```cpp run title="modificar.cpp" stdin="cuaderno\n" showfile=precios.txt
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <cstdio>
-using namespace std;
-int main()
+```c run title="modificar.c" stdin="cuaderno\n" showfile=precios.txt
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+int main(void)
 {
-    string buscado;
-    cout << "Producto a aumentar: ";
-    cin >> buscado;
-    ifstream in("precios.txt");
-    ofstream tmp("temp.txt");
-    if (!in || !tmp) return 1;
-    string p;
+    char buscado[30];
+    printf("Producto a aumentar: ");
+    scanf("%29s", buscado);
+    FILE *in = fopen("precios.txt", "r");
+    FILE *tmp = fopen("temp.txt", "w");
+    if (in == NULL || tmp == NULL) return 1;
+    char p[30];
     double precio;
     bool encontrado = false;
-    while (in >> p >> precio)
+    while (fscanf(in, "%29s %lf", p, &precio) == 2)
     {
-        if (p == buscado) { precio *= 1.10; encontrado = true; }
-        tmp << p << " " << precio << "\n";
+        if (strcmp(p, buscado) == 0) { precio *= 1.10; encontrado = true; }
+        fprintf(tmp, "%s %.2f\n", p, precio);
     }
-    in.close();
-    tmp.close();
+    fclose(in);
+    fclose(tmp);
     remove("precios.txt");
     rename("temp.txt", "precios.txt");
-    cout << (encontrado ? "Precio actualizado\n" : "No se encontro el producto\n");
+    printf(encontrado ? "Precio actualizado\n" : "No se encontro el producto\n");
     return 0;
 }
 ```
@@ -1027,40 +1015,40 @@ int main()
 :::recall | 5.1 Recall test · conocimiento declarativo
 1. ¿Qué diferencia hay entre memoria principal y memoria secundaria?
 2. Menciona una diferencia entre un archivo de texto y uno binario.
-3. ¿Qué biblioteca contiene `ifstream` y `ofstream`?
-4. ¿Qué ocurre si abres con `ofstream f("x.txt");` un archivo que ya tenía datos?
+3. ¿Qué cabecera declara `fopen`, `fprintf` y `fclose`?
+4. ¿Qué ocurre si abres con `fopen("x.txt", "w")` un archivo que ya tenía datos?
 5. ¿Cómo se abre un archivo para agregar al final?
 6. ¿Cómo se verifica que un archivo se abrió correctamente?
-7. ¿Por qué se recomienda `while (in >> x)` en lugar de `while (!in.eof())`?
-8. ¿Qué función lee una línea completa de un archivo?
-9. ¿Para qué sirve un `stringstream` al leer un CSV?
-10. ¿Cuál es el equivalente en C de `ofstream f("a.txt", ios::app);`?
+7. ¿Por qué se recomienda `while (fscanf(in, "%d", &x) == 1)` en lugar de `while (!feof(in))`?
+8. ¿Qué función lee una línea completa de un archivo? ¿Qué devuelve cuando ya no hay más líneas?
+9. ¿Qué devuelve `fscanf`?
+10. ¿Para qué sirve `sscanf` al leer un CSV?
 :::
 
 :::compr | 5.2 Comprehension test · conocimiento procedimental
 **P1. Analiza la salida** si `nums.txt` contiene `4 8 15 16 23 42`:
 
-```cpp check title="p1.cpp"
-#include <iostream>
-#include <fstream>
-using namespace std;
-int main()
+```c check title="p1.c"
+#include <stdio.h>
+int main(void)
 {
-    ifstream in("nums.txt");
+    FILE *in = fopen("nums.txt", "r");
+    if (in == NULL) return 1;
     int x, pares = 0, ultimo = 0;
-    while (in >> x)
+    while (fscanf(in, "%d", &x) == 1)
     {
         if (x % 2 == 0) pares++;
         ultimo = x;
     }
-    cout << pares << " " << ultimo << "\n";
+    fclose(in);
+    printf("%d %d\n", pares, ultimo);
     return 0;
 }
 ```
 
-**P2. Corrige:** `ifstream out("reporte.txt"); out << "Total: " << t; while (!out.eof()) {...}`
+**P2. Corrige:** `FILE *out = fopen("reporte.txt", "r"); fprintf(out, "Total: %d\n", t); while (!feof(out)) {...}`
 
-**P3. Implementa** un programa que lea `temperaturas.txt` (un número por línea) y escriba en `alertas.txt` solo las mayores de 30, numeradas.
+**P3. Implementa** un programa que lea `temps.txt` (un número por línea) y escriba en `alertas.txt` solo las mayores de 30, numeradas.
 
 **P4. Desarrolla** un programa de manipulación de datos: lee `alumnos.csv` (`id,nombre,promedio`), genera `aprobados.csv` y `reprobados.csv` (promedio ≥ 6 o < 6) con el mismo formato e informa cuántos registros escribió en cada uno.
 :::
@@ -1069,7 +1057,7 @@ int main()
 <ul class="checks">
 <li>Escribo archivos creando o agregando según lo que necesito.</li>
 <li>Leo archivos por datos y por líneas sin procesar dos veces el último dato.</li>
-<li>Verifico la apertura y cierro los archivos en el momento correcto.</li>
+<li>Verifico la apertura (<code>NULL</code>) y cierro los archivos (<code>fclose</code>) en el momento correcto.</li>
 <li>Proceso registros con campos y hago bajas o modificaciones con un archivo temporal.</li>
 </ul>
 **Esfuerzo mental invertido** (1 = muy, muy bajo · 9 = muy, muy alto):
@@ -1077,7 +1065,7 @@ int main()
 :::
 
 :::solucion | Evaluación 5.1 (recall)
-1 La principal (RAM) es rápida pero se borra al terminar el programa o apagar; la secundaria (disco, USB) conserva los datos · 2 El de texto contiene caracteres legibles y se abre con un editor; el binario guarda bytes tal como están en memoria · 3 `<fstream>` · 4 Se borra el contenido anterior (modo normal) · 5 `ofstream f("x.txt", ios::app);` · 6 `if (!f)` o `if (!f.is_open())` · 7 Porque `eof` se activa solo después de una lectura fallida y el último dato se procesaría dos veces · 8 `getline(flujo, cadena)` · 9 Para tratar la línea como un flujo y separar sus campos con `getline(ss, campo, ',')` · 10 `FILE* f = fopen("a.txt", "a");`
+1 La principal (RAM) es rápida pero se borra al terminar el programa o apagar; la secundaria (disco, USB) conserva los datos · 2 El de texto contiene caracteres legibles y se abre con un editor; el binario guarda bytes tal como están en memoria · 3 `<stdio.h>` · 4 Se borra el contenido anterior (modo `"w"`) · 5 `fopen("x.txt", "a")` · 6 `if (f == NULL)` (y `perror` para ver la causa) · 7 Porque `feof` se vuelve verdadero solo después de una lectura fallida y el último dato se procesaría dos veces; el valor de retorno de `fscanf` dice si la lectura funcionó · 8 `fgets(cadena, tamaño, archivo)`; devuelve `NULL` · 9 Cuántos datos logró leer y guardar, o `EOF` si se acabó el archivo antes de leer alguno · 10 Para separar los campos de una línea ya leída con `fgets`, con un formato como `"%d,%49[^,],%lf"`.
 :::
 
 :::solucion | Evaluación 5.2 (comprehension)
@@ -1087,25 +1075,25 @@ int main()
 4 8 15 16 23 42
 ```
 
-```cpp run title="p1.cpp"
-#include <iostream>
-#include <fstream>
-using namespace std;
-int main()
+```c run title="p1.c"
+#include <stdio.h>
+int main(void)
 {
-    ifstream in("nums.txt");
+    FILE *in = fopen("nums.txt", "r");
+    if (in == NULL) return 1;
     int x, pares = 0, ultimo = 0;
-    while (in >> x)
+    while (fscanf(in, "%d", &x) == 1)
     {
         if (x % 2 == 0) pares++;
         ultimo = x;
     }
-    cout << pares << " " << ultimo << "\n";
+    fclose(in);
+    printf("%d %d\n", pares, ultimo);
     return 0;
 }
 ```
 
-**P2.** Para escribir se usa `ofstream` (no `ifstream`); verificar la apertura; el ciclo con `eof` sobra (y no tiene sentido en un flujo de salida); cerrar al final.
+**P2.** Para escribir se abre con `"w"` (no `"r"`); verificar que `out` no sea `NULL`; el ciclo con `feof` sobra (y no tiene sentido al escribir); cerrar con `fclose(out)`.
 
 **P3.**
 
@@ -1117,21 +1105,22 @@ int main()
 30.1
 ```
 
-```cpp run title="alertas.cpp" showfile=alertas.txt
-#include <fstream>
-using namespace std;
-int main()
+```c run title="alertas.c" showfile=alertas.txt
+#include <stdio.h>
+int main(void)
 {
-    ifstream in("temps.txt");
-    ofstream out("alertas.txt");
-    if (!in || !out) return 1;
+    FILE *in = fopen("temps.txt", "r");
+    FILE *out = fopen("alertas.txt", "w");
+    if (in == NULL || out == NULL) return 1;
     double t;
     int k = 0;
-    while (in >> t)
-        if (t > 30) out << ++k << ". " << t << "\n";
+    while (fscanf(in, "%lf", &t) == 1)
+        if (t > 30) fprintf(out, "%d. %.1f\n", ++k, t);
+    fclose(in);
+    fclose(out);
     return 0;
 }
 ```
 
-**P4.** Se reutiliza el patrón del concepto 8 (CSV con `stringstream`) y dos `ofstream`; por cada línea se decide en cuál escribir con `if (promedio >= 6)` y se lleva un contador por archivo.
+**P4.** Se reutiliza el patrón del concepto 8 (CSV con `fgets` + `sscanf`) y dos archivos abiertos con `"w"`; por cada línea se decide en cuál escribir con `if (promedio >= 6)` y se lleva un contador por archivo.
 :::

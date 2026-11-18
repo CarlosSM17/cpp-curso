@@ -7,8 +7,8 @@ lema: "Una función que se llama a sí misma con un problema más pequeño, hast
 duracion: "4 h · 2 sesiones de 2 h"
 previos: "Tema 10 (funciones, parámetros, `return` y pila de llamadas)."
 fuentes:
-  - "Betancourt Uscátegui, J. F. y Polanco Guzmán, I. Y. (2021). *115 ejercicios resueltos de programación C++*. Cap. 9: Recursividad (§9.1 Concepto, §9.2 Características, §9.3 Tipos, §9.4 Ventajas y desventajas, §9.5 Ejercicios)."
-  - "Lospinoso, J. (2019). *C++ Crash Course*. Cap. 4: Call Stacks (marcos de la pila de llamadas y su desenrollado)."
+  - "Kernighan, B. W. y Ritchie, D. M. (1988). *The C Programming Language* (2.ª ed.). Prentice Hall. Cap. 4: §4.10 Recursion."
+  - "King, K. N. (2008). *C Programming: A Modern Approach* (2.ª ed.). W. W. Norton. Cap. 9: §9.6 Recursion (incluye *quicksort*)."
 objetivos:
   A:
     - "Explicar qué es una función recursiva e identificar su caso base y su caso recursivo."
@@ -85,7 +85,7 @@ Para encontrar la muñeca más pequeña, abres la muñeca grande y encuentras…
 :::
 
 :::relevancia
-La recursividad aparece en la vida real y en la computación: carpetas que contienen carpetas, fractales en gráficos, árboles de decisiones en la inteligencia artificial de los juegos (minimax del ajedrez), algoritmos rápidos de ordenamiento (*quicksort*) y la búsqueda binaria. Pensar recursivamente te da una herramienta poderosa para problemas que «se parecen a sí mismos». {{arcs:Relevancia}}
+La recursividad aparece en la vida real y en la computación: carpetas que contienen carpetas, fractales en gráficos, árboles de decisiones en la inteligencia artificial de los juegos (minimax del ajedrez), algoritmos rápidos de ordenamiento (*quicksort*, que King presenta en C) y la búsqueda binaria. Pensar recursivamente te da una herramienta poderosa para problemas que «se parecen a sí mismos». {{arcs:Relevancia}}
 :::
 
 ## 1.1 Conceptos, uno por uno
@@ -100,9 +100,8 @@ Cada paso acerca el problema al caso base: 4! → 3! → 2! → 1! → 0!.
 :::
 
 :::concepto | 2 | La primera función recursiva | Elementos aislados, Atención dividida
-```cpp run title="factorial.cpp"
-#include <iostream>
-using namespace std;
+```c run title="factorial.c"
+#include <stdio.h>
 
 long long factorial(int n)
 {
@@ -111,10 +110,10 @@ long long factorial(int n)
     return n * factorial(n - 1);       //> **Caso recursivo**: se llama a sí misma con n − 1
 }
 
-int main()
+int main(void)
 {
     for (int i = 0; i <= 5; i++)
-        cout << i << "! = " << factorial(i) << "\n";
+        printf("%d! = %lld\n", i, factorial(i));
     return 0;
 }
 ```
@@ -167,19 +166,18 @@ Lo que se hace **antes** de la llamada recursiva ocurre a la **subida**; lo que 
 <div class="cols eq">
 <div>
 
-```cpp run title="antes.cpp"
-#include <iostream>
-using namespace std;
+```c run title="antes.c"
+#include <stdio.h>
 void contar(int n)
 {
     if (n == 0) return;
-    cout << n << " ";   // ANTES
+    printf("%d ", n);   // ANTES
     contar(n - 1);
 }
-int main()
+int main(void)
 {
     contar(5);
-    cout << "\n";
+    printf("\n");
     return 0;
 }
 ```
@@ -187,19 +185,18 @@ int main()
 </div>
 <div>
 
-```cpp run title="despues.cpp"
-#include <iostream>
-using namespace std;
+```c run title="despues.c"
+#include <stdio.h>
 void contar(int n)
 {
     if (n == 0) return;
     contar(n - 1);
-    cout << n << " ";   // DESPUES
+    printf("%d ", n);   // DESPUES
 }
-int main()
+int main(void)
 {
     contar(5);
-    cout << "\n";
+    printf("\n");
     return 0;
 }
 ```
@@ -211,9 +208,8 @@ int main()
 :::concepto | 5 | Reducir el problema: dígitos y sumas | Elementos aislados
 La pregunta clave para diseñar una función recursiva: **«si alguien me resolviera el problema un poco más pequeño, ¿cómo lo usaría?»**
 
-```cpp run title="digitos.cpp"
-#include <iostream>
-using namespace std;
+```c run title="digitos.c"
+#include <stdio.h>
 
 int sumaDigitos(int n)
 {
@@ -222,9 +218,9 @@ int sumaDigitos(int n)
     return n % 10 + sumaDigitos(n / 10); //> Último dígito + suma de los demás (número más corto)
 }
 
-int main()
+int main(void)
 {
-    cout << sumaDigitos(4072) << "\n";   //> 2 + sumaDigitos(407) = 2 + 7 + sumaDigitos(40) = …
+    printf("%d\n", sumaDigitos(4072));   //> 2 + sumaDigitos(407) = 2 + 7 + sumaDigitos(40) = …
     return 0;
 }
 ```
@@ -233,24 +229,23 @@ int main()
 :::concepto | 6 | Recursión múltiple: Fibonacci y su costo | Elementos aislados, Atención dividida
 Si una llamada genera **dos** llamadas, el número de llamadas crece muy rápido:
 
-```cpp run title="fib.cpp"
-#include <iostream>
-using namespace std;
-int llamadas = 0;
+```c run title="fib.c"
+#include <stdio.h>
+long long llamadas = 0;
 long long fib(int n)
 {
     llamadas++;
     if (n < 2) return n;                 //> Dos casos base: fib(0) = 0, fib(1) = 1
     return fib(n - 1) + fib(n - 2);      //> Dos llamadas recursivas
 }
-int main()
+int main(void)
 {
     int prueba[] = {5, 20, 30};
-    for (int n : prueba)
+    for (int i = 0; i < 3; i++)
     {
         llamadas = 0;
-        long long r = fib(n);
-        cout << "fib(" << n << ") = " << r << " con " << llamadas << " llamadas\n";
+        long long r = fib(prueba[i]);
+        printf("fib(%d) = %lld con %lld llamadas\n", prueba[i], r, llamadas);
     }
     return 0;
 }
@@ -283,9 +278,8 @@ a -> b; a -> c; b -> d; b -> e; d -> f; d -> g; c -> h; c -> i;
 :::
 
 :::concepto | 8 | Ruta B · Recursión sobre arreglos y búsqueda binaria | Elementos aislados, Reversión de la experiencia
-```cpp run title="arreglos_rec.cpp"
-#include <iostream>
-using namespace std;
+```c run title="arreglos_rec.c"
+#include <stdio.h>
 
 int suma(const int a[], int n)                 //> Suma de los primeros n elementos
 {
@@ -302,11 +296,11 @@ int binaria(const int a[], int ini, int fin, int x)   //> a debe estar ORDENADO
     return binaria(a, mitad + 1, fin, x);                     //> Descarta la mitad izquierda
 }
 
-int main()
+int main(void)
 {
     int v[] = {3, 8, 15, 21, 34, 42, 57, 63};
-    cout << "Suma: " << suma(v, 8) << "\n";
-    cout << "42 esta en " << binaria(v, 0, 7, 42) << "; 10 esta en " << binaria(v, 0, 7, 10) << "\n";
+    printf("Suma: %d\n", suma(v, 8));
+    printf("42 esta en %d; 10 esta en %d\n", binaria(v, 0, 7, 42), binaria(v, 0, 7, 10));
     return 0;
 }
 ```
@@ -337,35 +331,32 @@ Algoritmo Potencias
 FinAlgoritmo
 ```
 
-**C. Código en C++** (con traza de cada nivel)
+**C. Código en C** (con traza de cada nivel)
 
-```cpp run title="potencia.cpp" stdin="2 4\n"
-#include <iostream>
-#include <string>
-using namespace std;
+```c run title="potencia.c" stdin="2 4\n"
+#include <stdio.h>
 
-double potencia(double b, int e, int nivel = 0)     //> `nivel` solo sirve para mostrar la traza con sangría
+double potencia(double b, int e, int nivel)          //> `nivel` solo sirve para mostrar la traza con sangría
 {
-    string sangria(nivel * 2, ' ');
-    cout << sangria << "potencia(" << b << ", " << e << ")\n";       //> Subida
-    if (e == 0)                                     //> Caso base
+    printf("%*spotencia(%.0f, %d)\n", nivel * 2, "", b, e);   //> Subida; `%*s` con "" imprime nivel·2 espacios
+    if (e == 0)                                      //> Caso base
     {
-        cout << sangria << "-> 1 (caso base)\n";
+        printf("%*s-> 1 (caso base)\n", nivel * 2, "");
         return 1;
     }
-    double r = b * potencia(b, e - 1, nivel + 1);  //> Caso recursivo: problema más pequeño (e − 1)
-    cout << sangria << "-> " << r << "\n";          //> Bajada: el resultado se construye al regresar
+    double r = b * potencia(b, e - 1, nivel + 1);   //> Caso recursivo: problema más pequeño (e − 1)
+    printf("%*s-> %.0f\n", nivel * 2, "", r);        //> Bajada: el resultado se construye al regresar
     return r;
 }
 
-int main()
+int main(void)
 {
     double b;
     int e;
-    cout << "Base y exponente: ";
-    cin >> b >> e;
-    double r = potencia(b, e);                      //> Primero se calcula (con su traza)…
-    cout << "Resultado: " << r << "\n";             //> …y después se muestra
+    printf("Base y exponente: ");
+    scanf("%lf %d", &b, &e);
+    double r = potencia(b, e, 0);                    //> El nivel inicial es 0 (C no tiene valores por defecto)
+    printf("Resultado: %.0f\n", r);
     return 0;
 }
 ```
@@ -390,7 +381,7 @@ r -> b; r -> c; c -> p; p -> ad; r -> m [style=dashed]; r -> t [style=dashed];
 # 2. Información procedimental {.procedimental}
 
 :::sintaxis | Tarjeta de sintaxis 2.1 · Plantilla y receta | Variabilidad
-```cpp blank title="plantilla_recursiva.cpp"
+```c blank title="plantilla_recursiva.c"
 tipo resolver(problema)
 {
     if (problema es trivial)               // 1) CASO BASE: respuesta directa
@@ -426,7 +417,7 @@ tipo resolver(problema)
 :::errores | Errores frecuentes 2.3 | Variabilidad, Autoexplicación
 **a) Sin caso base (o inalcanzable): desbordamiento de pila.** El programa se detiene con *Segmentation fault* / *stack overflow* tras miles de llamadas:
 
-```cpp blank title="sin_base.cpp"
+```c blank title="sin_base.c"
 int f(int n)
 {
     return n * f(n - 1);    // nunca se detiene
@@ -439,32 +430,31 @@ int f(int n)
 
 **d) Ignorar el resultado de la llamada.** El valor calculado se pierde:
 
-```cpp run
-#include <iostream>
-using namespace std;
+```c run
+#include <stdio.h>
 int suma(int n)
 {
     if (n == 0) return 0;
     suma(n - 1);              //> Se calcula… y se descarta
     return n;                 //> Devuelve solo n
 }
-int main()
+int main(void)
 {
-    cout << suma(4) << "\n";  //> Esperado 10, sale 4
+    printf("%d\n", suma(4));  //> Esperado 10, sale 4
     return 0;
 }
 ```
 *Corrección:* `return n + suma(n - 1);`
 
-**e) Función no `void` sin `return` en el caso recursivo:** compila con aviso; el resultado es indefinido.
+**e) Función no `void` sin `return` en el caso recursivo:** compila con advertencia (*control reaches end of non-void function*); el resultado es indefinido.
 :::
 
 :::isomorfo | Ejemplo isomórfico 2.4 · Recursión indirecta: ¿par o impar? | Variabilidad
-Dos funciones que se llaman mutuamente (Betancourt y Polanco, §9.3):
+Dos funciones que se llaman mutuamente:
 
-```cpp run title="mutua.cpp"
-#include <iostream>
-using namespace std;
+```c run title="mutua.c"
+#include <stdio.h>
+#include <stdbool.h>
 bool esImpar(int n);                  //> Prototipo necesario: esPar usa esImpar antes de definirla
 bool esPar(int n)
 {
@@ -476,9 +466,10 @@ bool esImpar(int n)
     if (n == 0) return false;
     return esPar(n - 1);
 }
-int main()
+int main(void)
 {
-    cout << boolalpha << esPar(10) << " " << esPar(7) << " " << esImpar(7) << "\n";
+    printf("esPar(10): %s  esPar(7): %s  esImpar(7): %s\n",
+           esPar(10) ? "si" : "no", esPar(7) ? "si" : "no", esImpar(7) ? "si" : "no");
     return 0;
 }
 ```
@@ -491,9 +482,8 @@ int main()
 :::tarea A | T1. Suma de 1 a n: ejemplo y gemelo | 20 min | Ejemplo resuelto, Variabilidad
 **Paso 1 · Estudia:**
 
-```cpp run title="suma_rec.cpp" stdin="5\n"
-#include <iostream>
-using namespace std;
+```c run title="suma_rec.c" stdin="5\n"
+#include <stdio.h>
 
 int sumaHasta(int n)
 {
@@ -502,11 +492,11 @@ int sumaHasta(int n)
     return n + sumaHasta(n - 1);    //> 2) Más pequeño: n − 1   3) Combinar: sumarle n
 }
 
-int main()
+int main(void)
 {
     int n;
-    cin >> n;
-    cout << "1 + ... + " << n << " = " << sumaHasta(n) << "\n";
+    scanf("%d", &n);
+    printf("1 + ... + %d = %d\n", n, sumaHasta(n));
     return 0;
 }
 ```
@@ -514,9 +504,8 @@ int main()
 **Paso 2 · Gemelo.** Escribe `int multiplicar(int a, int b)` que calcule `a × b` (con `b ≥ 0`) **solo con sumas**, usando recursión: `a × 0 = 0` y `a × b = a + a × (b − 1)`.
 
 :::solucion | T1
-```cpp run title="multiplicar.cpp" runs="7 4|9 0"
-#include <iostream>
-using namespace std;
+```c run title="multiplicar.c" runs="7 4|9 0"
+#include <stdio.h>
 
 int multiplicar(int a, int b)
 {
@@ -525,11 +514,11 @@ int multiplicar(int a, int b)
     return a + multiplicar(a, b - 1);
 }
 
-int main()
+int main(void)
 {
     int a, b;
-    cin >> a >> b;
-    cout << a << " x " << b << " = " << multiplicar(a, b) << "\n";
+    scanf("%d %d", &a, &b);
+    printf("%d x %d = %d\n", a, b, multiplicar(a, b));
     return 0;
 }
 ```
@@ -539,9 +528,8 @@ int main()
 :::tarea A | T2. Fibonacci recursivo (completa con pistas) | 20 min | Problema por completar
 **Contexto.** Compara con tu versión iterativa del Tema 06 (T3).
 
-```cpp blank title="fib_rec.cpp"
-#include <iostream>
-using namespace std;
+```c blank title="fib_rec.c"
+#include <stdio.h>
 
 long long fib(int n)
 {
@@ -552,13 +540,13 @@ long long fib(int n)
     return __3__ + __4__;          // 3 y 4: los dos terminos anteriores
 }
 
-int main()
+int main(void)
 {
     int n;
-    cin >> n;
+    scanf("%d", &n);
     for (int i = 0; i < n; i++)
-        cout << __5__ << " ";      // 5: termino i de la serie
-    cout << "\n";
+        printf("%lld ", __5__);    // 5: termino i de la serie
+    printf("\n");
     return 0;
 }
 ```
@@ -566,9 +554,8 @@ int main()
 :::solucion | T2
 {{c:1}} `0` · {{c:2}} `1` · {{c:3}} `fib(n - 1)` · {{c:4}} `fib(n - 2)` · {{c:5}} `fib(i)`
 
-```cpp run title="fib_rec.cpp" stdin="12\n"
-#include <iostream>
-using namespace std;
+```c run title="fib_rec.c" stdin="12\n"
+#include <stdio.h>
 
 long long fib(int n)
 {
@@ -579,13 +566,13 @@ long long fib(int n)
     return fib(n - 1) + fib(n - 2);
 }
 
-int main()
+int main(void)
 {
     int n;
-    cin >> n;
+    scanf("%d", &n);
     for (int i = 0; i < n; i++)
-        cout << fib(i) << " ";
-    cout << "\n";
+        printf("%lld ", fib(i));
+    printf("\n");
     return 0;
 }
 ```
@@ -595,13 +582,12 @@ int main()
 :::tarea AB | T3. Dígitos al revés (completa sin pistas) | 20 min | Problema por completar, Desvanecimiento de guía
 **Contexto.** Muestra los dígitos de un número **al revés** (4072 → `2 7 0 4`) y después **en orden** (`4 0 7 2`), con dos funciones recursivas `void`. Pista conceptual: concepto 4.
 
-```cpp blank title="digitos_orden.cpp"
-#include <iostream>
-using namespace std;
+```c blank title="digitos_orden.c"
+#include <stdio.h>
 
 void alReves(int n)
 {
-    cout << __1__ << " ";
+    printf("%d ", __1__);
     if (n >= 10)
         __2__;
 }
@@ -610,31 +596,30 @@ void enOrden(int n)
 {
     if (n >= 10)
         __3__;
-    cout << __4__ << " ";
+    printf("%d ", __4__);
 }
 
-int main()
+int main(void)
 {
     int n;
-    cin >> n;
+    scanf("%d", &n);
     alReves(n);
-    cout << "\n";
+    printf("\n");
     enOrden(n);
-    cout << "\n";
+    printf("\n");
     return 0;
 }
 ```
 
 :::solucion | T3
-{{c:1}} `n % 10` · {{c:2}} `alReves(n / 10)` · {{c:3}} `enOrden(n / 10)` · {{c:4}} `n % 10`. La única diferencia es si el `cout` va **antes** (subida) o **después** (bajada) de la llamada.
+{{c:1}} `n % 10` · {{c:2}} `alReves(n / 10)` · {{c:3}} `enOrden(n / 10)` · {{c:4}} `n % 10`. La única diferencia es si el `printf` va **antes** (subida) o **después** (bajada) de la llamada.
 
-```cpp run title="digitos_orden.cpp" stdin="4072\n"
-#include <iostream>
-using namespace std;
+```c run title="digitos_orden.c" stdin="4072\n"
+#include <stdio.h>
 
 void alReves(int n)
 {
-    cout << n % 10 << " ";
+    printf("%d ", n % 10);
     if (n >= 10)
         alReves(n / 10);
 }
@@ -643,17 +628,17 @@ void enOrden(int n)
 {
     if (n >= 10)
         enOrden(n / 10);
-    cout << n % 10 << " ";
+    printf("%d ", n % 10);
 }
 
-int main()
+int main(void)
 {
     int n;
-    cin >> n;
+    scanf("%d", &n);
     alReves(n);
-    cout << "\n";
+    printf("\n");
     enOrden(n);
-    cout << "\n";
+    printf("\n");
     return 0;
 }
 ```
@@ -666,9 +651,8 @@ int main()
 :::solucion | T4
 Traza: `mcd(84, 36)` → `mcd(36, 12)` → `mcd(12, 0)` → 12.
 
-```cpp run title="euclides.cpp" stdin="84 36\n"
-#include <iostream>
-using namespace std;
+```c run title="euclides.c" stdin="84 36\n"
+#include <stdio.h>
 
 int mcd(int a, int b)
 {
@@ -677,13 +661,13 @@ int mcd(int a, int b)
     return mcd(b, a % b);
 }
 
-int main()
+int main(void)
 {
     int a, b;
-    cin >> a >> b;
+    scanf("%d %d", &a, &b);
     int d = mcd(a, b);
-    cout << "mcd = " << d << ", mcm = " << a / d * b << "\n";
-    cout << a << "/" << b << " = " << a / d << "/" << b / d << "\n";
+    printf("mcd = %d, mcm = %d\n", d, a / d * b);
+    printf("%d/%d = %d/%d\n", a, b, a / d, b / d);
     return 0;
 }
 ```
@@ -694,19 +678,17 @@ int main()
 **Contexto.** Escribe **todas las versiones que puedas** para calcular `1 + 2 + … + n`: con `for`, con `while`, con la fórmula de Gauss, recursiva «hacia abajo» (`n + s(n − 1)`), recursiva «hacia arriba» (empezando en 1 hasta `n`), recursiva con acumulador… Compara: ¿cuál usa más memoria? ¿cuál es más clara?
 
 :::solucion | T5
-```cpp run title="sumas_todas.cpp"
-#include <iostream>
-using namespace std;
+```c run title="sumas_todas.c"
+#include <stdio.h>
 int abajo(int n) { return n == 0 ? 0 : n + abajo(n - 1); }
 int arriba(int i, int n) { return i > n ? 0 : i + arriba(i + 1, n); }
 int acum(int n, int total) { return n == 0 ? total : acum(n - 1, total + n); }
-int main()
+int main(void)
 {
     int n = 100, s1 = 0, s2 = 0, i = 1;
     for (int k = 1; k <= n; k++) s1 += k;
     while (i <= n) s2 += i++;
-    cout << s1 << " " << s2 << " " << n * (n + 1) / 2 << " "
-         << abajo(n) << " " << arriba(1, n) << " " << acum(n, 0) << "\n";
+    printf("%d %d %d %d %d %d\n", s1, s2, n * (n + 1) / 2, abajo(n), arriba(1, n), acum(n, 0));
     return 0;
 }
 ```
@@ -717,7 +699,7 @@ La fórmula no usa ciclos ni pila; las versiones recursivas usan `n` marcos en l
 :::tarea B | T6. Tres funciones recursivas que fallan (autoexplicación) | 20 min | Autoexplicación, Reversión de la experiencia
 Explica **qué ocurre** con cada función cuando se llama con el valor indicado, **por qué**, y corrígela.
 
-```cpp blank title="fallas.cpp"
+```c blank title="fallas.c"
 // A: potencia(2, 3)
 int potencia(int b, int e) { if (e == 1) return b; return b * potencia(b, e - 1); }
 //    ...y potencia(2, 0)?
@@ -739,11 +721,10 @@ int maximo(const int v[], int n)
 :::solucion | T6
 **A:** con `e = 3` funciona (8), pero con `e = 0` el caso base `e == 1` nunca se alcanza: `e` baja a −1, −2… → desbordamiento de pila. Caso base: `e == 0 → 1`.
 **B:** `n % 10` no «achica» el número: `500 % 10 = 0` → devuelve 1 (incorrecto); para 123 llama con 3 → 2. Debe ser `contarDigitos(n / 10)` y caso base `n < 10 → 1`.
-**C:** si `v[n − 1] <= m` la función termina sin `return` (indefinido). Falta `return m;` al final.
+**C:** si `v[n − 1] <= m` la función termina sin `return` (indefinido; gcc advierte *control reaches end of non-void function*). Falta `return m;` al final.
 
-```cpp run title="corregidas.cpp"
-#include <iostream>
-using namespace std;
+```c run title="corregidas.c"
+#include <stdio.h>
 int potencia(int b, int e) { if (e == 0) return 1; return b * potencia(b, e - 1); }
 int contarDigitos(int n) { if (n < 10) return 1; return 1 + contarDigitos(n / 10); }
 int maximo(const int v[], int n)
@@ -753,11 +734,10 @@ int maximo(const int v[], int n)
     if (v[n - 1] > m) return v[n - 1];
     return m;
 }
-int main()
+int main(void)
 {
     int v[] = {3, 9, 2, 7};
-    cout << potencia(2, 3) << " " << potencia(2, 0) << " " << contarDigitos(500)
-         << " " << maximo(v, 4) << "\n";
+    printf("%d %d %d %d\n", potencia(2, 3), potencia(2, 0), contarDigitos(500), maximo(v, 4));
     return 0;
 }
 ```
@@ -772,29 +752,29 @@ int main()
 3. Prográmala, cuenta los movimientos para n = 1…10 y deduce la fórmula.
 
 :::solucion | T7
-```cpp run title="hanoi.cpp"
-#include <iostream>
-using namespace std;
+```c run title="hanoi.c"
+#include <stdio.h>
+#include <stdbool.h>
 int movimientos = 0;
 void hanoi(int n, char origen, char destino, char auxiliar, bool mostrar)
 {
     if (n == 0) return;
     hanoi(n - 1, origen, auxiliar, destino, mostrar);
     movimientos++;
-    if (mostrar) cout << "Disco " << n << ": " << origen << " -> " << destino << "\n";
+    if (mostrar) printf("Disco %d: %c -> %c\n", n, origen, destino);
     hanoi(n - 1, auxiliar, destino, origen, mostrar);
 }
-int main()
+int main(void)
 {
     hanoi(3, 'A', 'C', 'B', true);
-    cout << "Movimientos con 3 discos: " << movimientos << "\n";
+    printf("Movimientos con 3 discos: %d\n", movimientos);
     for (int n = 1; n <= 10; n++)
     {
         movimientos = 0;
         hanoi(n, 'A', 'C', 'B', false);
-        cout << n << ":" << movimientos << " ";
+        printf("%d:%d ", n, movimientos);
     }
-    cout << "\n";
+    printf("\n");
     return 0;
 }
 ```
@@ -814,33 +794,32 @@ Equipos de 4, niveles mezclados. El usuario piensa un número del 1 al 100 y la 
 :::solucion | T8
 Ejecución simulando que el usuario pensó el 37:
 
-```cpp run title="adivinador.cpp" stdin="<\n>\n=\n"
-#include <iostream>
-using namespace std;
+```c run title="adivinador.c" stdin="<\n>\n=\n"
+#include <stdio.h>
 
 int adivinar(int ini, int fin, int intento)
 {
     if (ini > fin)
     {
-        cout << "Respuestas contradictorias: hiciste trampa!\n";
+        printf("Respuestas contradictorias: hiciste trampa!\n");
         return -1;
     }
     int m = (ini + fin) / 2;
     char r;
     do {
-        cout << "Intento " << intento << ": es " << m << "? (<, >, =): ";
-        cin >> r;
+        printf("Intento %d: es %d? (<, >, =): ", intento, m);
+        scanf(" %c", &r);
     } while (r != '<' && r != '>' && r != '=');
     if (r == '=') return intento;
     if (r == '<') return adivinar(ini, m - 1, intento + 1);
     return adivinar(m + 1, fin, intento + 1);
 }
 
-int main()
+int main(void)
 {
-    cout << "Piensa un numero del 1 al 100\n";
+    printf("Piensa un numero del 1 al 100\n");
     int n = adivinar(1, 100, 1);
-    if (n != -1) cout << "Lo adivine en " << n << " intentos\n";
+    if (n != -1) printf("Lo adivine en %d intentos\n", n);
     return 0;
 }
 ```
@@ -858,31 +837,30 @@ int main()
 
 **Segmento 2 — ¿Dónde está la recursión?** {{como}} Observo que el binario de 13 es «el binario de 6» seguido del residuo 1. {{porque}} Eso es un problema más pequeño (`n / 2`) más una pieza (`n % 2`): la forma de toda función recursiva.
 
-**Segmento 3 — Antes o después.** {{como}} Como el último residuo debe mostrarse al final, pongo el `cout` **después** de la llamada: `binario(n / 2); cout << n % 2;`. {{porque}} Lo que va después de la llamada se ejecuta a la bajada, en orden inverso: justo la inversión que necesitaba.
+**Segmento 3 — Antes o después.** {{como}} Como el último residuo debe mostrarse al final, pongo el `printf` **después** de la llamada: `binario(n / 2); printf("%d", n % 2);`. {{porque}} Lo que va después de la llamada se ejecuta a la bajada, en orden inverso: justo la inversión que necesitaba.
 
 **Segmento 4 — El caso base.** {{como}} Si `n < 2`, muestro `n` y termino. Pruebo con 1, 2, 13 y 255. {{porque}} El 1 y el 2 son los casos frontera: uno es el caso base y el otro es el primero que hace una llamada.
 
-```cpp run title="binario.cpp"
-#include <iostream>
-using namespace std;
+```c run title="binario.c"
+#include <stdio.h>
 void binario(int n)
 {
     if (n < 2)
     {
-        cout << n;
+        printf("%d", n);
         return;
     }
     binario(n / 2);
-    cout << n % 2;
+    printf("%d", n % 2);
 }
-int main()
+int main(void)
 {
     int prueba[] = {1, 2, 13, 255};
-    for (int n : prueba)
+    for (int i = 0; i < 4; i++)
     {
-        cout << n << " -> ";
-        binario(n);
-        cout << "\n";
+        printf("%d -> ", prueba[i]);
+        binario(prueba[i]);
+        printf("\n");
     }
     return 0;
 }
@@ -907,17 +885,16 @@ int main()
 :::compr | 5.2 Comprehension test · conocimiento procedimental
 **P1. Haz la traza y predice la salida:**
 
-```cpp check title="p1.cpp"
-#include <iostream>
-using namespace std;
+```c check title="p1.c"
+#include <stdio.h>
 int misterio(int a, int b)
 {
     if (a < b) return 0;
     return 1 + misterio(a - b, b);
 }
-int main()
+int main(void)
 {
-    cout << misterio(17, 5) << " " << misterio(4, 7) << "\n";
+    printf("%d %d\n", misterio(17, 5), misterio(4, 7));
     return 0;
 }
 ```
@@ -948,17 +925,16 @@ int main()
 :::solucion | Evaluación 5.2 (comprehension)
 **P1.** `misterio(17, 5)` = 1 + m(12, 5) = 2 + m(7, 5) = 3 + m(2, 5) = 3. Calcula la **división entera** por restas sucesivas.
 
-```cpp run title="p1.cpp"
-#include <iostream>
-using namespace std;
+```c run title="p1.c"
+#include <stdio.h>
 int misterio(int a, int b)
 {
     if (a < b) return 0;
     return 1 + misterio(a - b, b);
 }
-int main()
+int main(void)
 {
-    cout << misterio(17, 5) << " " << misterio(4, 7) << "\n";
+    printf("%d %d\n", misterio(17, 5), misterio(4, 7));
     return 0;
 }
 ```
@@ -969,20 +945,20 @@ int main()
 
 **P4.**
 
-```cpp run title="palindromo_arreglo.cpp"
-#include <iostream>
-using namespace std;
+```c run title="palindromo_arreglo.c"
+#include <stdio.h>
+#include <stdbool.h>
 bool esPalindromo(const int a[], int ini, int fin)
 {
     if (ini >= fin) return true;
     if (a[ini] != a[fin]) return false;
     return esPalindromo(a, ini + 1, fin - 1);
 }
-int main()
+int main(void)
 {
     int x[] = {1, 3, 5, 3, 1};
     int y[] = {1, 2, 2, 3};
-    cout << boolalpha << esPalindromo(x, 0, 4) << " " << esPalindromo(y, 0, 3) << "\n";
+    printf("%s %s\n", esPalindromo(x, 0, 4) ? "si" : "no", esPalindromo(y, 0, 3) ? "si" : "no");
     return 0;
 }
 ```

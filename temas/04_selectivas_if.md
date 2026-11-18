@@ -7,8 +7,9 @@ lema: "Los programas también deciden: si se cumple una condición toman un cami
 duracion: "4 h · 2 sesiones de 2 h"
 previos: "Tema 03 (operadores relacionales y lógicos, expresiones)."
 fuentes:
-  - "Betancourt Uscátegui, J. F. y Polanco Guzmán, I. Y. (2021). *115 ejercicios resueltos de programación C++*. Cap. 3: Estructuras selectivas if, if-else, if anidados (§3.1–§3.4). Cap. 2, ej. 3 y 5 (validación y fórmula general)."
-  - "Lospinoso, J. (2019). *C++ Crash Course*. Cap. 1: Conditional Statements. Cap. 7: Logical Operators, Ternary Conditional Operator. Cap. 8: Selection Statements (if statements, init-statements)."
+  - "Kernighan, B. W. y Ritchie, D. M. (1988). *The C Programming Language* (2.ª ed.). Prentice Hall. Cap. 2: §2.6 Relational and Logical Operators, §2.11 Conditional Expressions. Cap. 3: §3.1 Statements and Blocks, §3.2 If-Else, §3.3 Else-If."
+  - "King, K. N. (2008). *C Programming: A Modern Approach* (2.ª ed.). W. W. Norton. Cap. 5 «Selection Statements»: §5.1 Logical Expressions, §5.2 The if Statement."
+  - "Seacord, R. C. (2020). *Effective C*. No Starch Press. Cap. 4 «Expressions and Operators» (operadores lógicos y condicional). Cap. 5 «Control Flow»: Selection Statements."
 objetivos:
   A:
     - "Escribir condiciones con operadores relacionales (`< > <= >= == !=`) y lógicos (`&& || !`)."
@@ -17,7 +18,7 @@ objetivos:
     - "Validar datos de entrada y diseñar casos de prueba que recorran todos los caminos."
   B:
     - "Diseñar decisiones anidadas y transformarlas en escaleras o condiciones compuestas equivalentes."
-    - "Usar el operador ternario `?:` y el `if` con inicializador de C++17."
+    - "Usar el operador ternario `?:` y aprovechar que en C cualquier valor distinto de cero es verdadero."
     - "Explicar la evaluación en cortocircuito y aplicar las leyes de De Morgan."
     - "Evitar errores clásicos: `=` vs `==`, `;` tras el `if`, *else* colgante, comparación de `double`."
 efectos:
@@ -41,7 +42,7 @@ diferenciada:
   Contenido:
     comp: "Información de soporte"
     A: "`if`, `if-else`, escalera y anidados básicos, siempre con diagrama de flujo."
-    B: "Cortocircuito, De Morgan, ternario, `if` con inicializador, comparación de `double`."
+    B: "Cortocircuito, De Morgan, ternario, «distinto de cero es verdadero», comparación de `double`."
   Proceso:
     comp: "Tareas de aprendizaje"
     A: "T1 → T4 con tabla de casos de prueba guiada; pares mixtos."
@@ -53,7 +54,7 @@ diferenciada:
   Entorno:
     comp: "Información procedimental"
     A: "Diagramas de flujo en papel antes de codificar; depurador con puntos de interrupción."
-    B: "Compilar con `-Wall` para detectar `=` en condiciones y paréntesis sospechosos."
+    B: "Compilar con `-Wall -Wextra` para detectar `=` en condiciones, `;` tras el `if` y rangos al estilo matemático."
 plan:
   - ["Apertura", "Soporte", "Pregunta: «¿cómo decide un semáforo inteligente cuándo cambiar?». Analogía del cruce de caminos.", "10 min"]
   - ["Desarrollo 1", "Soporte", "Conceptos 1–4 con diagramas de flujo; diagrama de flujo en el piso.", "40 min"]
@@ -64,12 +65,12 @@ plan:
   - ["Cierre", "Protocolo + evaluación", "Protocolo verbal, tests y autorregistro.", "40 min"]
 glosario:
   - ["estructura selectiva", "selection statement", "Sentencia que elige qué código ejecutar según una condición."]
-  - ["condición", "condition", "Expresión que se evalúa como `true` o `false`."]
+  - ["condición", "condition", "Expresión que se evalúa como verdadera (distinta de 0) o falsa (0)."]
   - ["rama / camino", "branch", "Cada bloque alternativo de una decisión."]
   - ["bloque", "block / compound statement", "Grupo de sentencias entre llaves `{ }`."]
   - ["decisión anidada", "nested if", "Un `if` dentro de otro `if`."]
   - ["escalera if-else", "else-if chain", "Secuencia `if … else if … else` para rangos o casos excluyentes."]
-  - ["operador ternario", "ternary conditional operator", "`condicion ? valor1 : valor2`."]
+  - ["operador ternario", "conditional operator", "`condicion ? valor1 : valor2`."]
   - ["cortocircuito", "short-circuit evaluation", "`&&` y `||` dejan de evaluar en cuanto conocen el resultado."]
   - ["tabla de verdad", "truth table", "Resultado de un operador lógico para todas las combinaciones."]
   - ["caso de prueba", "test case", "Entrada concreta con su salida esperada."]
@@ -90,41 +91,40 @@ Un videojuego muestra «GAME OVER» cuando tu vida llega a cero. **¿Cómo crees
 :::
 
 :::relevancia
-Validar una contraseña, aplicar un descuento solo a clientes frecuentes, decidir si un sensor de temperatura debe encender un ventilador, determinar si un personaje fue golpeado: **toda la lógica de los programas reales se construye con decisiones**. Como dice el modelo ARCS, los condicionales son esenciales en inteligencia artificial y en videojuegos. {{arcs:Relevancia}}
+Validar una contraseña, aplicar un descuento solo a clientes frecuentes, decidir si un sensor de temperatura debe encender un ventilador, determinar si un personaje fue golpeado: **toda la lógica de los programas reales se construye con decisiones**. El firmware de un termostato o de un microondas, escrito en C, es en buena parte una colección de `if` bien ordenados. {{arcs:Relevancia}}
 :::
 
 ## 1.1 Conceptos, uno por uno
 
 :::concepto | 1 | La condición: una pregunta de sí o no | Elementos aislados
-Una **condición** es una expresión que vale `true` o `false`. Se construye con operadores relacionales y lógicos (Tema 03):
+Una **condición** es una expresión que vale **verdadero** (1) o **falso** (0). Se construye con operadores relacionales y lógicos (Tema 03):
 
-| Condición en C++ | Se lee | Con `x = 7` |
+| Condición en C | Se lee | Con `x = 7` |
 |---|---|---|
-| `x > 5` | x es mayor que 5 | `true` |
-| `x == 10` | x es igual a 10 | `false` |
-| `x % 2 == 0` | x es par | `false` |
-| `x >= 1 && x <= 10` | x está entre 1 y 10 | `true` |
-| `x < 0 \|\| x > 100` | x está fuera de 0..100 | `false` |
-| `!(x == 7)` | x **no** es 7 | `false` |
+| `x > 5` | x es mayor que 5 | 1 (verdadero) |
+| `x == 10` | x es igual a 10 | 0 (falso) |
+| `x % 2 == 0` | x es par | 0 (falso) |
+| `x >= 1 && x <= 10` | x está entre 1 y 10 | 1 (verdadero) |
+| `x < 0 \|\| x > 100` | x está fuera de 0..100 | 0 (falso) |
+| `!(x == 7)` | x **no** es 7 | 0 (falso) |
 :::
 
 :::concepto | 2 | `if`: hacer algo solo si se cumple | Elementos aislados, Atención dividida
 <div class="cols">
 <div>
 
-```cpp run runs="38.7|36.2"
-#include <iostream>
-using namespace std;
-int main()
+```c run runs="38.7|36.2"
+#include <stdio.h>
+int main(void)
 {
     double temp;
-    cout << "Temperatura: ";
-    cin >> temp;
-    if (temp > 38.0)                //> Condición entre paréntesis
+    printf("Temperatura: ");
+    scanf("%lf", &temp);
+    if (temp > 38.0)                    //> Condición entre paréntesis
     {
-        cout << "Tienes fiebre\n";  //> Solo si la condición es true
+        printf("Tienes fiebre\n");      //> Solo si la condición es verdadera
     }
-    cout << "Fin de la revision\n"; //> Siempre se ejecuta
+    printf("Fin de la revision\n");     //> Siempre se ejecuta
     return 0;
 }
 ```
@@ -150,21 +150,20 @@ l -> d; d -> s [label=" Sí"]; s -> j [arrowhead=none]; d -> j [label=" No", arr
 <div class="cols">
 <div>
 
-```cpp run runs="8|13"
-#include <iostream>
-using namespace std;
-int main()
+```c run runs="8|13"
+#include <stdio.h>
+int main(void)
 {
     int n;
-    cout << "Numero: ";
-    cin >> n;
-    if (n % 2 == 0)            //> ¿El residuo entre 2 es cero?
+    printf("Numero: ");
+    scanf("%d", &n);
+    if (n % 2 == 0)                    //> ¿El residuo entre 2 es cero?
     {
-        cout << n << " es PAR\n";   //> Camino del Sí
+        printf("%d es PAR\n", n);      //> Camino del Sí
     }
     else
     {
-        cout << n << " es IMPAR\n"; //> Camino del No
+        printf("%d es IMPAR\n", n);    //> Camino del No
     }
     return 0;
 }
@@ -193,20 +192,19 @@ En pseudocódigo (PSeInt): `Si n MOD 2 = 0 Entonces … SiNo … FinSi`.
 :::concepto | 4 | Bloques y llaves: ¿qué pertenece al `if`? | Elementos aislados
 Sin llaves, el `if` controla **solo la siguiente sentencia**. La indentación no cuenta para el compilador:
 
-```cpp run
-#include <iostream>
-using namespace std;
-int main()
+```c run
+#include <stdio.h>
+int main(void)
 {
     int vida = 50;
     if (vida <= 0)
-        cout << "GAME OVER\n";           //> Esta línea SÍ pertenece al if
-        cout << "Reiniciando nivel...\n"; //> Esta NO: se ejecuta siempre, aunque esté indentada
+        printf("GAME OVER\n");             //> Esta línea SÍ pertenece al if
+        printf("Reiniciando nivel...\n");  //> Esta NO: se ejecuta siempre, aunque esté indentada
     return 0;
 }
 ```
 
-**Regla del curso:** usa siempre llaves `{ }`, aunque el bloque tenga una sola sentencia.
+**Regla del curso:** usa siempre llaves `{ }`, aunque el bloque tenga una sola sentencia. (gcc con `-Wall` incluso advierte que esa indentación es engañosa.)
 :::
 
 :::concepto | 5 | La escalera `if-else if-else`: rangos y casos excluyentes | Elementos aislados, Atención dividida
@@ -215,22 +213,21 @@ Cuando hay más de dos caminos, se encadenan decisiones. Se evalúan **de arriba
 <div class="cols">
 <div>
 
-```cpp run runs="9.5|7.8|6|4.5"
-#include <iostream>
-using namespace std;
-int main()
+```c run runs="9.5|7.8|6|4.5"
+#include <stdio.h>
+int main(void)
 {
     double nota;
-    cout << "Calificacion (0-10): ";
-    cin >> nota;
+    printf("Calificacion (0-10): ");
+    scanf("%lf", &nota);
     if (nota >= 9)                 //> 1.ª pregunta
-        cout << "Excelente\n";
+        printf("Excelente\n");
     else if (nota >= 8)            //> Solo se pregunta si NO fue >= 9
-        cout << "Muy bien\n";
+        printf("Muy bien\n");
     else if (nota >= 6)            //> Aquí ya sabemos que nota < 8
-        cout << "Aprobado\n";
+        printf("Aprobado\n");
     else                           //> Todos los demás casos
-        cout << "Reprobado\n";
+        printf("Reprobado\n");
     return 0;
 }
 ```
@@ -262,25 +259,24 @@ Observa que la condición de «Muy bien» no necesita `nota < 9`: si llegó ahí
 :::concepto | 6 | Decisiones anidadas: una decisión dentro de otra | Elementos aislados, Atención dividida
 A veces la segunda pregunta **solo tiene sentido** si la primera fue verdadera:
 
-```cpp run runs="S 19|S 15|N 20"
-#include <iostream>
-using namespace std;
-int main()
+```c run runs="S 19|S 15|N 20"
+#include <stdio.h>
+int main(void)
 {
     char boleto;
     int edad;
-    cout << "Tiene boleto (S/N) y edad: ";
-    cin >> boleto >> edad;
+    printf("Tiene boleto (S/N) y edad: ");
+    scanf(" %c %d", &boleto, &edad);
     if (boleto == 'S')                          //> Decisión externa
     {
         if (edad >= 18)                         //> Decisión interna: solo se evalúa si hay boleto
-            cout << "Acceso a zona general\n";
+            printf("Acceso a zona general\n");
         else
-            cout << "Acceso con acompaniante\n";
+            printf("Acceso con acompaniante\n");
     }
     else
     {
-        cout << "Primero compra tu boleto\n";
+        printf("Primero compra tu boleto\n");
     }
     return 0;
 }
@@ -300,38 +296,38 @@ b -> e [label="Sí"]; b -> c [label="No"]; e -> g [label="Sí"]; e -> a [label="
 :::concepto | 7 | Condiciones compuestas y cortocircuito | Elementos aislados
 | A | B | `A && B` | `A \|\| B` | `!A` |
 |---|---|---|---|---|
-| true | true | true | true | false |
-| true | false | false | true | false |
-| false | true | false | true | true |
-| false | false | false | false | true |
+| 1 | 1 | 1 | 1 | 0 |
+| 1 | 0 | 0 | 1 | 0 |
+| 0 | 1 | 0 | 1 | 1 |
+| 0 | 0 | 0 | 0 | 1 |
 
 **Cortocircuito:** en `A && B`, si `A` es falso, `B` **ni se evalúa** (el resultado ya es falso). En `A || B`, si `A` es verdadero, `B` no se evalúa. Por eso `if (d != 0 && n / d > 2)` es seguro: nunca divide entre cero.
 
-**Rangos:** en matemáticas se escribe `0 < x < 10`; en C++ **debe** escribirse `0 < x && x < 10`.
+**Rangos:** en matemáticas se escribe `0 < x < 10`; en C **debe** escribirse `0 < x && x < 10`.
 
 **De Morgan (Ruta B):** `!(A && B)` equivale a `!A || !B`; `!(A || B)` equivale a `!A && !B`.
 :::
 
-:::concepto | 8 | Ruta B · Operador ternario e `if` con inicializador | Elementos aislados, Reversión de la experiencia
-El **operador ternario** elige entre dos **valores**: `condicion ? valor_si : valor_no`. El *C++ Crash Course* (cap. 8) muestra además el `if` con inicializador de C++17, que limita la variable al `if`:
+:::concepto | 8 | Ruta B · Operador ternario y «distinto de cero es verdadero» | Elementos aislados, Reversión de la experiencia
+El **operador ternario** elige entre dos **valores**: `condicion ? valor_si : valor_no`. Además, en C **cualquier número distinto de cero cuenta como verdadero**; por eso `if (n % 3)` significa «si el residuo no es cero»:
 
-```cpp run stdin="15\n"
-#include <iostream>
-#include <string>
-using namespace std;
-int main()
+```c run stdin="14\n"
+#include <stdio.h>
+int main(void)
 {
     int n;
-    cin >> n;
-    string tipo = (n % 2 == 0) ? "par" : "impar";       //> Ternario: elige un valor
-    cout << n << " es " << tipo << "\n";
-    if (int resto = n % 3; resto == 0)                  //> `resto` solo existe dentro de este if/else
-        cout << "multiplo de 3\n";
+    scanf("%d", &n);
+    printf("%d es %s\n", n, (n % 2 == 0) ? "par" : "impar");  //> Ternario: elige qué texto mostrar
+    int resto = n % 3;
+    if (resto)                                                 //> Equivale a `if (resto != 0)`
+        printf("residuo %d al dividir entre 3\n", resto);
     else
-        cout << "residuo " << resto << " al dividir entre 3\n";
+        printf("multiplo de 3\n");
     return 0;
 }
 ```
+
+Escribir `!= 0` explícitamente es más claro para quien empieza; reconocer la forma corta te ayudará a leer código ajeno.
 :::
 
 :::movimiento | Diagrama de flujo en el piso (15 min)
@@ -393,20 +389,19 @@ p -> dos [label=" Sí"]; p -> z [label=" No"]; z -> una [label=" Sí"]; z -> cx 
 </div>
 </div>
 
-**C. Código en C++**
+**C. Código en C**
 
-```cpp run title="cuadratica_v2.cpp" runs="1 -3 2|1 2 1|1 1 1|0 2 3"
-#include <iostream>
-#include <cmath>
-using namespace std;
-int main()
+```c run title="cuadratica_v2.c" runs="1 -3 2|1 2 1|1 1 1|0 2 3"
+#include <stdio.h>
+#include <math.h>
+int main(void)
 {
     double a, b, c;
-    cout << "Coeficientes a b c: ";
-    cin >> a >> b >> c;
+    printf("Coeficientes a b c: ");
+    scanf("%lf %lf %lf", &a, &b, &c);
     if (a == 0)                                   //> Validación: sin `a` no hay término cuadrático
     {
-        cout << "No es una ecuacion cuadratica\n";
+        printf("No es una ecuacion cuadratica\n");
     }
     else
     {
@@ -415,16 +410,16 @@ int main()
         {
             double x1 = (-b + sqrt(d)) / (2 * a);
             double x2 = (-b - sqrt(d)) / (2 * a);
-            cout << "Dos raices reales: " << x1 << " y " << x2 << "\n";
+            printf("Dos raices reales: %.2f y %.2f\n", x1, x2);
         }
         else if (d == 0)
         {
-            cout << "Raiz doble: " << -b / (2 * a) << "\n";
+            printf("Raiz doble: %.2f\n", -b / (2 * a));
         }
         else
         {
             double re = -b / (2 * a), im = sqrt(-d) / (2 * a);   //> sqrt de un número positivo: -d > 0
-            cout << "Raices complejas: " << re << " +/- " << im << "i\n";
+            printf("Raices complejas: %.2f +/- %.2fi\n", re, im);
         }
     }
     return 0;
@@ -443,7 +438,7 @@ rankdir=LR; nodesep=0.18; ranksep=0.3;
 @proc(i2, "if-else\n(dos caminos)")
 @proc(i3, "escalera else-if\n(rangos excluyentes)")
 @proc(i4, "anidados\n(decisión dentro de decisión)")
-@sub(t, "ternario ?:\nif con inicializador")
+@sub(t, "ternario ?:\ndistinto de 0 = verdadero")
 @hl(p, "Probar cada camino\n+ valores frontera")
 s -> c; s -> i1; s -> i2; s -> i3; s -> i4; s -> t; i3 -> p [style=dashed]; i4 -> p [style=dashed];
 ```
@@ -452,43 +447,43 @@ s -> c; s -> i1; s -> i2; s -> i3; s -> i4; s -> t; i3 -> p [style=dashed]; i4 -
 # 2. Información procedimental {.procedimental}
 
 :::sintaxis | Tarjeta de sintaxis 2.1
-```cpp check title="formas_if.cpp"
-#include <iostream>
-int main()
+```c check title="formas_if.c"
+#include <stdio.h>
+int main(void)
 {
     int x = 5;
     // 1) if simple
     if (x > 0) {
-        std::cout << "positivo\n";
+        printf("positivo\n");
     }
     // 2) if-else
     if (x % 2 == 0) {
-        std::cout << "par\n";
+        printf("par\n");
     } else {
-        std::cout << "impar\n";
+        printf("impar\n");
     }
     // 3) escalera
     if (x < 0) {
-        std::cout << "negativo\n";
+        printf("negativo\n");
     } else if (x == 0) {
-        std::cout << "cero\n";
+        printf("cero\n");
     } else {
-        std::cout << "positivo\n";
+        printf("positivo\n");
     }
     // 4) ternario
     int absx = (x < 0) ? -x : x;
-    std::cout << absx << "\n";
+    printf("%d\n", absx);
     return 0;
 }
 ```
 
-| En lenguaje natural | En C++ |
+| En lenguaje natural | En C |
 |---|---|
 | x está entre 10 y 20 (inclusive) | `x >= 10 && x <= 20` |
 | x está fuera de 10..20 | `x < 10 \|\| x > 20` |
 | c es una vocal minúscula | `c == 'a' \|\| c == 'e' \|\| c == 'i' \|\| c == 'o' \|\| c == 'u'` |
 | n es múltiplo de 3 y de 5 | `n % 3 == 0 && n % 5 == 0` |
-| dos `double` son «iguales» | `fabs(a - b) < 1e-9` |
+| dos `double` son «iguales» | `fabs(a - b) < 1e-9` (con `<math.h>`) |
 :::
 
 :::checklist | Guía de preguntas de rutina 2.2
@@ -504,68 +499,66 @@ int main()
 :::
 
 :::errores | Errores frecuentes 2.3 | Variabilidad, Autoexplicación
-**a) `=` en lugar de `==`.** ¿Por qué dice «aprobado» con un 4?
+**a) `=` en lugar de `==`.** ¿Por qué dice «calificación perfecta» con un 4?
 
-```cpp run stdin="4\n"
-#include <iostream>
-using namespace std;
-int main()
+```c run stdin="4\n"
+#include <stdio.h>
+int main(void)
 {
     int nota;
-    cin >> nota;
-    if (nota = 10)                   //> ASIGNA 10 a nota; el valor 10 (≠ 0) cuenta como true
-        cout << "Calificacion perfecta: " << nota << "\n";
+    scanf("%d", &nota);
+    if (nota = 10)                   //> ASIGNA 10 a nota; el valor 10 (≠ 0) cuenta como verdadero
+        printf("Calificacion perfecta: %d\n", nota);
     return 0;
 }
 ```
-*Corrección:* `if (nota == 10)`. Con `-Wall`, g++ advierte: *suggest parentheses around assignment used as truth value*.
+*Corrección:* `if (nota == 10)`. Con `-Wall`, gcc advierte: *suggest parentheses around assignment used as truth value*.
 
 **b) Punto y coma después del `if`.** El `;` es una sentencia vacía: el bloque siguiente se ejecuta siempre.
 
-```cpp run stdin="25\n"
-#include <iostream>
-using namespace std;
-int main()
+```c run stdin="25\n"
+#include <stdio.h>
+int main(void)
 {
     int temp;
-    cin >> temp;
+    scanf("%d", &temp);
     if (temp > 30);                  //> Este `;` termina el if: no controla nada
     {
-        cout << "Hace calor\n";      //> Se ejecuta siempre, aun con 25
+        printf("Hace calor\n");      //> Se ejecuta siempre, aun con 25
     }
     return 0;
 }
 ```
+*Corrección:* quitar el `;`. Con `-Wextra`, gcc advierte: *suggest braces around empty body in an 'if' statement*.
 
 **c) Rango al estilo matemático.** `0 < x < 10` compila, pero se evalúa como `(0 < x) < 10`; `0 < x` vale 0 o 1, y ambos son menores que 10: **siempre verdadero**.
 
-```cpp run stdin="50\n"
-#include <iostream>
-using namespace std;
-int main()
+```c run stdin="50\n"
+#include <stdio.h>
+int main(void)
 {
     int x;
-    cin >> x;
-    if (0 < x < 10)                  //> (0 < 50) es 1, y 1 < 10 es true
-        cout << x << " esta entre 0 y 10 (?)\n";
+    scanf("%d", &x);
+    if (0 < x < 10)                  //> (0 < 50) es 1, y 1 < 10 es verdadero
+        printf("%d esta entre 0 y 10 (?)\n", x);
     return 0;
 }
 ```
-*Corrección:* `if (0 < x && x < 10)`.
+*Corrección:* `if (0 < x && x < 10)`. gcc con `-Wall` avisa: *comparisons like 'X<=Y<=Z' do not have their mathematical meaning*.
 
 **d) Orden equivocado en la escalera.** Si la primera pregunta es `nota >= 6`, nadie llega a «Excelente»: pon primero el caso **más restrictivo**.
 
 **e) `else` sin `if`.** Un `;` o una llave mal puesta separa el `else` de su `if`:
 
-```cpp err
-#include <iostream>
-int main()
+```c err
+#include <stdio.h>
+int main(void)
 {
     int x = 3;
     if (x > 0);
-        std::cout << "positivo\n";
+        printf("positivo\n");
     else
-        std::cout << "no positivo\n";
+        printf("no positivo\n");
     return 0;
 }
 ```
@@ -574,22 +567,21 @@ int main()
 :::isomorfo | Ejemplo isomórfico 2.4 · Costo de envío por peso | Variabilidad
 Mismo patrón que la escalera de calificaciones, otro contexto:
 
-```cpp run title="envio.cpp" runs="0.8|3|12.5|-1"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="envio.c" runs="0.8|3|12.5|-1"
+#include <stdio.h>
+int main(void)
 {
     double kg;
-    cout << "Peso del paquete (kg): ";
-    cin >> kg;
+    printf("Peso del paquete (kg): ");
+    scanf("%lf", &kg);
     if (kg <= 0)                     //> Validación primero
-        cout << "Peso invalido\n";
+        printf("Peso invalido\n");
     else if (kg <= 1)
-        cout << "Costo: $99\n";
+        printf("Costo: $99\n");
     else if (kg <= 5)
-        cout << "Costo: $149\n";
+        printf("Costo: $149\n");
     else
-        cout << "Costo: $149 + $20 por kg extra = $" << 149 + (kg - 5) * 20 << "\n";
+        printf("Costo: $149 + $20 por kg extra = $%.2f\n", 149 + (kg - 5) * 20);
     return 0;
 }
 ```
@@ -602,22 +594,21 @@ int main()
 :::tarea A | T1. ¿Aprobado o reprobado? Estudia y resuelve el gemelo | 20 min | Ejemplo resuelto, Variabilidad
 **Contexto.** El sistema escolar muestra si un alumno aprobó (calificación mínima: 6). **¿Para qué?** Es la decisión más simple: una condición, dos caminos.
 
-```cpp run title="aprobado.cpp" runs="7.5|6|5.9"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="aprobado.c" runs="7.5|6|5.9"
+#include <stdio.h>
+int main(void)
 {
     const double MINIMA = 6.0;                //> Constante: el criterio puede cambiar sin tocar la lógica
     double cal;
-    cout << "Calificacion: ";
-    cin >> cal;
+    printf("Calificacion: ");
+    scanf("%lf", &cal);
     if (cal >= MINIMA)                        //> `>=`: el 6 exacto también aprueba (valor frontera)
     {
-        cout << "APROBADO\n";
+        printf("APROBADO\n");
     }
     else
     {
-        cout << "REPROBADO, te faltan " << MINIMA - cal << " puntos\n";
+        printf("REPROBADO, te faltan %.1f puntos\n", MINIMA - cal);
     }
     return 0;
 }
@@ -626,22 +617,21 @@ int main()
 **Gemelo.** En un videojuego, el jugador **sube de nivel** si su experiencia es de al menos 1000 puntos; si no, se le muestra cuántos le faltan. Prueba con 1500, 1000 y 730.
 
 :::solucion | T1
-```cpp run title="nivel.cpp" runs="1500|1000|730"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="nivel.c" runs="1500|1000|730"
+#include <stdio.h>
+#define EXP_NIVEL 1000
+int main(void)
 {
-    const int EXP_NIVEL = 1000;
     int exp;
-    cout << "Experiencia: ";
-    cin >> exp;
+    printf("Experiencia: ");
+    scanf("%d", &exp);
     if (exp >= EXP_NIVEL)
     {
-        cout << "SUBISTE DE NIVEL!\n";
+        printf("SUBISTE DE NIVEL!\n");
     }
     else
     {
-        cout << "Te faltan " << EXP_NIVEL - exp << " puntos\n";
+        printf("Te faltan %d puntos\n", EXP_NIVEL - exp);
     }
     return 0;
 }
@@ -652,22 +642,21 @@ int main()
 :::tarea A | T2. Tarifa del cine (completa con pistas) | 20 min | Problema por completar
 **Contexto.** Un cine cobra $50 a menores de 12 años, $40 a personas de 60 años o más y $80 al resto. Las edades negativas son inválidas.
 
-```cpp blank title="cine.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c blank title="cine.c"
+#include <stdio.h>
+int main(void)
 {
     int edad;
-    cout << "Edad: ";
-    cin >> edad;
+    printf("Edad: ");
+    scanf("%d", &edad);
     if (__1__)                      // 1: primero valida (edad negativa)
-        cout << "Edad invalida\n";
+        printf("Edad invalida\n");
     else if (__2__)                 // 2: ninos
-        cout << "Boleto: $50\n";
+        printf("Boleto: $50\n");
     __3__ (edad >= 60)              // 3: palabra(s) para continuar la escalera
-        cout << "Boleto: $40\n";
+        printf("Boleto: $40\n");
     __4__                           // 4: todos los demas casos
-        cout << "Boleto: $80\n";
+        printf("Boleto: $80\n");
     return 0;
 }
 ```
@@ -677,22 +666,21 @@ int main()
 :::solucion | T2
 {{c:1}} `edad < 0` · {{c:2}} `edad < 12` · {{c:3}} `else if` · {{c:4}} `else`
 
-```cpp run title="cine.cpp" runs="-3|11|12|59|60"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="cine.c" runs="-3|11|12|59|60"
+#include <stdio.h>
+int main(void)
 {
     int edad;
-    cout << "Edad: ";
-    cin >> edad;
+    printf("Edad: ");
+    scanf("%d", &edad);
     if (edad < 0)
-        cout << "Edad invalida\n";
+        printf("Edad invalida\n");
     else if (edad < 12)
-        cout << "Boleto: $50\n";
+        printf("Boleto: $50\n");
     else if (edad >= 60)
-        cout << "Boleto: $40\n";
+        printf("Boleto: $40\n");
     else
-        cout << "Boleto: $80\n";
+        printf("Boleto: $80\n");
     return 0;
 }
 ```
@@ -702,19 +690,19 @@ int main()
 :::tarea AB | T3. ¿Año bisiesto? (completa sin pistas) | 20 min | Problema por completar, Desvanecimiento de guía
 **Contexto.** Un año es bisiesto si es divisible entre 4 **y no** entre 100, **o bien** si es divisible entre 400. Las apps de calendario lo usan para saber si febrero tiene 29 días.
 
-```cpp blank title="bisiesto.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c blank title="bisiesto.c"
+#include <stdio.h>
+#include <stdbool.h>
+int main(void)
 {
     int anio;
-    cout << "Anio: ";
-    cin >> anio;
+    printf("Anio: ");
+    scanf("%d", &anio);
     bool bisiesto = (anio % 4 __1__ 0 __2__ anio % 100 __3__ 0) __4__ anio % 400 == 0;
     __5__ (bisiesto)
-        cout << anio << " es bisiesto: febrero tiene 29 dias\n";
+        printf("%d es bisiesto: febrero tiene 29 dias\n", anio);
     __6__
-        cout << anio << " no es bisiesto: febrero tiene 28 dias\n";
+        printf("%d no es bisiesto: febrero tiene 28 dias\n", anio);
     return 0;
 }
 ```
@@ -724,19 +712,19 @@ int main()
 :::solucion | T3
 {{c:1}} `==` · {{c:2}} `&&` · {{c:3}} `!=` · {{c:4}} `||` · {{c:5}} `if` · {{c:6}} `else`
 
-```cpp run title="bisiesto.cpp" runs="2024|2023|1900|2000"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="bisiesto.c" runs="2024|2023|1900|2000"
+#include <stdio.h>
+#include <stdbool.h>
+int main(void)
 {
     int anio;
-    cout << "Anio: ";
-    cin >> anio;
+    printf("Anio: ");
+    scanf("%d", &anio);
     bool bisiesto = (anio % 4 == 0 && anio % 100 != 0) || anio % 400 == 0;
     if (bisiesto)
-        cout << anio << " es bisiesto: febrero tiene 29 dias\n";
+        printf("%d es bisiesto: febrero tiene 29 dias\n", anio);
     else
-        cout << anio << " no es bisiesto: febrero tiene 28 dias\n";
+        printf("%d no es bisiesto: febrero tiene 28 dias\n", anio);
     return 0;
 }
 ```
@@ -749,27 +737,27 @@ int main()
 Entrega: diagrama de flujo, tabla de casos de prueba (al menos 5, incluyendo uno inválido) y el programa.
 
 :::solucion | T4
-```cpp run title="triangulos.cpp" runs="3 3 3|5 5 8|4 5 6|1 2 10"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="triangulos.c" runs="3 3 3|5 5 8|4 5 6|1 2 10"
+#include <stdio.h>
+#include <stdbool.h>
+int main(void)
 {
     double a, b, c;
-    cout << "Lados a b c: ";
-    cin >> a >> b >> c;
+    printf("Lados a b c: ");
+    scanf("%lf %lf %lf", &a, &b, &c);
     bool valido = a > 0 && b > 0 && c > 0 && a < b + c && b < a + c && c < a + b;
     if (!valido)
     {
-        cout << "No forman un triangulo\n";
+        printf("No forman un triangulo\n");
     }
     else
     {
         if (a == b && b == c)
-            cout << "Equilatero\n";
+            printf("Equilatero\n");
         else if (a == b || b == c || a == c)
-            cout << "Isosceles\n";
+            printf("Isosceles\n");
         else
-            cout << "Escaleno\n";
+            printf("Escaleno\n");
     }
     return 0;
 }
@@ -784,29 +772,27 @@ Observa que «isósceles» no necesita excluir explícitamente el equilátero: e
 :::solucion | T5
 Tres de las muchas soluciones posibles:
 
-```cpp run title="mayor_tres.cpp" stdin="7 19 4\n"
-#include <iostream>
-#include <algorithm>
-using namespace std;
-int main()
+```c run title="mayor_tres.c" stdin="7 19 4\n"
+#include <stdio.h>
+int main(void)
 {
     int a, b, c;
-    cin >> a >> b >> c;
+    scanf("%d %d %d", &a, &b, &c);
     // Version 1: escalera con condiciones compuestas
     if (a >= b && a >= c)
-        cout << "V1: " << a << "\n";
+        printf("V1: %d\n", a);
     else if (b >= a && b >= c)
-        cout << "V1: " << b << "\n";
+        printf("V1: %d\n", b);
     else
-        cout << "V1: " << c << "\n";
+        printf("V1: %d\n", c);
     // Version 2: variable auxiliar (la mas facil de extender)
     int mayor = a;
     if (b > mayor) mayor = b;
     if (c > mayor) mayor = c;
-    cout << "V2: " << mayor << "\n";
-    // Version 3: ternario anidado y std::max de la biblioteca
+    printf("V2: %d\n", mayor);
+    // Version 3: ternario anidado
     int m3 = (a > b) ? ((a > c) ? a : c) : ((b > c) ? b : c);
-    cout << "V3: " << m3 << "  max: " << max({a, b, c}) << "\n";
+    printf("V3: %d\n", m3);
     return 0;
 }
 ```
@@ -816,21 +802,20 @@ int main()
 :::tarea B | T6. El clasificador de temperaturas con errores (autoexplicación) | 20 min | Autoexplicación, Reversión de la experiencia
 **Contexto.** Un compañero programó un clasificador: «congelación» (≤ 0), «frío» (1–15), «templado» (16–25), «calor» (> 25). Con 20 °C el programa muestra mensajes incorrectos. Encuentra **los cuatro errores**, explica por qué cada uno produce el comportamiento observado y corrígelos.
 
-```cpp run title="clasificador_bug.cpp" stdin="20\n"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="clasificador_bug.c" stdin="20\n"
+#include <stdio.h>
+int main(void)
 {
     int t;
-    cin >> t;
+    scanf("%d", &t);
     if (t <= 0);
-        cout << "Congelacion\n";
+        printf("Congelacion\n");
     if (1 <= t <= 15)
-        cout << "Frio\n";
+        printf("Frio\n");
     else if (t >= 15 && t <= 25)
-        cout << "Templado\n";
+        printf("Templado\n");
     else if (t = 26)
-        cout << "Calor\n";
+        printf("Calor\n");
     return 0;
 }
 ```
@@ -838,26 +823,27 @@ int main()
 {{lineas:4}}
 
 :::solucion | T6
-1. Línea 7: `;` después del `if` → «Congelación» se muestra siempre.
-2. Línea 9: `1 <= t <= 15` es siempre verdadera (se compara 0/1 con 15) → muestra «Frío» con 20 y el resto de la escalera nunca se evalúa.
-3. Línea 11: el rango de templado empieza en 15 y se traslapa con frío; debe ser `t >= 16` (o simplemente `else if (t <= 25)`).
-4. Línea 13: `t = 26` asigna; además «calor» es `t > 25`. Basta un `else`.
+1. Línea 6: `;` después del `if` → «Congelación» se muestra siempre.
+2. Línea 8: `1 <= t <= 15` es siempre verdadera (se compara 0/1 con 15) → muestra «Frío» con 20 y el resto de la escalera nunca se evalúa.
+3. Línea 10: el rango de templado empieza en 15 y se traslapa con frío; debe ser `t >= 16` (o simplemente `else if (t <= 25)`).
+4. Línea 12: `t = 26` asigna; además «calor» es `t > 25`. Basta un `else`.
 
-```cpp run title="clasificador.cpp" runs="-4|10|20|31"
-#include <iostream>
-using namespace std;
-int main()
+Compilar con `gcc -Wall -Wextra` habría avisado de los errores 1, 2 y 4; el 3 es de lógica pura y solo lo revela una prueba con el valor frontera 15.
+
+```c run title="clasificador.c" runs="-4|10|20|31"
+#include <stdio.h>
+int main(void)
 {
     int t;
-    cin >> t;
+    scanf("%d", &t);
     if (t <= 0)
-        cout << "Congelacion\n";
+        printf("Congelacion\n");
     else if (t <= 15)
-        cout << "Frio\n";
+        printf("Frio\n");
     else if (t <= 25)
-        cout << "Templado\n";
+        printf("Templado\n");
     else
-        cout << "Calor\n";
+        printf("Calor\n");
     return 0;
 }
 ```
@@ -867,26 +853,25 @@ int main()
 :::tarea B | T7. ¿Qué camino toma? (imaginación) | 20 min | Imaginación
 **Sin ejecutar**, imagina el recorrido de cada entrada por las decisiones y escribe la salida esperada. Luego **reescribe** el programa como una escalera `if-else if` sin anidamiento y verifica que ambas versiones den lo mismo.
 
-```cpp check title="caminos.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c check title="caminos.c"
+#include <stdio.h>
+int main(void)
 {
     int x, y;
-    cin >> x >> y;
+    scanf("%d %d", &x, &y);
     if (x > 0)
     {
         if (y > 0)
-            cout << "Cuadrante I\n";
+            printf("Cuadrante I\n");
         else
-            cout << "Cuadrante IV o eje\n";
+            printf("Cuadrante IV o eje\n");
     }
     else
     {
         if (y > 0)
-            cout << "Cuadrante II o eje\n";
+            printf("Cuadrante II o eje\n");
         else
-            cout << "Cuadrante III o eje\n";
+            printf("Cuadrante III o eje\n");
     }
     return 0;
 }
@@ -899,21 +884,20 @@ Entradas: `3 5` · `3 -2` · `-1 4` · `0 0` · `-2 -2`
 :::solucion | T7
 `3 5` → I · `3 -2` → IV o eje · `-1 4` → II o eje · `0 0` → III o eje · `-2 -2` → III o eje. Versión en escalera con condiciones compuestas:
 
-```cpp run title="caminos_escalera.cpp" runs="3 5|3 -2|-1 4|0 0|-2 -2"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="caminos_escalera.c" runs="3 5|3 -2|-1 4|0 0|-2 -2"
+#include <stdio.h>
+int main(void)
 {
     int x, y;
-    cin >> x >> y;
+    scanf("%d %d", &x, &y);
     if (x > 0 && y > 0)
-        cout << "Cuadrante I\n";
+        printf("Cuadrante I\n");
     else if (x > 0)
-        cout << "Cuadrante IV o eje\n";
+        printf("Cuadrante IV o eje\n");
     else if (y > 0)
-        cout << "Cuadrante II o eje\n";
+        printf("Cuadrante II o eje\n");
     else
-        cout << "Cuadrante III o eje\n";
+        printf("Cuadrante III o eje\n");
     return 0;
 }
 ```
@@ -935,18 +919,17 @@ Equipos de 3–4, niveles mezclados. Cada integrante diseña **una dimensión** 
 **Producto del equipo:** diagrama de flujo, tabla con **al menos 8 casos de prueba** que recorran todos los caminos y el programa integrado. Intercambien tablas con otro equipo y ejecuten sus casos.
 
 :::solucion | T8
-```cpp run title="envios.cpp" runs="0.5 N N|3 I S|8 N S|-2 N N|2 X N"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="envios.c" runs="0.5 N N|3 I S|8 N S|-2 N N|2 X N"
+#include <stdio.h>
+int main(void)
 {
     double kg;
     char destino, express;
-    cout << "Peso, destino (N/I) y express (S/N): ";
-    cin >> kg >> destino >> express;
+    printf("Peso, destino (N/I) y express (S/N): ");
+    scanf("%lf %c %c", &kg, &destino, &express);
     if (kg <= 0 || (destino != 'N' && destino != 'I'))
     {
-        cout << "Datos invalidos\n";
+        printf("Datos invalidos\n");
     }
     else
     {
@@ -961,7 +944,7 @@ int main()
             costo = costo * 1.80;
         if (express == 'S')
             costo += 150;
-        cout << "Costo total: $" << costo << "\n";
+        printf("Costo total: $%.2f\n", costo);
     }
     return 0;
 }
@@ -980,19 +963,19 @@ int main()
 
 **Segmento 2 — Orden de la escalera.** {{como}} Pongo primero el caso más restrictivo: `monto > 1000 && frecuente`. Luego `monto > 1000`, después `frecuente` y al final `else`. {{porque}} En una escalera gana la primera condición verdadera; si preguntara primero `monto > 1000`, un cliente frecuente con $1500 recibiría solo 10 %.
 
-**Segmento 3 — Leer el «sí/no».** {{como}} Leo la respuesta como `char` y la convierto en `bool frecuente = (resp == 'S' || resp == 's');`. {{porque}} Así la escalera queda legible y acepto mayúscula o minúscula.
+**Segmento 3 — Leer el «sí/no».** {{como}} Leo la respuesta como `char` con `" %c"` y la convierto en `bool frecuente = (resp == 'S' || resp == 's');`. {{porque}} Así la escalera queda legible y acepto mayúscula o minúscula.
 
 **Segmento 4 — Probar fronteras.** {{como}} Pruebo $1500 S, $1500 N, $1000 S (¡justo en el límite!) y $800 N. {{porque}} El valor 1000 decide si se usa `>` o `>=`; el enunciado dice «supera», así que 1000 **no** recibe el descuento por monto.
 
-```cpp run title="descuentos.cpp" runs="1500 S|1500 N|1000 S|800 N"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="descuentos.c" runs="1500 S|1500 N|1000 S|800 N"
+#include <stdio.h>
+#include <stdbool.h>
+int main(void)
 {
     double monto;
     char resp;
-    cout << "Monto y cliente frecuente (S/N): ";
-    cin >> monto >> resp;
+    printf("Monto y cliente frecuente (S/N): ");
+    scanf("%lf %c", &monto, &resp);
     bool frecuente = (resp == 'S' || resp == 's');
     double pct;
     if (monto > 1000 && frecuente)
@@ -1003,7 +986,7 @@ int main()
         pct = 0.05;
     else
         pct = 0.0;
-    cout << "Descuento: " << pct * 100 << "%  Total: $" << monto * (1 - pct) << "\n";
+    printf("Descuento: %.0f%%  Total: $%.2f\n", pct * 100, monto * (1 - pct));
     return 0;
 }
 ```
@@ -1015,49 +998,48 @@ int main()
 1. ¿Qué diferencia hay entre `=` y `==`?
 2. ¿Cuántos bloques se ejecutan, como máximo, en una escalera `if-else if-else`?
 3. Escribe la condición «`x` está entre 1 y 100, inclusive».
-4. Completa la tabla: `true && false` = \_\_\_ · `true || false` = \_\_\_ · `!true` = \_\_\_
+4. Completa con 1 o 0: `1 && 0` = \_\_\_ · `1 || 0` = \_\_\_ · `!1` = \_\_\_
 5. Verdadero o falso: sin llaves, un `if` controla todas las líneas indentadas debajo de él.
 6. ¿Qué es la evaluación en cortocircuito?
 7. ¿Qué símbolo representa una decisión en un diagrama de flujo?
 8. ¿Qué valor guarda `r` en `int r = (5 > 3) ? 10 : 20;`?
 9. ¿Qué es un valor frontera y por qué conviene probarlo?
-10. ¿Cómo se escribe en PSeInt la estructura `if-else`?
+10. En C, ¿qué valores cuentan como «verdadero» en una condición?
 :::
 
 :::compr | 5.2 Comprehension test · conocimiento procedimental
 **P1. Predice la salida** para `n = 15` y para `n = 8`:
 
-```cpp check title="p1.cpp"
-#include <iostream>
-using namespace std;
-int main()
+```c check title="p1.c"
+#include <stdio.h>
+int main(void)
 {
     int n;
-    cin >> n;
+    scanf("%d", &n);
     if (n % 3 == 0 && n % 5 == 0)
-        cout << "FizzBuzz\n";
+        printf("FizzBuzz\n");
     else if (n % 3 == 0)
-        cout << "Fizz\n";
+        printf("Fizz\n");
     else if (n % 5 == 0)
-        cout << "Buzz\n";
+        printf("Buzz\n");
     else
-        cout << n << "\n";
+        printf("%d\n", n);
     return 0;
 }
 ```
 
-**P2. Corrige** (tres errores) el programa que debe mostrar «Puede votar» si `edad >= 18` y «No puede votar» en otro caso:
+**P2. Corrige** (tres errores) el fragmento que debe mostrar «Puede votar» si `edad >= 18` y «No puede votar» en otro caso:
 
-```cpp blank title="p2.cpp"
+```c blank title="p2.c"
 int edad;
-cin >> edad;
+scanf("%d", &edad);
 if (edad => 18);
-    cout << "Puede votar\n";
+    printf("Puede votar\n");
 else
-    cout << "No puede votar\n"
+    printf("No puede votar\n")
 ```
 
-**P3. Reescribe sin anidar** usando una sola condición compuesta: `if (a > 0) { if (b > 0) { cout << "ambos positivos"; } }`
+**P3. Reescribe sin anidar** usando una sola condición compuesta: `if (a > 0) { if (b > 0) { printf("ambos positivos"); } }`
 
 **P4. Escribe un programa** que lea el consumo mensual de agua (m³) y calcule el pago: hasta 10 m³ a $8 cada uno; de 11 a 30 m³, los primeros 10 a $8 y el resto a $12; más de 30, los primeros 30 como antes y el resto a $18. Valida consumos negativos.
 :::
@@ -1074,49 +1056,47 @@ else
 :::
 
 :::solucion | Evaluación 5.1 (recall)
-1 `=` asigna un valor; `==` compara · 2 Uno · 3 `x >= 1 && x <= 100` · 4 `false`, `true`, `false` · 5 Falso: solo controla la siguiente sentencia · 6 `&&` y `||` dejan de evaluar en cuanto el resultado está decidido (p. ej., si el lado izquierdo de `&&` es falso) · 7 El rombo · 8 `10` · 9 Un valor justo en el límite de un rango (p. ej., 6 para aprobar); ahí se esconden los errores de `>` contra `>=` · 10 `Si condicion Entonces … SiNo … FinSi`
+1 `=` asigna un valor; `==` compara · 2 Uno · 3 `x >= 1 && x <= 100` · 4 `0`, `1`, `0` · 5 Falso: solo controla la siguiente sentencia · 6 `&&` y `||` dejan de evaluar en cuanto el resultado está decidido (p. ej., si el lado izquierdo de `&&` es falso) · 7 El rombo · 8 `10` · 9 Un valor justo en el límite de un rango (p. ej., 6 para aprobar); ahí se esconden los errores de `>` contra `>=` · 10 Cualquier valor distinto de cero; solo el 0 es falso
 :::
 
 :::solucion | Evaluación 5.2 (comprehension)
 **P1.**
 
-```cpp run title="p1.cpp" runs="15|8"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="p1.c" runs="15|8"
+#include <stdio.h>
+int main(void)
 {
     int n;
-    cin >> n;
+    scanf("%d", &n);
     if (n % 3 == 0 && n % 5 == 0)
-        cout << "FizzBuzz\n";
+        printf("FizzBuzz\n");
     else if (n % 3 == 0)
-        cout << "Fizz\n";
+        printf("Fizz\n");
     else if (n % 5 == 0)
-        cout << "Buzz\n";
+        printf("Buzz\n");
     else
-        cout << n << "\n";
+        printf("%d\n", n);
     return 0;
 }
 ```
 
 **P2.** `=>` debe ser `>=`; sobra el `;` después del `if` (además deja al `else` sin `if`); falta `;` al final de la última línea.
 
-**P3.** `if (a > 0 && b > 0) { cout << "ambos positivos"; }`
+**P3.** `if (a > 0 && b > 0) { printf("ambos positivos"); }`
 
 **P4.**
 
-```cpp run title="agua.cpp" runs="7|25|42|-3"
-#include <iostream>
-using namespace std;
-int main()
+```c run title="agua.c" runs="7|25|42|-3"
+#include <stdio.h>
+int main(void)
 {
     double m3;
-    cout << "Consumo (m3): ";
-    cin >> m3;
+    printf("Consumo (m3): ");
+    scanf("%lf", &m3);
     double pago;
     if (m3 < 0)
     {
-        cout << "Consumo invalido\n";
+        printf("Consumo invalido\n");
         return 0;
     }
     else if (m3 <= 10)
@@ -1125,7 +1105,7 @@ int main()
         pago = 10 * 8 + (m3 - 10) * 12;
     else
         pago = 10 * 8 + 20 * 12 + (m3 - 30) * 18;
-    cout << "Pago: $" << pago << "\n";
+    printf("Pago: $%.2f\n", pago);
     return 0;
 }
 ```
